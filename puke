@@ -24,6 +24,7 @@ pkg_info() {
     [ -f sources ] || die "Sources file not found."
 
     while read -r line; do version=$line; done < version
+    name=$1
 }
 
 pkg_depends() {
@@ -70,12 +71,24 @@ pkg_extract() {
 }
 
 pkg_build() {
-    log "Building $1-$version"
+    log "Building $name-$version"
 
     cd "$build_dir"
     set -e
     . "$OLDPWD/build"
     set +e
+    cd -
+
+    log "Sucessfully built $name-$version"
+}
+
+pkg_manifest() {
+    cd "$pkg_dir"
+
+    _() { find . -mindepth 1 "$@" | sed 's/^\.//'; }
+    _ -not -type d  > "$OLDPWD/manifest"
+    _ -type d | sort -r >> "$OLDPWD/manifest"
+
     cd -
 }
 
@@ -87,7 +100,8 @@ args() {
             pkg_depends
             pkg_sources
             pkg_extract
-            pkg_build "$2"
+            pkg_build
+            pkg_manifest
         ;;
     esac
 }
@@ -101,6 +115,7 @@ main() {
     source_dir=$PWD/sources
     build_dir=$PWD/build
     pkg_dir=$PWD/pkg
+    sys_dir=$PWD/sys
 
     args "$@"
 }
