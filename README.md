@@ -34,3 +34,15 @@ while read -r depend; do
     # do thing.
 done < depends
 ```
+
+## Table of Contents
+
+<!-- vim-markdown-toc GFM -->
+
+* [`build`](#build)
+
+<!-- vim-markdown-toc -->
+
+## `build`
+
+The `build` file should contain the necessary steps to patch, configure, build and install the package. When at the install step; the variable `$pkg_dir` is available. This variable points to the directory the package manager uses for built packages. Whatever is in this directory will become part of the package's manifest and will be copied to `/` (or `$PUKE_ROOT`).
