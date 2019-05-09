@@ -111,12 +111,14 @@ main() {
     trap clean EXIT
     clean
 
-    mkdir -p sources build pkg || die "Couldn't create directories at '$PWD'".
+    mkdir -p sources build pkg sys bin ||
+        die "Couldn't create directories at '$PWD'".
 
     source_dir=$PWD/sources
     build_dir=$PWD/build
     pkg_dir=$PWD/pkg
     sys_dir=$PWD/sys
+    bin_dir=$PWD/bin
 
     args "$@"
 }
