@@ -1,4 +1,4 @@
-# KISS Package Experiment.
+# KISS Package Experiment
 
 This is an alternative package system I am experimenting with. Instead of the usual `PKGBUILD`, `APKBUILD`, `xbps-template` and `Pkgfile` format, this repository explores a more unixy approach.
 
