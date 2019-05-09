@@ -22,3 +22,15 @@ zlib/            # Package name.
 ├─ release       # Force a package update for the same version.
 ┘
 ```
+
+When a built package is installed, this entire directory tree is copied to `/var/db/puke` where it becomes a database entry. Listing the dependencies for a package is a simple as printing the contents of the `depends` file. Searching for which package owns a file is as simple as checking each `manifest` file.
+
+This new structure also allows the package manager to be stupid simple. POSIX `sh` has no arrays. However, they are mimicked by looping over each line of each file. No more insecure `depends="pkg pkg pkg"` and `for pkg in $depends`.
+
+Instead, the following can be done.
+
+```sh
+while read -r depend; do
+    # do thing.
+done < depends
+```
