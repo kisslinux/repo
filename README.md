@@ -19,7 +19,6 @@ zlib/            # Package name.
 
 # Optional files.
 ├─ post_install  # The script to run after install.
-├─ release       # Force a package update for the same version.
 ┘
 ```
 
@@ -43,6 +42,7 @@ done < depends
 * [`manifest`](#manifest)
 * [`sources`](#sources)
 * [`depends`](#depends)
+* [`version`](#version)
 
 <!-- vim-markdown-toc -->
 
@@ -99,4 +99,12 @@ The `depends` file contains the package's dependencies one per line.
 zlib
 binutils
 openssl
+```
+
+## `version`
+
+The `version` file contains the package's version as well as its release number. The format of this file is `version release`. The `release` portion allows a package upgrade without the modification of the version number.
+
+```
+1.2.11 1
 ```
