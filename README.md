@@ -51,6 +51,7 @@ done < depends
 
 <!-- vim-markdown-toc GFM -->
 
+* [Getting started with `puke`](#getting-started-with-puke)
 * [The package format](#the-package-format)
     * [`build`](#build)
     * [`manifest`](#manifest)
@@ -58,9 +59,22 @@ done < depends
     * [`depends`](#depends)
     * [`version`](#version)
     * [`checksums`](#checksums)
-* [Getting started with `puke`](#getting-started-with-puke)
 
 <!-- vim-markdown-toc -->
+
+
+## Getting started with `puke`
+
+Puke is a simple package manager written in POSIX `sh`. The package manager does not need to be added to your `PATH`. Instead it runs inside the packages repository, very similar to Void Linux's `xbps-src`.
+
+Puke has 6 different "operators".
+
+- `build`: Build a package.
+- `checksum`: Generate checksums for a package.
+- `install`: Install a built package.
+- `remove`: Remove an installed package.
+- `depends`: List a package's dependencies .
+- `list`: List installed packages.
 
 ## The package format
 
@@ -134,16 +148,3 @@ The `checksums` file contains the `sha256` sums of each entry in the `sources` f
 ```
 c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1  zlib-1.2.11.tar.gz
 ```
-
-## Getting started with `puke`
-
-Puke is a simple package manager written in POSIX `sh`. The package manager does not need to be added to your `PATH`. Instead it runs inside the packages repository, very similar to Void Linux's `xbps-src`.
-
-Puke has 6 different "operators".
-
-- `build`: Build a package.
-- `checksum`: Generate checksums for a package.
-- `install`: Install a built package.
-- `remove`: Remove an installed package.
-- `depends`: List a package's dependencies .
-- `list`: List installed packages.
