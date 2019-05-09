@@ -1,0 +1,108 @@
+#!/bin/sh
+# shellcheck source=/dev/null
+#
+# pkg - package manager for kiss linux.
+
+die() {
+    printf '\033[31mERROR>\033[m %s\n' "$@" >&2
+    exit 1
+}
+
+log() {
+    printf '\033[32m=>\033[m %s\n' "$@"
+}
+
+clean() {
+    rm -rf "$build_dir" "$pkg_dir"
+}
+
+pkg_info() {
+    [ -z "$1" ]    && die "No package specified."
+    cd "repo/$1"   || die "Package '$1' not in repository."
+    [ -f version ] || die "Version file not found."
+    [ -f depends ] || die "Depends file not found."
+    [ -f sources ] || die "Sources file not found."
+
+    while read -r line; do version=$line; done < version
+}
+
+pkg_depends() {
+    while read -r dependency; do
+        # TODO: Handle dependencies.
+        log "Found dependency $dependency"
+    done < depends
+}
+
+pkg_sources() {
+    while read -r source; do
+        source_name=${source##*/}
+
+        if [ -f "$source" ]; then
+            continue
+
+        elif [ -f "$source_dir/$source_name" ]; then
+            log "Found cached $source_name."
+            continue
+
+        elif [ -z "${source##*://*}" ]; then
+            log "Downloading '$source'."
+            wget -P "$source_dir" "$source" || die "Failed to download $source."
+
+        else
+            die "Source file '$source' not found."
+        fi
+    done < sources
+}
+
+pkg_extract() {
+    while read -r source; do
+        source_name=${source##*/}
+
+        if [ -f "$source" ]; then
+            cp -f "$source" "$build_dir"
+
+        elif [ -f "$source_dir/$source_name" ]; then
+            # TODO: Handle extraction based on file type.
+            tar xf "$source_dir/$source_name" -C "$build_dir" \
+                --strip-components 1 || die "couldn't extract $source_name"
+        fi
+    done < sources
+}
+
+pkg_build() {
+    log "Building $1-$version"
+
+    cd "$build_dir"
+    set -e
+    . "$OLDPWD/build"
+    set +e
+    cd -
+}
+
+args() {
+    pkg_info "$2"
+
+    case $1 in
+        b*)
+            pkg_depends
+            pkg_sources
+            pkg_extract
+            pkg_build "$2"
+        ;;
+    esac
+}
+
+main() {
+    trap clean EXIT
+    clean
+
+    mkdir -p sources build pkg || die "Couldn't create directories at '$PWD'".
+
+    source_dir=$PWD/sources
+    build_dir=$PWD/build
+    pkg_dir=$PWD/pkg
+
+    args "$@"
+}
+
+main "$@"

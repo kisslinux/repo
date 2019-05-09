@@ -1,0 +1,7 @@
+./configure \
+    --prefix=/usr \
+    --libdir=/lib \
+    --shared
+
+make
+make DESTDIR="$pkg_dir" install
