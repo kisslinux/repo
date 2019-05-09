@@ -1,5 +1,5 @@
 #!/bin/sh
-# shellcheck source=/dev/null
+# shellcheck disable=2094,2103 source=/dev/null
 #
 # pkg - package manager for kiss linux.
 
@@ -13,7 +13,8 @@ log() {
 }
 
 clean() {
-    rm -rf "$build_dir" "$pkg_dir"
+    cd "$old_pwd/repo/$name"
+    rm -rf -- "$mak_dir" "$pkg_dir" .checksums
 }
 
 pkg_info() {
@@ -36,51 +37,85 @@ pkg_depends() {
 }
 
 pkg_sources() {
-    while read -r source; do
-        source_name=${source##*/}
+    while read -r src; do
+        src_name=${src##*/}
 
-        if [ -f "$source" ]; then
+        if [ -f "$src" ]; then
             continue
 
-        elif [ -f "$source_dir/$source_name" ]; then
-            log "Found cached $source_name."
+        elif [ -f "$src_dir/$src_name" ]; then
+            log "Found cached $src_name."
             continue
 
-        elif [ -z "${source##*://*}" ]; then
-            log "Downloading '$source'."
-            wget -P "$source_dir" "$source" || die "Failed to download $source."
+        elif [ -z "${src##*://*}" ]; then
+            log "Downloading '$src'."
+            wget -P "$src_dir" "$src" || die "Failed to download $src."
 
         else
-            die "Source file '$source' not found."
+            die "Source file '$src' not found."
         fi
     done < sources
 }
 
+pkg_checksum() {
+    while read -r src; do
+        src_name=${src##*/}
+
+        if [ -f "$src" ]; then
+            src_path=$src
+
+        elif [ -f "$src_dir/$src_name" ]; then
+            src_path=$src_dir/$src_name
+        fi
+
+        cd "${src_path%/*}"
+        sha256sum -- "$src_name" || die "Failed to generate checksums."
+        cd - >/dev/null
+    done < sources > "${1-checksums}"
+}
+
+pkg_verify() {
+    pkg_checksum .checksums
+
+    diff .checksums checksums ||
+        die "checksum of sources does not match checksum of package" \
+            "run '$0 checksum $name' to update checksums"
+
+    log "Checksums verified."
+}
+
 pkg_extract() {
-    while read -r source; do
-        source_name=${source##*/}
+    while read -r src; do
+        src_name=${src##*/}
 
-        if [ -f "$source" ]; then
-            cp -f "$source" "$build_dir"
+        if [ -f "$src" ]; then
+            cp -f "$src" "$mak_dir"
 
-        elif [ -f "$source_dir/$source_name" ]; then
-            # TODO: Handle extraction based on file type.
-            tar xf "$source_dir/$source_name" -C "$build_dir" \
-                --strip-components 1 || die "couldn't extract $source_name"
+        elif [ ! -f "$src_dir/$src_name" ]; then
+            die "$src_name" not found.
+
+        else
+            case $src_dir/$src_name in
+                *.tar|*.tar.??|*.tar.???|*.tar.????|*.tgz)
+                    tar xf "$src_dir/$src_name" -C "$mak_dir" \
+                        --strip-components 1 ||
+                        die "Couldn't extract $src_name"
+                ;;
+            esac
         fi
     done < sources
 }
 
 pkg_build() {
-    log "Building $pkg"
+    log "Building $pkg."
 
-    cd "$build_dir"
+    cd "$mak_dir"
     set -e
     . "$OLDPWD/build"
     set +e
     cd -
 
-    log "Sucessfully built $pkg"
+    log "Sucessfully built $pkg."
 }
 
 pkg_manifest() {
@@ -98,24 +133,35 @@ args() {
 
     case $1 in
         b*)
+            [ -f checksums ] || die "Checksums missing, run '$0 checksum $name'"
+
             pkg_depends
             pkg_sources
+            pkg_verify
             pkg_extract
             pkg_build
             pkg_manifest
+        ;;
+
+        c*)
+            pkg_sources
+            pkg_checksum
+
+            log "Generated checksums."
         ;;
     esac
 }
 
 main() {
-    trap clean EXIT
+    trap clean EXIT INT
     clean
 
     mkdir -p sources build pkg sys bin ||
         die "Couldn't create directories at '$PWD'".
 
-    source_dir=$PWD/sources
-    build_dir=$PWD/build
+    old_pwd=$PWD
+    src_dir=$PWD/sources
+    mak_dir=$PWD/build
     pkg_dir=$PWD/pkg
     sys_dir=$PWD/sys
     bin_dir=$PWD/bin
