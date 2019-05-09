@@ -51,16 +51,20 @@ done < depends
 
 <!-- vim-markdown-toc GFM -->
 
-* [`build`](#build)
-* [`manifest`](#manifest)
-* [`sources`](#sources)
-* [`depends`](#depends)
-* [`version`](#version)
-* [`checksums`](#checksums)
+* [The package format](#the-package-format)
+    * [`build`](#build)
+    * [`manifest`](#manifest)
+    * [`sources`](#sources)
+    * [`depends`](#depends)
+    * [`version`](#version)
+    * [`checksums`](#checksums)
+* [Getting started with `puke`](#getting-started-with-puke)
 
 <!-- vim-markdown-toc -->
 
-## `build`
+## The package format
+
+### `build`
 
 The `build` file should contain the necessary steps to patch, configure, build and install the package. When at the install step; the variable `$pkg_dir` is available. This variable points to the directory the package manager uses for built packages. Whatever is in this directory will become part of the package's manifest and will be copied to `/` (or `$PUKE_ROOT`).
 
@@ -74,7 +78,7 @@ make
 make DESTDIR="$pkg_dir" install
 ```
 
-## `manifest`
+### `manifest`
 
 The `manifest` file contains the built package's file and directory list. The full paths to files are listed first and the directories (*in reverse*) follow. This allows the package manager to remove the directories if they're empty without needing checks in-between.
 
@@ -96,7 +100,7 @@ The `manifest` file contains the built package's file and directory list. The fu
 /lib
 ```
 
-## `sources`
+### `sources`
 
 The `sources` file contains the package's sources one per line. Sources can be local or remote.
 
@@ -105,7 +109,7 @@ https://www.openssl.org/source/openssl-X.X.X.tar.gz
 patches/fix-musl.patch
 ```
 
-## `depends`
+### `depends`
 
 The `depends` file contains the package's dependencies one per line.
 
@@ -115,7 +119,7 @@ binutils
 openssl
 ```
 
-## `version`
+### `version`
 
 The `version` file contains the package's version as well as its release number. The format of this file is `version release`. The `release` portion allows a package upgrade without the modification of the version number.
 
@@ -123,10 +127,23 @@ The `version` file contains the package's version as well as its release number.
 1.2.11 1
 ```
 
-## `checksums`
+### `checksums`
 
 The `checksums` file contains the `sha256` sums of each entry in the `sources` file. This is generated and verified automatically.
 
 ```
 c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1  zlib-1.2.11.tar.gz
 ```
+
+## Getting started with `puke`
+
+Puke is a simple package manager written in POSIX `sh`. The package manager does not need to be added to your `PATH`. Instead it runs inside the packages repository, very similar to Void Linux's `xbps-src`.
+
+Puke has 6 different "operators".
+
+- `build`: Build a package.
+- `checksum`: Generate checksums for a package.
+- `install`: Install a built package.
+- `remove`: Remove an installed package.
+- `depends`: List a package's dependencies .
+- `list`: List installed packages.
