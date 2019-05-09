@@ -23,7 +23,6 @@ pkg_info() {
     [ -z "$1" ]    && die "No package specified."
     cd "./repo/$1" || die "Package '$1' not in repository."
     [ -f version ] || die "Version file not found."
-    [ -f depends ] || die "Depends file not found."
     [ -f sources ] || die "Sources file not found."
 
     read -r version release < version
@@ -32,7 +31,7 @@ pkg_info() {
 }
 
 pkg_depends() {
-    while read -r dependency; do
+    [ -f depends ] && while read -r dependency; do
         # TODO: Handle dependencies.
         log "Found dependency $dependency"
     done < depends
