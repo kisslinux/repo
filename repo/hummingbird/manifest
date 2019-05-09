@@ -1,0 +1,8 @@
+/usr/bin/shutdown
+/usr/bin/hummingbird
+/usr/bin/reboot
+/etc/rc.shutdown
+/etc/rc.init
+/usr/bin
+/usr
+/etc

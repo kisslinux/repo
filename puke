@@ -13,13 +13,15 @@ log() {
 }
 
 clean() {
-    cd "$old_pwd/repo/$name"
-    rm -rf -- "$mak_dir" "$pkg_dir" .checksums
+    rm -rf -- "$mak_dir" "$pkg_dir"
+
+    [ -n "$name" ] &&
+        rm "$old_pwd/repo/$name/.checksums"
 }
 
 pkg_info() {
     [ -z "$1" ]    && die "No package specified."
-    cd "repo/$1"   || die "Package '$1' not in repository."
+    cd "./repo/$1" || die "Package '$1' not in repository."
     [ -f version ] || die "Version file not found."
     [ -f depends ] || die "Depends file not found."
     [ -f sources ] || die "Sources file not found."
@@ -47,6 +49,9 @@ pkg_sources() {
             log "Found cached $src_name."
             continue
 
+        elif [ -z "${src##git:*}" ]; then
+            git clone "${src##git:}" "$mak_dir"
+
         elif [ -z "${src##*://*}" ]; then
             log "Downloading '$src'."
             wget -P "$src_dir" "$src" || die "Failed to download $src."
@@ -61,7 +66,10 @@ pkg_checksum() {
     while read -r src; do
         src_name=${src##*/}
 
-        if [ -f "$src" ]; then
+        if [ -z "${src##git:*}" ]; then
+            continue
+
+        elif [ -f "$src" ]; then
             src_path=$src
 
         elif [ -f "$src_dir/$src_name" ]; then
@@ -88,11 +96,14 @@ pkg_extract() {
     while read -r src; do
         src_name=${src##*/}
 
-        if [ -f "$src" ]; then
+        if [ -z "${src##git:*}" ]; then
+            continue
+
+        elif [ -f "$src" ]; then
             cp -f "$src" "$mak_dir"
 
         elif [ ! -f "$src_dir/$src_name" ]; then
-            die "$src_name" not found.
+            die "$src_name not found."
 
         else
             case $src_dir/$src_name in
@@ -113,7 +124,7 @@ pkg_build() {
     set -e
     . "$OLDPWD/build"
     set +e
-    cd -
+    cd - >/dev/null
 
     log "Sucessfully built $pkg."
 }
@@ -125,7 +136,7 @@ pkg_manifest() {
     _ -not -type d  > "$OLDPWD/manifest"
     _ -type d | sort -r >> "$OLDPWD/manifest"
 
-    cd -
+    cd - >/dev/null
 }
 
 args() {
