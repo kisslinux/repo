@@ -40,9 +40,42 @@ done < depends
 <!-- vim-markdown-toc GFM -->
 
 * [`build`](#build)
+* [`manifest`](#manifest)
 
 <!-- vim-markdown-toc -->
 
 ## `build`
 
 The `build` file should contain the necessary steps to patch, configure, build and install the package. When at the install step; the variable `$pkg_dir` is available. This variable points to the directory the package manager uses for built packages. Whatever is in this directory will become part of the package's manifest and will be copied to `/` (or `$PUKE_ROOT`).
+
+```sh
+./configure \
+    --prefix=/usr \
+    --libdir=/lib \
+    --shared
+
+make
+make DESTDIR="$pkg_dir" install
+```
+
+## `manifest`
+
+The `manifest` file contains the built package's file and directory list. The full paths to files are listed first and the directories (*in reverse*) follow. This allows the package manager to remove the directories if they're empty without needing checks in-between.
+
+```
+/usr/share/man/man3/zlib.3
+/usr/include/zconf.h
+/usr/include/zlib.h
+/lib/libz.so.1.2.11
+/lib/libz.so.1
+/lib/libz.so
+/lib/libz.a
+/lib/pkgconfig/zlib.pc
+/usr/share/man/man3
+/usr/share/man
+/usr/share
+/usr/include
+/usr
+/lib/pkgconfig
+/lib
+```
