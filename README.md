@@ -41,6 +41,8 @@ done < depends
 
 * [`build`](#build)
 * [`manifest`](#manifest)
+* [`sources`](#sources)
+* [`depends`](#depends)
 
 <!-- vim-markdown-toc -->
 
@@ -78,4 +80,23 @@ The `manifest` file contains the built package's file and directory list. The fu
 /usr
 /lib/pkgconfig
 /lib
+```
+
+## `sources`
+
+The `sources` file contains the package's sources one per line. Sources can be local or remote.
+
+```
+https://www.openssl.org/source/openssl-X.X.X.tar.gz
+patches/fix-musl.patch
+```
+
+## `depends`
+
+The `depends` file contains the package's dependencies one per line.
+
+```
+zlib
+binutils
+openssl
 ```
