@@ -181,6 +181,10 @@ args() {
                 log "${pkg##*/} $version-$release"
             done
         ;;
+
+        *)
+            log "$0 [build|checksum|install|list|help] [pkg]"
+        ;;
     esac
 }
 
