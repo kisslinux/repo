@@ -37,11 +37,11 @@ done < depends
 ## TODO
 
 - [x] Checksums.
-- [ ] Package installation.
-- [ ] Package listing.
+- [x] Package installation.
+- [x] Package listing.
 - [ ] Package removal.
-- [ ] Package dependencies.
-- [ ] Source extraction.
+- [x] Package dependencies.
+- [x] Source extraction.
     - [x] `tar.*`
     - [x] `git`
 
