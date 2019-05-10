@@ -1,7 +1,7 @@
 #!/bin/sh
 # shellcheck disable=2094,2103 source=/dev/null
 #
-# pkg - package manager for kiss linux.
+# puke - package manager for kiss linux.
 
 die() {
     printf '\033[31mERROR>\033[m %s\n' "$@" >&2
