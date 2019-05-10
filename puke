@@ -16,7 +16,7 @@ clean() {
     rm -rf -- "$mak_dir" "$pkg_dir"
 
     [ -n "$name" ] &&
-        rm "$old_pwd/repo/$name/.checksums"
+        rm "$old_pwd/repo/$name/.checksums" 2>/dev/null
 }
 
 pkg_info() {
@@ -41,12 +41,8 @@ pkg_sources() {
     while read -r src; do
         src_name=${src##*/}
 
-        if [ -f "$src" ]; then
-            continue
-
-        elif [ -f "$src_dir/$src_name" ]; then
-            log "Found cached $src_name."
-            continue
+        if [ -f "$src" ] || [ -f "$src_dir/$src_name" ]; then
+            log "Found local $src_name."
 
         elif [ -z "${src##git:*}" ]; then
             git clone "${src##git:}" "$mak_dir"
@@ -89,6 +85,7 @@ pkg_verify() {
             "run '$0 checksum $name' to update checksums"
 
     log "Checksums verified."
+    rm .checksums
 }
 
 pkg_extract() {
@@ -123,8 +120,9 @@ pkg_build() {
     set -e
     . "$OLDPWD/build"
     set +e
-    cd - >/dev/null
+    cd -
 
+    cp -R "$old_pwd/repo/$name" "$old_pwd/pkg/var/db/puke"
     log "Sucessfully built $pkg."
 }
 
@@ -136,6 +134,15 @@ pkg_manifest() {
     _ -type d | sort -r >> "$OLDPWD/manifest"
 
     cd - >/dev/null
+}
+
+pkg_tar() {
+    cd "$bin_dir"
+
+    tar pcvf "$pkg.tar.gz" -C "$pkg_dir" . ||
+        die "Failed to create package."
+
+    log "Package is at $bin_dir/$pkg.tar.gz."
 }
 
 args() {
@@ -151,6 +158,7 @@ args() {
             pkg_extract
             pkg_build
             pkg_manifest
+            pkg_tar
         ;;
 
         c*)
@@ -166,7 +174,7 @@ main() {
     trap clean EXIT INT
     clean
 
-    mkdir -p sources build pkg sys bin ||
+    mkdir -p sources build pkg/var/db/puke sys bin ||
         die "Couldn't create directories at '$PWD'".
 
     old_pwd=$PWD
@@ -175,6 +183,7 @@ main() {
     pkg_dir=$PWD/pkg
     sys_dir=$PWD/sys
     bin_dir=$PWD/bin
+    db_dir=var/db/puke
 
     args "$@"
 }

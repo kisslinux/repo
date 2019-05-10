@@ -1,8 +1,17 @@
 /usr/bin/shutdown
 /usr/bin/hummingbird
 /usr/bin/reboot
+/var/db/puke/hummingbird/sources
+/var/db/puke/hummingbird/manifest
+/var/db/puke/hummingbird/checksums
+/var/db/puke/hummingbird/build
+/var/db/puke/hummingbird/version
 /etc/rc.shutdown
 /etc/rc.init
+/var/db/puke/hummingbird
+/var/db/puke
+/var/db
+/var
 /usr/bin
 /usr
 /etc
