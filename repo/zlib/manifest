@@ -4,6 +4,7 @@
 /var/db/puke/zlib/sources
 /var/db/puke/zlib/manifest
 /var/db/puke/zlib/checksums
+/var/db/puke/zlib/post-install
 /var/db/puke/zlib/build
 /var/db/puke/zlib/version
 /lib/libz.so.1.2.11
