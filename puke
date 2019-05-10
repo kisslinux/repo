@@ -16,7 +16,7 @@ clean() {
     rm -rf -- "$mak_dir" "$pkg_dir"
 
     [ -n "$name" ] &&
-        rm "$old_pwd/repo/$name/.checksums" 2>/dev/null
+        rm "$rep_dir/$name/.checksums" 2>/dev/null
 }
 
 pkg_info() {
@@ -122,9 +122,9 @@ pkg_build() {
     set -e
     . "$OLDPWD/build"
     set +e
-    cd "$old_pwd/repo/$name"
+    cd "$rep_dir/$name"
 
-    cp -R "$old_pwd/repo/$name" "$old_pwd/pkg/var/db/puke"
+    cp -R "$rep_dir/$name" "$pkg_dir/$dbs_dir"
     log "Sucessfully built $pkg."
 }
 
@@ -152,6 +152,10 @@ pkg_install() {
 
     pkg_remove "$name"
     tar pxvf "$bin_dir/$pkg.tar.gz" -k -C "$sys_dir/" 2>/dev/null
+
+    [ -f "$sys_dir/$dbs_dir/$name/post-install" ] &&
+        . "$sys_dir/$dbs_dir/$name/post-install"
+
     log "Installed $pkg"
 }
 
@@ -170,18 +174,18 @@ pkg_remove() {
         fi
 
         [ "$?" = 0 ] && log "Removed $file"
-    done < "$sys_dir/var/db/puke/$name/manifest"
+    done < "$sys_dir/$dbs_dir/$name/manifest"
 
     return 0
 }
 
 pkg_updates() {
     git pull
-    cd "$sys_dir/var/db/puke"
+    cd "$sys_dir/$dbs_dir"
 
     for pkg in *; do
         read -r db_version db_release < "$pkg/version"
-        read -r re_version re_release < "$old_pwd/repo/$pkg/version"
+        read -r re_version re_release < "$rep_dir/$pkg/version"
 
         [ "$db_version-$db_release" != "$re_version-$re_release" ] &&
             log "NEW $pkg $re_version-$re_release"
@@ -190,10 +194,10 @@ pkg_updates() {
 
 pkg_list() {
     [ "$1" ] && {
-        [ -d "$sys_dir/var/db/puke/$1" ] || return 1 && return 0
+        [ -d "$sys_dir/$dbs_dir/$1" ] || return 1 && return 0
     }
 
-    for pkg in "$sys_dir/var/db/puke/"*; do
+    for pkg in "$sys_dir/$dbs_dir/"*; do
         [ -d "$pkg" ] || continue
         read -r version release < "$pkg/version"
         log "${pkg##*/} $version-$release"
@@ -242,12 +246,13 @@ main() {
     trap clean EXIT INT
     clean
 
-    old_pwd=$PWD
-    src_dir=$PWD/sources # Contains the downloaded sources.
-    mak_dir=$PWD/build   # Contains the current build.
-    pkg_dir=$PWD/pkg     # Contains the built package's files.
-    sys_dir=$PWD/sys     # Fake root (testing, temporary).
-    bin_dir=$PWD/bin     # Contains the final tarballed packages.
+    src_dir=$PWD/sources
+    mak_dir=$PWD/build
+    pkg_dir=$PWD/pkg
+    sys_dir=$PWD/sys
+    bin_dir=$PWD/bin
+    rep_dir=$PWD/repo
+    dbs_dir=var/db/puke
 
     args "$@"
 }
