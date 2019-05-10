@@ -36,16 +36,14 @@ done < depends
 
 ## TODO
 
-- [ ] Checksums.
+- [x] Checksums.
 - [ ] Package installation.
 - [ ] Package listing.
 - [ ] Package removal.
 - [ ] Package dependencies.
 - [ ] Source extraction.
     - [x] `tar.*`
-    - [ ] `git`
-    - [ ] `zip`
-    - [ ] `7z`
+    - [x] `git`
 
 ## Table of Contents
 
