@@ -24,10 +24,11 @@ pkg_info() {
     cd "./repo/$1" || die "Package '$1' not in repository."
     [ -f version ] || die "Version file not found."
     [ -f sources ] || die "Sources file not found."
+    [ -f build ]   || die "Build file not found."
 
     read -r version release < version
     name=$1
-    pkg=$name-$version-$release
+    pkg=$name\#$version-$release
 }
 
 pkg_depends() {
@@ -147,14 +148,16 @@ pkg_tar() {
 }
 
 pkg_install() {
-    tar pxvf "$bin_dir/$pkg.tar.gz" -C "$sys_dir/" ||
+    pkg_remove "$name"
+
+    tar pxvf "$bin_dir/$pkg.tar.gz" -k -C "$sys_dir/" ||
         die "Failed to install $pkg"
 
     log "Installed $pkg"
 }
 
 pkg_remove() {
-    pkg_list "$name" || die "Package '$name' not installed"
+    pkg_list "$name" || return 1
 
     while read -r file; do
         [ "${file%/*}" = "/etc" ] && continue
@@ -163,13 +166,14 @@ pkg_remove() {
 
         if [ -d "$path" ]; then
             rmdir "$path" 2>/dev/null
-
-        elif [ -e "$path" ]; then
+        else
             rm -- "$path" || log "Failed to remove $file."
         fi
 
         [ "$?" = 0 ] && log "Removed $file"
-    done < manifest
+    done < "$sys_dir/var/db/puke/$name/manifest"
+
+    return 0
 }
 
 pkg_list() {
@@ -178,6 +182,7 @@ pkg_list() {
     }
 
     for pkg in "$sys_dir/var/db/puke/"*; do
+        [ -f "$pkg" ] || continue
         read -r version release < "$pkg/version"
         log "${pkg##*/} $version-$release"
     done
@@ -213,7 +218,7 @@ args() {
 
         i*) pkg_install ;;
         l*) pkg_list "$2" ;;
-        r*) pkg_remove ;;
+        r*) pkg_remove || die "Package '$name' not installed" ;;
 
         *)  log "$0 [build|checksum|install|list|remove] [pkg]" ;;
     esac
