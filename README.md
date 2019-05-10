@@ -96,15 +96,26 @@ make DESTDIR="$pkg_dir" install
 
 The `manifest` file contains the built package's file and directory list. The full paths to files are listed first and the directories (*in reverse*) follow. This allows the package manager to remove the directories if they're empty without needing checks in-between.
 
+The manifest also includes the package's database entry. You can install the package with or without `puke` and it will be recognized.
+
 ```
 /usr/share/man/man3/zlib.3
 /usr/include/zconf.h
 /usr/include/zlib.h
+/var/db/puke/zlib/sources
+/var/db/puke/zlib/manifest
+/var/db/puke/zlib/checksums
+/var/db/puke/zlib/build
+/var/db/puke/zlib/version
 /lib/libz.so.1.2.11
 /lib/libz.so.1
 /lib/libz.so
 /lib/libz.a
 /lib/pkgconfig/zlib.pc
+/var/db/puke/zlib
+/var/db/puke
+/var/db
+/var
 /usr/share/man/man3
 /usr/share/man
 /usr/share
@@ -136,6 +147,8 @@ openssl
 ### `version`
 
 The `version` file contains the package's version as well as its release number. The format of this file is `version release`. The `release` portion allows a package upgrade without the modification of the version number.
+
+The version can also be `git 1` to specify that the package is built from the latest `git` head.
 
 ```
 1.2.11 1
