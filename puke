@@ -32,9 +32,10 @@ pkg_info() {
 
 pkg_depends() {
     [ -f depends ] && while read -r dependency; do
-        # TODO: Handle dependencies.
-        log "Found dependency $dependency"
+        pkg_list "$dependency" || missing="$missing $dependency"
     done < depends
+
+    [ -n "$missing" ] && die "Missing dependencies:$missing"
 }
 
 pkg_sources() {
@@ -145,8 +146,24 @@ pkg_tar() {
     log "Package is at $bin_dir/$pkg.tar.gz."
 }
 
+pkg_list() {
+    [ "$1" ] && {
+        [ -d "$sys_dir/var/db/puke/$1" ] || return 1 && return 0
+    }
+
+    for pkg in "$sys_dir/var/db/puke/"*; do
+        read -r version release < "$pkg/version"
+        log "${pkg##*/} $version-$release"
+    done
+}
+
 args() {
-    [ -n "${1#l*}" ] && pkg_info "$2"
+    [ -n "${1#l*}" ] && {
+        mkdir -p sources build pkg/var/db/puke sys bin ||
+            die "Couldn't create directories at '$PWD'".
+
+        pkg_info "$2"
+    }
 
     case $1 in
         b*)
@@ -176,10 +193,7 @@ args() {
         ;;
 
         l*)
-            for pkg in "$sys_dir/var/db/puke/"*; do
-                read -r version release < "$pkg/version"
-                log "${pkg##*/} $version-$release"
-            done
+            pkg_list "$2"
         ;;
 
         *)
@@ -191,9 +205,6 @@ args() {
 main() {
     trap clean EXIT INT
     clean
-
-    mkdir -p sources build pkg/var/db/puke sys bin ||
-        die "Couldn't create directories at '$PWD'".
 
     old_pwd=$PWD
     src_dir=$PWD/sources
