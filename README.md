@@ -65,10 +65,11 @@ Puke has 6 different "operators".
 
 - `build`: Build a package.
 - `checksum`: Generate checksums for a package.
+- `depends`: List a package's dependencies .
 - `install`: Install a built package.
 - `remove`: Remove an installed package.
-- `depends`: List a package's dependencies .
 - `list`: List installed packages.
+- `update`: List packages with available updates.
 
 ## The package format
 

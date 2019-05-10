@@ -176,6 +176,8 @@ pkg_remove() {
 }
 
 pkg_updates() {
+    git pull
+
     cd "$sys_dir/var/db/puke"
 
     for pkg in *; do
