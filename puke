@@ -1,5 +1,5 @@
 #!/bin/sh
-# shellcheck disable=2094,2103 source=/dev/null
+# shellcheck disable=2094,2103,SC2181 source=/dev/null
 #
 # puke - package manager for kiss linux.
 
@@ -146,6 +146,32 @@ pkg_tar() {
     log "Package is at $bin_dir/$pkg.tar.gz."
 }
 
+pkg_install() {
+    tar pxvf "$bin_dir/$pkg.tar.gz" -C "$sys_dir/" ||
+        die "Failed to install $pkg"
+
+    log "Installed $pkg"
+}
+
+pkg_remove() {
+    pkg_list "$name" || die "Package '$name' not installed"
+
+    while read -r file; do
+        [ "${file%/*}" = "/etc" ] && continue
+
+        path="${sys_dir}${file}"
+
+        if [ -d "$path" ]; then
+            rmdir "$path" 2>/dev/null
+
+        elif [ -e "$path" ]; then
+            rm -- "$path" || log "Failed to remove $file."
+        fi
+
+        [ "$?" = 0 ] && log "Removed $file"
+    done < manifest
+}
+
 pkg_list() {
     [ "$1" ] && {
         [ -d "$sys_dir/var/db/puke/$1" ] || return 1 && return 0
@@ -185,20 +211,11 @@ args() {
             log "Generated checksums."
         ;;
 
-        i*)
-            tar pxvf "$bin_dir/$pkg.tar.gz" -C "$sys_dir/" ||
-                die "Failed to install $pkg"
+        i*) pkg_install ;;
+        l*) pkg_list "$2" ;;
+        r*) pkg_remove ;;
 
-            log "Installed $pkg"
-        ;;
-
-        l*)
-            pkg_list "$2"
-        ;;
-
-        *)
-            log "$0 [build|checksum|install|list|help] [pkg]"
-        ;;
+        *)  log "$0 [build|checksum|install|list|remove] [pkg]" ;;
     esac
 }
 
@@ -207,12 +224,11 @@ main() {
     clean
 
     old_pwd=$PWD
-    src_dir=$PWD/sources
-    mak_dir=$PWD/build
-    pkg_dir=$PWD/pkg
-    sys_dir=$PWD/sys
-    bin_dir=$PWD/bin
-    db_dir=var/db/puke
+    src_dir=$PWD/sources # Contains the downloaded sources.
+    mak_dir=$PWD/build   # Contains the current build.
+    pkg_dir=$PWD/pkg     # Contains the built package's files.
+    sys_dir=$PWD/sys     # Fake root (testing, temporary).
+    bin_dir=$PWD/bin     # Contains the final tarballed packages.
 
     args "$@"
 }
