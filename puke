@@ -149,10 +149,7 @@ pkg_tar() {
 
 pkg_install() {
     pkg_remove "$name"
-
-    tar pxvf "$bin_dir/$pkg.tar.gz" -k -C "$sys_dir/" ||
-        die "Failed to install $pkg"
-
+    tar pxvf "$bin_dir/$pkg.tar.gz" -k -C "$sys_dir/" 2>/dev/null
     log "Installed $pkg"
 }
 
