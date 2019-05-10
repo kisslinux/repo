@@ -188,7 +188,7 @@ pkg_list() {
 }
 
 args() {
-    [ -n "${1#l*}" ] && {
+    [ -n "${1##l*}" ] && {
         mkdir -p sources build pkg/var/db/puke sys bin ||
             die "Couldn't create directories at '$PWD'".
 
