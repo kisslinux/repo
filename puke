@@ -182,7 +182,7 @@ pkg_list() {
     }
 
     for pkg in "$sys_dir/var/db/puke/"*; do
-        [ -f "$pkg" ] || continue
+        [ -d "$pkg" ] || continue
         read -r version release < "$pkg/version"
         log "${pkg##*/} $version-$release"
     done
