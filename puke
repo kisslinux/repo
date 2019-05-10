@@ -215,11 +215,12 @@ args() {
             log "Generated checksums."
         ;;
 
+        d*) [ -f depends ] && cat depends ;;
         i*) pkg_install ;;
         l*) pkg_list "$2" ;;
         r*) pkg_remove || die "Package '$name' not installed" ;;
 
-        *)  log "$0 [build|checksum|install|list|remove] [pkg]" ;;
+        *)  log "$0 [build|checksum|depends|install|list|remove] [pkg]" ;;
     esac
 }
 
