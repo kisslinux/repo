@@ -148,6 +148,8 @@ pkg_tar() {
 }
 
 pkg_install() {
+    [ -f "$bin_dir/$pkg.tar.gz" ] || die "Package must be built first."
+
     pkg_remove "$name"
     tar pxvf "$bin_dir/$pkg.tar.gz" -k -C "$sys_dir/" 2>/dev/null
     log "Installed $pkg"
