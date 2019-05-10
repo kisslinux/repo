@@ -46,6 +46,13 @@ done < depends
 <!-- vim-markdown-toc GFM -->
 
 * [Getting started with `puke`](#getting-started-with-puke)
+    * [`puke build pkg`](#puke-build-pkg)
+    * [`puke checksum pkg`](#puke-checksum-pkg)
+    * [`puke depends pkg`](#puke-depends-pkg)
+    * [`puke install pkg`](#puke-install-pkg)
+    * [`puke remove pkg`](#puke-remove-pkg)
+    * [`puke list` or `puke list pkg`](#puke-list-or-puke-list-pkg)
+    * [`puke update`](#puke-update)
 * [The package format](#the-package-format)
     * [`build`](#build)
     * [`manifest`](#manifest)
@@ -70,6 +77,35 @@ Puke has 6 different "operators".
 - `remove`: Remove an installed package.
 - `list`: List installed packages.
 - `update`: List packages with available updates.
+
+### `puke build pkg`
+
+Puke's `build` operator handles a package from its source code to the installable `.tar.gz` file. Sources are downloaded, checksums are verified, dependencies are checked and the package is compiled then packaged.
+
+### `puke checksum pkg`
+
+Puke's `checksum` operator generates the initial checksums for a package from every source in the `sources` file.
+
+### `puke depends pkg`
+
+Puke's `depends` operator does not recursively check dependencies. It only lists the direct dependencies for the selected package. In the future, more complex dependency solving may be added.
+
+### `puke install pkg`
+
+Puke's `install` operator takes the built `.tar.gz` file and installs it in the system. This is as simple as removing the old version of the package (*if it exists*) and unpacking the archive at `/`.
+
+### `puke remove pkg`
+
+Puke's `remove` operator uninstalls a package from your system. Files and directories in `/etc` are untouched. Support for exclusions will come as they are needed.
+
+### `puke list` or `puke list pkg`
+
+Puke's `list` operator lists the installed packages and their versions. Giving `list` an argument will check if a singular package is installed.
+
+### `puke update`
+
+Puke's `update` operator does a `git pull` of the repository and compares the repository versions to the installed database versions. Any mismatch in versions is considered a new upgrade from the repository.
+
 
 ## The package format
 
