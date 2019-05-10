@@ -1,0 +1,7 @@
+patch -p1 -i fix-glibc-2.28.patch
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$pkg_dir" install

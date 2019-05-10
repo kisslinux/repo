@@ -73,7 +73,7 @@ pkg_checksum() {
             src_path=$src_dir/$src_name
         fi
 
-        cd "${src_path%/*}"
+        cd "${src_path%/*}" >/dev/null
         sha256sum -- "$src_name" || die "Failed to generate checksums."
         cd - >/dev/null
     done < sources > "${1-checksums}"
@@ -122,7 +122,7 @@ pkg_build() {
     set -e
     . "$OLDPWD/build"
     set +e
-    cd -
+    cd "$old_pwd/repo/$name"
 
     cp -R "$old_pwd/repo/$name" "$old_pwd/pkg/var/db/puke"
     log "Sucessfully built $pkg."
