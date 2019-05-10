@@ -146,7 +146,7 @@ pkg_tar() {
 }
 
 args() {
-    pkg_info "$2"
+    [ -n "${1#l*}" ] && pkg_info "$2"
 
     case $1 in
         b*)
@@ -166,6 +166,20 @@ args() {
             pkg_checksum
 
             log "Generated checksums."
+        ;;
+
+        i*)
+            tar pxvf "$bin_dir/$pkg.tar.gz" -C "$sys_dir/" ||
+                die "Failed to install $pkg"
+
+            log "Installed $pkg"
+        ;;
+
+        l*)
+            for pkg in "$sys_dir/var/db/puke/"*; do
+                read -r version release < "$pkg/version"
+                log "${pkg##*/} $version-$release"
+            done
         ;;
     esac
 }
