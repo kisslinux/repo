@@ -116,9 +116,9 @@ pkg_build() {
     log "Building $pkg."
 
     cd "$mak_dir"
-    set -e
+    set -e errexit
     . "$OLDPWD/build"
-    set +e
+    set +e errexit
     cd "$rep_dir/$name"
 
     cp -R "$rep_dir/$name" "$pkg_dir/$dbs_dir"
