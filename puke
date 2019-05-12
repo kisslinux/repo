@@ -21,7 +21,7 @@ clean() {
     }
 }
 
-pkg_info() {
+pkg_setup() {
     [ -z "$1" ]      && die "No package specified."
     cd "$rep_dir/$1" || die "Package '$1' not in repository."
     [ -f version ]   || die "Version file not found."
@@ -31,6 +31,10 @@ pkg_info() {
     read -r version release < version
     name=$1
     pkg=$name\#$version-$release
+
+    mkdir -p "$src_dir" "$mak_dir" "$pkg_dir/$dbs_dir" \
+             "$sys_dir" "$bin_dir" ||
+             die "Couldn't create directories at '$PWD'".
 }
 
 pkg_depends() {
@@ -207,14 +211,7 @@ pkg_list() {
 }
 
 args() {
-    [ -n "${1##l*}" ] && [ -n "${1##u*}" ] && {
-        mkdir -p "$src_dir" "$mak_dir" "$pkg_dir/$dbs_dir" \
-                 "$sys_dir" "$bin_dir" ||
-                 die "Couldn't create directories at '$PWD'".
-
-        pkg_info "$2"
-    }
-
+    case $1 in b*|c*|d*|i*|r*) pkg_setup "$2"; esac
     case $1 in
         b*)
             [ -f checksums ] || die "Checksums missing, run '$0 checksum $name'"
@@ -241,7 +238,14 @@ args() {
         r*) pkg_remove || die "Package '$name' not installed" ;;
         u*) pkg_updates ;;
 
-        *)  log "$0 [build|checksum|depends|install|list|remove|update] [pkg]"
+        *)  log "$0 [b|c|d|i|l|r|u] [pkg]" \
+                "build:     Build a package." \
+                "checksum:  Generate checksums." \
+                "depends:   See package dependencies." \
+                "install:   Install a package." \
+                "list:      List packages." \
+                "remove:    Remove a package." \
+                "update:    Check for updates."
     esac
 }
 
