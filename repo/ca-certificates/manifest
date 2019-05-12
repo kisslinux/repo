@@ -154,7 +154,6 @@
 /var/db/puke/ca-certificates/checksums
 /var/db/puke/ca-certificates/patches/update-ca-certificates-destdir.patch
 /var/db/puke/ca-certificates/post-install
-/var/db/puke/ca-certificates/.checksum
 /var/db/puke/ca-certificates/build
 /var/db/puke/ca-certificates/version
 /etc/ca-certificates.conf

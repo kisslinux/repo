@@ -41,42 +41,41 @@ pkg_depends() {
     [ -n "$missing" ] && die "Missing dependencies:$missing"
 }
 
+source_type() {
+    [ -f "$1" ]                && return 2
+    [ -f "$src_dir/${1##*/}" ] && return 3
+    [ -z "${1##git:*}" ]       && return 4
+    [ -z "${1##*://*}" ]       && return 5
+}
+
 pkg_sources() {
     while read -r src; do
-        src_name=${src##*/}
+        source_type "$src"
 
-        if [ -f "$src" ] || [ -f "$src_dir/$src_name" ]; then
-            log "Found local $src_name."
+        case $? in
+            2|3) log "Found local ${src##*/}." ;;
+            4) git clone "${src##git:}" "$mak_dir" ;;
 
-        elif [ -z "${src##git:*}" ]; then
-            git clone "${src##git:}" "$mak_dir"
+            5) log "Downloading '$src'."
+               wget -P "$src_dir" "$src" || die "Failed to download $src." ;;
 
-        elif [ -z "${src##*://*}" ]; then
-            log "Downloading '$src'."
-            wget -P "$src_dir" "$src" || die "Failed to download $src."
-
-        else
-            die "Source file '$src' not found."
-        fi
+            *) die "Source file '$src' not found." ;;
+        esac
     done < sources
 }
 
 pkg_checksum() {
     while read -r src; do
-        src_name=${src##*/}
+        source_type "$src"
 
-        if [ -z "${src##git:*}" ]; then
-            continue
-
-        elif [ -f "$src" ]; then
-            src_path=$src
-
-        elif [ -f "$src_dir/$src_name" ]; then
-            src_path=$src_dir/$src_name
-        fi
+        case $? in
+            2) src_path=$src ;;
+            3) src_path=$src_dir/${src##*/} ;;
+            4) continue ;;
+        esac
 
         cd "${src_path%/*}" >/dev/null
-        sha256sum -- "$src_name" || die "Failed to generate checksums."
+        sha256sum -- "${src##*/}" || die "Failed to generate checksums."
         cd - >/dev/null
     done < sources > "${1-checksums}"
 }
@@ -94,26 +93,22 @@ pkg_verify() {
 
 pkg_extract() {
     while read -r src; do
-        src_name=${src##*/}
+        source_type "$src"
 
-        if [ -z "${src##git:*}" ]; then
-            continue
+        case $? in
+            2) cp -f "$src" "$mak_dir" ;;
+            4) continue ;;
 
-        elif [ -f "$src" ]; then
-            cp -f "$src" "$mak_dir"
+            3) case $src in
+                   *.tar|*.tar.??|*.tar.???|*.tar.????|*.tgz)
+                       tar xf "$src_dir/${src##*/}" -C "$mak_dir" \
+                           --strip-components 1 ||
+                           die "Couldn't extract ${src##*/}"
+                   ;;
+               esac ;;
 
-        elif [ ! -f "$src_dir/$src_name" ]; then
-            die "$src_name not found."
-
-        else
-            case $src_dir/$src_name in
-                *.tar|*.tar.??|*.tar.???|*.tar.????|*.tgz)
-                    tar xf "$src_dir/$src_name" -C "$mak_dir" \
-                        --strip-components 1 ||
-                        die "Couldn't extract $src_name"
-                ;;
-            esac
-        fi
+            *) die "${src##*/} not found."
+        esac
     done < sources
 }
 
