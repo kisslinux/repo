@@ -1,0 +1,4 @@
+./configure
+
+make
+make DESTDIR="$pkg_dir" install

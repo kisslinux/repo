@@ -15,16 +15,18 @@ log() {
 clean() {
     rm -rf -- "$mak_dir" "$pkg_dir"
 
-    [ -n "$name" ] &&
+    [ -n "$name" ] && {
         rm "$rep_dir/$name/.checksums" 2>/dev/null
+        rm "$rep_dir/$name/.manifest" 2>/dev/null
+    }
 }
 
 pkg_info() {
-    [ -z "$1" ]    && die "No package specified."
-    cd "./repo/$1" || die "Package '$1' not in repository."
-    [ -f version ] || die "Version file not found."
-    [ -f sources ] || die "Sources file not found."
-    [ -f build ]   || die "Build file not found."
+    [ -z "$1" ]      && die "No package specified."
+    cd "$rep_dir/$1" || die "Package '$1' not in repository."
+    [ -f version ]   || die "Version file not found."
+    [ -f sources ]   || die "Sources file not found."
+    [ -f build ]     || die "Build file not found."
 
     read -r version release < version
     name=$1
@@ -125,6 +127,8 @@ pkg_build() {
     cd "$rep_dir/$name"
 
     cp -R "$rep_dir/$name" "$pkg_dir/$dbs_dir"
+    touch "$pkg_dir/$dbs_dir/$name/manifest"
+
     log "Sucessfully built $pkg."
 }
 
@@ -135,6 +139,7 @@ pkg_manifest() {
     _ -not -type d  > "$OLDPWD/manifest"
     _ -type d | sort -r >> "$OLDPWD/manifest"
 
+    cp "$OLDPWD/manifest" "$pkg_dir/$dbs_dir/$name"
     cd - >/dev/null
 }
 
@@ -162,6 +167,8 @@ pkg_install() {
 pkg_remove() {
     pkg_list "$name" || return 1
 
+    cp "$sys_dir/$dbs_dir/$name/manifest" .manifest
+
     while read -r file; do
         [ "${file%/*}" = "/etc" ] && continue
 
@@ -174,7 +181,7 @@ pkg_remove() {
         fi
 
         [ "$?" = 0 ] && log "Removed $file"
-    done < "$sys_dir/$dbs_dir/$name/manifest"
+    done < .manifest
 
     return 0
 }
@@ -206,8 +213,9 @@ pkg_list() {
 
 args() {
     [ -n "${1##l*}" ] && [ -n "${1##u*}" ] && {
-        mkdir -p sources build pkg/var/db/puke sys bin ||
-            die "Couldn't create directories at '$PWD'".
+        mkdir -p "$src_dir" "$mak_dir" "$pkg_dir/$dbs_dir" \
+                 "$sys_dir" "$bin_dir" ||
+                 die "Couldn't create directories at '$PWD'".
 
         pkg_info "$2"
     }

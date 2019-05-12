@@ -2449,7 +2449,6 @@
 /var/db/puke/perl/sources
 /var/db/puke/perl/manifest
 /var/db/puke/perl/checksums
-/var/db/puke/perl/release
 /var/db/puke/perl/build
 /var/db/puke/perl/version
 /var/db/puke/perl
