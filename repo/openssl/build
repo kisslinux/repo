@@ -1,0 +1,22 @@
+./Configure linux-x86_64 \
+    --prefix=/usr \
+    --libdir=lib \
+    --openssldir=/etc/ssl \
+    shared \
+    enable-ec_nistp_64_gcc_128 \
+    no-async \
+    no-comp \
+    no-idea \
+    no-mdc2 \
+    no-rc5 \
+    no-ec2m \
+    no-sm2 \
+    no-sm4 \
+    no-ssl2 \
+    no-ssl3 \
+    no-seed \
+    no-weak-ssl-ciphers \
+    -Wa,--noexecstack
+
+make
+make DESTDIR="$pkg_dir" install_sw

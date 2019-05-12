@@ -1,0 +1,22 @@
+# Taken from void.
+gcc certdata2pem.c -o "mozilla/certdata2pem"
+
+sed -i mozilla/Makefile \
+        -e 's,python certdata2pem.py,./certdata2pem,g'
+
+patch -p1 -i update-ca-certificates-destdir.patch
+make
+
+cd "$pkg_dir" || return 1
+
+install -m0755 -d usr/share/ca-certificates
+install -m0755 -d usr/bin
+install -m0755 -d usr/sbin
+install -m0755 -d etc/ssl/certs
+
+cd - || return 1
+
+make DESTDIR="$pkg_dir" install
+
+cd "$pkg_dir/usr/share/ca-certificates" || return 1
+find . -name '*.crt' | sort | cut -b3- > "$pkg_dir/etc/ca-certificates.conf"
