@@ -67,7 +67,7 @@ pkg_checksum() {
         case $? in
             2) src_path=$src ;;
             3) src_path=$src_dir/${src##*/} ;;
-            4) continue ;;
+            4) continue
         esac
 
         (cd "${src_path%/*}" >/dev/null
