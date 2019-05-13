@@ -13,12 +13,9 @@ log() {
 }
 
 clean() {
-    rm -rf -- "$mak_dir" "$pkg_dir"
-
-    [ -n "$name" ] && {
-        rm "$rep_dir/$name/.checksums" 2>/dev/null
-        rm "$rep_dir/$name/.manifest" 2>/dev/null
-    }
+    rm -rf -- "$mak_dir" "$pkg_dir" \
+              "$rep_dir/$name/.checksums" \
+              "$rep_dir/$name/.manifest" 2>/dev/null
 }
 
 pkg_setup() {
