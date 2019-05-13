@@ -151,8 +151,6 @@ pkg_install() {
 pkg_remove() {
     pkg_list "$name" || return 1
 
-    cp "$sys_dir/$dbs_dir/$name/manifest" .manifest
-
     while read -r file; do
         [ "${file%/*}" = "/etc" ] && continue
 
@@ -165,7 +163,7 @@ pkg_remove() {
         fi
 
         [ "$?" = 0 ] && log "Removed $file"
-    done < .manifest
+    done < "$sys_dir/$dbs_dir/$name/manifest"
 
     return 0
 }
