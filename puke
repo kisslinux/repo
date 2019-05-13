@@ -233,7 +233,6 @@ args() {
 
 main() {
     trap clean EXIT INT
-    clean
 
     src_dir=$PWD/sources
     mak_dir=$PWD/build
