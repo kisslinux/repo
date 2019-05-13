@@ -33,17 +33,6 @@ while read -r depend; do
 done < depends
 ```
 
-## TODO
-
-- [x] Checksums.
-- [x] Package installation.
-- [x] Package listing.
-- [x] Package removal.
-- [x] Package dependencies.
-- [x] Source extraction.
-    - [x] `tar.*`
-    - [x] `git`
-
 ## Table of Contents
 
 <!-- vim-markdown-toc GFM -->
