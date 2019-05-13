@@ -109,9 +109,8 @@ pkg_build() {
         die "Build failed."
 
     cp -R "$rep_dir/$name" "$pkg_dir/$dbs_dir"
-    > "$pkg_dir/$dbs_dir/$name/manifest"
 
-    log "Sucessfully built $pkg."
+    log "Sucessfully built $pkg." 2> "$pkg_dir/$dbs_dir/$name/manifest"
 }
 
 pkg_manifest() {
