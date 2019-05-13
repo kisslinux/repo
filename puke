@@ -32,8 +32,8 @@ pkg_setup() {
     read -r version release < version
     pkg=${name:=$1}\#$version-$release
 
-    mkdir -p "$src_dir" "$mak_dir" "$pkg_dir/$dbs_dir" \
-             "$sys_dir" "$bin_dir" || die "Couldn't create directories at $PWD."
+    mkdir -p "$src_dir" "$mak_dir" "$pkg_dir/$dbs_dir" "$sys_dir" "$bin_dir" ||
+        die "Couldn't create directories at $PWD."
 }
 
 pkg_depends() {
