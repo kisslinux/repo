@@ -163,9 +163,7 @@ pkg_updates() {
 }
 
 pkg_list() {
-    [ "$1" ] && {
-        [ -d "$sys_dir/$dbs_dir/$1" ] || return 1 && return 0
-    }
+    [ "$1" ] && { [ -d "$sys_dir/$dbs_dir/$1" ]; return "$?"; }
 
     for pkg in "$sys_dir/$dbs_dir/"*; do
         [ -d "$pkg" ] || continue
