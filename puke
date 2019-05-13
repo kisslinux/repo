@@ -40,9 +40,9 @@ pkg_setup() {
 }
 
 pkg_depends() {
-    [ -f depends ] && while read -r dependency; do
+    while read -r dependency; do
         pkg_list "$dependency" || missing="$missing $dependency"
-    done < depends
+    done 2>/dev/null < depends
 
     [ -n "$missing" ] && die "Missing dependencies:$missing"
 }
@@ -79,14 +79,11 @@ pkg_checksum() {
 }
 
 pkg_verify() {
-    pkg_checksum .checksums
-
-    diff .checksums checksums ||
+    pkg_checksum /dev/stdout | diff checksums - ||
         die "Checksums of sources do not match checksums of package." \
             "Run '$0 checksum $name' to update checksums"
 
     log "Checksums verified."
-    rm .checksums
 }
 
 pkg_extract() {
