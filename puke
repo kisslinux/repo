@@ -151,21 +151,21 @@ pkg_remove() {
 }
 
 pkg_updates() {
-    for pkg in "$sys_dir/$dbs_dir/"*; do
-        read -r db_ver db_rel < "$pkg/version"
-        read -r re_ver re_rel < "$rep_dir/${pkg##*/}/version"
+    for item in "$sys_dir/$dbs_dir/"*; do
+        read -r db_ver db_rel < "$item/version"
+        read -r re_ver re_rel < "$rep_dir/${item##*/}/version"
 
         [ "$db_ver-$db_rel" != "$re_ver-$re_rel" ] &&
-            printf '%s\n' "${pkg##*/} $re_ver-$re_rel"
+            printf '%s\n' "${item##*/} $re_ver-$re_rel"
     done
 }
 
 pkg_list() {
     [ "$1" ] && { [ -d "$sys_dir/$dbs_dir/$1" ]; return "$?"; }
 
-    for pkg in "$sys_dir/$dbs_dir/"*; do
-        read -r version release < "$pkg/version"
-        printf '%s\n' "${pkg##*/} $version-$release"
+    for item in "$sys_dir/$dbs_dir/"*; do
+        read -r version release < "$item/version"
+        printf '%s\n' "${item##*/} $version-$release"
     done
 }
 
