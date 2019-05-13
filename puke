@@ -13,9 +13,7 @@ log() {
 }
 
 clean() {
-    rm -rf -- "$mak_dir" "$pkg_dir" \
-              "$rep_dir/$name/.checksums" \
-              "$rep_dir/$name/.manifest" 2>/dev/null
+    rm -rf -- "$mak_dir" "$pkg_dir" "$rep_dir/$name/.manifest" 2>/dev/null
 }
 
 source_type() {
