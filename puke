@@ -82,8 +82,8 @@ pkg_verify() {
     pkg_checksum .checksums
 
     diff .checksums checksums ||
-        die "checksum of sources does not match checksum of package" \
-            "run '$0 checksum $name' to update checksums"
+        die "Checksums of sources do not match checksums of package." \
+            "Run '$0 checksum $name' to update checksums"
 
     log "Checksums verified."
     rm .checksums
@@ -95,7 +95,7 @@ pkg_extract() {
 
         case $? in
             2) cp -f "$src" "$mak_dir" ;;
-            4) continue ;;
+            4) ;;
 
             3) case $src in
                    *.tar|*.tar.??|*.tar.???|*.tar.????|*.tgz)
@@ -122,7 +122,7 @@ pkg_build() {
     log "Sucessfully built $pkg."
 }
 
-pkg_manifest() {
+pkg_manifest() (
     cd "$pkg_dir"
 
     _() { find . -mindepth 1 "$@" | sed 's/^\.//'; }
@@ -130,8 +130,7 @@ pkg_manifest() {
     _ -type d | sort -r >> "$OLDPWD/manifest"
 
     cp "$OLDPWD/manifest" "$pkg_dir/$dbs_dir/$name"
-    cd - >/dev/null
-}
+)
 
 pkg_tar() {
     cd "$bin_dir"
