@@ -115,7 +115,9 @@ Puke's `update` operator does a `git pull` of the repository and compares the re
 
 ### `build`
 
-The `build` file should contain the necessary steps to patch, configure, build and install the package. When at the install step; the variable `$pkg_dir` is available. This variable points to the directory the package manager uses for built packages. Whatever is in this directory will become part of the package's manifest and will be copied to `/` (or `$PUKE_ROOT`).
+The `build` file should contain the necessary steps to patch, configure, build and install the package. The build script is sent a single argument. This argument points to the package directory. Whatever is in this directory will become part of the package's manifest and will be copied to `/` (or `$PUKE_ROOT`). The first argument is frequently used in `make DESTDIR="$1" install` for example.
+
+The `build` file can be written in any language. The only requirement is that the file be executable.
 
 ```sh
 ./configure \
