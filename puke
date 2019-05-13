@@ -132,7 +132,7 @@ pkg_install() {
     tar pxvf "$bin_dir/$pkg.tar.gz" -k -C "$sys_dir/" 2>/dev/null
 
     [ -f "$sys_dir/$dbs_dir/$name/post-install" ] &&
-        . "$sys_dir/$dbs_dir/$name/post-install"
+        "$sys_dir/$dbs_dir/$name/post-install"
 
     log "Installed $pkg"
 }

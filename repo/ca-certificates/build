@@ -1,4 +1,5 @@
-# Taken from void.
+#!/bin/sh
+
 gcc certdata2pem.c -o "mozilla/certdata2pem"
 
 sed -i mozilla/Makefile \
