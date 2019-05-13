@@ -120,9 +120,7 @@ pkg_manifest() {
 }
 
 pkg_tar() {
-    cd "$bin_dir"
-
-    tar pcvf "$pkg.tar.gz" -C "$pkg_dir" . ||
+    tar pcvf "$bin_dir/$pkg.tar.gz" -C "$pkg_dir" . ||
         die "Failed to create package."
 
     log "Package is at $bin_dir/$pkg.tar.gz."
