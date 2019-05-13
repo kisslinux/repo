@@ -73,9 +73,8 @@ pkg_checksum() {
             4) continue ;;
         esac
 
-        cd "${src_path%/*}" >/dev/null
-        sha256sum -- "${src##*/}" || die "Failed to generate checksums."
-        cd - >/dev/null
+        (cd "${src_path%/*}" >/dev/null
+        sha256sum -- "${src##*/}" || die "Failed to generate checksums.")
     done < sources > "${1-checksums}"
 }
 
