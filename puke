@@ -1,5 +1,5 @@
 #!/bin/sh
-# shellcheck disable=2094,2103,SC2181 source=/dev/null
+# shellcheck disable=2094,2103,2181,2188 source=/dev/null
 #
 # puke - package manager for kiss linux.
 
@@ -109,7 +109,7 @@ pkg_build() {
         die "Build failed."
 
     cp -R "$rep_dir/$name" "$pkg_dir/$dbs_dir"
-    touch "$pkg_dir/$dbs_dir/$name/manifest"
+    > "$pkg_dir/$dbs_dir/$name/manifest"
 
     log "Sucessfully built $pkg."
 }
