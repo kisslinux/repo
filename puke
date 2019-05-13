@@ -145,13 +145,11 @@ pkg_remove() {
         if [ "${file%/*}" = "/etc" ]; then
             continue
         elif [ -d "$sys_dir$file" ]; then
-            rmdir "$sys_dir$file" 2>/dev/null
+            rmdir "$sys_dir$file" 2>/dev/null ||:
         else
             rm -- "$sys_dir$file" || log "Failed to remove $file."
         fi && log "Removed $file"
     done < "$sys_dir/$dbs_dir/$name/manifest"
-
-    return 0
 }
 
 pkg_updates() {
