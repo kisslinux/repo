@@ -114,15 +114,10 @@ pkg_build() {
     log "Sucessfully built $pkg."
 }
 
-pkg_manifest() (
-    cd "$pkg_dir"
-
-    _() { find . -mindepth 1 "$@" | sed 's/^\.//'; }
-    _ -not -type d  > "$OLDPWD/manifest"
-    _ -type d | sort -r >> "$OLDPWD/manifest"
-
-    cp "$OLDPWD/manifest" "$pkg_dir/$dbs_dir/$name"
-)
+pkg_manifest() {
+    find "$pkg_dir" -mindepth 1 | sed "s|^$pkg_dir||" | sort -r > manifest
+    cp manifest "$pkg_dir/$dbs_dir/$name"
+}
 
 pkg_tar() {
     cd "$bin_dir"
