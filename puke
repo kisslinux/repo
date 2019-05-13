@@ -29,8 +29,7 @@ pkg_setup() {
     pkg=${name:=$1}\#$version-$release
 
     mkdir -p "$src_dir" "$mak_dir" "$pkg_dir/$dbs_dir" \
-             "$sys_dir" "$bin_dir" ||
-             die "Couldn't create directories at '$PWD'".
+             "$sys_dir" "$bin_dir" || die "Couldn't create directories at $PWD."
 }
 
 pkg_depends() {
@@ -187,7 +186,7 @@ pkg_updates() {
         read -r re_version re_release < "$rep_dir/$pkg/version"
 
         [ "$db_version-$db_release" != "$re_version-$re_release" ] &&
-            log "NEW $pkg $re_version-$re_release"
+            printf '%s\n' "$pkg $re_version-$re_release"
     done
 }
 
@@ -199,7 +198,7 @@ pkg_list() {
     for pkg in "$sys_dir/$dbs_dir/"*; do
         [ -d "$pkg" ] || continue
         read -r version release < "$pkg/version"
-        log "${pkg##*/} $version-$release"
+        printf '%s\n' "${pkg##*/} $version-$release"
     done
 }
 
