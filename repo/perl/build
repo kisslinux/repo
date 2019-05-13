@@ -32,4 +32,4 @@ BUILD_BZIP2=0
     -Dusenm
 
 make
-make DESTDIR="$pkg_dir" install
+make DESTDIR="$1" install

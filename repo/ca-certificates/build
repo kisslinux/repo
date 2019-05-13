@@ -7,7 +7,7 @@ sed -i mozilla/Makefile \
 patch -p1 -i update-ca-certificates-destdir.patch
 make
 
-cd "$pkg_dir" || return 1
+cd "$1" || return 1
 
 install -m0755 -d usr/share/ca-certificates
 install -m0755 -d usr/bin
@@ -16,7 +16,7 @@ install -m0755 -d etc/ssl/certs
 
 cd - || return 1
 
-make DESTDIR="$pkg_dir" install
+make DESTDIR="$1" install
 
-cd "$pkg_dir/usr/share/ca-certificates" || return 1
-find . -name '*.crt' | sort | cut -b3- > "$pkg_dir/etc/ca-certificates.conf"
+cd "$1/usr/share/ca-certificates" || return 1
+find . -name '*.crt' | sort | cut -b3- > "$1/etc/ca-certificates.conf"

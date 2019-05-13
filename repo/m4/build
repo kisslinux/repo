@@ -4,4 +4,4 @@ patch -p1 -i fix-glibc-2.28.patch
     --prefix=/usr
 
 make
-make DESTDIR="$pkg_dir" install
+make DESTDIR="$1" install

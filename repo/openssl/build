@@ -19,4 +19,4 @@
     -Wa,--noexecstack
 
 make
-make DESTDIR="$pkg_dir" install_sw
+make DESTDIR="$1" install_sw

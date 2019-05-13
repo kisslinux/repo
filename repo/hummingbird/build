@@ -1,5 +1,5 @@
 make
-make DESTDIR="$pkg_dir" install
+make DESTDIR="$1" install
 
-install -Dm755 ./etc/rc.init "$pkg_dir/etc/rc.init"
-install -Dm755 ./etc/rc.shutdown "$pkg_dir/etc/rc.shutdown"
+install -Dm755 ./etc/rc.init "$1/etc/rc.init"
+install -Dm755 ./etc/rc.shutdown "$1/etc/rc.shutdown"

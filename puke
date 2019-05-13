@@ -27,7 +27,7 @@ pkg_setup() {
     cd "$rep_dir/$1" || die "Package '$1' not in repository."
     [ -f version ]   || die "Version file not found."
     [ -f sources ]   || die "Sources file not found."
-    [ -f build ]     || die "Build file not found."
+    [ -x build ]     || die "Build file not found or not executable."
 
     read -r version release < version
     pkg=${name:=$1}\#$version-$release
@@ -107,7 +107,7 @@ pkg_extract() {
 pkg_build() {
     log "Building $pkg."
 
-    (set -e errexit; cd "$mak_dir"; . "$OLDPWD/build") ||
+    (set -e errexit; cd "$mak_dir"; "$OLDPWD/build" "$pkg_dir" ) ||
         die "Build failed."
 
     cp -R "$rep_dir/$name" "$pkg_dir/$dbs_dir"

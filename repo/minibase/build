@@ -1,4 +1,4 @@
 ./configure
 
 make
-make DESTDIR="$pkg_dir" install
+make DESTDIR="$1" install
