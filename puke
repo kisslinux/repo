@@ -72,6 +72,8 @@ pkg_checksum() {
         (cd "${src_path%/*}" >/dev/null
         sha256sum -- "${src##*/}" || die "Failed to generate checksums.")
     done < sources > "${1-checksums}"
+
+    log "Generated checksums."
 }
 
 pkg_verify() {
@@ -188,8 +190,6 @@ args() {
         c*)
             pkg_sources
             pkg_checksum
-
-            log "Generated checksums."
         ;;
 
         d*) [ -f depends ] && cat depends ;;
