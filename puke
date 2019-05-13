@@ -25,11 +25,10 @@ source_type() {
 
 pkg_setup() {
     cd "$rep_dir/$1" || die "Package '$1' not in repository."
-    [ -f version ]   || die "Version file not found."
     [ -f sources ]   || die "Sources file not found."
     [ -x build ]     || die "Build file not found or not executable."
 
-    read -r version release < version
+    read -r version release < version || die "Version file not found."
     pkg=${name:=$1}\#$version-$release
 
     mkdir -p "$src_dir" "$mak_dir" "$pkg_dir/$dbs_dir" "$sys_dir" "$bin_dir" ||
