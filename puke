@@ -168,7 +168,6 @@ pkg_remove() {
 }
 
 pkg_updates() {
-    git pull
     cd "$sys_dir/$dbs_dir"
 
     for pkg in *; do
