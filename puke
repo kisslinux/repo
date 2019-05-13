@@ -96,7 +96,6 @@ pkg_extract() {
                        tar xf "$src_dir/${src##*/}" -C "$mak_dir" \
                            --strip-components 1 ||
                            die "Couldn't extract ${src##*/}"
-                   ;;
                esac ;;
 
             *) die "${src##*/} not found."
