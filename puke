@@ -161,7 +161,7 @@ pkg_remove() {
     while read -r file; do
         [ "${file%/*}" = "/etc" ] && continue
 
-        path="${sys_dir}${file}"
+        path=${sys_dir}${file}
 
         if [ -d "$path" ]; then
             rmdir "$path" 2>/dev/null
