@@ -26,8 +26,7 @@ pkg_setup() {
     [ -f build ]     || die "Build file not found."
 
     read -r version release < version
-    name=$1
-    pkg=$name\#$version-$release
+    pkg=${name:=$1}\#$version-$release
 
     mkdir -p "$src_dir" "$mak_dir" "$pkg_dir/$dbs_dir" \
              "$sys_dir" "$bin_dir" ||
