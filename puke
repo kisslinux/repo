@@ -144,7 +144,7 @@ pkg_remove() {
     while read -r file; do
         [ "${file%/*}" = "/etc" ] && continue
 
-        path=${sys_dir}${file}
+        path=$sys_dir$file
 
         if [ -d "$path" ]; then
             rmdir "$path" 2>/dev/null
@@ -225,7 +225,7 @@ main() {
     src_dir=$PWD/sources
     mak_dir=$PWD/build
     pkg_dir=$PWD/pkg
-    sys_dir=$PWD/sys
+    sys_dir=$PUKE_ROOT
     bin_dir=$PWD/bin
     rep_dir=$PWD/repo
     dbs_dir=var/db/puke
