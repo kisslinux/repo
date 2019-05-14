@@ -11,10 +11,6 @@ log() {
     printf '\033[32m=>\033[m %s\n' "$@"
 }
 
-clean() {
-    rm -rf -- "$mak_dir" "$pkg_dir"
-}
-
 source_type() {
     [ -f "$1" ]                && return 2
     [ -f "$src_dir/${1##*/}" ] && return 3
@@ -194,7 +190,7 @@ args() {
 }
 
 main() {
-    trap clean EXIT INT
+    trap 'rm -rf -- "$mak_dir" "$pkg_dir"' EXIT INT
 
     src_dir=$PWD/sources
     mak_dir=$PWD/build
