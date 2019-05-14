@@ -85,16 +85,13 @@ pkg_extract() {
     while read -r src; do
         source_type "$src"
 
-        case $? in
-            2) cp -f "$src" "$mak_dir" ;;
-            4) ;;
+        case $?-$src in
+            2-*) cp -f "$src" "$mak_dir" ;;
+            4-*) ;;
 
-            3) case $src in
-                   *.tar|*.tar.??|*.tar.???|*.tar.????|*.tgz)
-                       tar xf "$src_dir/${src##*/}" -C "$mak_dir" \
-                           --strip-components 1 ||
-                           die "Couldn't extract ${src##*/}"
-               esac ;;
+            3-*.tar*)
+               tar xf "$src_dir/${src##*/}" -C "$mak_dir" --strip-components 1 ||
+                   die "Couldn't extract ${src##*/}" ;;
 
             *) die "${src##*/} not found."
         esac
