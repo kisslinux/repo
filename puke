@@ -102,8 +102,6 @@ pkg_extract() {
 }
 
 pkg_build() {
-    log "Building $pkg."
-
     (set -e errexit; cd "$mak_dir"; "$OLDPWD/build" "$pkg_dir" ) ||
         die "Build failed."
 
