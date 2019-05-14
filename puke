@@ -156,9 +156,8 @@ pkg_list() {
     [ "$1" ] && { [ -d "$sys_dir/$dbs_dir/$1" ]; return "$?"; }
 
     for item in "$sys_dir/$dbs_dir/"*; do
-        [ -d "$item" ] || continue
-        read -r version release < "$item/version"
-        printf '%s\n' "${item##*/} $version-$release"
+        read -r version release 2>/dev/null < "$item/version" &&
+            printf '%s\n' "${item##*/} $version-$release"
     done
 }
 
