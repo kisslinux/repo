@@ -1,6 +1,0 @@
-#!/bin/sh
-
-./configure
-
-make
-make DESTDIR="$1" install
