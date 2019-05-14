@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 patch -p1 -i fix-glibc-2.28.patch
 

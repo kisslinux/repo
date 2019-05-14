@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 gcc certdata2pem.c -o "mozilla/certdata2pem"
 

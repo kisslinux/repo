@@ -98,8 +98,7 @@ pkg_extract() {
 }
 
 pkg_build() {
-    (set -e errexit; cd "$mak_dir"; "$OLDPWD/build" "$pkg_dir") ||
-        die "Build failed."
+    (cd "$mak_dir"; "$OLDPWD/build" "$pkg_dir") || die "Build failed."
 
     cp -R "$rep_dir/$name" "$pkg_dir/$dbs_dir"
 
