@@ -87,19 +87,18 @@ pkg_extract() {
 
         case $?-$src in
             2-*) cp -f "$src" "$mak_dir" ;;
-            4-*) ;;
 
             3-*.tar*)
                tar xf "$src_dir/${src##*/}" -C "$mak_dir" --strip-components 1 ||
                    die "Couldn't extract ${src##*/}" ;;
 
-            *) die "${src##*/} not found."
+            [01]-*) die "${src##*/} not found."
         esac
     done < sources
 }
 
 pkg_build() {
-    (set -e errexit; cd "$mak_dir"; "$OLDPWD/build" "$pkg_dir" ) ||
+    (set -e errexit; cd "$mak_dir"; "$OLDPWD/build" "$pkg_dir") ||
         die "Build failed."
 
     cp -R "$rep_dir/$name" "$pkg_dir/$dbs_dir"
