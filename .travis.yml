@@ -4,4 +4,4 @@ os:
     - linux
 
 script:
-    - shellcheck puke
+    - shellcheck puke repo/*/build repo/*/post-install
