@@ -164,6 +164,7 @@ pkg_list() {
     [ "$1" ] && { [ -d "$sys_dir/$dbs_dir/$1" ]; return "$?"; }
 
     for item in "$sys_dir/$dbs_dir/"*; do
+        [ -d "$item" ] || continue
         read -r version release < "$item/version"
         printf '%s\n' "${item##*/} $version-$release"
     done
@@ -172,8 +173,7 @@ pkg_list() {
 args() {
     case $1 in b*|c*|d*|i*|r*) pkg_setup "${2-null}"; esac
     case $1 in
-        b*)
-            [ -f checksums ] || die "Checksums missing, run '$0 checksum $name'"
+        b*) [ -f checksums ] || die "Checksums missing, run '$0 checksum $name'"
 
             pkg_depends
             pkg_sources
@@ -181,15 +181,11 @@ args() {
             pkg_extract
             pkg_build
             pkg_manifest
-            pkg_tar
-        ;;
+            pkg_tar ;;
 
-        c*)
-            pkg_sources
+        c*) pkg_sources
             pkg_checksum
-
-            log "Generated checksums."
-        ;;
+            log "Generated checksums." ;;
 
         d*) [ -f depends ] && cat depends ;;
         i*) pkg_install ;;
