@@ -178,16 +178,14 @@ args() {
             pkg_checksum
             log "Generated checksums." ;;
 
-        d*) [ -f depends ] && cat depends ;;
         i*) pkg_install ;;
         l*) pkg_list "$2" ;;
         r*) pkg_remove || die "Package '$name' not installed" ;;
         u*) pkg_updates ;;
 
-        *)  log "$0 [b|c|d|i|l|r|u] [pkg]" \
+        *)  log "$0 [b|c|i|l|r|u] [pkg]" \
                 "build:     Build a package." \
                 "checksum:  Generate checksums." \
-                "depends:   See package dependencies." \
                 "install:   Install a package." \
                 "list:      List packages." \
                 "remove:    Remove a package." \

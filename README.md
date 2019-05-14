@@ -40,7 +40,6 @@ done < depends
 * [Getting started with `puke`](#getting-started-with-puke)
     * [`puke build pkg`](#puke-build-pkg)
     * [`puke checksum pkg`](#puke-checksum-pkg)
-    * [`puke depends pkg`](#puke-depends-pkg)
     * [`puke install pkg`](#puke-install-pkg)
     * [`puke remove pkg`](#puke-remove-pkg)
     * [`puke list` or `puke list pkg`](#puke-list-or-puke-list-pkg)
@@ -65,7 +64,6 @@ Puke has 6 different "operators".
 
 - `build`: Build a package.
 - `checksum`: Generate checksums for a package.
-- `depends`: List a package's dependencies .
 - `install`: Install a built package.
 - `remove`: Remove an installed package.
 - `list`: List installed packages.
@@ -78,10 +76,6 @@ Puke's `build` operator handles a package from its source code to the installabl
 ### `puke checksum pkg`
 
 Puke's `checksum` operator generates the initial checksums for a package from every source in the `sources` file.
-
-### `puke depends pkg`
-
-Puke's `depends` operator does not recursively check dependencies. It only lists the direct dependencies for the selected package. In the future, more complex dependency solving may be added.
 
 ### `puke install pkg`
 
