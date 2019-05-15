@@ -102,8 +102,8 @@ pkg_build() {
 }
 
 pkg_manifest() {
-    find "$pkg_dir" -mindepth 1 | sed "s|^$pkg_dir||" | sort -r > manifest
-    cp manifest "$pkg_dir/$dbs_dir/$name"
+    (cd "$pkg_dir" && find -- ./* | sed 's|^.||' | sort -r) |
+        tee manifest > "$pkg_dir/$dbs_dir/$name/manifest"
 }
 
 pkg_tar() {
