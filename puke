@@ -24,9 +24,9 @@ pkg_setup() {
     [ -x build ]     || die "Build file not found or not executable."
 
     read -r ver rel < version || die "Version file not found."
-    pkg=${name:=$1}\#$ver-$rel
+    pkg=${name:=$1}\#$ver-$rel.tar.gz
 
-    mkdir -p "$src_dir" "$mak_dir" "$pkg_dir/$dbs_dir" "$sys_dir" "$bin_dir" ||
+    mkdir -p "$src_dir" "$mak_dir" "$pkg_db" "$sys_dir" "$bin_dir" ||
         die "Couldn't create directories at $PWD."
 }
 
@@ -96,32 +96,30 @@ pkg_extract() {
 pkg_build() {
     (cd "$mak_dir"; "$OLDPWD/build" "$pkg_dir") || die "Build failed."
 
-    cp -R "$rep_dir/$name" "$pkg_dir/$dbs_dir"
+    cp -R "$rep_dir/$name" "$pkg_db"
 
-    log "Sucessfully built $pkg." 2> "$pkg_dir/$dbs_dir/$name/manifest"
+    log "Sucessfully built $pkg." 2> "$pkg_db/$name/manifest"
 }
 
 pkg_manifest() {
     (cd "$pkg_dir" && find -- ./* | sed 's|^.||' | sort -r) |
-        tee manifest > "$pkg_dir/$dbs_dir/$name/manifest"
+        tee manifest > "$pkg_db/$name/manifest"
 }
 
 pkg_tar() {
-    tar pcvf "$bin_dir/$pkg.tar.gz" -C "$pkg_dir" . ||
-        die "Failed to create package."
-
-    log "Package is at $bin_dir/$pkg.tar.gz."
+    tar pcvf "$bin_dir/$pkg" -C "$pkg_dir" . || die "Failed to create package."
+    log "Package is at $bin_dir/$pkg."
 }
 
 pkg_install() {
-    [ -f "$bin_dir/$pkg.tar.gz" ] || die "Package must be built first."
+    [ -f "$bin_dir/$pkg" ] || die "Package must be built first."
 
     pkg_remove "$name"
-    tar pxvf "$bin_dir/$pkg.tar.gz" -k -C "$sys_dir/" 2>/dev/null
+    tar pxvf "$bin_dir/$pkg" -k -C "$sys_dir/" 2>/dev/null
 
-    "$sys_dir/$dbs_dir/$name/post-install" 2>/dev/null
+    "$sys_db/$name/post-install" 2>/dev/null
 
-    log "Installed $pkg"
+    log "Installed ${pkg%.tar.gz}"
 }
 
 pkg_remove() {
@@ -135,11 +133,11 @@ pkg_remove() {
         else
             rm -- "$sys_dir$file" || log "Failed to remove $file."
         fi && log "Removed $file"
-    done < "$sys_dir/$dbs_dir/$name/manifest"
+    done < "$sys_db/$name/manifest"
 }
 
 pkg_updates() {
-    for item in "$sys_dir/$dbs_dir/"*; do
+    for item in "$sys_db/"*; do
         read -r db_ver db_rel < "$item/version"
         read -r re_ver re_rel < "$rep_dir/${item##*/}/version"
 
@@ -149,9 +147,9 @@ pkg_updates() {
 }
 
 pkg_list() {
-    [ "$1" ] && { [ -d "$sys_dir/$dbs_dir/$1" ]; return "$?"; }
+    [ "$1" ] && { [ -d "$sys_db/$1" ]; return "$?"; }
 
-    for item in "$sys_dir/$dbs_dir/"*; do
+    for item in "$sys_db/"*; do
         read -r version release 2>/dev/null < "$item/version" &&
             printf '%s\n' "${item##*/} $version-$release"
     done
@@ -198,7 +196,8 @@ main() {
     sys_dir=$PUKE_ROOT
     bin_dir=$PWD/bin
     rep_dir=$PWD/repo
-    dbs_dir=var/db/puke
+    pkg_db=$pkg_dir/var/db/puke
+    sys_db=$sys_dir/var/db/puke
 
     args "$@"
 }
