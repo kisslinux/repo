@@ -39,12 +39,9 @@ pkg_sources() {
     while read -r src; do
         case $(source_type "$src"; echo $?) in
             2|3) log "Found local ${src##*/}." ;;
-            4) git clone "${src##git:}" "$mak_dir" ;;
-
-            5) log "Downloading '$src'."
-               wget -P "$src_dir" "$src" || die "Failed to download $src." ;;
-
-            *) die "Source file '$src' not found." ;;
+            4)   git clone "${src##git:}" "$mak_dir" ;;
+            5)   wget -P "$src_dir" "$src" || die "Failed to download $src." ;;
+            *)   die "Source file '$src' not found." ;;
         esac
     done < sources
 }
