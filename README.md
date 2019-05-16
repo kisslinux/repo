@@ -33,6 +33,8 @@ while read -r depend; do
 done < depends
 ```
 
+This also means anyone can write a tool to manipulate the repository or even their own package manager. It's all plain text files delimited by a new line or a space.
+
 ## Table of Contents
 
 <!-- vim-markdown-toc GFM -->
