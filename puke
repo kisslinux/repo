@@ -156,7 +156,7 @@ pkg_list() {
 }
 
 args() {
-    case $1 in b*|c*|d*|i*|r*) pkg_setup "${2-null}"; esac
+    case $1 in b*|c*|i*|r*) pkg_setup "${2-null}"; esac
     case $1 in
         b*) [ -f checksums ] || die "Checksums missing, run '$0 checksum $name'"
 
