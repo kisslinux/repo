@@ -195,4 +195,4 @@ The `post-install` file should contain any steps required directly after the pac
 
 ### How do I change compiler options globally?
 
-All you need to do is define `CFLAGS` in your environment. Either give it to `puke` directly (`CFLAGS=-O3 ./puke build zlib`) or set it in your shell's RC file.
+All you need to do is define `CFLAGS`, `MAKEFLAGS` or equivalent in your environment. Either give it to `puke` directly (`CFLAGS=-O3 MAKEFLAGS=-j4 ./puke build zlib`) or set it in your shell's RC file.
