@@ -25,9 +25,6 @@ pkg_setup() {
 
     read -r ver rel < version || die "Version file not found."
     pkg=${name:=$1}\#$ver-$rel.tar.gz
-
-    mkdir -p "$src_dir" "$mak_dir" "$pkg_db" "$sys_dir" "$bin_dir" ||
-        die "Couldn't create directories at $PWD."
 }
 
 pkg_depends() {
@@ -190,14 +187,13 @@ args() {
 main() {
     trap 'rm -rf -- "$mak_dir" "$pkg_dir"' EXIT INT
 
-    src_dir=$PWD/sources
-    mak_dir=$PWD/build
-    pkg_dir=$PWD/pkg
-    sys_dir=$PUKE_ROOT
-    bin_dir=$PWD/bin
-    rep_dir=$PWD/repo
-    pkg_db=$pkg_dir/var/db/puke
-    sys_db=$sys_dir/var/db/puke
+    mkdir -p "${src_dir:=$PWD/sources}" \
+             "${mak_dir:=$PWD/build}" \
+             "${pkg_db:=${pkg_dir:=$PWD/pkg}/var/db/puke}" \
+             "${sys_db:=${sys_dir:=$PUKE_ROOT}/var/db/puke}" \
+             "${bin_dir:=$PWD/bin}" \
+             "${rep_dir:=$PWD/repo}" ||
+             die "Couldn't create directories at $PWD."
 
     args "$@"
 }
