@@ -86,9 +86,7 @@ pkg_extract() {
 
 pkg_build() {
     (cd "$mak_dir"; "$OLDPWD/build" "$pkg_dir") || die "Build failed."
-
     cp -R "$rep_dir/$name" "$pkg_db"
-
     log "Sucessfully built $pkg." 2> "$pkg_db/$name/manifest"
 }
 
