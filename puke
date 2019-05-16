@@ -113,7 +113,7 @@ pkg_remove() {
         if [ -d "$sys_dir$file" ]; then
             rmdir "$sys_dir$file" 2>/dev/null || continue
         else
-            rm -- "$sys_dir$file" || log "Failed to remove $file."
+            rm -f -- "$sys_dir$file" || log "Failed to remove $file."
         fi && log "Removed $file"
     done < "$sys_db/$name/manifest"
 }
