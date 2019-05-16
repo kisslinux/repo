@@ -38,10 +38,9 @@ pkg_depends() {
 pkg_sources() {
     while read -r src; do
         case $(source_type "$src"; echo $?) in
-            2|3) log "Found local ${src##*/}." ;;
             4)   git clone "${src##git:}" "$mak_dir" ;;
             5)   wget -P "$src_dir" "$src" || die "Failed to download $src." ;;
-            *)   die "Source file '$src' not found." ;;
+            0|1) die "Source file '$src' not found." ;;
         esac
     done < sources
 }
@@ -62,8 +61,6 @@ pkg_checksum() {
 pkg_verify() {
     pkg_checksum /dev/stdout | diff checksums - ||
         die "Checksum mismatch, run '$0 checksum $name' to update checksums."
-
-    log "Checksums verified."
 }
 
 pkg_extract() {
@@ -92,8 +89,8 @@ pkg_manifest() {
 }
 
 pkg_tar() {
-    tar pcvf "$bin_dir/$pkg" -C "$pkg_dir" . || die "Failed to create package."
-    log "Package is at $bin_dir/$pkg."
+    tar pcf "$bin_dir/$pkg" -C "$pkg_dir" . || die "Failed to create package."
+    log "Use '$0 install $name' to install the package."
 }
 
 pkg_install() {
