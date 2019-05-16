@@ -90,10 +90,10 @@ pkg_build() {
     log "Sucessfully built $pkg." 2> "$pkg_db/$name/manifest"
 }
 
-pkg_manifest() {
-    (cd "$pkg_dir" && find -- ./* | sed ss.ss | tac) |
+pkg_manifest() (
+    cd "$pkg_dir" && find ./* | sed ss.ss | tac |
         tee manifest > "$pkg_db/$name/manifest"
-}
+)
 
 pkg_tar() {
     tar pcvf "$bin_dir/$pkg" -C "$pkg_dir" . || die "Failed to create package."
