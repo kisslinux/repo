@@ -52,6 +52,8 @@ done < depends
     * [`version`](#version)
     * [`checksums`](#checksums)
     * [`post-install`](#post-install)
+* [Frequently asked questions](#frequently-asked-questions)
+    * [How do I change compiler options globally?](#how-do-i-change-compiler-options-globally)
 
 <!-- vim-markdown-toc -->
 
@@ -187,3 +189,10 @@ c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1  zlib-1.2.11.ta
 ### `post-install`
 
 The `post-install` file should contain any steps required directly after the package is installed. This includes updating font databases and creating any post-install symlinks which may be required.
+
+
+## Frequently asked questions
+
+### How do I change compiler options globally?
+
+All you need to do is define `CFLAGS` in your environment. Either give it to `puke` directly (`CFLAGS=-O3 ./puke build zlib`) or set it in your shell's RC file.
