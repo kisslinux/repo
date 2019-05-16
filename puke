@@ -37,9 +37,7 @@ pkg_depends() {
 
 pkg_sources() {
     while read -r src; do
-        source_type "$src"
-
-        case $? in
+        case $(source_type "$src"; echo $?) in
             2|3) log "Found local ${src##*/}." ;;
             4) git clone "${src##git:}" "$mak_dir" ;;
 
@@ -53,9 +51,7 @@ pkg_sources() {
 
 pkg_checksum() {
     while read -r src; do
-        source_type "$src"
-
-        case $? in
+        case $(source_type "$src"; echo $?) in
             2) src_path=$src ;;
             3) src_path=$src_dir/${src##*/} ;;
             4) continue
@@ -76,9 +72,7 @@ pkg_verify() {
 
 pkg_extract() {
     while read -r src; do
-        source_type "$src"
-
-        case $?-$src in
+        case $(source_type "$src"; echo $?)-$src in
             2-*) cp -f "$src" "$mak_dir" ;;
 
             3-*.tar*)
