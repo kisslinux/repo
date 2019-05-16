@@ -91,7 +91,7 @@ pkg_build() {
 }
 
 pkg_manifest() (
-    cd "$pkg_dir" && find . | sed ss.ss | tac |
+    cd "$pkg_dir" && find . | cut -c1- | tac |
         tee manifest > "$pkg_db/$name/manifest"
 )
 
