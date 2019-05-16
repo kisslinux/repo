@@ -7,7 +7,7 @@ Each Package is split into multiple files.
 ```sh
 zlib/            # Package name.
 ├─ build         # Build script.
-├─ depends       # Dependencies (one per line) (optional).
+├─ depends       # Dependencies (one per line) (sometimes optional).
 ├─ sources       # Sources (one per line).
 ├─ version       # Package version.
 ┘
@@ -21,6 +21,7 @@ zlib/            # Package name.
 ├─ post_install  # Script to run after package installation.
 ├─ patches/*     # Directory to store patches.
 ├─ files/*       # Directory to misc files.
+┘
 ```
 
 When a built package is installed, this entire directory tree is copied to `/var/db/puke` where it becomes a database entry. Listing the dependencies for a package is a simple as printing the contents of the `depends` file. Searching for which package owns a file is as simple as checking each `manifest` file.
