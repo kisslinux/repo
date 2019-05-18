@@ -1,0 +1,61 @@
+#!/bin/sh
+# shellcheck source=/dev/null disable=2154,2016
+#
+# Convert a crux pkgfile to puke's format.
+
+die() {
+    printf '\033[31mERROR>\033[m %s\n' "$@" >&2
+    exit 1
+}
+
+repo_setup() {
+    cd repo >/dev/null    || die "Not in kiss repository."
+    mkdir "$name"         || die "$name already exists."
+    cd "$name" >/dev/null || die "Can't cd to $name"
+}
+
+pkgfile_read() {
+    [ -n "$1" ] || die "Need a pkgfile as input."
+    [ -f "$1" ] || die "File not found '$1'"
+
+    . "$1" || die "Syntax error in pkgfile."
+
+    [ -n "$name" ]    || die "Field 'name' missing from pkgfile."
+    [ -n "$version" ] || die "Field 'version' missing from pkgfile."
+    [ -n "$release" ] || die "Field 'release' missing from pkgfile."
+    [ -n "$source" ]  || die "Field 'source' missing from pkgfile."
+}
+
+pkgfile_version() {
+    printf '%s\n' "$version $release" > version
+}
+
+pkgfile_source() {
+    printf '%s\n' "$source" | while IFS=' ' read -r src; do
+        printf '%s\n' "$src"
+    done > sources
+}
+
+pkgfile_build() {
+    sed 's/$BUILD/$pkg_dir/g' "$1" | while read -r line; do
+        [ "$line" = "}" ] && code=
+        [ "$code" ]       && printf '%s\n' "$line"
+
+        [ "$line" = "build() {" ] && {
+            printf '%s\n\n' "#!/bin/sh -e"
+            code=1
+        }
+    done > build
+}
+
+main() {
+    pkgfile_read "$1"
+
+    repo_setup
+
+    pkgfile_version
+    pkgfile_source
+    pkgfile_build "$1"
+}
+
+main "$@"
