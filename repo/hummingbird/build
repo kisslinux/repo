@@ -1,7 +1,0 @@
-#!/bin/sh -e
-
-make
-make DESTDIR="$1" install
-
-install -Dm755 ./etc/rc.init "$1/etc/rc.init"
-install -Dm755 ./etc/rc.shutdown "$1/etc/rc.shutdown"
