@@ -2,4 +2,4 @@ perl
 gmp
 flex
 bison
-openssl
+libressl
