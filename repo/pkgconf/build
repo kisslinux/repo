@@ -4,10 +4,10 @@
 --prefix=/usr \
 --sysconfdir=/etc
 
-mkdir -p "$pkg_dir/usr/bin"
+mkdir -p "$1/usr/bin"
 
 make
-make DESTDIR="$pkg_dir" install
+make DESTDIR="$1" install
 
-cd "$pkg_dir/usr/bin" || exit 1
+cd "$1/usr/bin" || exit 1
 ln -s pkgconf pkg-config

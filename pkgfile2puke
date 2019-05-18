@@ -45,7 +45,7 @@ pkgfile_depends() {
 }
 
 pkgfile_build() {
-    sed 's/$\(BUILD\|PKG\)/$pkg_dir/g' "$1" | while read -r line; do
+    sed 's/$\(BUILD\|PKG\)/$1/g' "$1" | while read -r line; do
         [ "$line" = "}" ] && code=
         [ "$code" ]       && printf '%s\n' "$line"
 
@@ -54,6 +54,8 @@ pkgfile_build() {
             code=1
         }
     done > build
+
+    chmod +x build
 }
 
 main() {
