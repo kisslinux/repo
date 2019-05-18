@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+patch -p1 -i CVE-2018-1000097.patch
+patch -p1 -i fix-glibc-2.27.patch
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install

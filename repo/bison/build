@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --datadir=/usr/share \
+    --infodir=/usr/share/info \
+    --mandir=/usr/share/man
+
+make
+make DESTDIR="$1" install

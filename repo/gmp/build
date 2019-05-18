@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --infodir=/usr/share/info \
+    --mandir=/usr/share/man \
+    --localstatedir=/var/state/gmp \
+    --enable-cxx \
+    --with-pic
+
+make
+make DESTDIR="$1" install
