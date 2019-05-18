@@ -31,17 +31,13 @@ pkgfile_version() {
 }
 
 pkgfile_source() {
-    printf '%s\n' "$source" | while IFS=' ' read -r src; do
-        printf '%s\n' "$src"
-    done > sources
+    printf '%s\n' "$source" | sed 's/ /\n/g' > sources
 }
 
 pkgfile_depends() {
     [ "$depends" ] || return
 
-    printf '%s\n' "$depends" | while IFS=' ' read -r dep; do
-        printf '%s\n' "$dep"
-    done > depends
+    printf '%s\n' "$depends" | sed 's/ /\n/g' > depends
 }
 
 pkgfile_build() {
