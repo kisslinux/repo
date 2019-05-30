@@ -94,7 +94,7 @@ pkg_tar() {
 }
 
 pkg_install() {
-    [ -f "$bin_dir/$pkg" ] || die "Package must be built first."
+    [ -f "$bin_dir/$pkg" ] || args b "$name"
 
     pkg_remove "$name"
     tar pxvf "$bin_dir/$pkg" -k -C "$sys_dir/" 2>/dev/null
@@ -162,7 +162,7 @@ args() {
         *)  log "$0 [b|c|i|l|r|u] [pkg]" \
                 "build:     Build a package." \
                 "checksum:  Generate checksums." \
-                "install:   Install a package." \
+                "install:   Install a package (Runs build when needed)." \
                 "list:      List packages." \
                 "remove:    Remove a package." \
                 "update:    Check for updates."
