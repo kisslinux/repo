@@ -1,8 +1,8 @@
 /var/db/puke/patch/version
-/var/db/puke/patch/build
-/var/db/puke/patch/checksums
-/var/db/puke/patch/manifest
 /var/db/puke/patch/sources
+/var/db/puke/patch/checksums
+/var/db/puke/patch/build
+/var/db/puke/patch/manifest
 /var/db/puke/patch
 /var/db/puke
 /var/db
@@ -13,4 +13,6 @@
 /usr/share/man/man1
 /usr/share/man
 /usr/share
+/usr/lib/charset.alias
+/usr/lib
 /usr
