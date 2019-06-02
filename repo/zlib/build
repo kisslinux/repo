@@ -2,7 +2,7 @@
 
 ./configure \
     --prefix=/usr \
-    --libdir=/lib \
+    --libdir=/usr/lib \
     --shared
 
 make
