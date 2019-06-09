@@ -89,7 +89,7 @@ pkg_manifest() {
 }
 
 pkg_tar() {
-    tar pcf "$bin_dir/$pkg" -C "$pkg_dir" . || die "Failed to create package."
+    tar zpcf "$bin_dir/$pkg" -C "$pkg_dir" . || die "Failed to create package."
     log "Use '$0 install $name' to install the package."
 }
 
