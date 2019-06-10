@@ -92,8 +92,9 @@ pkg_strip() {
             ;;
             application/x-archive*) strip_opts="--strip-debug" ;;
             application/x-executable*) strip_opts="--strip-all" ;;
+            *) continue ;;
         esac
-        strip "$strip_opts" "$binary" 2>/dev/null
+        strip "$strip_opts" "$binary"
     done
 }
 
