@@ -85,13 +85,14 @@ pkg_build() {
 
 pkg_strip() {
     log "Stripping unneeded symbols from binaries and libraries"
+
     find "$pkg_dir" -type f | while read -r binary; do
-        case "$(file -bi "$binary")" in
+        case $(file -bi "$binary") in
             application/x-sharedlib*|application/x-pie-executable*)
-                strip_opts="--strip-unneeded"
+                strip_opts=--strip-unneeded
             ;;
-            application/x-archive*) strip_opts="--strip-debug" ;;
-            application/x-executable*) strip_opts="--strip-all" ;;
+            application/x-archive*) strip_opts=--strip-debug ;;
+            application/x-executable*) strip_opts=--strip-all ;;
             *) continue ;;
         esac
         strip "$strip_opts" "$binary"
@@ -162,7 +163,7 @@ args() {
             pkg_verify
             pkg_extract
             pkg_build
-            [ ! -f nostrip ] && pkg_strip
+            [ -f nostrip ] || pkg_strip
             pkg_manifest
             pkg_tar ;;
 
