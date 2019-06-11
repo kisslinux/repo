@@ -91,10 +91,13 @@ pkg_strip() {
             application/x-sharedlib*|application/x-pie-executable*)
                 strip_opts=--strip-unneeded
             ;;
-            application/x-archive*) strip_opts=--strip-debug ;;
+
+            application/x-archive*)    strip_opts=--strip-debug ;;
             application/x-executable*) strip_opts=--strip-all ;;
+
             *) continue ;;
         esac
+
         strip "$strip_opts" "$binary"
     done
 }
