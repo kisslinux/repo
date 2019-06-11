@@ -83,6 +83,22 @@ pkg_build() {
     log "Sucessfully built $pkg." 2> "$pkg_db/$name/manifest"
 }
 
+pkg_strip() {
+    log "Stripping unneeded symbols from binaries and libraries"
+
+    find "$pkg_dir" -type f | while read -r binary; do
+        case $(file -bi "$binary") in
+            application/x-sharedlib*|application/x-pie-executable*)
+                strip_opts=--strip-unneeded
+            ;;
+            application/x-archive*) strip_opts=--strip-debug ;;
+            application/x-executable*) strip_opts=--strip-all ;;
+            *) continue ;;
+        esac
+        strip "$strip_opts" "$binary"
+    done
+}
+
 pkg_manifest() {
     (cd "$pkg_dir" && find ./*) | sed ss.ss | tac |
         tee manifest > "$pkg_db/$name/manifest"
@@ -147,6 +163,7 @@ args() {
             pkg_verify
             pkg_extract
             pkg_build
+            [ -f nostrip ] || pkg_strip
             pkg_manifest
             pkg_tar ;;
 
