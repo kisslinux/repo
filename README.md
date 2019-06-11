@@ -100,7 +100,7 @@ Puke's `list` operator lists the installed packages and their versions. Giving `
 
 Puke's `update` operator compares the repository versions of packages to the installed database versions of packages. Any mismatch in versions is considered a new upgrade from the repository.
 
-The `update` mechanism doesn't do a `git pull` of the repository. This must be done manually beforehand. This is intentional. It allows the user to `git pull` selectively. You can slow down the distribution's package updates by limiting pulling to a week behind master for example.
+The `update` mechanism doesn't do a `git pull` of the repository. This must be done manually beforehand and is intentional. It allows the user to `git pull` selectively. You can slow down the distribution's package updates by limiting pulling to a week behind master for example.
 
 
 ## The package format
@@ -118,12 +118,12 @@ The `build` file can be written in any language. The only requirement is that th
     --shared
 
 make
-make DESTDIR="$pkg_dir" install
+make DESTDIR="$1" install
 ```
 
 ### `manifest`
 
-The `manifest` file contains the built package's file and directory list. The full paths to files are listed first and the directories (*in reverse*) follow. This allows the package manager to remove the directories if they're empty without needing checks in-between.
+The `manifest` file contains the built package's file and directory list. The full paths to files are listed first and the directories (*in reverse*) follow. This allows the package manager to remove the directories if they are empty without needing checks in-between.
 
 The manifest also includes the package's database entry. You can install the package with or without `puke` and it will be recognized.
 
