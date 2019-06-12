@@ -161,6 +161,11 @@ The `sources` file contains the package's sources one per line. Sources can be l
 ```
 https://www.openssl.org/source/openssl-X.X.X.tar.gz
 patches/fix-musl.patch
+
+# An optional destination field can be added to tell the package manager
+# where to extract the source. This is relative to the regular extraction
+# directory.
+https://www.openssl.org/source/openssl-X.X.X.tar.gz lib/example/
 ```
 
 ### `depends`
