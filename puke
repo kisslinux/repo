@@ -65,6 +65,8 @@ pkg_verify() {
 
 pkg_extract() {
     while read -r src dest; do
+        [ "$dest" ] && mkdir -p "$mak_dir/$dest"
+
         case $(source_type "$src"; echo $?)-$src in
             2-*) cp -f "$src" "$mak_dir/$dest" ;;
 
