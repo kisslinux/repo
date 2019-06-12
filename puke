@@ -36,7 +36,7 @@ pkg_depends() {
 }
 
 pkg_sources() {
-    while read -r src; do
+    while read -r src _; do
         case $(source_type "$src"; echo $?) in
             4)   git clone "${src##git:}" "$mak_dir" ;;
             5)   wget -P "$src_dir" "$src" || die "Failed to download $src." ;;
@@ -46,7 +46,7 @@ pkg_sources() {
 }
 
 pkg_checksum() {
-    while read -r src; do
+    while read -r src _; do
         case $(source_type "$src"; echo $?) in
             2) src_path=$src ;;
             3) src_path=$src_dir/${src##*/} ;;
@@ -64,13 +64,13 @@ pkg_verify() {
 }
 
 pkg_extract() {
-    while read -r src; do
+    while read -r src dest; do
         case $(source_type "$src"; echo $?)-$src in
             2-*) cp -f "$src" "$mak_dir" ;;
 
             3-*.tar*)
-               tar xf "$src_dir/${src##*/}" -C "$mak_dir" --strip-components 1 ||
-                   die "Couldn't extract ${src##*/}" ;;
+               tar xf "$src_dir/${src##*/}" -C "$mak_dir/$dest" \
+                   --strip-components 1 || die "Couldn't extract ${src##*/}" ;;
 
             [01]-*) die "${src##*/} not found."
         esac
