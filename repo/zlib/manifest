@@ -1,10 +1,10 @@
-/var/db/puke/zlib/version
-/var/db/puke/zlib/build
-/var/db/puke/zlib/checksums
-/var/db/puke/zlib/manifest
-/var/db/puke/zlib/sources
-/var/db/puke/zlib
-/var/db/puke
+/var/db/kiss/zlib/version
+/var/db/kiss/zlib/build
+/var/db/kiss/zlib/checksums
+/var/db/kiss/zlib/manifest
+/var/db/kiss/zlib/sources
+/var/db/kiss/zlib
+/var/db/kiss
 /var/db
 /var
 /usr/include/zlib.h
