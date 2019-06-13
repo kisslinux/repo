@@ -158,13 +158,11 @@ The manifest also includes the package's database entry. You can install the pac
 
 The `sources` file contains the package's sources one per line. Sources can be local or remote.
 
+An optional destination field can be added to tell the package manager where to extract the source. This is relative to the regular extraction directory. The passed directories are also created.
+
 ```
 https://www.openssl.org/source/openssl-X.X.X.tar.gz
 patches/fix-musl.patch
-
-# An optional destination field can be added to tell the package manager
-# where to extract the source. This is relative to the regular extraction
-# directory. The passed directories are also created.
 https://www.openssl.org/source/openssl-X.X.X.tar.gz lib/example/
 ```
 
