@@ -1,7 +1,2 @@
 language: bash
-
-os:
-    - linux
-
-script:
-    - shellcheck -e 2034 repo/*/build repo/*/post-install
+script:   shellcheck -e 2034 repo/*/build repo/*/post-install
