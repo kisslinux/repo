@@ -44,13 +44,6 @@ This also means anyone can write a tool to manipulate the repository or even the
 
 <!-- vim-markdown-toc GFM -->
 
-* [Getting started with `kiss`](#getting-started-with-kiss)
-    * [`kiss build pkg`](#kiss-build-pkg)
-    * [`kiss checksum pkg`](#kiss-checksum-pkg)
-    * [`kiss install pkg`](#kiss-install-pkg)
-    * [`kiss remove pkg`](#kiss-remove-pkg)
-    * [`kiss list` or `kiss list pkg`](#kiss-list-or-kiss-list-pkg)
-    * [`kiss update`](#kiss-update)
 * [The package format](#the-package-format)
     * [`build`](#build)
     * [`manifest`](#manifest)
@@ -59,50 +52,8 @@ This also means anyone can write a tool to manipulate the repository or even the
     * [`version`](#version)
     * [`checksums`](#checksums)
     * [`post-install`](#post-install)
-* [Frequently asked questions](#frequently-asked-questions)
-    * [How do I change compiler options globally?](#how-do-i-change-compiler-options-globally)
 
 <!-- vim-markdown-toc -->
-
-
-## Getting started with `kiss`
-
-Kiss is a simple package manager written in POSIX `sh`. The package manager does not need to be added to your `PATH`. Instead it runs inside the packages repository, very similar to Void Linux's `xbps-src`.
-
-Kiss has 6 different "operators".
-
-- `build`: Build a package.
-- `checksum`: Generate checksums for a package.
-- `install`: Install a built package.
-- `remove`: Remove an installed package.
-- `list`: List installed packages.
-- `update`: List packages with available updates.
-
-### `kiss build pkg`
-
-Kiss's `build` operator handles a package from its source code to the installable `.tar.gz` file. Sources are downloaded, checksums are verified, dependencies are checked and the package is compiled then packaged.
-
-### `kiss checksum pkg`
-
-Kiss's `checksum` operator generates the initial checksums for a package from every source in the `sources` file.
-
-### `kiss install pkg`
-
-Kiss's `install` operator takes the built `.tar.gz` file and installs it in the system. This is as simple as removing the old version of the package (*if it exists*) and unpacking the archive at `/`.
-
-### `kiss remove pkg`
-
-Kiss's `remove` operator uninstalls a package from your system. Files and directories in `/etc` are untouched. Support for exclusions will come as they are needed.
-
-### `kiss list` or `kiss list pkg`
-
-Kiss's `list` operator lists the installed packages and their versions. Giving `list` an argument will check if a singular package is installed.
-
-### `kiss update`
-
-Kiss's `update` operator compares the repository versions of packages to the installed database versions of packages. Any mismatch in versions is considered a new upgrade from the repository.
-
-The `update` mechanism doesn't do a `git pull` of the repository. This must be done manually beforehand and is intentional. It allows the user to `git pull` selectively. You can slow down the distribution's package updates by limiting pulling to a week behind master for example.
 
 
 ## The package format
@@ -199,10 +150,3 @@ c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1  zlib-1.2.11.ta
 ### `post-install`
 
 The `post-install` file should contain any steps required directly after the package is installed. This includes updating font databases and creating any post-install symlinks which may be required.
-
-
-## Frequently asked questions
-
-### How do I change compiler options globally?
-
-All you need to do is define `CFLAGS`, `MAKEFLAGS` or equivalent in your environment. Either give it to `kiss` directly (`CFLAGS=-O3 MAKEFLAGS=-j4 ./kiss build zlib`) or set it in your shell's RC file.
