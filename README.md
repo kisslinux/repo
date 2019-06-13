@@ -1,6 +1,6 @@
 # KISS Alternative Package System
 
-This is an alternative package system I am experimenting with. Instead of the usual `PKGBUILD`, `APKBUILD`, `xbps-template` and `Pkgfile` format, this repository explores a more unixy approach.
+This is a package system I am experimenting with. This format is an alternative to the usual `PKGBUILD`, `APKBUILD` and `Pkgfile` systems and explores a more unixy approach.
 
 **NOTE**: The package manager can be found here: [kiss](https://github.com/kissx/kiss)
 
