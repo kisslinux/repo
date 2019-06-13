@@ -24,7 +24,7 @@ zlib/            # Package name.
 ┘
 ```
 
-When a built package is installed, this entire directory tree is copied to `/var/db/puke` where it becomes a database entry. Listing the dependencies for a package is a simple as printing the contents of the `depends` file. Searching for which package owns a file is as simple as checking each `manifest` file.
+When a built package is installed, this entire directory tree is copied to `/var/db/kiss` where it becomes a database entry. Listing the dependencies for a package is a simple as printing the contents of the `depends` file. Searching for which package owns a file is as simple as checking each `manifest` file.
 
 This new structure also allows the package manager to be stupid simple. POSIX `sh` has no arrays. However, they are mimicked by looping over each line of each file. No more insecure `depends="pkg pkg pkg"` and `for pkg in $depends`.
 
@@ -42,13 +42,13 @@ This also means anyone can write a tool to manipulate the repository or even the
 
 <!-- vim-markdown-toc GFM -->
 
-* [Getting started with `puke`](#getting-started-with-puke)
-    * [`puke build pkg`](#puke-build-pkg)
-    * [`puke checksum pkg`](#puke-checksum-pkg)
-    * [`puke install pkg`](#puke-install-pkg)
-    * [`puke remove pkg`](#puke-remove-pkg)
-    * [`puke list` or `puke list pkg`](#puke-list-or-puke-list-pkg)
-    * [`puke update`](#puke-update)
+* [Getting started with `kiss`](#getting-started-with-kiss)
+    * [`kiss build pkg`](#kiss-build-pkg)
+    * [`kiss checksum pkg`](#kiss-checksum-pkg)
+    * [`kiss install pkg`](#kiss-install-pkg)
+    * [`kiss remove pkg`](#kiss-remove-pkg)
+    * [`kiss list` or `kiss list pkg`](#kiss-list-or-kiss-list-pkg)
+    * [`kiss update`](#kiss-update)
 * [The package format](#the-package-format)
     * [`build`](#build)
     * [`manifest`](#manifest)
@@ -63,11 +63,11 @@ This also means anyone can write a tool to manipulate the repository or even the
 <!-- vim-markdown-toc -->
 
 
-## Getting started with `puke`
+## Getting started with `kiss`
 
-Puke is a simple package manager written in POSIX `sh`. The package manager does not need to be added to your `PATH`. Instead it runs inside the packages repository, very similar to Void Linux's `xbps-src`.
+Kiss is a simple package manager written in POSIX `sh`. The package manager does not need to be added to your `PATH`. Instead it runs inside the packages repository, very similar to Void Linux's `xbps-src`.
 
-Puke has 6 different "operators".
+Kiss has 6 different "operators".
 
 - `build`: Build a package.
 - `checksum`: Generate checksums for a package.
@@ -76,29 +76,29 @@ Puke has 6 different "operators".
 - `list`: List installed packages.
 - `update`: List packages with available updates.
 
-### `puke build pkg`
+### `kiss build pkg`
 
-Puke's `build` operator handles a package from its source code to the installable `.tar.gz` file. Sources are downloaded, checksums are verified, dependencies are checked and the package is compiled then packaged.
+Kiss's `build` operator handles a package from its source code to the installable `.tar.gz` file. Sources are downloaded, checksums are verified, dependencies are checked and the package is compiled then packaged.
 
-### `puke checksum pkg`
+### `kiss checksum pkg`
 
-Puke's `checksum` operator generates the initial checksums for a package from every source in the `sources` file.
+Kiss's `checksum` operator generates the initial checksums for a package from every source in the `sources` file.
 
-### `puke install pkg`
+### `kiss install pkg`
 
-Puke's `install` operator takes the built `.tar.gz` file and installs it in the system. This is as simple as removing the old version of the package (*if it exists*) and unpacking the archive at `/`.
+Kiss's `install` operator takes the built `.tar.gz` file and installs it in the system. This is as simple as removing the old version of the package (*if it exists*) and unpacking the archive at `/`.
 
-### `puke remove pkg`
+### `kiss remove pkg`
 
-Puke's `remove` operator uninstalls a package from your system. Files and directories in `/etc` are untouched. Support for exclusions will come as they are needed.
+Kiss's `remove` operator uninstalls a package from your system. Files and directories in `/etc` are untouched. Support for exclusions will come as they are needed.
 
-### `puke list` or `puke list pkg`
+### `kiss list` or `kiss list pkg`
 
-Puke's `list` operator lists the installed packages and their versions. Giving `list` an argument will check if a singular package is installed.
+Kiss's `list` operator lists the installed packages and their versions. Giving `list` an argument will check if a singular package is installed.
 
-### `puke update`
+### `kiss update`
 
-Puke's `update` operator compares the repository versions of packages to the installed database versions of packages. Any mismatch in versions is considered a new upgrade from the repository.
+Kiss's `update` operator compares the repository versions of packages to the installed database versions of packages. Any mismatch in versions is considered a new upgrade from the repository.
 
 The `update` mechanism doesn't do a `git pull` of the repository. This must be done manually beforehand and is intentional. It allows the user to `git pull` selectively. You can slow down the distribution's package updates by limiting pulling to a week behind master for example.
 
@@ -107,7 +107,7 @@ The `update` mechanism doesn't do a `git pull` of the repository. This must be d
 
 ### `build`
 
-The `build` file should contain the necessary steps to patch, configure, build and install the package. The build script is sent a single argument. This argument points to the package directory. Whatever is in this directory will become part of the package's manifest and will be copied to `/` (or `$PUKE_ROOT`). The first argument is frequently used in `make DESTDIR="$1" install` for example.
+The `build` file should contain the necessary steps to patch, configure, build and install the package. The build script is sent a single argument. This argument points to the package directory. Whatever is in this directory will become part of the package's manifest and will be copied to `/` (or `$kiss_ROOT`). The first argument is frequently used in `make DESTDIR="$1" install` for example.
 
 The `build` file can be written in any language. The only requirement is that the file be executable.
 
@@ -125,24 +125,24 @@ make DESTDIR="$1" install
 
 The `manifest` file contains the built package's file and directory list. The full paths to files are listed first and the directories (*in reverse*) follow. This allows the package manager to remove the directories if they are empty without needing checks in-between.
 
-The manifest also includes the package's database entry. You can install the package with or without `puke` and it will be recognized.
+The manifest also includes the package's database entry. You can install the package with or without `kiss` and it will be recognized.
 
 ```
 /usr/share/man/man3/zlib.3
 /usr/include/zconf.h
 /usr/include/zlib.h
-/var/db/puke/zlib/sources
-/var/db/puke/zlib/manifest
-/var/db/puke/zlib/checksums
-/var/db/puke/zlib/build
-/var/db/puke/zlib/version
+/var/db/kiss/zlib/sources
+/var/db/kiss/zlib/manifest
+/var/db/kiss/zlib/checksums
+/var/db/kiss/zlib/build
+/var/db/kiss/zlib/version
 /lib/libz.so.1.2.11
 /lib/libz.so.1
 /lib/libz.so
 /lib/libz.a
 /lib/pkgconfig/zlib.pc
-/var/db/puke/zlib
-/var/db/puke
+/var/db/kiss/zlib
+/var/db/kiss
 /var/db
 /var
 /usr/share/man/man3
@@ -203,4 +203,4 @@ The `post-install` file should contain any steps required directly after the pac
 
 ### How do I change compiler options globally?
 
-All you need to do is define `CFLAGS`, `MAKEFLAGS` or equivalent in your environment. Either give it to `puke` directly (`CFLAGS=-O3 MAKEFLAGS=-j4 ./puke build zlib`) or set it in your shell's RC file.
+All you need to do is define `CFLAGS`, `MAKEFLAGS` or equivalent in your environment. Either give it to `kiss` directly (`CFLAGS=-O3 MAKEFLAGS=-j4 ./kiss build zlib`) or set it in your shell's RC file.

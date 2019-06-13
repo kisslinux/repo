@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# puke - package manager for kiss linux.
+# kiss - package manager for kiss linux.
 
 die() {
     printf '\033[31mERROR>\033[m %s\n' "$@" >&2
@@ -101,6 +101,8 @@ pkg_strip() {
         esac
 
         strip "$strip_opts" "$binary"
+        echo "${binary##*/}: $(stat -c %f "$binary"): $strip_opts: $(file -bi "$binary")"
+        sleep 1
     done
 }
 
@@ -196,8 +198,8 @@ main() {
 
     mkdir -p "${src_dir:=$PWD/sources}" \
              "${mak_dir:=$PWD/build}" \
-             "${pkg_db:=${pkg_dir:=$PWD/pkg}/var/db/puke}" \
-             "${sys_db:=${sys_dir:=$PUKE_ROOT}/var/db/puke}" \
+             "${pkg_db:=${pkg_dir:=$PWD/pkg}/var/db/$0}" \
+             "${sys_db:=${sys_dir:=$KISS_ROOT}/var/db/$0}" \
              "${bin_dir:=$PWD/bin}" \
              "${rep_dir:=$PWD/repo}" ||
              die "Couldn't create directories at $PWD."
