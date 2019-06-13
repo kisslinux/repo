@@ -2,6 +2,8 @@
 
 This is an alternative package system I am experimenting with. Instead of the usual `PKGBUILD`, `APKBUILD`, `xbps-template` and `Pkgfile` format, this repository explores a more unixy approach.
 
+**NOTE**: The package manager can be found here: [kiss](https://github.com/kissx/kiss)
+
 Each Package is split into multiple files.
 
 ```sh
