@@ -117,6 +117,7 @@ An optional destination field can be added to tell the package manager where to 
 https://www.openssl.org/source/openssl-X.X.X.tar.gz
 patches/fix-musl.patch
 https://www.openssl.org/source/openssl-X.X.X.tar.gz lib/example/
+git:https://github.com/dylanaraps/neofetch
 ```
 
 ### `depends`
