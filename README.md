@@ -122,11 +122,13 @@ git:https://github.com/dylanaraps/neofetch
 
 ### `depends`
 
-The `depends` file contains the package's dependencies one per line.
+The `depends` file contains the package's dependencies one per line. An optional field can be added to specify whether a dependency is needed at compile time. This may later be extended to allow for optional runtime dependencies.
+
+**NOTE**: A dependency without a secondary field is assumed to be a runtime dependency.
 
 ```
-zlib
-binutils
+zlib     make
+binutils make
 openssl
 ```
 
