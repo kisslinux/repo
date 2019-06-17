@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+mkdir -p "$1/usr"
+make headers_install INSTALL_HDR_PATH="$1/usr"
