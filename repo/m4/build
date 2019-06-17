@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < m4-1.4.18-glibc-change-work-around.patch
+
 ./configure \
     --prefix=/usr
 
