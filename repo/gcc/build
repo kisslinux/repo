@@ -1,25 +1,8 @@
 #!/bin/sh -e
 
-cd gcc
-
-patch -p1 < 0002-posix_memalign.patch
-patch -p1 < 0003-gcc-poison-system-directories.patch
-patch -p1 < 0008-s390x-muslldso.patch
-patch -p1 < 0010-ldbl128-config.patch
-patch -p1 < 0012-static-pie.patch
-patch -p1 < 0016-invalid_tls_model.patch
-patch -p1 < 005_all_default-as-needed.patch
-patch -p1 < 020_all_msgfmt-libstdc++-link.patch
-patch -p1 < 050_all_libiberty-asprintf.patch
-patch -p1 < 051_all_libiberty-pic.patch
-patch -p1 < 203-libgcc_s.patch
-patch -p1 < 320-libffi-gnulinux.patch
-patch -p1 < libgcc-always-build-gcceh.a.patch
-patch -p1 < libgnarl-musl.patch
-
 # Build must happen outside of gcc source.
-mkdir -p ../gcc-build
-cd ../gcc-build || return 1
+mkdir -p gcc-build
+cd gcc-build || return 1
 
 export libat_cv_have_ifunc=no
 
