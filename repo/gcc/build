@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+cd gcc
+
 patch -p1 < 0002-posix_memalign.patch
 patch -p1 < 0003-gcc-poison-system-directories.patch
 patch -p1 < 0008-s390x-muslldso.patch
@@ -21,31 +23,28 @@ cd ../gcc-build || return 1
 
 export libat_cv_have_ifunc=no
 
-"$OLDPWD/configure" \
---prefix=/usr \
---host=x86_64-linux-musl \
---build=x86_64-linux-musl \
---target=x86_64-linux-musl \
---disable-multilib \
---disable-symvers \
---disable-libmpx \
---disable-libmudflap \
---disable-libsanitizer \
---disable-nls \
---disable-werror \
---disable-fixed-point \
---disable-libstdcxx-pch \
---enable-checking=release \
---mandir=/usr/share/man \
---infodir=/usr/share/info \
---with-system-zlib \
---enable-__cxa_atexit \
---enable-default-pie \
---enable-default-ssp \
---enable-shared \
---enable-threads \
---enable-tls \
---enable-languages=c,c++
+../gcc/configure \
+    --prefix=/usr \
+    --disable-multilib \
+    --disable-symvers \
+    --disable-libmpx \
+    --disable-libmudflap \
+    --disable-libsanitizer \
+    --disable-nls \
+    --disable-werror \
+    --disable-fixed-point \
+    --disable-libstdcxx-pch \
+    --enable-checking=release \
+    --mandir=/usr/share/man \
+    --infodir=/usr/share/info \
+    --with-system-zlib \
+    --enable-__cxa_atexit \
+    --enable-default-pie \
+    --enable-default-ssp \
+    --enable-shared \
+    --enable-threads \
+    --enable-tls \
+    --enable-languages=c,c++
 
 make BOOT_CFLAGS='-O'
 make DESTDIR="$1" install

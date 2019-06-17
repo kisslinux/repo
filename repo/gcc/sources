@@ -1,15 +1,15 @@
-https://gcc.gnu.org/pub/gcc/releases/gcc-8.3.0/gcc-8.3.0.tar.xz
-patches/0002-posix_memalign.patch
-patches/0003-gcc-poison-system-directories.patch
-patches/0008-s390x-muslldso.patch
-patches/0010-ldbl128-config.patch
-patches/0012-static-pie.patch
-patches/0016-invalid_tls_model.patch
-patches/005_all_default-as-needed.patch
-patches/020_all_msgfmt-libstdc++-link.patch
-patches/050_all_libiberty-asprintf.patch
-patches/051_all_libiberty-pic.patch
-patches/203-libgcc_s.patch
-patches/320-libffi-gnulinux.patch
-patches/libgcc-always-build-gcceh.a.patch
-patches/libgnarl-musl.patch
+https://gcc.gnu.org/pub/gcc/releases/gcc-8.3.0/gcc-8.3.0.tar.xz gcc/
+patches/0002-posix_memalign.patch gcc/
+patches/0003-gcc-poison-system-directories.patch gcc/
+patches/0008-s390x-muslldso.patch gcc/
+patches/0010-ldbl128-config.patch gcc/
+patches/0012-static-pie.patch gcc/
+patches/0016-invalid_tls_model.patch gcc/
+patches/005_all_default-as-needed.patch gcc/
+patches/020_all_msgfmt-libstdc++-link.patch gcc/
+patches/050_all_libiberty-asprintf.patch gcc/
+patches/051_all_libiberty-pic.patch gcc/
+patches/203-libgcc_s.patch gcc/
+patches/320-libffi-gnulinux.patch gcc/
+patches/libgcc-always-build-gcceh.a.patch gcc/
+patches/libgnarl-musl.patch gcc/
