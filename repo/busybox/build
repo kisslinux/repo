@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-export LDFLAGS=--static
-
 make
 make install
 
