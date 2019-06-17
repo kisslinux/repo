@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+install -D kiss "$1/bin/kiss"

@@ -1,0 +1,11 @@
+/bin
+/bin/kiss
+/var
+/var/db
+/var/db/kiss
+/var/db/kiss/kiss
+/var/db/kiss/kiss/build
+/var/db/kiss/kiss/checksums
+/var/db/kiss/kiss/manifest
+/var/db/kiss/kiss/sources
+/var/db/kiss/kiss/version
