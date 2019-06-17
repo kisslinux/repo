@@ -1,0 +1,8 @@
+bison
+flex
+gmp
+mpfr
+mpc1
+zlib
+linux-headers
+binutils
