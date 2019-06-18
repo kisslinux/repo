@@ -7,3 +7,6 @@ patch -p1 < make-4.2.1.patch
 
 make
 make DESTDIR="$1" install
+
+# Remove all info files.
+rm -rf "$1/usr/share/info"
