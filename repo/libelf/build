@@ -1,8 +1,0 @@
-#!/bin/sh -e
-
-./configure \
-    --prefix=/usr \
-    --disable-nls
-
-make
-make prefix="$1/usr" install
