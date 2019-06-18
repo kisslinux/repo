@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+autoreconf -vif
+
+./configure \
+    --prefix=/usr \
+    --enable-ipv6 \
+    --enable-unix-sockets \
+    --enable-hidden-symbols \
+    --without-libidn \
+    --without-libidn2 \
+    --disable-manual \
+    --disable-ldap \
+    --disable-ares \
+    --without-libidn \
+    --without-librtmp \
+    --with-pic
+
+make
+make DESTDIR="$1" install
