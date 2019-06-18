@@ -1,0 +1,8 @@
+NAME="KISS Linux"
+PRETTY_NAME="KISS Linux"
+ID=kiss
+BUILD_ID=rolling
+HOME_URL="https://kissx.github.io"
+DOCUMENTATION_URL="https://github.com/kissx/kiss"
+SUPPORT_URL="https://github.com/kissx/kiss/issues"
+BUG_REPORT_URL="https://github.com/kissx/kiss/issues"
