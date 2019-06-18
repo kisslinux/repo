@@ -1,3 +1,0 @@
-ftp://ftp.gnu.org/gnu/sharutils/sharutils-4.15.2.tar.xz
-patches/CVE-2018-1000097.patch
-patches/fix-glibc-2.27.patch
