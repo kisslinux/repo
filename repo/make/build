@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < make-4.2.1.patch
+
 ./configure \
     --prefix=/usr
 
