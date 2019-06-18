@@ -3,9 +3,10 @@
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
-    --mandir=/usr/share/man \
-    --infodir=/usr/share/info \
     --enable-shared
 
 make
 make DESTDIR="$1" install
+
+# Remove all info files.
+rm -rf "$1/usr/share/info"
