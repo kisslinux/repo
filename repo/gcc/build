@@ -31,3 +31,6 @@ export libat_cv_have_ifunc=no
 
 make BOOT_CFLAGS='-O'
 make DESTDIR="$1" install
+
+# Remove all info files.
+rm -rf "$1/usr/share/info"
