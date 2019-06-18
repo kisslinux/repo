@@ -2,8 +2,6 @@
 
 ./configure \
     --prefix=/usr \
-    --mandir=/usr/share/man \
-    --infodir=/usr/share/info \
     --disable-static \
     --enable-shared \
     ac_cv_func_malloc_0_nonnull=yes \
@@ -11,3 +9,6 @@
 
 make
 make DESTDIR="$1" install
+
+# Remove all info files.
+rm -rf "$1/usr/share/info"

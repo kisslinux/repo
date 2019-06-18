@@ -2,8 +2,6 @@
 
 ./configure \
     --prefix=/usr \
-    --mandir=/usr/share/man \
-    --infodir=/usr/share/info \
     --enable-targets=x86_64-pep \
     --disable-multilib \
     --disable-werror \
@@ -13,3 +11,6 @@
 
 make
 make DESTDIR="$1" install
+
+# Remove all info files.
+rm -rf "$1/usr/share/info"
