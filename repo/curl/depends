@@ -1,5 +1,3 @@
-autoconf
-automake
 libressl
 perl
 zlib
