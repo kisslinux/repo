@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-autoreconf -vif
-
 ./configure \
     --prefix=/usr \
     --enable-ipv6 \
