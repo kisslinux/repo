@@ -1,5 +1,6 @@
-perl
-gmp
-flex
-bison
-libressl
+binutils make
+bison    make
+flex     make
+gmp      make
+libressl make
+perl     make
