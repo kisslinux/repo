@@ -35,3 +35,17 @@ BUILD_BZIP2=0
 
 make
 make DESTDIR="$1" install
+
+# Remove all .pod files except for those in:
+# /usr/share/perl5/core_perl/pod/
+for d in "$1/usr/share/perl5/core_perl/"*; do
+    [ -d "$d" ] && [ "${d##*/}" != pod ] && {
+        find "$d" -name "*.pod" -delete
+    }
+done
+
+# Ditto.
+rm -f "$1/usr/share/perl5/core_perl/"*.pod
+find "$1/usr/lib" -name \*.pod -delete
+find "$1" -name .packlist -delete
+
