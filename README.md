@@ -52,6 +52,7 @@ This also means anyone can write a tool to manipulate the repository or even the
     * [`depends`](#depends)
     * [`version`](#version)
     * [`checksums`](#checksums)
+    * [`licenses`](#licenses)
     * [`post-install`](#post-install)
 
 <!-- vim-markdown-toc -->
