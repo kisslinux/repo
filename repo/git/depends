@@ -1,6 +1,5 @@
 autoconf make
 curl
-expat
 libressl
 perl
 zlib
