@@ -1,4 +1,4 @@
-autoconf
+autoconf make
 curl
 libressl
 perl
