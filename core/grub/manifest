@@ -2,7 +2,6 @@
 /var/db/kiss/grub/sources
 /var/db/kiss/grub/patches/0008-Fix-packed-not-aligned-error-on-GCC-8.patch
 /var/db/kiss/grub/patches/
-/var/db/kiss/grub/nostrip
 /var/db/kiss/grub/manifest
 /var/db/kiss/grub/depends
 /var/db/kiss/grub/checksums
