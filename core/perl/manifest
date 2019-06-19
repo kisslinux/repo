@@ -1,6 +1,7 @@
 /var/db/kiss/perl/version
 /var/db/kiss/perl/sources
 /var/db/kiss/perl/manifest
+/var/db/kiss/perl/licenses
 /var/db/kiss/perl/depends
 /var/db/kiss/perl/checksums
 /var/db/kiss/perl/build
