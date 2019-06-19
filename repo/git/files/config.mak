@@ -1,6 +1,5 @@
 NO_GETTEXT=YesPlease
 NO_SVN_TESTS=YesPlease
 NO_TCLTK=YesPlease
-NO_EXPAT=YesPlease
 NO_NSEC=YesPlease
 NO_SYS_POLL_H=1
