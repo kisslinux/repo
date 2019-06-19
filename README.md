@@ -10,6 +10,7 @@ Each Package is split into multiple files.
 zlib/            # Package name.
 ├─ build         # Build script.
 ├─ depends       # Dependencies (one per line) (sometimes optional).
+├─ licenses      # Licenses (see below).
 ├─ sources       # Sources (one per line).
 ├─ version       # Package version.
 ┘
@@ -148,6 +149,28 @@ The `checksums` file contains the `sha256` sums of each entry in the `sources` f
 
 ```
 c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1  zlib-1.2.11.tar.gz
+```
+
+### `licenses`
+
+The `licenses` file contains the license(s) of the package. Licenses such as `GPL`, `AGPL`, `LGPL`, `MPL`, `Artistic`, `CDDL`, or `Apache` can be written with [SPDX Short Identifier](https://spdx.org/licenses/) one per line, but for license exceptions or copyright notice licenses such as `BSD`, `MIT`, or `ISC`, the copyright notice must be included verbatim.
+
+```
+GPL-3.0-or-later
+The ISC License
+Copyright <YEAR> <OWNER>
+
+Permission to use, copy, modify, and/or distribute this software for
+any purpose with or without fee is hereby granted, provided that the
+above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
 ### `post-install`
