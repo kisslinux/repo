@@ -24,3 +24,13 @@ build_grub() (
 
 build_grub --with-platform=pc
 build_grub --with-platform=efi --disable-efiemu
+
+# Remove gdb debugging files.
+(
+    cd "$pkg_dir"
+    rm -f usr/lib/grub/*/*.module
+    rm -f usr/lib/grub/*/*.image
+    rm -f usr/lib/grub/*/kernel.exec
+    rm -f usr/lib/grub/*/gdb_grub
+    rm -f usr/lib/grub/*/gmodule.pl
+) ||:
