@@ -36,4 +36,4 @@ make DESTDIR="$1" install
 rm -rf "$1/usr/share/info"
 
 # Some legacy programs will expect cc
-    ln -s gcc "$1/usr/bin/cc"
+ln -s gcc "$1/usr/bin/cc"
