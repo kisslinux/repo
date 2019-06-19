@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+patch -p1 < 0008-Fix-packed-not-aligned-error-on-GCC-8.patch
+
+./configure \
+    --sbindir=/usr/bin \
+    --disable-werror
+
+make
+make DESTDIR="$1" install
