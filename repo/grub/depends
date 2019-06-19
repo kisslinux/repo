@@ -1,3 +1,4 @@
-binutils make
-bison    make
-flex     make
+binutils      make
+bison         make
+flex          make
+linux-headers make
