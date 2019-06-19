@@ -1,14 +1,26 @@
 #!/bin/sh -e
 
-patch -p1 < 0008-Fix-packed-not-aligned-error-on-GCC-8.patch
+(cd grub; patch -p1 < 0008-Fix-packed-not-aligned-error-on-GCC-8.patch)
 
-./configure \
-    --prefix=/usr \
-    --sbindir=/usr/bin \
-    --disable-nls \
-    --disable-werror \
-    --with-platform=efi --disable-efiemu \
-    --with-platform=pc
+# Grub is built in a function so the script argument needs to be stored.
+pkg_dir=$1
 
-make
-make DESTDIR="$1" install
+build_grub() (
+    cp -R grub "grub-${1##*=}"
+    cd "grub-${1##*=}"
+
+    autoreconf -fi
+
+    ./configure \
+        --prefix=/usr \
+        --sbindir=/usr/bin \
+        --disable-nls \
+        --disable-werror \
+        "$@"
+
+    make
+    make DESTDIR="$pkg_dir" install
+)
+
+build_grub --with-platform=pc
+build_grub --with-platform=efi --disable-efiemu
