@@ -1,0 +1,14 @@
+/var/db/kiss/baseinit/version
+/var/db/kiss/baseinit/sources
+/var/db/kiss/baseinit/manifest
+/var/db/kiss/baseinit/licenses
+/var/db/kiss/baseinit/files/inittab
+/var/db/kiss/baseinit/files/
+/var/db/kiss/baseinit/checksums
+/var/db/kiss/baseinit/build
+/var/db/kiss/baseinit/
+/var/db/kiss/
+/var/db/
+/var/
+/etc/inittab
+/etc/
