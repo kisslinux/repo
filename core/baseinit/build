@@ -2,7 +2,7 @@
 
 install -dm 755 "$1/etc"
 
-for f in inittab; do
+for f in inittab rc.boot; do
     install -m 644 "$f" "$1/etc"
 done
 

@@ -2,6 +2,7 @@
 /var/db/kiss/baseinit/sources
 /var/db/kiss/baseinit/manifest
 /var/db/kiss/baseinit/licenses
+/var/db/kiss/baseinit/files/rc.boot
 /var/db/kiss/baseinit/files/inittab
 /var/db/kiss/baseinit/files/
 /var/db/kiss/baseinit/checksums
@@ -10,5 +11,6 @@
 /var/db/kiss/
 /var/db/
 /var/
+/etc/rc.boot
 /etc/inittab
 /etc/
