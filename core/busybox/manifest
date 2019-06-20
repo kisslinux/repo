@@ -1,6 +1,7 @@
 /var/db/kiss/busybox/version
 /var/db/kiss/busybox/sources
 /var/db/kiss/busybox/manifest
+/var/db/kiss/busybox/licenses
 /var/db/kiss/busybox/files/.config
 /var/db/kiss/busybox/files/
 /var/db/kiss/busybox/depends
@@ -262,7 +263,9 @@
 /sbin/runlevel
 /sbin/route
 /sbin/rmmod
+/sbin/reboot
 /sbin/raidautorun
+/sbin/poweroff
 /sbin/pivot_root
 /sbin/nameif
 /sbin/modprobe
@@ -288,12 +291,14 @@
 /sbin/ipaddr
 /sbin/ip
 /sbin/insmod
+/sbin/init
 /sbin/ifup
 /sbin/ifenslave
 /sbin/ifdown
 /sbin/ifconfig
 /sbin/hwclock
 /sbin/hdparm
+/sbin/halt
 /sbin/getty
 /sbin/fstrim
 /sbin/fsck.minix
