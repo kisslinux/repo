@@ -24,6 +24,7 @@ zlib/            # Package name.
 ├─ post_install  # Script to run after package installation.
 ├─ patches/*     # Directory to store patches.
 ├─ files/*       # Directory to misc files.
+├─ nostrip       # Don't strip binaries for this package (empty file).
 ┘
 ```
 
