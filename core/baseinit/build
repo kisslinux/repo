@@ -1,8 +1,9 @@
 #!/bin/sh -e
 
-install -dm 755 "$1/etc"
+mkdir -p "$1/etc/runit"
 
 for f in inittab rc.boot; do
     install -m 644 "$f" "$1/etc"
 done
 
+cp -R stages "$1/etc/runit"

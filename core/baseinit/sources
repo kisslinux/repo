@@ -1,2 +1,1 @@
-files/inittab
-files/rc.boot
+git:https://github.com/kissx/kiss-init
