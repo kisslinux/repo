@@ -8,13 +8,7 @@
 /var/db/kiss/
 /var/db/
 /var/
-/etc/runit/stages/04-sysctl.sh
-/etc/runit/stages/03-misc.sh
-/etc/runit/stages/02-filesystems.sh
-/etc/runit/stages/01-mdev.sh
-/etc/runit/stages/00-pseudo-filesystems.sh
-/etc/runit/stages/
-/etc/runit/
+/etc/rc.shutdown
 /etc/rc.boot
 /etc/inittab
 /etc/
