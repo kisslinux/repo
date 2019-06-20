@@ -48,9 +48,12 @@ done
 ln -s ../man "$1/usr/local/share/man"
 
 # /etc skeleton files.
-for f in crypttab fstab host.conf hosts issue os-release \
-         passwd profile securetty shadow shells; do
+for f in fstab host.conf hosts issue os-release \
+         passwd profile securetty shells; do
     install -m 644 "$f" "$1/etc"
+done
+for f in crypttab shadow; do
+    install -m 600 "$f" "$1/etc"
 done
 
 ln -s /proc/self/mounts "$1/etc/mtab"
