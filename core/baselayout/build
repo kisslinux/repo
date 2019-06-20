@@ -52,6 +52,7 @@ for f in fstab host.conf hosts issue os-release \
          passwd profile securetty shells; do
     install -m 644 "$f" "$1/etc"
 done
+
 for f in crypttab shadow; do
     install -m 600 "$f" "$1/etc"
 done
