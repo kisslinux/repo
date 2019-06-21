@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+autoreconf -fi
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install
