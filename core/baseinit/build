@@ -1,7 +1,3 @@
 #!/bin/sh -e
 
-mkdir -p "$1/etc"
-
-for f in src/*; do
-    install -m 644 "$f" "$1/etc"
-done
+cp -R etc "$1"

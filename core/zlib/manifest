@@ -1,6 +1,7 @@
 /var/db/kiss/zlib/version
 /var/db/kiss/zlib/sources
 /var/db/kiss/zlib/manifest
+/var/db/kiss/zlib/licenses
 /var/db/kiss/zlib/checksums
 /var/db/kiss/zlib/build
 /var/db/kiss/zlib/
