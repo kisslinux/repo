@@ -2,7 +2,7 @@
 
 # Build must happen outside of gcc source.
 mkdir -p gcc-build
-cd gcc-build || return 1
+cd gcc-build
 
 export libat_cv_have_ifunc=no
 
