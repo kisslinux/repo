@@ -302,13 +302,11 @@
 /sbin/fsck.minix
 /sbin/fsck
 /sbin/freeramdisk
-/sbin/findfs
 /sbin/fdisk
 /sbin/fbsplash
 /sbin/devmem
 /sbin/depmod
 /sbin/blockdev
-/sbin/blkid
 /sbin/arp
 /sbin/adjtimex
 /sbin/acpid
