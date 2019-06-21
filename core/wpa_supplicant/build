@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+patch -p1 < libressl.patch
+
+cd wpa_supplicant
+cp ../.config .
+
+make LIBDIR=/usr/lib BINDIR=/usr/bin
+make LIBDIR=/usr/lib BINDIR=/usr/bin  DESTDIR="$1" install
