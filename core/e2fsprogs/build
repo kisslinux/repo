@@ -2,8 +2,12 @@
 
 export CFLAGS="$CFLAGS -static"
 
+# Build using private libuuid and libblkid libraries as
+# KISS uses util-linux from busybox.
 ./configure \
     --enable-symlink-install \
+    --enable-libuuid \
+    --enable-libblkid \
     --disable-uuidd \
     --disable-elf-shlibs \
     --disable-fsck \
