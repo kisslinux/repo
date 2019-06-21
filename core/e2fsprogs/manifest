@@ -23,6 +23,7 @@
 /usr/share/man/man8/fsck.ext4.8
 /usr/share/man/man8/fsck.ext3.8
 /usr/share/man/man8/fsck.ext2.8
+/usr/share/man/man8/findfs.8
 /usr/share/man/man8/filefrag.8
 /usr/share/man/man8/e4defrag.8
 /usr/share/man/man8/e4crypt.8
@@ -36,6 +37,7 @@
 /usr/share/man/man8/e2freefrag.8
 /usr/share/man/man8/dumpe2fs.8
 /usr/share/man/man8/debugfs.8
+/usr/share/man/man8/blkid.8
 /usr/share/man/man8/badblocks.8
 /usr/share/man/man8/
 /usr/share/man/man5/mke2fs.conf.5
@@ -44,6 +46,7 @@
 /usr/share/man/man5/ext2.5
 /usr/share/man/man5/e2fsck.conf.5
 /usr/share/man/man5/
+/usr/share/man/man3/libblkid.3
 /usr/share/man/man3/com_err.3
 /usr/share/man/man3/
 /usr/share/man/man1/mk_cmds.1
@@ -66,11 +69,13 @@
 /usr/lib/pkgconfig/ext2fs.pc
 /usr/lib/pkgconfig/e2p.pc
 /usr/lib/pkgconfig/com_err.pc
+/usr/lib/pkgconfig/blkid.pc
 /usr/lib/pkgconfig/
 /usr/lib/libss.a
 /usr/lib/libext2fs.a
 /usr/lib/libe2p.a
 /usr/lib/libcom_err.a
+/usr/lib/libblkid.a
 /usr/lib/e2initrd_helper
 /usr/lib/
 /usr/include/ss/ss.h
@@ -93,6 +98,9 @@
 /usr/include/e2p/e2p.h
 /usr/include/e2p/
 /usr/include/com_err.h
+/usr/include/blkid/blkid_types.h
+/usr/include/blkid/blkid.h
+/usr/include/blkid/
 /usr/include/
 /usr/bin/mk_cmds
 /usr/bin/lsattr
@@ -110,6 +118,7 @@
 /sbin/fsck.ext4
 /sbin/fsck.ext3
 /sbin/fsck.ext2
+/sbin/findfs
 /sbin/e2undo
 /sbin/e2scrub_all
 /sbin/e2scrub
@@ -119,6 +128,7 @@
 /sbin/e2fsck
 /sbin/dumpe2fs
 /sbin/debugfs
+/sbin/blkid
 /sbin/badblocks
 /sbin/
 /etc/mke2fs.conf
