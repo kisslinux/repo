@@ -1,5 +1,7 @@
 /var/db/kiss/libnl3/version
 /var/db/kiss/libnl3/sources
+/var/db/kiss/libnl3/patches/musl-ipv6.patch
+/var/db/kiss/libnl3/patches/
 /var/db/kiss/libnl3/manifest
 /var/db/kiss/libnl3/licenses
 /var/db/kiss/libnl3/checksums
