@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
+# Fix issues on musl.
 patch -p0 < musl-ipv6.patch
 sed -i '/<linux\/if_bridge.h>/i#define _LINUX_IN6_H' lib/route/link/bridge.c
 
