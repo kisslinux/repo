@@ -273,8 +273,6 @@
 /sbin/mkswap
 /sbin/mkfs.vfat
 /sbin/mkfs.minix
-/sbin/mkfs.ext2
-/sbin/mke2fs
 /sbin/mkdosfs
 /sbin/mdev
 /sbin/makedevs
