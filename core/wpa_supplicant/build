@@ -3,7 +3,7 @@
 patch -p1 < libressl.patch
 
 cd wpa_supplicant
-cp ../.config .
+mv ../.config .
 
 make LIBDIR=/usr/lib BINDIR=/usr/bin
 make LIBDIR=/usr/lib BINDIR=/usr/bin  DESTDIR="$1" install
