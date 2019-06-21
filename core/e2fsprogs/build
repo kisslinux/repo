@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+./configure \
+    --enable-symlink-install \
+    --disable-fsck \
+    --disable-uuidd \
+    --disable-libuuid \
+    --disable-libblkid \
+    --disable-nls
+
+make
+make DESTDIR="$1" install
+make DESTDIR="$1" install-libs
+
+# Make static libraries writable (for strip).
+chmod -v u+w "$1/usr/lib/libcom_err.a" \
+             "$1/usr/lib/libe2p.a" \
+             "$1/usr/lib/libext2fs.a" \
+             "$1/usr/lib/libss.a"
+
+# Remove all info files.
+rm -rf "$1/usr/share/info"
