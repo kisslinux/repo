@@ -2,15 +2,13 @@
 
 ./configure \
     --enable-symlink-install \
+    --disable-elf-shlibs \
     --disable-fsck \
-    --disable-uuidd \
-    --disable-libuuid \
-    --disable-libblkid \
     --disable-nls
 
+# MKDIR_P fixes an install issue on musl/busybox.
 make
-make DESTDIR="$1" install
-make DESTDIR="$1" install-libs
+make MKDIR_P="install -d" DESTDIR="$1" install install-libs
 
 # Make static libraries writable (for strip).
 chmod -v u+w "$1/usr/lib/libcom_err.a" \
