@@ -2,7 +2,7 @@
 
 ./configure \
     --prefix=/usr \
-    --program-prefix=eu-
+    --disable-nls
 
 make
-make DESTDIR="$1" install
+make prefix="$1/usr" install
