@@ -48,4 +48,3 @@ done
 rm -f "$1/usr/share/perl5/core_perl/"*.pod
 find "$1/usr/lib" -name \*.pod -delete
 find "$1" -name .packlist -delete
-

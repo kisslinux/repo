@@ -8,6 +8,13 @@
 /var/db/kiss/
 /var/db/
 /var/
+/etc/sv/udhcpc/supervise
+/etc/sv/udhcpc/run
+/etc/sv/udhcpc/
+/etc/sv/acpid/supervise
+/etc/sv/acpid/run
+/etc/sv/acpid/
+/etc/sv/
 /etc/rc.shutdown
 /etc/rc.boot
 /etc/inittab
