@@ -71,8 +71,6 @@
 /usr/sbin/addgroup
 /usr/sbin/
 /usr/bin/yes
-/usr/bin/xzcat
-/usr/bin/xz
 /usr/bin/xxd
 /usr/bin/xargs
 /usr/bin/whois
@@ -90,10 +88,8 @@
 /usr/bin/users
 /usr/bin/uptime
 /usr/bin/unzip
-/usr/bin/unxz
 /usr/bin/unshare
 /usr/bin/unlzop
-/usr/bin/unlzma
 /usr/bin/unlink
 /usr/bin/unix2dos
 /usr/bin/uniq
@@ -174,8 +170,6 @@
 /usr/bin/md5sum
 /usr/bin/man
 /usr/bin/lzopcat
-/usr/bin/lzma
-/usr/bin/lzcat
 /usr/bin/lsusb
 /usr/bin/lsscsi
 /usr/bin/lspci
