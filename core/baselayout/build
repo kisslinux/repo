@@ -29,7 +29,7 @@ ln -s usr/lib "$1/lib64"
 ln -s lib     "$1/usr/lib64"
 
 # Setup /var.
-for d in cache local opt log/old lib/misc empty; do
+for d in cache local opt log/old lib/misc empty service; do
     install -dm 755 "$1/var/$d"
 done
 
