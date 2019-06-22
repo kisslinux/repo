@@ -1,6 +1,7 @@
 /var/tmp/
 /var/spool/mail/
 /var/spool/
+/var/service/
 /var/run
 /var/opt/
 /var/mail
@@ -14,6 +15,7 @@
 /var/db/kiss/baselayout/version
 /var/db/kiss/baselayout/sources
 /var/db/kiss/baselayout/manifest
+/var/db/kiss/baselayout/licenses
 /var/db/kiss/baselayout/files/shells
 /var/db/kiss/baselayout/files/shadow
 /var/db/kiss/baselayout/files/securetty
