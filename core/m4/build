@@ -10,3 +10,6 @@ make DESTDIR="$1" install
 
 # Remove all info files.
 rm -rf "$1/usr/share/info"
+
+# Remove conflicting file.
+rm "$1/usr/lib/charset.alias"
