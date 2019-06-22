@@ -5,6 +5,7 @@ mkdir -p gcc-build
 cd gcc-build
 
 export libat_cv_have_ifunc=no
+machine=$(gcc -dumpmachine)
 
 ../gcc/configure \
     --prefix=/usr \
@@ -27,7 +28,10 @@ export libat_cv_have_ifunc=no
     --enable-shared \
     --enable-threads \
     --enable-tls \
-    --enable-languages=c,c++
+    --enable-languages=c,c++ \
+    --build="$machine" \
+    --target="$machine" \
+    --host="$machine"
 
 make BOOT_CFLAGS='-O'
 make DESTDIR="$1" install
