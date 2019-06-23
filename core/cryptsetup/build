@@ -2,6 +2,7 @@
 
 ./configure \
     --prefix=/usr \
+    --disable-selinux \
     --enable-static-cryptsetup \
     --disable-blkid
 
