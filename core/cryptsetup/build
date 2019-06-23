@@ -5,11 +5,9 @@ machine=$(gcc -dumpmachine)
 ./configure \
     --prefix=/usr \
     --build="$machine" \
-    --target="$machine" \
     --host="$machine" \
     --disable-selinux \
     --enable-static-cryptsetup \
-    --enable-libargon2 \
     --disable-blkid
 
 make
