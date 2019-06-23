@@ -67,6 +67,7 @@
 /usr/include/archive.h
 /usr/include/archive_entry.h
 /usr/include/
+/usr/bin/tar
 /usr/bin/bsdtar
 /usr/bin/bsdcpio
 /usr/bin/bsdcat
