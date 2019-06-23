@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --disable-nls \
+    --with-ignore-dot \
+    --with-insults=disabled \
+    --with-all-insults \
+    --without-sendmail \
+    --with-logfac=auth \
+    --disable-root-mailer \
+    --enable-pie \
+    --with-passprompt="[sudo] password for %p: "
+
+make
+make DESTDIR="$1" install
