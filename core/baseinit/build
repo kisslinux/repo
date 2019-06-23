@@ -1,3 +1,4 @@
 #!/bin/sh -e
 
 cp -R etc "$1"
+cp -R lib "$1"

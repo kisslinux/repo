@@ -8,6 +8,10 @@
 /var/db/kiss/
 /var/db/
 /var/
+/lib/init/rc.shutdown
+/lib/init/rc.boot
+/lib/init/
+/lib/
 /etc/sv/udhcpc/supervise
 /etc/sv/udhcpc/run
 /etc/sv/udhcpc/
@@ -15,7 +19,5 @@
 /etc/sv/acpid/run
 /etc/sv/acpid/
 /etc/sv/
-/etc/rc.shutdown
-/etc/rc.boot
 /etc/inittab
 /etc/
