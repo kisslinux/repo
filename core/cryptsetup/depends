@@ -1,2 +1,3 @@
 lvm2
-popt
+popt   make
+json-c make
