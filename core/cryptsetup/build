@@ -2,7 +2,8 @@
 
 ./configure \
     --prefix=/usr \
-    --enable-static-cryptsetup
+    --enable-static-cryptsetup \
+    --disable-blkid
 
 make
 make DESTDIR="$1" install
