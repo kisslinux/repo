@@ -6,8 +6,6 @@ machine=$(gcc -dumpmachine)
     --prefix=/usr \
     --build="$machine" \
     --host="$machine" \
-    --disable-selinux \
-    --enable-static-cryptsetup \
     --disable-blkid
 
 make
