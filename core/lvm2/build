@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 patch -p1 < portability.patch
+patch -p1 < fix-stdio-usage.patch
 
 ./configure \
     --prefix=/usr \
