@@ -4,6 +4,7 @@
     --prefix=/usr \
     --disable-selinux \
     --enable-static-cryptsetup \
+    --enable-libargon2 \
     --disable-blkid
 
 make
