@@ -1,9 +1,12 @@
 #!/bin/sh -e
 
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --without-xml2 \
+    --disable-rpath
 
 make
 make DESTDIR="$1" install
 
-ln -s "$1/usr/bin/bsdtar" "$1/usr/bin/tar"
+(cd "$1/usr/bin"; ln -s bsdtar "$1/usr/bin/tar")
+
