@@ -5,3 +5,5 @@
 
 make
 make DESTDIR="$1" install
+
+ln -s "$1/usr/bin/bsdtar" "$1/usr/bin/tar"
