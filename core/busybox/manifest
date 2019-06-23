@@ -314,7 +314,6 @@
 /bin/umount
 /bin/true
 /bin/touch
-/bin/tar
 /bin/sync
 /bin/su
 /bin/stty
