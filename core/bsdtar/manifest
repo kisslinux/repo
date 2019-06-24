@@ -2,6 +2,7 @@
 /var/db/kiss/bsdtar/sources
 /var/db/kiss/bsdtar/manifest
 /var/db/kiss/bsdtar/licenses
+/var/db/kiss/bsdtar/depends
 /var/db/kiss/bsdtar/checksums
 /var/db/kiss/bsdtar/build
 /var/db/kiss/bsdtar/
