@@ -8,5 +8,4 @@
 make
 make DESTDIR="$1" install
 
-(cd "$1/usr/bin"; ln -s bsdtar "$1/usr/bin/tar")
-
+ln -s bsdtar "$1/usr/bin/tar"
