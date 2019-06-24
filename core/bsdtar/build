@@ -6,6 +6,14 @@
     --disable-rpath
 
 make
+
+# Since --enable-bsdtar=static doesn't work, link it manually
+ld -static -o bsdtar tar/bsdtar-bsdtar.o tar/bsdtar-cmdline.o \
+    tar/bsdtar-creation_set.o tar/bsdtar-read.o tar/bsdtar-subst.o \
+    tar/bsdtar-util.o tar/bsdtar-write.o /usr/lib/crt1.o \
+    .libs/libarchive.a .libs/libarchive_fe.a /usr/lib/libz.a \
+    /usr/lib/libcrypto.a /usr/lib/liblzma.a /usr/lib/libc.a
+
 make DESTDIR="$1" install
 
 ln -s bsdtar "$1/usr/bin/tar"
