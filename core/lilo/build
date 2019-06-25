@@ -1,9 +1,0 @@
-#!/bin/sh -e
-
-install -dm0755 "$1/etc"
-install -m644 lilo.conf "$1/etc/lilo.conf"
-
-patch -p1 < lilo-24.1-remove__GLIBC__.patch
-
-make all
-make DESTDIR="$1" install
