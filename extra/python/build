@@ -1,7 +1,12 @@
 #!/bin/sh -e
 
+# Force system libs
+rm -r Modules/_ctypes/darwin* \
+      Modules/_ctypes/libffi*
+
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --with-system-ffi
 
 make
 make DESTDIR="$1" install
