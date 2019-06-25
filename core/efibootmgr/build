@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < efivar.patch
+
 make EXTRA_CFLAGS=-Os EFIDIR=/boot/EFI
 
 install -d "$1/usr/bin/"
