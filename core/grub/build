@@ -33,7 +33,5 @@ build_grub --with-platform=efi --disable-efiemu
     rm -f usr/lib/grub/*/kernel.exec
     rm -f usr/lib/grub/*/gdb_grub
     rm -f usr/lib/grub/*/gmodule.pl
+    rm -f usr/lib/charset.alias
 ) ||:
-
-# Remove conflicting file.
-rm "$1/usr/lib/charset.alias"
