@@ -6,3 +6,5 @@
 
 make
 make DESTDIR="$1" install
+
+ln -s python3 "$1/usr/bin/python"
