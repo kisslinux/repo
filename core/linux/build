@@ -1,16 +1,16 @@
 #!/bin/sh -e
 
-mkdir -p "$1/boot" "$1/lib/modules"
+mkdir -p "$1/boot" "$1/usr/lib/modules"
 
 make defconfig
 make
 
 make \
     INSTALL_PATH="$1/boot" \
-    INSTALL_MOD_PATH="$1" \
+    INSTALL_MOD_PATH="$1/usr" \
     modules_install
 
 make \
     INSTALL_PATH="$1/boot" \
-    INSTALL_MOD_PATH="$1" \
+    INSTALL_MOD_PATH="$1/usr" \
     install
