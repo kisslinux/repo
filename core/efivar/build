@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+make libdir=/usr/lib/ \
+     bindir=/usr/bin/ \
+     mandir=/usr/share/man/ \
+     includedir=/usr/include/
+
+make libdir=/usr/lib/ \
+     bindir=/usr/bin/ \
+     mandir=/usr/share/man/ \
+     includedir=/usr/include/ \
+     DESTDIR="$1" \
+     install
