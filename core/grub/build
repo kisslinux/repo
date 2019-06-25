@@ -9,7 +9,8 @@ build_grub() (
     cp -R grub "grub-${1##*=}"
     cd "grub-${1##*=}"
 
-    autoreconf -fi
+    rm autogen.sh
+    rm gentpl.py
 
     ./configure \
         --prefix=/usr \
