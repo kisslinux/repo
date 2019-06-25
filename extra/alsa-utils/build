@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+./configure \
+    --disable-alsaconf \
+    --disable-bat   \
+    --disable-nls   \
+    --disable-xmlto \
+    --without-debug \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install

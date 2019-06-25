@@ -1,0 +1,21 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --mandir=/usr/share/man \
+    --enable-pc-files \
+    --disable-rpath-hack \
+    --with-pkg-config-libdir=/usr/lib/pkgconfig \
+    --with-shared \
+    --enable-widec \
+    --without-ada \
+    --without-tests \
+    --without-debug \
+    --without-cxx-binding
+
+make
+make DESTDIR="$1" install
+
+# These conflict with busybox's.
+rm -f "$1/usr/bin/clear"
+rm -f "$1/usr/bin/reset"
