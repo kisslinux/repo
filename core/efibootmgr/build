@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+make EXTRA_CFLAGS=-Os EFIDIR=/boot/EFI
+
+install -d "$1/usr/bin/"
+install -Dm0755 efibootmgr/src/efibootmgr "$1/usr/bin/efibootmgr"
+
+install -d "$1/usr/share/man/man8/"
+install -Dm0644 efibootmgr/src/efibootmgr.8 "$1/usr/share/man/man8/efibootmgr.8"
