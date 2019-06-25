@@ -86,6 +86,7 @@
 /etc/issue
 /etc/hosts
 /etc/host.conf
+/etc/group
 /etc/fstab
 /etc/crypttab
 /etc/
