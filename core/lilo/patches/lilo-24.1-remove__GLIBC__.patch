@@ -1,0 +1,11 @@
+diff -Naur lilo-24.1.orig/src/lilo.c lilo-24.1/src/lilo.c
+--- lilo-24.1.orig/src/lilo.c	2014-10-16 20:06:46.000000000 -0400
++++ lilo-24.1/src/lilo.c	2015-07-18 22:16:32.776066238 -0400
+@@ -182,7 +182,6 @@
+                 printf("Without");
+ #endif
+                 printf(" device-mapper\n");
+-		printf("\nglibc version %d.%d\n", __GLIBC__, __GLIBC_MINOR__);
+ 		printf("Kernel Headers included from  %d.%d.%d\n",
+ 			LINUX_VERSION_CODE>>16,
+ 			LINUX_VERSION_CODE>>8 & 255,
