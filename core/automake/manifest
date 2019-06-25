@@ -1,6 +1,7 @@
 /var/db/kiss/automake/version
 /var/db/kiss/automake/sources
 /var/db/kiss/automake/manifest
+/var/db/kiss/automake/licenses
 /var/db/kiss/automake/depends
 /var/db/kiss/automake/checksums
 /var/db/kiss/automake/build
