@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+tar xf Clover-v2.4k-4972-X64.iso EFI
+
+install -dm755 "$1/boot"
+install -dm755 "$1/usr/share/doc"
+
+cp -a EFI "$1/boot"
+rm -r "$1/boot/EFI/BOOT"
+mv -f "$1/boot/EFI/CLOVER/doc" "$1/usr/share/doc/clover-efi"
