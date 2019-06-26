@@ -8,10 +8,11 @@
 /var/db/kiss/
 /var/db/
 /var/
-/lib/init/rc.shutdown
-/lib/init/rc.boot
-/lib/init/
-/lib/
+/usr/lib/init/rc.shutdown
+/usr/lib/init/rc.boot
+/usr/lib/init/
+/usr/lib/
+/usr/
 /etc/sv/udhcpc/supervise
 /etc/sv/udhcpc/run
 /etc/sv/udhcpc/
