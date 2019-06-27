@@ -8,9 +8,9 @@ cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_BUILD_LLVM_DYLIB=ON \
     -DLLVM_LINK_LLVM_DYLIB=ON \
-    -DLLVM_TARGETS_TO_BUILD="host;X86" \
+    -DLLVM_TARGETS_TO_BUILD="host;X86;amdgpu" \
     -DLLVM_ENABLE_RTTI=ON \
-    -Wno-dev -G Ninja ..
+    -Wno-dev -G "Unix Makefiles" ..
 
-ninja
-DESTDIR="$1" ninja install
+make -j "$(nproc || echo 2)"
+make DESTDIR="$1" install
