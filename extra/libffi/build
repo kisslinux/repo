@@ -1,6 +1,9 @@
 #!/bin/sh -e
 
-./configure --prefix=/usr
+./configure \
+    --prefix=/usr \
+    --includedir=/usr/include \
+    --with-pic
 
 make
 make DESTDIR="$1" install
