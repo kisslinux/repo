@@ -2,6 +2,10 @@
 
 meson \
     --prefix=/usr \
+    --sysconfdir=/etc \
+    --mandir=/usr/share/man \
+    --localstatedir=/var \
+    --buildtype=release \
     . output
 
 ninja -C output
