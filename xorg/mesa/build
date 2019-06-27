@@ -6,8 +6,7 @@ meson \
     --mandir=/usr/share/man \
     --localstatedir=/var \
     --buildtype=release \
-    --platforms=x11,drm \
-    --valgrind=false \
+    -Dplatforms=x11,drm \
     . output
 
 ninja -C output
