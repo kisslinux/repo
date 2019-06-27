@@ -1,1 +1,16 @@
 #!/bin/sh -e
+
+mkdir -p build
+cd build
+
+cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DLLVM_BUILD_LLVM_DYLIB=ON \
+    -DLLVM_LINK_LLVM_DYLIB=ON \
+    -DLLVM_TARGETS_TO_BUILD="host;X86" \
+    -DLLVM_ENABLE_RTTI=ON \
+    -Wno-dev -G Ninja ..
+
+ninja
+DESTDIR="$1" ninja install
