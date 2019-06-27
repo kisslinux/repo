@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --with-fontrootdir=/usr/share/fonts/X11
+
+make
+make DESTDIR="$1" install
