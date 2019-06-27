@@ -7,3 +7,4 @@ make
 make DESTDIR="$1" install
 
 ln -s python3 "$1/usr/bin/python"
+rm "$1/usr/bin/easy_install-3.6"
