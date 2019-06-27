@@ -1,4 +1,5 @@
 bison       make
+expat       make
 flex        make
 libX11      make
 libdrm      make
