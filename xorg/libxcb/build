@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+sed "s|pthread-stubs ||" -i configure.ac
+autoreconf -fi
+
+./configure \
+    --prefix=/usr \
+    --disable-build-docs
+
+make
+make DESTDIR="$1" install

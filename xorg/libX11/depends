@@ -1,2 +1,3 @@
+libxcb    make
 xorgproto make
 xtrans    make
