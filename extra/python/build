@@ -6,8 +6,7 @@ rm -r Modules/_ctypes/darwin*
 rm -r Modules/_ctypes/libffi*
 
 ./configure \
-    --prefix=/usr \
-    --without-ensurepip
+    --prefix=/usr
 
 make
 make DESTDIR="$1" install
