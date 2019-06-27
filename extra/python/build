@@ -1,7 +1,8 @@
 #!/bin/sh -e
 
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --without-ensurepip
 
 make
 make DESTDIR="$1" install
