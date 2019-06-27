@@ -1,2 +1,3 @@
-pixman make
+libX11 make
 libdrm make
+pixman make

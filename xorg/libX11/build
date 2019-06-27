@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+CFLAGS_FOR_BUILD=-fPIC \
+./configure \
+    --prefix=/usr \
+    --enable-static
+
+make
+make DESTDIR="$1" install
