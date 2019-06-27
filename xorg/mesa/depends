@@ -3,6 +3,7 @@ expat        make
 flex         make
 libX11       make
 libXext      make
+libXrandr    make
 libXxf86vm   make
 libdrm       make
 libxcb       make
