@@ -1,3 +1,4 @@
-xorgproto make
-xtrans    make
-freetype  make
+freetype   make
+libfontenc make
+xorgproto  make
+xtrans     make
