@@ -1,14 +1,7 @@
 #!/bin/sh -e
 
-rm -rf Modules/zlib
-rm -rf Modules/expat
-rm -rf Modules/_ctypes/darwin*
-rm -rf Modules/_ctypes/libffi*
-
 ./configure \
-    --prefix=/usr \
-    --with-system-expat \
-    --with-system-ffi
+    --prefix=/usr
 
 make
 make DESTDIR="$1" install
