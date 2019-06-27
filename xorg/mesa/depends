@@ -9,6 +9,8 @@ libXxf86vm   make
 libdrm       make
 libxcb       make
 libxshmfence make
+meson        make
+ninja        make
 python       make
 python-mako  make
 xorgproto    make
