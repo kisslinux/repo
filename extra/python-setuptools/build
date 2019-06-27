@@ -9,3 +9,5 @@ python3 setup.py install \
     --root="$1" \
     --optimize=1 \
     --skip-build
+
+rm -f "$1/usr/bin/easy_install"*
