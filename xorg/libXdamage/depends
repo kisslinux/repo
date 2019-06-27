@@ -1,2 +1,3 @@
-xorgproto
-libX11
+xorgproto make
+libX11    make
+libXfixes make
