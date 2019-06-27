@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+# Use autotools to build mesa.
+# Meson has no ability to disable 'gettext'.
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
