@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+export SETUPTOOLS_INSTALL_WINDOWS_SPECIFIC_FILES=0
+
 python3 bootstrap.py
 python3 setup.py build
 python3 setup.py install \
