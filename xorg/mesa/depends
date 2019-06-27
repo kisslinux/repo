@@ -2,6 +2,7 @@ bison       make
 expat       make
 flex        make
 libX11      make
+libXext     make
 libdrm      make
 libxcb      make
 python      make
