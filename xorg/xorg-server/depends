@@ -3,3 +3,5 @@ libXfont2  make
 libdrm     make
 libxkbfile make
 pixman     make
+mesa       make
+libressl   make
