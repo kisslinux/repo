@@ -2,7 +2,16 @@
 
 ./configure \
     --prefix=/usr \
-    --with-included-gettext
+    --with-included-gettext \
+    --without-examples \
+    --disable-java \
+    --disable-native-java \
+    --disable-csharp \
+    --disable-libasprintf \
+    --disable-acl \
+    --without-git \
+    --disable-openmp \
+    --disable-curses
 
 make
 make DESTDIR="$1" install
