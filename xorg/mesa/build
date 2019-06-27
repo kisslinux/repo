@@ -1,16 +1,16 @@
 #!/bin/sh -e
 
-patch -p1 < musl.patch
-
-# Use autotools to build mesa.
-# Meson has no ability to disable 'gettext'.
-./configure \
+meson \
     --prefix=/usr \
     --sysconfdir=/etc \
     --mandir=/usr/share/man \
     --localstatedir=/var \
-    --with-platforms=x11,drm \
-    --enable-autotools
+    --buildtype=release \
+    --platforms=x11,drm \
+    --valgrind=false \
+    . output
 
-make
-make DESTDIR="$1" install
+ninja -C output
+
+DESTDIR="$1" ninja -C output install
+
