@@ -1,4 +1,3 @@
 libX11 make
 libdrm make
 pixman make
-xproto make
