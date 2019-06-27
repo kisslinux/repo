@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < musl.patch
+
 # Use autotools to build mesa.
 # Meson has no ability to disable 'gettext'.
 ./configure \
