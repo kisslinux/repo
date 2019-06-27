@@ -2,3 +2,4 @@ libX11     make
 libdrm     make
 pixman     make
 libxkbfile make
+libXfont2  make
