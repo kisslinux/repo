@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+CFLAGS="$CFLAGS -DDEFAULT_TT_INTERPRETER_VERSION=TT_INTERPRETER_VERSION_40" \
+./configure \
+    --prefix=/usr \
+    --enable-freetype-config
+
+make
+make DESTDIR="$1" install
