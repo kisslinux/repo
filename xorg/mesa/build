@@ -5,7 +5,6 @@
     --sysconfdir=/etc \
     --mandir=/usr/share/man \
     --localstatedir=/var \
-    --buildtype=release \
     --with-platforms=x11,drm
 
 make
