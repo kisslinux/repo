@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+ls
+./configure \
+    --prefix=/usr \
+    --disable-valgrind
+
+make
+make DESTDIR="$1" install
