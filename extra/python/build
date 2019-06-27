@@ -1,5 +1,10 @@
 #!/bin/sh -e
 
+rm -r Modules/zlib
+rm -r Modules/expat
+rm -r Modules/_ctypes/darwin*
+rm -r Modules/_ctypes/libffi*
+
 ./configure \
     --prefix=/usr \
     --without-ensurepip
