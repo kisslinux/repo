@@ -6,7 +6,9 @@ rm -rf Modules/_ctypes/darwin*
 rm -rf Modules/_ctypes/libffi*
 
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --with-system-expat \
+    --with-system-ffi
 
 make
 make DESTDIR="$1" install
