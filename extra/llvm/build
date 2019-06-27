@@ -8,7 +8,7 @@ cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_BUILD_LLVM_DYLIB=ON \
     -DLLVM_LINK_LLVM_DYLIB=ON \
-    -DLLVM_TARGETS_TO_BUILD="host;X86;amdgpu" \
+    -DLLVM_TARGETS_TO_BUILD="host;X86;AMDGPU" \
     -DLLVM_ENABLE_RTTI=ON \
     -Wno-dev -G "Unix Makefiles" ..
 
