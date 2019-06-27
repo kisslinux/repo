@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+meson \
+    --prefix=/usr \
+    . output
+
+ninja -C output
+
+DESTDIR="$1" ninja -C output install
+
