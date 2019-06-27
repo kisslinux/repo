@@ -1,0 +1,8 @@
+bison     make
+flex      make
+libX11    make
+libdrm    make
+libxcb    make
+python    make
+xorgproto make
+zlib      make
