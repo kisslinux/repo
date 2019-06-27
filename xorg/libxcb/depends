@@ -1,3 +1,4 @@
+libXau           make
 libtool          make
 xcb-proto        make
 xorg-util-macros make
