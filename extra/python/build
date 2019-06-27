@@ -1,9 +1,9 @@
 #!/bin/sh -e
 
-rm -r Modules/zlib
-rm -r Modules/expat
-rm -r Modules/_ctypes/darwin*
-rm -r Modules/_ctypes/libffi*
+rm -rf Modules/zlib
+rm -rf Modules/expat
+rm -rf Modules/_ctypes/darwin*
+rm -rf Modules/_ctypes/libffi*
 
 ./configure \
     --prefix=/usr
