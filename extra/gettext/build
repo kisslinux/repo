@@ -15,3 +15,9 @@
 
 make
 make DESTDIR="$1" install
+
+# Fix conflict with musl.
+[ -e "$1/usr/include/libintl.h" ] && {
+    mkdir -p "$1/usr/include/gettext"
+    mv "$1/usr/include/libintl.h" "$1/usr/include/gettext"
+}
