@@ -1,4 +1,4 @@
 #!/bin/sh -e
 
 make -C libudev-compat
-make DESTDIR="$1" -C libudev-compat install
+make DESTDIR="$1" PREFIX= INCLUDE_PREFIX=/usr -C libudev-compat install
