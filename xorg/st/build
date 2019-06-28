@@ -2,5 +2,8 @@
 
 sed -i 's|Liberation Mono|Monospace|g' config.def.h
 
+# Fix no 'c99' executable.
+export CC=cc
+
 make
 make DESTDIR="$1" install
