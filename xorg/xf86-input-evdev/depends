@@ -1,4 +1,0 @@
-libevdev       make
-libudev-compat
-mtdev          make
-xorg-server    make
