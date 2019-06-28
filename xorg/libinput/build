@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+meson \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --mandir=/usr/share/man \
+    -Ddebug-gui=false \
+    -Ddocumentation=false \
+    -Dtests=false \
+    . output
+
+ninja -C output
+
+DESTDIR="$1" ninja -C output install
