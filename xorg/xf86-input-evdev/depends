@@ -1,0 +1,3 @@
+libevdev    make
+mtdev       make
+xorg-server make
