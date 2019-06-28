@@ -1,5 +1,0 @@
-libevdev       make
-libudev-compat
-meson          make
-mtdev          make
-ninja          make
