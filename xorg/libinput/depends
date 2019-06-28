@@ -1,0 +1,4 @@
+meson    make
+ninja    make
+mtdev    make
+libevdev make
