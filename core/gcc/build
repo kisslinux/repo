@@ -41,3 +41,6 @@ rm -rf "$1/usr/share/info"
 
 # Some legacy programs will expect cc
 ln -s gcc "$1/usr/bin/cc"
+
+# POSIX compliance.
+install -Dm755 ../c99 "$1/usr/bin/c99"
