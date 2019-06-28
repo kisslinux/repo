@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
+# Disable udev as we use mdev.
 ./configure \
     --prefix=/usr \
     --disable-systemd-logind \
@@ -7,7 +8,9 @@
     --enable-dri \
     --enable-dri2 \
     --enable-dri3 \
-    --enable-xorg
+    --enable-xorg \
+    --disable-config-udev \
+    --disable-config-udev-kms
 
 make
 make DESTDIR="$1" install
