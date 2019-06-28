@@ -2,3 +2,6 @@
 
 make -C libudev-compat
 make DESTDIR="$1" PREFIX= INCLUDE_PREFIX=/usr -C libudev-compat install
+
+# Fix ld issue.
+ln -s libudev.so.1 "$1/lib/libudev.so"
