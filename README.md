@@ -1,16 +1,13 @@
-# KISS Alternative Package System
-
-This is a package system I am experimenting with. This format is an alternative to the usual `PKGBUILD`, `APKBUILD` and `Pkgfile` systems and explores a more unixy approach.
-
-**NOTE**: The package manager can be found here: [kiss](https://github.com/kissx/kiss)
-
-Each Package is split into multiple files.
+# KISS The alternative packaging system
+--------
+This is a packaging system I'm experimenting with. KISS is an alternative to PKGBUILD, APKBUILD, Pkgfile etc... This repository explores a much unix-like approach.
+*NOTE*: The package manager can be found [here](https://github.com/kissx/kiss)
+Each package is split into multiple files.
 
 ```sh
 zlib/            # Package name.
 ├─ build         # Build script.
 ├─ depends       # Dependencies (one per line) (sometimes optional).
-├─ licenses      # Licenses (see below).
 ├─ sources       # Sources (one per line).
 ├─ version       # Package version.
 ┘
@@ -24,48 +21,44 @@ zlib/            # Package name.
 ├─ post_install  # Script to run after package installation.
 ├─ patches/*     # Directory to store patches.
 ├─ files/*       # Directory to misc files.
-├─ nostrip       # Don't strip binaries for this package (empty file).
 ┘
 ```
+--------
+When a package is installed, the directory is copied to `/var/db/kiss` where it becomes a database entry. Listing each dependency for packages is as simple as printing the contents of the `depends` file, searching for the package that owns a file is simple as checking each `manifest` file.
 
-When a built package is installed, this entire directory tree is copied to `/var/db/kiss` where it becomes a database entry. Listing the dependencies for a package is a simple as printing the contents of the `depends` file. Searching for which package owns a file is as simple as checking each `manifest` file.
-
-This new structure also allows the package manager to be stupid simple. POSIX `sh` has no arrays. However, they are mimicked by looping over each line of each file. No more insecure `depends="pkg pkg pkg"` and `for pkg in $depends`.
-
-Instead, the following can be done.
-
+This new structure allows the package manager to be stupidly simple. POSIX sh has no arrays, however, they are mimicked by looping each line of each file. No more insecure depends="pkg pkg pkg" and for pkg in $depends.
+Instead do the following:
 ```sh
-while read -r depend; do
-    # do thing.
+while read-r depends; do
+	# do something...
 done < depends
 ```
 
-This also means anyone can write a tool to manipulate the repository or even their own package manager. It's all plain text files delimited by a new line or a space.
+This means that anyone could write a tool to manipulate the repository even the package manager! It's all in the plain text files fixed by a new line or a space.
+--------
 
 ## Table of Contents
-
 <!-- vim-markdown-toc GFM -->
 
-* [The package format](#the-package-format)
-    * [`build`](#build)
-    * [`manifest`](#manifest)
-    * [`sources`](#sources)
-    * [`depends`](#depends)
-    * [`version`](#version)
-    * [`checksums`](#checksums)
-    * [`licenses`](#licenses)
-    * [`post-install`](#post-install)
+* [The packaging format](#the-packaging-format)
+	* [`build`](#build)
+	* [`manifest`](#manifest)
+	* [`sources`](#sources)
+	* [`depends`](#sources)
+	* [`version`](#version)
+	* [`checksums`](#checksyms)
+	* [`post-install`](#post-install)
 
-<!-- vim-markdown-toc -->
-
+<!-- vim markdown-toc -->
+--------
 
 ## The package format
 
 ### `build`
+The `build` tool must contain the necessary arguments to patch, configure, build, and install a package. The build script is sent one argument. This argument points to the package's directory. Everything in this directory will become part of the package's manifest and will be copied to `/` (The linux FileSystem) or `$kiss_ROOT`. The first argument is frequently used in `make DESTDIR="$1" install`.
 
-The `build` file should contain the necessary steps to patch, configure, build and install the package. The build script is sent a single argument. This argument points to the package directory. Whatever is in this directory will become part of the package's manifest and will be copied to `/` (or `$kiss_ROOT`). The first argument is frequently used in `make DESTDIR="$1" install` for example.
-
-The `build` file can be written in any language. The only requirement is that the file be executable.
+For example:
+The `build` file can be written in any programming language. The only requirment is that the file should be an executable.
 
 ```sh
 ./configure \
@@ -76,12 +69,13 @@ The `build` file can be written in any language. The only requirement is that th
 make
 make DESTDIR="$1" install
 ```
+--------
 
 ### `manifest`
 
-The `manifest` file contains the built package's file and directory list. The full paths to files are listed first and the directories (*in reverse*) follow. This allows the package manager to remove the directories if they are empty without needing checks in-between.
+The `manifest` file contains the package's file and it's directory list. The full paths to the files and the directory are listed first (In reverse) order. This allow the package manager to delete directories if they're empty without the need of checks in between.
 
-The manifest also includes the package's database entry. You can install the package with or without `kiss` and it will be recognized.
+[the](the) manifest includes the package's database entry, so you can install the package with or withouw `kiss` and it will be recognized.
 
 ```
 /usr/share/man/man3/zlib.3
@@ -109,10 +103,10 @@ The manifest also includes the package's database entry. You can install the pac
 /lib/pkgconfig
 /lib
 ```
+--------
 
 ### `sources`
-
-The `sources` file contains the package's sources one per line. Sources can be local or remote.
+The `sources` file contains the package's sources on each line. Sources can be local or remote.
 
 An optional destination field can be added to tell the package manager where to extract the source. This is relative to the regular extraction directory. The passed directories are also created.
 
@@ -120,30 +114,30 @@ An optional destination field can be added to tell the package manager where to 
 https://www.openssl.org/source/openssl-X.X.X.tar.gz
 patches/fix-musl.patch
 https://www.openssl.org/source/openssl-X.X.X.tar.gz lib/example/
-git:https://github.com/dylanaraps/neofetch
 ```
+--------
 
 ### `depends`
 
-The `depends` file contains the package's dependencies one per line. An optional field can be added to specify whether a dependency is needed at compile time. This may later be extended to allow for optional runtime dependencies.
-
-**NOTE**: A dependency without a secondary field is assumed to be a runtime dependency.
+The `depends` file contains the package's dependencies on each line.
 
 ```
-zlib     make
-binutils make
+zlib
 openssl
+binutils
 ```
+--------
 
 ### `version`
 
-The `version` file contains the package's version as well as its release number. The format of this file is `version release`. The `release` portion allows a package upgrade without the modification of the version number.
+The `version` file contains the package's version and the release number. The format of this file is `version release`. The release portion allows a package upgrade without the modification of the version number.
 
-The version can also be `git 1` to specify that the package is built from the latest `git` head.
+The version can also be `git 1` to specify that the package is built from the latest `git` HEAD.
 
 ```
 1.2.11 1
 ```
+--------
 
 ### `checksums`
 
@@ -152,29 +146,9 @@ The `checksums` file contains the `sha256` sums of each entry in the `sources` f
 ```
 c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1  zlib-1.2.11.tar.gz
 ```
-
-### `licenses`
-
-The `licenses` file contains the license(s) of the package. Licenses such as `GPL`, `AGPL`, `LGPL`, `MPL`, `Artistic`, `CDDL`, or `Apache` can be written with [SPDX Short Identifier](https://spdx.org/licenses/) one per line, but for license exceptions or copyright notice licenses such as `BSD`, `MIT`, or `ISC`, the copyright notice must be included verbatim.
-
-```
-GPL-3.0-or-later
-The ISC License
-Copyright <YEAR> <OWNER>
-
-Permission to use, copy, modify, and/or distribute this software for
-any purpose with or without fee is hereby granted, provided that the
-above copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-```
+--------
 
 ### `post-install`
 
-The `post-install` file should contain any steps required directly after the package is installed. This includes updating font databases and creating any post-install symlinks which may be required.
+The `post-install` file should contain any steps required directly after the package is installed. This includes updating fonts, databass, and creating any post-install symbolic links which may be required.
+
