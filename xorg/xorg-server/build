@@ -2,7 +2,12 @@
 
 ./configure \
     --prefix=/usr \
-    --disable-systemd-logind
+    --disable-systemd-logind \
+    --enable-glx \
+    --enable-dri \
+    --enable-dri2 \
+    --enable-dri3 \
+    --enable-xorg
 
 make
 make DESTDIR="$1" install
