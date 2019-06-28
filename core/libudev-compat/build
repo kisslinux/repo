@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+make -C libudev-compat
+make DESTDIR="$1" -C libudev-compat install
