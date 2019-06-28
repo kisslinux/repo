@@ -1,7 +1,9 @@
 # KISS The alternative packaging system
 --------
 This is a packaging system I'm experimenting with. KISS is an alternative to PKGBUILD, APKBUILD, Pkgfile etc... This repository explores a much unix-like approach.
-*NOTE*: The package manager can be found [here](https://github.com/kissx/kiss)
+
+**NOTE**: The package manager can be found [here](https://github.com/kissx/kiss)
+
 Each package is split into multiple files.
 
 ```sh
