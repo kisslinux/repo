@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --disable-gcov
+
+make
+make DESTDIR="$1" install
