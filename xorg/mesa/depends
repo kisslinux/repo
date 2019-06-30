@@ -1,19 +1,19 @@
 bison        make
-expat        make
+expat
 flex         make
 gettext      make
-libX11       make
-libXext      make
-libXrandr    make
-libXrender   make
-libXxf86vm   make
-libdrm       make
-libxcb       make
-libxshmfence make
-llvm         make
+libX11
+libXext
+libXrandr
+libXrender
+libXxf86vm
+libdrm
+libxcb
+libxshmfence
+llvm
 meson        make
 ninja        make
 python       make
 python-mako  make
-xorgproto    make
-zlib         make
+xorgproto
+zlib
