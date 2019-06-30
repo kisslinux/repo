@@ -21,3 +21,6 @@ make DESTDIR="$1" install
     mkdir -p "$1/usr/include/gettext"
     mv "$1/usr/include/libintl.h" "$1/usr/include/gettext"
 }
+
+# Remove all info files.
+rm -rf "$1/usr/share/info"
