@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
+    --rundir=/run
+
+make
+make DESTDIR="$1" install
+
+# Install runit service.
+install -Dm 755 dhcpcd.run "$1/etc/sv/dhcpcd/run"
+ln -s /run/runit/supervise.dhcpcd "$1/etc/sv/dhcpcd/supervise"
