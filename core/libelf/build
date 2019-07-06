@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < preprocessor-warnings.patch
+
 ./configure \
     --prefix=/usr \
     --disable-nls
