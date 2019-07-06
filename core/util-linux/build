@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --localstatedir=/var \
+    --bindir=/usr/bin \
+    --sbindir=/usr/bin \
+    --libdir=/usr/lib \
+    --disable-nls \
+    --enable-libuuid \
+    --enable-libblkid \
+    --enable-fsck \
+    --disable-makeinstall-chown \
+    --disable-rpath \
+    --without-udev \
+    --without-python \
+    --without-systemd
+
+make
+make DESTDIR="$1" install
