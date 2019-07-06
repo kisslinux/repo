@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < mesa-no-gettext.patch
+
 meson \
     --prefix=/usr \
     --sysconfdir=/etc \

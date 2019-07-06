@@ -1,7 +1,6 @@
 bison        make
 expat
 flex         make
-gettext      make
 libX11
 libXdamage
 libXext
