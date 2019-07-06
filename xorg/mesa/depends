@@ -8,6 +8,7 @@ libXrandr
 libXrender
 libXxf86vm
 libdrm
+libelf
 libxcb
 libxshmfence
 llvm
