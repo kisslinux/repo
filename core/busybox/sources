@@ -3,4 +3,3 @@ files/.config
 files/acpid.run
 files/crond.run
 files/syslogd.run
-files/udhcpc.run
