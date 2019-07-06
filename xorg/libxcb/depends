@@ -1,3 +1,4 @@
+automake         make
 libXau           make
 libtool          make
 xcb-proto        make
