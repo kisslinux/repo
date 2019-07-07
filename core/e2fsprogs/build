@@ -1,14 +1,11 @@
 #!/bin/sh -e
 
-export CFLAGS="$CFLAGS -static"
-
-# Build using private libuuid and libblkid libraries as
-# KISS uses util-linux from busybox.
 ./configure \
+    --prefix=/usr \
     --enable-symlink-install \
-    --enable-libuuid \
-    --enable-libblkid \
     --disable-uuidd \
+    --disable-libuuid \
+    --disable-libblkid \
     --disable-elf-shlibs \
     --disable-fsck \
     --disable-nls
@@ -16,13 +13,6 @@ export CFLAGS="$CFLAGS -static"
 # MKDIR_P fixes an install issue on musl/busybox.
 make
 make MKDIR_P="install -d" DESTDIR="$1" install install-libs
-
-# Make static libraries writable (for strip).
-chmod -v u+w "$1/usr/lib/libcom_err.a" \
-             "$1/usr/lib/libe2p.a" \
-             "$1/usr/lib/libext2fs.a" \
-             "$1/usr/lib/libss.a" \
-             "$1/usr/lib/libblkid.a"
 
 # Remove all info files.
 rm -rf "$1/usr/share/info"
