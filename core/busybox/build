@@ -15,4 +15,4 @@ ln -s /run/runit/supervise.crond "$1/etc/sv/crond/supervise"
 ln -s /run/runit/supervise.syslogd "$1/etc/sv/syslogd/supervise"
 
 # Install mdev config.
-install -Dm755 mdev.conf "$1/etc/mdev.conf"
+cp mdev.conf "$1/etc/mdev.conf"
