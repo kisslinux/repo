@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --enable-hwdb \
+    --disable-introspection
+
+make
+make DESTDIR="$1" install
