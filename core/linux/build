@@ -2,7 +2,6 @@
 
 mkdir -p "$1/boot" "$1/usr/lib/modules"
 
-make defconfig
 make
 
 make \
