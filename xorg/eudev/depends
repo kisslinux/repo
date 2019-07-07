@@ -1,5 +1,4 @@
 automake   make
 libtool    make
 gperf      make
-libxslt    make
 util-linux make
