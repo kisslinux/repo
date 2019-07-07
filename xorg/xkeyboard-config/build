@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --with-xkb-rules-symlink=xfree86,xorg \
+    --enable-compat-rules
+
+make
+make DESTDIR="$1" install
