@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+autoreconf -fi
+
 ./configure \
     --prefix=/usr \
     --enable-hwdb \
