@@ -1,3 +1,4 @@
+eudev
 libX11           make
 libXfont2        make
 libdrm           make
