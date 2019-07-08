@@ -4,6 +4,7 @@ autoreconf -fi
 
 ./configure \
     --prefix=/usr \
+    --sysconfdir=/etc \
     --enable-hwdb \
     --disable-introspection
 
