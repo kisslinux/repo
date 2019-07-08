@@ -1,4 +1,0 @@
-automake   make
-libtool    make
-gperf      make
-util-linux make
