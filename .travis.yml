@@ -1,2 +1,2 @@
 language: bash
-script:   shellcheck -e 2034 core/*/build core/*/post-install
+script:   shellcheck -e 2034 */*/build */*/post-install
