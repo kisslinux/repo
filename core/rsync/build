@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 ./configure \
+    --prefix=/usr \
     --with-included-popt
 
 make
