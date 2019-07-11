@@ -20,5 +20,6 @@ mpfr            make
 musl            make
 perl            make
 pkgconf         make
+rsync           make
 xz              make
 zlib            make
