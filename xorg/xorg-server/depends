@@ -7,5 +7,4 @@ libressl         make
 libxkbfile       make
 mesa             make
 pixman           make
-xkb
 xkeyboard-config
