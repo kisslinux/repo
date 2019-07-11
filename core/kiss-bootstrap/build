@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+printf '%s\n' "NOTE: This is just a dummy package."
