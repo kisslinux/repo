@@ -1,8 +1,0 @@
-#!/bin/sh -e
-
-./configure \
-    --prefix=/usr \
-    --datadir=/usr/share/kbd
-
-make
-make DESTDIR="$1" install
