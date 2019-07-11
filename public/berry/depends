@@ -1,0 +1,4 @@
+freetype    make
+libX11      make
+libXft      make
+libXinerama make
