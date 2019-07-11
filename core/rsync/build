@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+./configure \
+    --with-included-popt
+
+make
+make DESTDIR="$1" install
