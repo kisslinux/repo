@@ -7,8 +7,12 @@ cd gcc-build
 export libat_cv_have_ifunc=no
 machine=$(gcc -dumpmachine)
 
+# Unset CFLAGS/CXXFLAGS to make 'gcc' build as generic.
+unset CFLAGS CXXFLAGS
+
 ../gcc/configure \
     --prefix=/usr \
+    --disable-bootstrap \
     --disable-multilib \
     --disable-symvers \
     --disable-libmpx \
@@ -29,12 +33,15 @@ machine=$(gcc -dumpmachine)
     --enable-threads \
     --enable-tls \
     --enable-languages=c,c++ \
-    --build="$machine" \
-    --target="$machine" \
-    --host="$machine"
+    --build="$machine"
 
 make BOOT_CFLAGS='-O'
 make DESTDIR="$1" install
+
+# Save 35MB.
+find "$1" -name libgtkpeer.a  -delete
+find "$1" -name libgjsmalsa.a -delete
+find "$1" -name libgij.a      -delete
 
 # Remove all info files.
 rm -rf "$1/usr/share/info"
