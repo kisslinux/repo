@@ -33,7 +33,10 @@ unset CFLAGS CXXFLAGS
     --enable-threads \
     --enable-tls \
     --enable-languages=c,c++ \
-    --build="$machine"
+    --build="$machine" \
+    --with-tune=generic \
+    --with-arch=x86-64 \
+    --with-cpu-64=generic
 
 make BOOT_CFLAGS='-O'
 make DESTDIR="$1" install
