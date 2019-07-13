@@ -8,6 +8,7 @@ cp -v configfsf.sub   config.sub
     --localstatedir=/var/state/gmp \
     --build="$(gcc -dumpmachine)" \
     --enable-cxx \
+    --enable-fat \
     --with-pic
 
 make
