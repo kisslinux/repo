@@ -3,6 +3,8 @@
 cp -v configfsf.guess config.guess
 cp -v configfsf.sub   config.sub
 
+unset CFLAGS CXXFLAGS
+
 ./configure \
     --prefix=/usr \
     --localstatedir=/var/state/gmp \
