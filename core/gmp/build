@@ -4,7 +4,8 @@
     --prefix=/usr \
     --localstatedir=/var/state/gmp \
     --enable-cxx \
-    --with-pic
+    --with-pic \
+    --build=x86_64-pc-linux-musl
 
 make
 make DESTDIR="$1" install
