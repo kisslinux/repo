@@ -5,7 +5,6 @@ mkdir -p gcc-build
 cd gcc-build
 
 export libat_cv_have_ifunc=no
-machine=$(gcc -dumpmachine)
 
 # Unset CFLAGS/CXXFLAGS to make 'gcc' build as generic.
 unset CFLAGS CXXFLAGS
@@ -13,7 +12,6 @@ unset CFLAGS CXXFLAGS
 ../gcc/configure \
     --prefix=/usr \
     --disable-bootstrap \
-    --disable-multilib \
     --disable-symvers \
     --disable-libmpx \
     --disable-libmudflap \
@@ -32,13 +30,9 @@ unset CFLAGS CXXFLAGS
     --enable-shared \
     --enable-threads \
     --enable-tls \
-    --enable-languages=c,c++ \
-    --build="$machine" \
-    --with-tune=generic \
-    --with-arch=x86-64 \
-    --with-cpu-64=generic
+    --enable-languages=c,c++
 
-make BOOT_CFLAGS='-O'
+make
 make DESTDIR="$1" install
 
 # Save 35MB.
