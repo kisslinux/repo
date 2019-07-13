@@ -9,7 +9,7 @@ export libat_cv_have_ifunc=no
 # Unset CFLAGS/CXXFLAGS to make 'gcc' build as generic.
 unset CFLAGS CXXFLAGS
 
-../gcc/configure \
+CFLAGS=-pipe ../gcc/configure \
     --prefix=/usr \
     --disable-bootstrap \
     --disable-multilib \
