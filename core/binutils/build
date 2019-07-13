@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+machine=$(gcc -dumpmachine)
+
 ./configure \
     --prefix=/usr \
     --enable-targets=x86_64-pep \
@@ -7,6 +9,7 @@
     --disable-werror \
     --disable-nls \
     --with-mmap \
+    --build="$machine" \
     --with-system-zlib
 
 make
