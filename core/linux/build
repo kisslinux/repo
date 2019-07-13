@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+# Grab the package version.
+read -r version _ < "${0%/*}/version"
+
 mkdir -p "$1/boot" "$1/usr/lib/modules"
 
 make
@@ -13,3 +16,6 @@ make \
     INSTALL_PATH="$1/boot" \
     INSTALL_MOD_PATH="$1/usr" \
     install
+
+# Rename 'vmlinuz' according to package version.
+mv "$1/boot/vmlinuz" "$1/boot/vmlinuz-$version" || :
