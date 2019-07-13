@@ -7,8 +7,8 @@ cd gcc-build
 export libat_cv_have_ifunc=no
 
 # Unset CFLAGS/CXXFLAGS to make 'gcc' build as generic.
-unset CFLAGS CXXFLAGS
 export CFLAGS=-pipe
+export CXXFLAGS=-pipe
 
 ../gcc/configure \
     --prefix=/usr \
