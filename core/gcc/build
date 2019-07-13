@@ -12,7 +12,6 @@ export CXXFLAGS=-pipe
 
 ../gcc/configure \
     --prefix=/usr \
-    --disable-bootstrap \
     --disable-multilib \
     --disable-symvers \
     --disable-libmpx \
