@@ -31,7 +31,9 @@ export CXXFLAGS=-pipe
     --enable-shared \
     --enable-threads \
     --enable-tls \
-    --enable-languages=c,c++
+    --enable-languages=c,c++ \
+    --build=x86_64-pc-linux-musl \
+    --host=x86_64-pc-linux-musl
 
 make
 make DESTDIR="$1" install

@@ -2,6 +2,8 @@
 
 ./configure \
     --prefix=/usr \
+    --build=x86_64-pc-linux-musl \
+    --host=x86_64-pc-linux-musl \
     --enable-targets=x86_64-pep \
     --disable-multilib \
     --disable-werror \
