@@ -1,11 +1,13 @@
 #!/bin/sh -e
 
+cp -v configfsf.guess config.guess
+cp -v configfsf.sub   config.sub
+
 ./configure \
     --prefix=/usr \
     --localstatedir=/var/state/gmp \
     --enable-cxx \
-    --with-pic \
-    --build=x86_64-pc-linux-musl
+    --with-pic
 
 make
 make DESTDIR="$1" install
