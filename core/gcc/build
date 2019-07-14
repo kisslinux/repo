@@ -14,6 +14,10 @@ export libat_cv_have_ifunc=no
 export CFLAGS=-pipe
 export CXXFLAGS=-pipe
 
+# Use lib not lib64 by default.
+sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
+sed -i 's/lib64/lib/' gcc/config/i386/linux64.h
+
 ../gcc/configure \
     --prefix=/usr \
     --disable-multilib \
