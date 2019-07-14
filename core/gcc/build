@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+# Make sure gmp is built with generic options.
+cp -v gmp/configfsf.guess gmp/config.guess
+cp -v gmp/configfsf.sub gmp/config.sub
+
 # Build must happen outside of gcc source.
 mkdir -p gcc-build
 cd gcc-build
