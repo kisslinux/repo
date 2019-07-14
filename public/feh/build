@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+make PREFIX=/usr exif=1 help=1 stat64=1
+make PREFIX=/usr DESTDIR="$1" install
