@@ -9,14 +9,11 @@ file            make
 flex            make
 gcc             make
 git             make
-gmp             make
 kiss            make
 libressl        make
 linux-headers   make
 m4              make
 make            make
-mpc1            make
-mpfr            make
 musl            make
 perl            make
 pkgconf         make
