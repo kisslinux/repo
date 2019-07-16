@@ -1,20 +1,26 @@
 #!/bin/sh -e
 
 export GOARCH=amd64
+
 [ -f /var/db/kiss/go/manifest ] || {
     export GOROOT="$PWD/go1.4-bootstrap"
     export GOROOT_FINAL="$PWD/lib/go-bootstrap"
+
     mkdir -p lib/go-bootstrap
+
     cd "$GOROOT/src"
     bash ./make.bash
     cd ..
     cp -a bin pkg src ../lib/go-bootstrap
     cd ..
 }
+
 export GOROOT_FINAL=/usr/lib/go
 export GOROOT_BOOTSTRAP="$PWD/lib/go-bootstrap"
 export GOROOT="$PWD/go-current"
-(cd "$GOROOT/src"
+
+(
+    cd "$GOROOT/src"
     bash make.bash --no-clean -v
 )
 
@@ -33,7 +39,7 @@ cp -r doc misc "$1/usr/share/doc/go"
 ln -s /usr/share/doc/go/doc "$1/usr/lib/go/doc"
 ln -s /usr/share/doc/go/misc "$1/usr/lib/go/misc"
 
-rm -f "$1/usr/share/go/doc/articles/wiki/get.bin"
-rm -f "$1/usr/lib/go/pkg/tool/*/api"
+rm -f  "$1/usr/share/go/doc/articles/wiki/get.bin"
+rm -f  "$1/usr/lib/go/pkg/tool/*/api"
 rm -rf "$1/usr/lib/go/pkg/bootstrap"
 rm -rf "$1/usr/lib/go/pkg/obj"
