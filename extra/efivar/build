@@ -1,4 +1,6 @@
 #!/bin/sh -e
+patch -p1 < fix-gcc9-dp.h.patch
+patch -p1 < fix-gcc9.patch
 
 make libdir=/usr/lib/ \
      bindir=/usr/bin/ \
