@@ -1,0 +1,37 @@
+#!/bin/sh -e
+
+export GOARCH=amd64
+if [ ! -d /usr/lib/go ]; then
+    export GOROOT="$(pwd)/go1.4-bootstrap"
+    export GOROOT_FINAL="$(pwd)/lib/go-bootstrap"
+    mkdir -p lib/go-bootstrap
+    cd "$GOROOT/src"
+    bash ./make.bash
+    cd ..
+    cp -a bin pkg src ../lib/go-bootstrap
+    cd ..
+fi
+export GOROOT_FINAL=/usr/lib/go
+export GOROOT_BOOTSTRAP="$(pwd)/lib/go-bootstrap"
+export GOROOT="$(pwd)/go-current"
+cd "$GOROOT/src"
+bash make.bash --no-clean -v
+
+cd ..
+mkdir -p "$1/usr/bin" "$1/usr/lib/go/bin" "$1/usr/share/doc/go"
+
+for binary in go gofmt; do
+    install -m755 "bin/$binary" "$1/usr/lib/go/bin/$binary"
+    ln -s "/usr/lib/go/bin/$binary" "$1/usr/bin"
+done
+
+cp -a pkg src lib "$1/usr/lib/go"
+cp -r doc misc "$1/usr/share/doc/go"
+
+ln -s /usr/share/doc/go/doc "$1/usr/lib/go/doc"
+ln -s /usr/share/doc/go/misc "$1/usr/lib/go/misc"
+
+rm -f "$1/usr/share/go/doc/articles/wiki/get.bin"
+rm -f "$1/usr/lib/go/pkg/tool/*/api"
+rm -rf "$1/usr/lib/go/pkg/bootstrap"
+rm -rf "$1/usr/lib/go/pkg/obj"
