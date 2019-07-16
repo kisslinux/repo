@@ -14,10 +14,12 @@ export GOARCH=amd64
 export GOROOT_FINAL=/usr/lib/go
 export GOROOT_BOOTSTRAP="$PWD/lib/go-bootstrap"
 export GOROOT="$PWD/go-current"
-cd "$GOROOT/src"
-bash make.bash --no-clean -v
+(cd "$GOROOT/src"
+    bash make.bash --no-clean -v
+)
 
-cd ..
+cd "$GOROOT"
+
 mkdir -p "$1/usr/bin" "$1/usr/lib/go/bin" "$1/usr/share/doc/go"
 
 for binary in go gofmt; do
