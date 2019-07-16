@@ -1,0 +1,6 @@
+fontconfig make
+libX11 make
+libXft make
+libXrender make
+ncurses make
+perl
