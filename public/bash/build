@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --without-bash-malloc \
+    --without-installed-readline \
+    --disable-nls
+
+MAKEFLAGS="TERMCAP_LIB=/usr/lib/libncursesw.a $MAKEFLAGS"
+make
+make DESTDIR="$1" install

@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --disable-nls \
+    ac_cv_path_DOXYGEN=false
+
+make
+make DESTDIR="$1" install

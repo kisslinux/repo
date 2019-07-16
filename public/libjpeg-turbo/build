@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+    -DCMAKE_SHARED_LIBS=True \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DWITH_JPEG8=1
+
+make
+make DESTDIR="$1" install
