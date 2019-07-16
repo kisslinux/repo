@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+patch -p1 < silence-dlerror.patch
+patch -p0 < fakeroot-no64.patch
+patch -p0 < fakeroot-stdint.patch
+
+export CONFIG_SHELL=/bin/sh
+export CFLAGS="-D_STAT_VER=0 $CFLAGS"
+
+ac_cv_func_capset=no \
+./configure \
+    --prefix=/usr \
+    --disable-static
+
+make DESTDIR="$1" install
