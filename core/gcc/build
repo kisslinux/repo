@@ -36,8 +36,7 @@ export libat_cv_have_ifunc=no
     --enable-threads \
     --enable-tls \
     --enable-languages=c,c++ \
-    --build=x86_64-pc-linux-musl \
-    --host=x86_64-pc-linux-musl
+    --build=x86_64-pc-linux-musl
 
 make
 make DESTDIR="$1" install
