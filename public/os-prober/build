@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+# Adjust lib dir to allow detection of 64-bit distros
+sed -i -e "s:/lib/ld\*\.so\*:/lib*/ld*.so*:g" os-probes/mounted/common/90linux-distro
+
+make
+
+install -Dm755 linux-boot-prober "$1/usr/bin/linux-boot-prober"
+install -Dm755 os-prober "$1/usr/bin/os-prober"
+install -Dm755 newns "$1/usr/lib/os-prober/newns"
+install -Dm755 common.sh "$1/usr/share/os-prober/common.sh"
+
+for dir in os-probes os-probes/mounted os-probes/init linux-boot-probes linux-boot-probes/mounted; do
+    install -dm755 "$1/usr/lib/$dir"
+    install -m755 -t "$1/usr/lib/$dir" "$dir"/common/*
+    [ -d "$dir/x86" ] && cp -r "$dir"/x86/* "$1/usr/lib/$dir"
+done
+
+install -Dm755 os-probes/mounted/powerpc/20macosx "$1/usr/lib/os-probes/mounted/20macosx"
+install -dm755 "$1/var/lib/os-prober"
