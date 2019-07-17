@@ -61,8 +61,6 @@ Commit rules:
 
 Ensure that the package builds successfully on your system before creating a pull request. If for some reason it **does not**, open an issue if assistance is needed.
 
-Pull requests should only contain the new package and any dependencies which do not yet exist in any of the repositories.
-
 
 ## Linting
 
