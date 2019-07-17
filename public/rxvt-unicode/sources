@@ -1,0 +1,3 @@
+http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-9.22.tar.bz2
+patches/gentables.patch
+patches/rxvt-unicode-kerning.patch
