@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+patch -p1 < replace-pr-1.patch
+patch -p1 < replace-pr-2.patch
+
+./configure \
+    --prefix=/usr \
+    --disable-debug
+
+make
+make DESTDIR="$1" install
