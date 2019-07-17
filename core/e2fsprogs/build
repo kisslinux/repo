@@ -2,6 +2,8 @@
 
 ./configure \
     --prefix=/usr \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
     --enable-symlink-install \
     --disable-uuidd \
     --disable-libuuid \
