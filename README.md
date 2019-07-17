@@ -29,7 +29,7 @@ Unless for a good reason, new packages go in `public`. The `core`, `extra` and `
 - `xorg`: Contains everything `xorg` related for a working `xorg-server`.
 - `public`: Everything else.
 
-When a package is added to `public` it is assumed that the committer is now the maintainer of said package. The other three repositories are maintained by the KISS developers themselves.
+When a package is added to `public` it is assumed that the **first** committer is now the maintainer of said package. The other three repositories are maintained by the KISS developers themselves.
 
 
 ## Example package
