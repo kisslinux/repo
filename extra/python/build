@@ -25,7 +25,7 @@ ln -s python3 "$1/usr/bin/python"
     python_repo=${python_repo#?.}
     python_repo=${python_repo%.*}
 
-    # If the two python versions match, exit here.
+    # If the two python versions differ, tell post-install to rebuild.
     [ "$python_sys" = "$python_repo" ] ||
         :>/tmp/python-REBUILD
 }
