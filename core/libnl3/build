@@ -6,6 +6,7 @@ sed -i '/<linux\/if_bridge.h>/i#define _LINUX_IN6_H' lib/route/link/bridge.c
 
 ./configure \
     --prefix=/usr \
+    --sysconfdir=/etc \
     --disable-static
 
 make
