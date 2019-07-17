@@ -8,24 +8,3 @@ make
 make DESTDIR="$1" install
 
 ln -s python3 "$1/usr/bin/python"
-
-# Rebuild all python subpackages if required.
-{
-    # Exit here if python is not installed.
-    command -v python3 >/dev/null || exit 0
-
-    # Figure out the system's python version.
-    python_sys=$(kiss l python)
-    python_sys=${python_sys#* }
-    python_sys=${python_sys#?.}
-    python_sys=${python_sys%.*}
-
-    # Figure out this python version.
-    read -r python_repo _ < "${0%/*}/version"
-    python_repo=${python_repo#?.}
-    python_repo=${python_repo%.*}
-
-    # If the two python versions differ, tell post-install to rebuild.
-    [ "$python_sys" = "$python_repo" ] ||
-        :>/tmp/python-REBUILD
-}
