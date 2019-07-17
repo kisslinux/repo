@@ -19,6 +19,7 @@ build_grub() (
     ./configure \
         --prefix=/usr \
         --sbindir=/usr/bin \
+        --sysconfdir=/etc \
         --disable-nls \
         --disable-werror \
         "$@"
