@@ -12,6 +12,8 @@ More information: https://kissx.github.io/pages/package-system/
 <!-- vim-markdown-toc GFM -->
 
 * [Adding packages to this repository](#adding-packages-to-this-repository)
+* [Example package](#example-package)
+* [Generating checksums](#generating-checksums)
 * [Committing changes](#committing-changes)
 * [Pull requests](#pull-requests)
 * [Linting](#linting)
@@ -28,6 +30,18 @@ Unless for a good reason, new packages go in `public`. The `core`, `extra` and `
 - `public`: Everything else.
 
 When a package is added to `public` it is assumed that the committer is now the maintainer of said package. The other three repositories are maintained by the KISS developers themselves.
+
+
+## Example package
+
+A simple package to use as a reference is `file`. It has dependencies and uses the GNU configure style (*which a lot of packages use*).
+
+https://github.com/kissx/packages/tree/master/core/file
+
+
+## Generating checksums
+
+Once you have packaged something (*and before the first build*) run `kiss checksum pkg` to generate checksums for the package.
 
 
 ## Committing changes
