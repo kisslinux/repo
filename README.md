@@ -36,11 +36,11 @@ One package per commit unless the packages are very closely related (`linux` and
 
 Commit rules:
 
-* For new packages: `<package>: new package at <version>`
-* For updating an existing package: `<package>: update to <version>`, `<package>: bump to <version>` is also acceptable.
-* Any other changes: `<package>: <changes>`
-* Merges: GitHub's default format is acceptable, or just `Merge #<PR number>` should suffice.
-* Misc: We leave that to the discretion of the author and/or committer.
+* **New packages**: `<package>: new package at <version>`
+* **Existing packages**: `<package>: update to <version>`, `<package>: bump to <version>` is also acceptable.
+* **Other package changes**: `<package>: <changes>`
+* **Merges**: GitHub's default format is acceptable, or just `Merge #<PR number>` should suffice.
+* **Misc**: We leave that to the discretion of the author and/or committer.
 
 
 ## Pull requests
