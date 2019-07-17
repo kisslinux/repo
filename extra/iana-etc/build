@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+mkdir -p "$1/etc"
+cp protocols "$1/etc"
+cp services  "$1/etc"
