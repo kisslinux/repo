@@ -3,7 +3,8 @@
 ./configure \
     --prefix=/usr \
     --localstatedir=/var \
-    --sysconfdir=/etc
+    --sysconfdir=/etc \
+    --with-xmldir=/etc/fonts
 
 make
 make DESTDIR="$1" install
