@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+patch -p1 < rxvt-unicode-kerning.patch
+patch -p1 < gentables.patch
+
+./configure \
+    --prefix=/usr \
+    --with-terminfo=/usr/share/terminfo \
+    --enable-256-color \
+    --enable-font-styles \
+    --enable-xim \
+    --enable-keepscrolling \
+    --enable-selectionscrolling \
+    --enable-smart-resize \
+    --enable-transparency \
+    --enable-frills \
+    --enable-perl \
+    --enable-mousewheel \
+    --enable-text-blink \
+    --enable-fading \
+    --enable-unicode3 \
+    --disable-utmp \
+    --disable-wtmp \
+    --disable-lastlog
+
+make DESTDIR="$1" install
