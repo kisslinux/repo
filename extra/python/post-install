@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+[ -f /tmp/python-REBUILD ] || exit 0
+
+rm -f /tmp/python-REBUILD
+
+# Rebuild all python subpackages if the above file existed.
+kiss l | while read -r pkg _; do
+    case $pkg in
+        python-*)
+            kiss build "$pkg"
+            kiss install "$pkg"
+        ;;
+    esac
+done
