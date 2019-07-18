@@ -2,7 +2,6 @@
 
 ./configure \
     --prefix=/usr \
-    --disable-full-bootstrap \
     --release-channel=stable \
     --disable-rpath \
     --disable-docs \
