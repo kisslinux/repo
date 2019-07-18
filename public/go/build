@@ -16,7 +16,13 @@ export GOARCH=amd64
 }
 
 export GOROOT_FINAL=/usr/lib/go
-export GOROOT_BOOTSTRAP="$PWD/lib/go-bootstrap"
+
+if [ -f /var/db/kiss/go/manifest ]; then
+    export GOROOT_BOOTSTRAP=/usr/lib/go
+else
+    export GOROOT_BOOTSTRAP="$PWD/lib/go-bootstrap"
+fi
+
 export GOROOT="$PWD/go-current"
 
 (
