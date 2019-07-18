@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --disable-full-bootstrap \
+    --release-channel=stable \
+    --disable-rpath \
+    --disable-docs \
+    --disable-codegen-tests \
+    --enable-vendor \
+    --llvm-root=/usr
+
+make
+DESTDIR="$1" ./x.py install -v
