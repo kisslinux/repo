@@ -6,6 +6,6 @@ git clone --depth 1 \
 export PATH="$PATH:$PWD/depot_tools"
 
 gn gen out/Default \
-    --args='target_os="linux" target_cpu="x64" is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_gtk3=false use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false'
+    --args='target_os="linux" target_cpu="x64" is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_gtk3=false use_gtk2=true use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false'
 
 ninja -C out/Release chrome chromedriver
