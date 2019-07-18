@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --disable-docs \
+    --with-glib=no
+
+make
+make DESTDIR="$1" install
