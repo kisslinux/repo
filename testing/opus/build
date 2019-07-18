@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --enable-custom-modes \
+    --enable-float-approx
+
+make
+make DESTDIR="$1" install
