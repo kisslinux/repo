@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc/imlib2 \
+    --enable-visibility-hiding
+
+make
+make DESTDIR="$1" install
