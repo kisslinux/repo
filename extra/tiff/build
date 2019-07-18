@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+autoreconf -fi
+
+./configure \
+    --prefix=/usr \
+    --enable-cxx \
+    --without-x
+
+make
+make DESTDIR="$1" install
