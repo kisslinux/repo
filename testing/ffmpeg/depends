@@ -1,3 +1,4 @@
 pkgconf make
 perl make
 yasm make
+alsa-lib
