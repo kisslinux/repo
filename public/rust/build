@@ -8,7 +8,11 @@
     --disable-docs \
     --disable-codegen-tests \
     --enable-vendor \
-    --llvm-root=/usr
+    --llvm-root=/usr \
+    --build=x86_64-unknown-linux-musl \
+    --target=x86_64-unknown-linux-musl \
+    --set=target.x86_64-unknown-linux-musl.llvm-config=/usr/bin/llvm-config \
+    --set=target.x86_64-unknown-linux-musl.llvm-config=/usr/bin/llvm-config
 
 make
 DESTDIR="$1" ./x.py install -v
