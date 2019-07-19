@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --enable-cgroup \
+    --enable-unicode \
+    --enable-taskstats
+
+make
+make DESTDIR="$1" install
