@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+patch -p1 < CVE-2018-6767.patch
+patch -p1 < CVE-2018-7253.patch
+patch -p1 < CVE-2018-7254.patch
+patch -p1 < CVE-2018-10536.patch
+patch -p1 < CVE-2018-10538.patch
+patch -p1 < CVE-2018-19840.patch
+patch -p1 < CVE-2018-19841.patch
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install
