@@ -17,5 +17,6 @@ make \
     INSTALL_MOD_PATH="$1/usr" \
     install
 
-# Rename 'vmlinuz' according to package version.
+# Rename 'vmlinuz' and 'System.map" according to package version.
 mv "$1/boot/vmlinuz" "$1/boot/vmlinuz-$version" || :
+mv "$1/boot/System.map" "$1/boot/System.map-$version" || :
