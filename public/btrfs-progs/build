@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+NOCONFIGURE=1 ./autogen.sh
+
+# Requires losetup which is part of util-linux,
+# but even with it installed it fails.
+rm -rf tests/mkfs-tests/017-small-backing-size-thin-provision-device
+
+./configure \
+    --prefix=/usr \
+    --disable-python \
+    --disable-backtrace \
+    --disable-documentation
+
+make DESTDIR="$1" install

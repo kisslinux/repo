@@ -4,7 +4,7 @@ The package system was built specifically for KISS and employs a UNIX-like file 
 
 The data in each file is separated by lines and spaces. The repository and packages can be manipulated and read using any programming language. The build script (for each package) can be written in whatever language you desire.
 
-More information: https://kissx.github.io/pages/package-system/
+More information: https://getkiss.org/pages/package-system/
 
 
 ## Index
@@ -36,7 +36,7 @@ When a package is added to `public` it is assumed that the **first** committer i
 
 A simple package to use as a reference is `file`. It has dependencies and uses the GNU configure style (*which a lot of packages use*).
 
-https://github.com/kissx/packages/tree/master/core/file
+https://github.com/kisslinux/packages/tree/master/core/file
 
 
 ## Generating checksums
