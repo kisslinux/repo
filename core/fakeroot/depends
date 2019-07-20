@@ -1,1 +1,3 @@
 linux-headers make
+automake make
+libtool make

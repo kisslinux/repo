@@ -3,3 +3,4 @@ patches/busybox_compat_force_abslibpath.patch
 patches/fakeroot-no64.patch
 patches/fakeroot-stdint.patch
 patches/silence-dlerror.patch
+patches/xstatjunk.patch
