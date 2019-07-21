@@ -6,5 +6,8 @@
 make
 make DESTDIR="$1" install
 
-mkdir -p "$1/bin"
-ln -s "/lib/ld-musl-x86_64.so.1" "$1/bin/ldd"
+mv "$1/lib/ld-musl-x86_64.so.1" "$1/usr/lib"
+rmdir "$1/lib"
+
+mkdir -p "$1/usr/bin"
+ln -s "/usr/lib/ld-musl-x86_64.so.1" "$1/usr/bin/ldd"
