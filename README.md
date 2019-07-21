@@ -27,6 +27,7 @@ Unless for a good reason, new packages go in `public`. The `core`, `extra` and `
 - `core`: Contains just enough to rebuild itself and any additional packages.
 - `extra`: Contains essential packages which do not belong in `core`.
 - `xorg`: Contains everything `xorg` related for a working `xorg-server`.
+- `testing`: Contains packages which aren't ready for wide usage yet.
 - `public`: Everything else.
 
 When a package is added to `public` it is assumed that the **first** committer is now the maintainer of said package. The other three repositories are maintained by the KISS developers themselves.
