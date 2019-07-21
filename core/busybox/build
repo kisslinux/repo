@@ -6,6 +6,12 @@ make install
 # Work around no 'DESTDIR'.
 cp -a _install/. "$1"
 
+# Fix package filesystem.
+mv "$1/bin/"* "$1/usr/bin"
+mv "$1/sbin/"* "$1/usr/bin"
+mv "$1/usr/sbin/"* "$1/usr/bin"
+rmdir "$1/bin" "$1/usr/sbin" "$1/sbin"
+
 # Install runit services.
 install -Dm755 acpid.run "$1/etc/sv/acpid/run"
 install -Dm755 crond.run "$1/etc/sv/crond/run"
@@ -13,6 +19,3 @@ install -Dm755 syslogd.run "$1/etc/sv/syslogd/run"
 ln -s /run/runit/supervise.acpid "$1/etc/sv/acpid/supervise"
 ln -s /run/runit/supervise.crond "$1/etc/sv/crond/supervise"
 ln -s /run/runit/supervise.syslogd "$1/etc/sv/syslogd/supervise"
-
-# Install mdev config.
-cp mdev.conf "$1/etc/mdev.conf"

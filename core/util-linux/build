@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+# During ./configure, disable kill and sulogin as they are provided
+# by busybox.
 ./configure \
     --prefix=/usr \
     --localstatedir=/var \
@@ -12,6 +14,8 @@
     --enable-fsck \
     --disable-makeinstall-chown \
     --disable-rpath \
+    --disable-kill \
+    --disable-sulogin \
     --without-udev \
     --without-python \
     --without-systemd
@@ -19,5 +23,6 @@
 make
 make DESTDIR="$1" install
 
-# Remove 'getopt' as it is provided by 'busybox'.
+# Remove getopt as it is provided by busybox. (For some reason
+# ./configure does not support it)
 rm -f "$1/usr/bin/getopt"
