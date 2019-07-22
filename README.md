@@ -30,7 +30,7 @@ Unless for a good reason, new packages go in `public`. The `core`, `extra` and `
 - `testing`: Contains packages which aren't ready for wide usage yet.
 - `public`: Everything else.
 
-When a package is added to `public` it is assumed that the **first** committer is now the maintainer of said package. The other four repositories are maintained by the KISS developers themselves.
+When a package is added to `public` it is assumed that the **first** committer is now the maintainer of said package. The other repositories are maintained by the KISS developers themselves.
 
 
 ## Example package
