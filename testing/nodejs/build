@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+export PYTHON=python2
+
 chmod +x configure
 
 ./configure \
