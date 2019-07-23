@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+meson \
+    --prefix=/usr \
+    -Dman=false \
+    -Dfam=false \
+    -Dnls=disabled \
+    . build
+
+ninja -C build
+DESTDIR="$1" ninja -C build install
