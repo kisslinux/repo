@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+cargo install fd-find
+make DESTDIR="$1" install
