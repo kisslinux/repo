@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+cargo build --release
+make DESTDIR="$1" install
