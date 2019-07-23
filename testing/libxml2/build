@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --with-threads \
+    --with-history \
+    --without-python \
+    --without-icu
+
+make
+make DESTDIR="$1" install
