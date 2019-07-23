@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --without-ensurepip
+
+make
+make DESTDIR="$1" install
+
+rm "$1/usr/bin/2to3"
+rm "$1/usr/bin/python"
