@@ -1,0 +1,41 @@
+From ae6486c6251039d3a6bb5a90e1d818331cf55edc Mon Sep 17 00:00:00 2001
+From: "Guo, Yejun" <yejun.guo@intel.com>
+Date: Wed, 24 Apr 2019 21:13:21 +0800
+Subject: [PATCH] configure: replace 'pr' with printf since busybox does not
+ support pr
+
+This patch is based on https://trac.ffmpeg.org/ticket/5680 provided by
+Kylie McClain <somasis@exherbo.org> at Wed, 29 Jun 2016 16:37:20 -0400,
+and have some changes.
+
+contributor: Kylie McClain <somasis@exherbo.org>
+contributor: avih <avihpit@yahoo.com>
+Signed-off-by: Guo, Yejun <yejun.guo@intel.com>
+---
+ configure | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/configure b/configure
+index 580af9c0f6..9b4305cf0d 100755
+--- a/configure
++++ b/configure
+@@ -503,9 +503,13 @@ log(){
+ }
+ 
+ log_file(){
+-    log BEGIN $1
+-    pr -n -t $1 >> $logfile
+-    log END $1
++    log BEGIN "$1"
++    log_file_i=1
++    while IFS= read -r log_file_line; do
++        printf '%5d\t%s\n' "$log_file_i" "$log_file_line"
++        log_file_i=$(($log_file_i+1))
++    done < "$1" >> "$logfile"
++    log END "$1"
+ }
+ 
+ warn(){
+-- 
+2.11.0
+
