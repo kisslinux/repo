@@ -2,3 +2,11 @@ pkgconf make
 perl make
 yasm make
 alsa-lib
+lame
+libass
+libogg
+libtheora
+libvorbis
+libwebp
+opus
+wavpack

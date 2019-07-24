@@ -5,7 +5,23 @@ patch -p1 < replace-pr-2.patch
 
 ./configure \
     --prefix=/usr \
-    --disable-debug
+    --disable-debug \
+    --enable-gpl \
+    --enable-version3 \
+    --enable-libaom \
+    --enable-libass \
+    --enable-libmp3lame \
+    --enable-libopus \
+    --enable-libvorbis \
+    --enable-libtheora \
+    --enable-libwavpack \
+    --enable-libvpx \
+    --enable-libx264 \
+    --enable-libx265 \
+    --enable-libxvid \
+    --enable-libwebp \
+    --enable-openssl \
+    --enable-libdrm
 
 make
 make DESTDIR="$1" install
