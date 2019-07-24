@@ -1,7 +1,8 @@
 #!/bin/sh -e
 
 autoreconf -vfi
-./configure
+./configure \
+    --prefix=/usr
 
 make
 make DESTDIR="$1" install
