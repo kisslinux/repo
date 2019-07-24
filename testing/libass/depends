@@ -1,0 +1,6 @@
+pkgconf make
+yasm make
+expat
+fribidi
+fontconfig
+freetype
