@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+make
+make prefix=/usr DESTDIR="$1" install
