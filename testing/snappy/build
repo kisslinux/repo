@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+    -DBUILD_SHARED_LIBS=1 \
+    -DCMAKE_BUILD_TYPE=Release
+
+make
+make DESTDIR="$1" install
