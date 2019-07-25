@@ -24,6 +24,7 @@ ninja         make
 nodejs        make
 perl          make
 python2       make
+re2           make
 snappy        make
 yasm          make
 zlib          make
