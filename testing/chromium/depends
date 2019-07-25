@@ -1,5 +1,6 @@
-ninja make
-git   make
+ninja    make
+git      make
+libevent make
 # nss make
 # python2 make
 # pango
