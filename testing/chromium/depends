@@ -6,6 +6,7 @@ git           make
 glib          make
 gperf         make
 jsoncpp       make
+libcap        make
 libXScrnSaver make
 libXcomposite make
 libXdamage    make
