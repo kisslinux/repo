@@ -28,5 +28,6 @@ re2           make
 snappy        make
 yasm          make
 zlib          make
-# nss make
-# pango
+# nss         make
+# pango       make
+# gtk3        make
