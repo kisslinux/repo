@@ -15,7 +15,6 @@ libwebp       make
 libxml2       make
 libxslt       make
 ninja         make
-ninja         make
 nodejs        make
 perl          make
 python2       make
