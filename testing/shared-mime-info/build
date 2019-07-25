@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+for i in merge update extract perl; do
+    ln -sf intltool "intltool-fake/intltool-$i"
+done
+
+export INTLTOOL_PERL="$PWD/intltool-fake/intltool-perl"
+export PATH="$PATH:$PWD/intltool-fake"
+
+./configure \
+    --prefix=/usr \
+    --disable-nls \
+    --disable-update-mimedb
+
+make
+make DESTDIR="$1" install
