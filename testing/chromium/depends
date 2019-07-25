@@ -1,9 +1,10 @@
 git      make
 glib     make
+libXi    make
 libevent make
 ninja    make
-# nss make
-# python2 make
-# pango
-# atk
+python2  make
 # at-spi2-atk
+# atk
+# nss make
+# pango
