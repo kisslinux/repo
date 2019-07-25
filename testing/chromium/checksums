@@ -1,1 +1,3 @@
 510e6ca7ccc218b401b375c13656f6aecab196b03142026dc3602b9d1804a5ac  chromium-75.0.3770.142.tar.xz
+75c31df557238c5bdc2b91401b13b381b68c812594d89f8f053e0e489d4991c2  chromium-optional-atk-r1.patch
+6592a17ac557d4cdd5dbb9cd2445c95c1668f17d8c95a7f5ebf42ebbde35430e  chromium-optional-dbus-r5.patch
