@@ -2,6 +2,7 @@ git           make
 glib          make
 libXcomposite make
 libXi         make
+libXrandr     make
 libevent      make
 ninja         make
 python2       make
