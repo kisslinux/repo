@@ -4,6 +4,7 @@ freetype      make
 git           make
 glib          make
 gperf         make
+libXScrnSaver make
 libXcomposite make
 libXdamage    make
 libXi         make
