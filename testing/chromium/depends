@@ -1,3 +1,4 @@
+alsa-lib      make
 bison         make
 ffmpeg        make
 freetype      make
