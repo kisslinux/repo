@@ -3,10 +3,19 @@ glib          make
 libXcomposite make
 libXi         make
 libXrandr     make
+libxml2       make
+libxslt       make
+libexif       make
 libevent      make
 ninja         make
 python2       make
 snappy        make
+yasm          make
+perl          make
+gperf         make
+bison         make
+ninja         make
+nodejs        make
 # at-spi2-atk
 # atk
 # nss make
