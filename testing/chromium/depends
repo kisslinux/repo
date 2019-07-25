@@ -6,6 +6,7 @@ libXrandr     make
 libevent      make
 ninja         make
 python2       make
+snappy        make
 # at-spi2-atk
 # atk
 # nss make
