@@ -1,1 +1,3 @@
 https://commondatastorage.googleapis.com/chromium-browser-official/chromium-75.0.3770.142.tar.xz
+patches/chromium-optional-atk-r1.patch
+patches/chromium-optional-dbus-r5.patch
