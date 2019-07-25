@@ -28,7 +28,5 @@ re2           make
 snappy        make
 yasm          make
 zlib          make
-# at-spi2-atk
-# atk
 # nss make
 # pango
