@@ -1,9 +1,10 @@
-git      make
-glib     make
-libXi    make
-libevent make
-ninja    make
-python2  make
+git           make
+glib          make
+libXcomposite make
+libXi         make
+libevent      make
+ninja         make
+python2       make
 # at-spi2-atk
 # atk
 # nss make
