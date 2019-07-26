@@ -1,1 +1,2 @@
-yasm make
+cmake make
+yasm  make
