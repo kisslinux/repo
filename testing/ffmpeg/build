@@ -8,7 +8,6 @@ patch -p1 < replace-pr-2.patch
     --disable-debug \
     --enable-gpl \
     --enable-version3 \
-    --enable-libaom \
     --enable-libass \
     --enable-libmp3lame \
     --enable-libopus \
