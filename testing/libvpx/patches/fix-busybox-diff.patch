@@ -1,0 +1,13 @@
+diff --git a/configure b/configure
+index e5a74c6..11f660d 100755
+--- a/configure
++++ b/configure
+@@ -170,7 +170,7 @@ for t in ${all_targets}; do
+     [ -f "${source_path}/${t}.mk" ] && enable_feature ${t}
+ done
+ 
+-if ! diff --version >/dev/null; then
++if ! command -v diff >/dev/null; then
+   die "diff missing: Try installing diffutils via your package manager."
+ fi
+ 

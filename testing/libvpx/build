@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < fix-busybox-diff.patch
+
 ./configure \
     --prefix=/usr \
     --enable-vp8 \
