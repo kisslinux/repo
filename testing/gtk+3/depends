@@ -3,6 +3,7 @@ atk-bridge-fake  make
 fribidi          make
 gdk-pixbuf       make
 libXi            make
+libXinerama      make
 libepoxy         make
 pango            make
 shared-mime-info
