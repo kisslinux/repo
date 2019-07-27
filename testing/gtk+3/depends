@@ -1,5 +1,6 @@
-fribidi    make
-gdk-pixbuf make
-libepoxy   make
-pango      make
+atk-bridge-fake  make
+fribidi          make
+gdk-pixbuf       make
+libepoxy         make
+pango            make
 shared-mime-info
