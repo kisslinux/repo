@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+# Don't build with gettext.
+sed -i "s|subdir('po')||g"    -i meson.build
+
+meson \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --mandir=/usr/share/man \
+    -Ddocs=false \
+    -Dintrospection=false \
+    . output
+
+ninja -C output
+
+DESTDIR="$1" ninja -C output install
