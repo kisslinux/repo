@@ -42,3 +42,6 @@ EOF
 
 make
 make DESTDIR="$1" install
+
+# Remove a boat load of HTML documentation.
+rm -rf "$1/gtk-doc/"
