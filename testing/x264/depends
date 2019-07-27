@@ -1,3 +1,3 @@
-bash make
-perl make
-nasm make
+#bash make
+#perl make
+#nasm make

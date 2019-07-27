@@ -6,6 +6,7 @@ freetype      make
 git           make
 glib          make
 gperf         make
+gtk3          make
 json-c        make
 jsoncpp       make
 libXScrnSaver make
@@ -22,6 +23,7 @@ libxml2       make
 libxslt       make
 ninja         make
 nodejs        make
+pango         make
 perl          make
 python2       make
 re2           make
@@ -29,5 +31,3 @@ snappy        make
 yasm          make
 zlib          make
 # nss         make
-# pango       make
-# gtk3        make

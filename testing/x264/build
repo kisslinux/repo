@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
+sh
 ./configure \
     --prefix=/usr \
     --disable-swscale \
