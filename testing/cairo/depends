@@ -1,6 +1,7 @@
-libX11
-libXext
-libffi
-libpng
-mesa
-pixman
+libX11     make
+libXext    make
+libffi     make
+libpng     make
+mesa       make
+pixman     make
+fontconfig make
