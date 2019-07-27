@@ -1,5 +1,6 @@
 atk              make
 atk-bridge-fake  make
+fribidi          make
 gdk-pixbuf       make
 libXi            make
 libepoxy         make
