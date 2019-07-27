@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --disable-nls \
+    --enable-debug=no \
+    --disable-cloudproviders \
+    --disable-cups \
+    --disable-papi \
+    --disable-cloudprint \
+    --enable-introspection=no \
+    --enable-colord=no \
+    --enable-gtk-doc-html=no
+
+make
+make DESTDIR="$1" install
