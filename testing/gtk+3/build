@@ -13,6 +13,7 @@
     --enable-x11-backend \
     --disable-nls \
     --enable-debug=no \
+    --disable-schemas-compile \
     --disable-cloudproviders \
     --disable-cups \
     --disable-papi \

@@ -1,3 +1,5 @@
-fribidi
-libepoxy
-pango
+fribidi    make
+gdk-pixbuf make
+libepoxy   make
+pango      make
+shared-mime-info
