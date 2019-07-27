@@ -16,7 +16,6 @@ libXi         make
 libXrandr     make
 libcap        make
 libevent      make
-libexif       make
 libjpeg-turbo make
 libwebp       make
 libxml2       make
