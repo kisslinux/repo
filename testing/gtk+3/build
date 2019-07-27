@@ -2,6 +2,15 @@
 
 ./configure \
     --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --enable-xkb \
+    --enable-xinerama \
+    --enable-xrandr \
+    --enable-xfixes \
+    --enable-xcomposite \
+    --enable-xdamage \
+    --enable-x11-backend \
     --disable-nls \
     --enable-debug=no \
     --disable-cloudproviders \
