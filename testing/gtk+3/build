@@ -33,7 +33,6 @@ EOF
     --disable-nls \
     --enable-debug=no \
     --disable-schemas-compile \
-    --disable-cloudproviders \
     --disable-cups \
     --disable-papi \
     --disable-cloudprint \
