@@ -1,5 +1,24 @@
 #!/bin/sh -e
 
+# Patch out 'dbus' (taken from Sabotage Linux).
+cat << EOF > gtk/gtkmountoperation.c
+#define GMountOperation void
+#define GtkMountOperation void
+#define GtkWindow void
+#define GdkScreen void
+#define gboolean int
+#define GType unsigned long /* size_t */
+#define P __attribute__ ((visibility ("default")))
+extern GType g_mount_operation_get_type();
+P GType gtk_mount_operation_get_type() { return g_mount_operation_get_type(); }
+P GMountOperation *gtk_mount_operation_new (GtkWindow *parent) { return 0; }
+P gboolean gtk_mount_operation_is_showing (GtkMountOperation *op) { return 0; }
+P void gtk_mount_operation_set_parent (GtkMountOperation *op, GtkWindow *parent) {}
+P GtkWindow *gtk_mount_operation_get_parent (GtkMountOperation *op) { return 0; }
+P void gtk_mount_operation_set_screen (GtkMountOperation *op, GdkScreen *screen){}
+P GdkScreen *gtk_mount_operation_get_screen (GtkMountOperation *op){ return 0; }
+EOF
+
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
