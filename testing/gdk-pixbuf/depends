@@ -1,0 +1,4 @@
+glib             make
+libX11           make
+libpng           make
+shared-mime-info make
