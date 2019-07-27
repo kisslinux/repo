@@ -6,7 +6,7 @@ freetype      make
 git           make
 glib          make
 gperf         make
-gtk3          make
+gtk+3         make
 json-c        make
 jsoncpp       make
 libXScrnSaver make
