@@ -19,7 +19,6 @@ patch -p1 < replace-pr-2.patch
     --enable-libx265 \
     --enable-libxvid \
     --enable-libwebp \
-    --enable-openssl \
     --enable-libdrm
 
 make
