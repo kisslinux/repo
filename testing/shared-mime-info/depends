@@ -1,2 +1,2 @@
-libxml make
-glib   make
+libxml2 make
+glib    make
