@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+install -Dm 0644 queue.h* "$1/usr/include/sys/queue.h"
