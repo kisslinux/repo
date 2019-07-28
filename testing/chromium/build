@@ -27,5 +27,8 @@ out/Release/gn gen out/Release \
 
 ninja -C out/Release chrome chromedriver
 
-# Temporary.
-sh
+cd out/Release
+
+for bin in chrome chromedriver *.bin; do
+    install -Dm755 "$bin" "$1/usr/lib/chromium/$bin"
+done
