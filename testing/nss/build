@@ -11,9 +11,10 @@ make -j 1 -C nss
 
 mkdir -p "$1/usr/lib/pkgconfig" "$1/usr/bin" "$1/usr/include/nss"
 
-export NSS_VMAJOR="$(awk '/#define.*NSS_VMAJOR/ {print $3}' nss/lib/nss/nss.h)"
-export NSS_VMINOR="$(awk '/#define.*NSS_VMINOR/ {print $3}' nss/lib/nss/nss.h)"
-export NSS_VPATCH="$(awk '/#define.*NSS_VPATCH/ {print $3}' nss/lib/nss/nss.h)"
+NSS_VMAJOR="$(awk '/#define.*NSS_VMAJOR/ {print $3}' nss/lib/nss/nss.h)"
+NSS_VMINOR="$(awk '/#define.*NSS_VMINOR/ {print $3}' nss/lib/nss/nss.h)"
+NSS_VPATCH="$(awk '/#define.*NSS_VPATCH/ {print $3}' nss/lib/nss/nss.h)"
+
 read -r NSPR_VER _ < /var/db/kiss/installed/nspr/version
 
 sed nss.pc.in \
