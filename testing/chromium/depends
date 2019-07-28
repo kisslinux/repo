@@ -20,6 +20,7 @@ libjpeg-turbo make
 libwebp       make
 libxml2       make
 libxslt       make
+netbsd-queue  make
 ninja         make
 nodejs        make
 nss           make
