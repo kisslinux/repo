@@ -1,1 +1,3 @@
 https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_45_RTM/src/nss-3.45.tar.gz
+files/nss.pc.in
+files/nss-config.in
