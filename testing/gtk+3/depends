@@ -1,9 +1,10 @@
-atk              make
-atk-bridge-fake  make
-fribidi          make
-gdk-pixbuf       make
-libXi            make
-libXinerama      make
-libepoxy         make
-pango            make
+atk
+atk-bridge-fake
+fribidi
+gdk-pixbuf
+libXcomposite
+libXi
+libXinerama
+libepoxy
+pango
 shared-mime-info
