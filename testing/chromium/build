@@ -4,7 +4,9 @@ git clone --depth 1 \
     https://chromium.googlesource.com/chromium/tools/depot_tools.git
 
 export PATH="$PATH:$PWD/depot_tools"
+export DEPOT_TOOLS_WIN_TOOLCHAIN=0
 
+gclient config https://chromium.googlesource.com/chromium/src.git
 gclient runhooks
 
 PYTHONDONTWRITEBYTECODE=1 python2 "$PWD/depot_tools/gn.py" gen out/Default \
