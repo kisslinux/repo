@@ -1,0 +1,13 @@
+diff --git chromium-69.0.3497.100/buildtools/third_party/libc++/trunk/include/__config
+index 52c7142..ca187dd 100644
+--- chromium-69.0.3497.100/buildtools/third_party/libc++/trunk/include/__config
++++ chromium-69.0.3497.100/buildtools/third_party/libc++/trunk/include/__config
+@@ -11,6 +11,8 @@
+ #ifndef _LIBCPP_CONFIG
+ #define _LIBCPP_CONFIG
+ 
++#define _LIBCPP_HAS_MUSL_LIBC
++
+ #if defined(_MSC_VER) && !defined(__clang__)
+ #  if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+ #    define _LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER
