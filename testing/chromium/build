@@ -19,8 +19,25 @@ exec python2 "\$@"
 EOF
 chmod +x ./fix-python-bin/python
 
+# Use system libraries.
+for dep in ffmpeg flac fontconfig harfbuzz-ng libdrm libevent libjpeg \
+           libpng libwebp libxml libxslt opus re2 snappy yasm libjpeg_turbo; do
+    find . -type f -path "*third_party/$dep/*" \
+        \! -path "*third_party/$dep/chromium/*" \
+        \! -path "*third_party/$dep/google/*" \
+        \! -path './base/third_party/icu/*' \
+        \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
+        \! -path './third_party/yasm/run_yasm.py' \
+        \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
+        -delete
+done
+
+# Switch to system provided dependencies.
+python2 build/linux/unbundle/replace_gn_files.py \
+    --system-libraries ffmpeg flac fontconfig harfbuzz-ng libdrm libevent libjpeg libpng libwebp libxml libxslt opus re2 snappy yasm libjpeg_turbo
+
 python2 tools/gn/bootstrap/bootstrap.py -s -v \
-    --gn-gen-args 'is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false rtc_use_x11=true is_clang=false use_atk=false use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false'
+    --gn-gen-args 'is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false rtc_use_x11=true is_clang=false use_atk=false use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_gperf=false use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false'
 
 out/Release/gn gen out/Release \
     --script-executable=/usr/bin/python2
