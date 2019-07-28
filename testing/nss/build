@@ -9,20 +9,44 @@ make -j 1 -C nss/coreconf
 make -j 1 -C nss/lib/dbm
 make -j 1 -C nss
 
-cd dist
-
 mkdir -p "$1/usr/lib/pkgconfig" "$1/usr/bin" "$1/usr/include/nss"
 
-install -vm 755 Linux*/lib/*.so      "$1/usr/lib"
-install -vm 644 Linux*/lib/*.chk     "$1/usr/lib"
-install -vm 644 Linux*/lib/libcrmf.a "$1/usr/lib"
+export NSS_VMAJOR="$(awk '/#define.*NSS_VMAJOR/ {print $3}' nss/lib/nss/nss.h)"
+export NSS_VMINOR="$(awk '/#define.*NSS_VMINOR/ {print $3}' nss/lib/nss/nss.h)"
+export NSS_VPATCH="$(awk '/#define.*NSS_VPATCH/ {print $3}' nss/lib/nss/nss.h)"
+read -r NSPR_VER _ < /var/db/kiss/installed/nspr/version
 
-install -vm 755 -d "$1/usr/include/nss"
-cp -vRL public/nss/* private/nss/* "$1/usr/include/nss"
-chmod -v 644 "$1/usr/include/nss/"*
+sed nss.pc.in \
+    -e "s,%libdir%,/usr/lib,g" \
+    -e "s,%prefix%,/usr,g" \
+    -e "s,%exec_prefix%,/usr/bin,g" \
+    -e "s,%includedir%,/usr/include/nss,g" \
+    -e "s,%NSPR_VERSION%,${NSPR_VER},g" \
+    -e "s,%NSS_VERSION%,3.45,g" > \
+    "$1/usr/lib/pkgconfig/nss.pc"
+ln -sf nss.pc "$1/usr/lib/pkgconfig/mozilla-nss.pc"
+chmod 644 "$1"/usr/lib/pkgconfig/*.pc
 
-# BROKEN (SEE ALPINE/VOID) #
-install -vm 755 Linux*/bin/certutil   "$1/usr/bin"
-install -vm 755 Linux*/bin/nss-config "$1/usr/bin"
-install -vm 755 Linux*/bin/pk12util   "$1/usr/bin"
-install -vm 644 Linux*/lib/pkgconfig/nss.pc  "$1/usr/lib/pkgconfig"
+sed nss-config.in \
+    -e "s,@libdir@,/usr/lib,g" \
+    -e "s,@prefix@,/usr/bin,g" \
+    -e "s,@exec_prefix@,/usr/bin,g" \
+    -e "s,@includedir@,/usr/include/nss,g" \
+    -e "s,@MOD_MAJOR_VERSION@,${NSS_VMAJOR},g" \
+    -e "s,@MOD_MINOR_VERSION@,${NSS_VMINOR},g" \
+    -e "s,@MOD_PATCH_VERSION@,${NSS_VPATCH},g" \
+    > "$1/usr/bin/nss-config"
+chmod 755 "$1/usr/bin/nss-config"
+
+for f in libsoftokn3.so libfreebl3.so libnss3.so libnssutil3.so \
+         libssl3.so libsmime3.so libnssckbi.so libnssdbm3.so; do
+    install -m755 dist/*.OBJ/lib/"$f" "$1/usr/lib"
+done
+install -m644 dist/*OBJ/lib/libcrmf.a "$1/usr/lib"
+
+for f in certutil cmsutil crlutil modutil pk12util shlibsign \
+         signtool signver ssltap; do
+    install -m755 dist/*.OBJ/bin/"$f" "$1/usr/bin"
+done
+
+install -m644 dist/public/nss/*.h "$1/usr/include/nss"
