@@ -1,0 +1,15 @@
+diff --git chromium-69.0.3497.100/third_party/angle/third_party/vulkan-loader/BUILD.gn
+index 0d662fd..de5a0b1 100644
+--- chromium-69.0.3497.100/third_party/angle/third_party/vulkan-loader/BUILD.gn
++++ chromium-69.0.3497.100/third_party/angle/third_party/vulkan-loader/BUILD.gn
+@@ -192,10 +192,6 @@ config("vulkan_loader_config") {
+   if (is_win) {
+     cflags = [ "/wd4201" ]
+   }
+-  if (is_linux) {
+-    # assume secure_getenv() is available
+-    defines += [ "HAVE_SECURE_GETENV" ]
+-  }
+ }
+ 
+ if (!is_android) {
