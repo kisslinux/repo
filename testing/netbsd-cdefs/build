@@ -1,3 +1,0 @@
-#!/bin/sh -e
-
-install -Dm 0644 cdefs.h* "$1/usr/include/sys/cdefs.h"
