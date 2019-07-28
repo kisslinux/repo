@@ -1,13 +1,12 @@
 #!/bin/sh -e
 
-git clone --depth 1 \
-    https://chromium.googlesource.com/chromium/tools/depot_tools.git
-
-export PATH="$PATH:$PWD/depot_tools"
-export DEPOT_TOOLS_WIN_TOOLCHAIN=0
-
 sed -i '1s|python$|&2|' third_party/dom_distiller_js/protoc_plugins/*.py
 
-gn gen out/Release --script-executable=/usr/bin/python2 --args='target_cpu="x64" is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gtk3=true use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false rtc_use_x11=true use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false'
+python2 tools/gn/bootstrap/bootstrap.py -s -v \
+    --gn-gen-args 'target_cpu="x64" is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gtk3=true use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false rtc_use_x11=true use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false'
 
-ninja -C out/Release chrome chrome_sandbox chromedriver
+out/Release/gn gen out/Release \
+    --args='target_cpu="x64" is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gtk3=true use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false rtc_use_x11=true use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false'
+
+ninja -C out/Release chrome chromedriver
+sh
