@@ -20,7 +20,7 @@ EOF
 chmod +x ./fix-python-bin/python
 
 python2 tools/gn/bootstrap/bootstrap.py -s -v \
-    --gn-gen-args 'is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false rtc_use_x11=true is_clang=false use_atk=false use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false'
+    --gn-gen-args 'is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false rtc_use_x11=true is_clang=false use_atk=false use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false'
 
 out/Release/gn gen out/Release \
     --script-executable=/usr/bin/python2
