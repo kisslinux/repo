@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+make generic
+make DESTDIR="$1" install linux
