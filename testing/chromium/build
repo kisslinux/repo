@@ -11,7 +11,7 @@ export PATH=$PWD/fix-python-bin:$PATH
 mkdir -p fix-python-bin
 cat << EOF > ./fix-python-bin/python
 #!/bin/sh
-exec python2 "$@"
+exec python2 "\$@"
 EOF
 chmod +x ./fix-python-bin/python
 
