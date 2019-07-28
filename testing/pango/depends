@@ -1,6 +1,6 @@
-glib       make
-harfbuzz   make
-fontconfig make
-fribidi    make
-cairo      make
+glib
+harfbuzz
+fontconfig
+fribidi
+cairo
 meson      make
