@@ -6,6 +6,9 @@ git clone --depth 1 \
 export PATH="$PATH:$PWD/depot_tools"
 export DEPOT_TOOLS_WIN_TOOLCHAIN=0
 
+mkdir -p src
+cd src
+
 gclient config https://chromium.googlesource.com/chromium/src.git
 gclient runhooks
 
