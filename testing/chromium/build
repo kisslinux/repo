@@ -5,6 +5,15 @@ find . -type f -name \*.py -exec sed -i '1s|python$|&2|' {} \;
 
 # Use 'gcc' instead of 'clang'.
 export CC=gcc CXX=g++
+export PATH=$PWD/fix-python-bin:$PATH
+
+# Make a temporary script to cause 'python' to resolve to python 2 and not 3.
+mkdir -p fix-python-bin
+cat << EOF > ./fix-python-bin/python
+#!/bin/sh
+exec python2 "$@"
+EOF
+chmod +x ./fix-python-bin/python
 
 python2 tools/gn/bootstrap/bootstrap.py -s -v \
     --gn-gen-args 'is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gtk3=true use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false rtc_use_x11=true use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false'
