@@ -1,0 +1,28 @@
+#!/bin/sh -e
+
+export BUILD_OPT=1
+export NSPR_INCLUDE_DIR=/usr/include/nspr
+export NSS_ENABLE_WERROR=0
+export USE_64=1
+
+make -j 1 -C nss/coreconf
+make -j 1 -C nss/lib/dbm
+make -j 1 -C nss
+
+cd dist
+
+mkdir -p "$1/usr/lib/pkgconfig" "$1/usr/bin" "$1/usr/include/nss"
+
+install -vm 755 Linux*/lib/*.so      "$1/usr/lib"
+install -vm 644 Linux*/lib/*.chk     "$1/usr/lib"
+install -vm 644 Linux*/lib/libcrmf.a "$1/usr/lib"
+
+install -vm 755 -d "$1/usr/include/nss"
+cp -vRL public/nss/* private/nss/* "$1/usr/include/nss"
+chmod -v 644 "$1/usr/include/nss/"*
+
+# BROKEN (SEE ALPINE/VOID) #
+install -vm 755 Linux*/bin/certutil   "$1/usr/bin"
+install -vm 755 Linux*/bin/nss-config "$1/usr/bin"
+install -vm 755 Linux*/bin/pk12util   "$1/usr/bin"
+install -vm 644 Linux*/lib/pkgconfig/nss.pc  "$1/usr/lib/pkgconfig"
