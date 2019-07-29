@@ -25,6 +25,7 @@ ninja              make
 nodejs             make
 nss                make
 pango              make
+pciutils           make
 perl               make
 python2            make
 re2                make
