@@ -1,0 +1,19 @@
+#!/bin/sh -e
+
+make \
+    PREFIX=/usr \
+    SHAREDIR=/usr/share/hwdata \
+    SHARED=yes \
+    MANDIR=/usr/share/man \
+    SBINDIR=/usr/bin
+
+make \
+    PREFIX=/usr \
+    SHAREDIR=/usr/share/hwdata \
+    SHARED=yes \
+    MANDIR=/usr/share/man \
+    SBINDIR=/usr/bin \
+    DESTDIR="$1" \
+    install install-lib
+
+chmod -v 755 "$1/usr/lib/libpci.so"
