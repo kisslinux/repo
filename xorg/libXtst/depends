@@ -1,0 +1,3 @@
+libXext    make
+xorgproto  make
+libXi      make
