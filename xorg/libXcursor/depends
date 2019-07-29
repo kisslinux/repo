@@ -1,0 +1,3 @@
+xorgproto  make
+libXrender make
+libXfixes  make
