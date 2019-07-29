@@ -12,9 +12,11 @@ json-c             make
 jsoncpp            make
 libXScrnSaver      make
 libXcomposite      make
+libXcursor         make
 libXdamage         make
 libXi              make
 libXrandr          make
+libXtst            make
 libcap             make
 libevent           make
 libjpeg-turbo      make
