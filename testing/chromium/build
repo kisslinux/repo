@@ -8,7 +8,7 @@ done
 find . -type f -name \*.py -exec sed -i '1s|python$|&2|' {} \;
 
 # Use 'gcc' instead of 'clang'.
-export CC=gcc CXX=g++ LD=g++
+export CC=gcc CXX=g++ LD=g++ AR=ar
 export PATH=$PWD/fix-python-bin:$PATH
 
 # Make a temporary script to cause 'python' to resolve to python 2 and not 3.
@@ -41,7 +41,7 @@ python2 build/linux/unbundle/replace_gn_files.py \
     --system-libraries ffmpeg fontconfig harfbuzz-ng libdrm libevent libjpeg libpng libwebp libxml libxslt opus re2 snappy yasm
 
 python2 tools/gn/bootstrap/bootstrap.py -s -v \
-    --gn-gen-args 'is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false rtc_use_x11=true is_clang=false use_atk=false use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_gperf=false use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false use_allocator="none" use_allocator_shim=false use_system_harfbuzz=true clang_use_chrome_plugins=false custom_toolchain="//build/toolchain/linux/unbundle:default" host_toolchain="//build/toolchain/linux/unbundle:default" linux_use_bundled_binutils=false use_custom_libcxx=false use_lld=false'
+    --gn-gen-args 'is_debug=false use_jumbo_build=true enable_nacl=false symbol_level=0 blink_symbol_level=0 enable_nacl_nonsfi=false use_gold=false treat_warnings_as_errors=false fatal_linker_warnings=false use_sysroot=false use_cups=false rtc_use_x11=true is_clang=false use_atk=false use_dbus=false safe_browsing_mode=0 use_pulseaudio=false use_gperf=false use_gconf=false use_gio=false use_gnome_keyring=false use_kerberos=false use_allocator="none" use_allocator_shim=false use_system_harfbuzz=true clang_use_chrome_plugins=false custom_toolchain="//build/toolchain/linux/unbundle:default" host_toolchain="//build/toolchain/linux/unbundle:default" linux_use_bundled_binutils=false use_custom_libcxx=false use_lld=false closure_compile=false'
 
 out/Release/gn gen out/Release \
     --script-executable=/usr/bin/python2
