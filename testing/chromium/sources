@@ -69,4 +69,3 @@ patches/safe_browsing-disable-reporting-of-safebrowsing-over.patch
 patches/unrar.patch
 patches/welcome-page.patch
 patches/disable_swiftshader.patch
-patches/disable_tracing.patch
