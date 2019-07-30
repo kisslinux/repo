@@ -44,7 +44,7 @@ set -- \
     use_official_google_api_keys=false \
     use_unofficial_version_number=false \
     remove_webcore_debug_symbols=true \
-    is_official=true
+    is_official_build=true
 
 for patch in *.patch; do
     patch -p1 < "$patch"
