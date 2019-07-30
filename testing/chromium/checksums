@@ -1,4 +1,5 @@
 510e6ca7ccc218b401b375c13656f6aecab196b03142026dc3602b9d1804a5ac  chromium-75.0.3770.142.tar.xz
+6cb02c710eee5c2a0b67b8ff48ee1328f9db3d1f430cb4c213887f1860720f32  0001-fix-building-without-safebrowsing.patch
 bc2a44c2f3574f5997e54e4088e1644bcffaa6f541cd729a32bf94ea05dd10bb  0003-disable-autofill-download-manager.patch
 4a27dea88e61e1ba607cc9868ecba60882759ea608299c42ce59b821f0e17d8a  0004-disable-google-url-tracker.patch
 1dc7e3f22cd81ca85ea9f3240cc6adb90f111477c9cc05efcfe4943a2dcf9f6e  0005-disable-default-extensions.patch
