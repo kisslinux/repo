@@ -17,6 +17,7 @@ set -- \
     enable_swiftshader=false \
     fatal_linker_warnings=false \
     host_toolchain=\"//build/toolchain/linux/unbundle:default\" \
+    is_component_build=true \
     is_clang=false \
     is_debug=false \
     linux_use_bundled_binutils=false \
@@ -34,14 +35,15 @@ set -- \
     use_gnome_keyring=false \
     use_gold=false \
     use_jumbo_build=true \
-    jumbo_file_merge_limit=8 \
+    jumbo_file_merge_limit=20 \
     use_kerberos=false \
     use_lld=false \
     use_pulseaudio=false \
     use_sysroot=false \
     use_system_harfbuzz=true \
     use_official_google_api_keys=false \
-    use_unofficial_version_number=false
+    use_unofficial_version_number=false \
+    remove_webcore_debug_symbols=true
 
 for patch in *.patch; do
     patch -p1 < "$patch"
