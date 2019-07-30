@@ -1,4 +1,5 @@
 https://commondatastorage.googleapis.com/chromium-browser-official/chromium-75.0.3770.142.tar.xz
+patches/0001-fix-building-without-safebrowsing.patch
 patches/0003-disable-autofill-download-manager.patch
 patches/0004-disable-google-url-tracker.patch
 patches/0005-disable-default-extensions.patch
