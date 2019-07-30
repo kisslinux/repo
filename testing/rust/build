@@ -1,17 +1,28 @@
 #!/bin/sh -e
 
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
+
 ./configure \
     --prefix=/usr \
     --release-channel=stable \
     --disable-rpath \
     --disable-docs \
+    --disable-full-bootstrap \
     --disable-codegen-tests \
     --enable-vendor \
+    --enable-local-rust \
     --llvm-root=/usr \
     --build=x86_64-unknown-linux-musl \
     --target=x86_64-unknown-linux-musl \
     --set=target.x86_64-unknown-linux-musl.llvm-config=/usr/bin/llvm-config \
-    --set=target.x86_64-unknown-linux-musl.llvm-config=/usr/bin/llvm-config
+    --set=target.x86_64-unknown-linux-musl.crt-static=false
+
+# rust checksums files in vendor/, but we patch a few files.
+for vendor in libc lzma-sys typenum backtrace-sys; do
+    sed -i 's/\("files":{\)[^}]*/\1/' vendor/$vendor/.cargo-checksum.json
+done
 
 make
 DESTDIR="$1" ./x.py install -v
