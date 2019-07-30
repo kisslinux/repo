@@ -42,8 +42,7 @@ set -- \
     use_sysroot=false \
     use_system_harfbuzz=true \
     use_official_google_api_keys=false \
-    use_unofficial_version_number=false \
-    remove_webcore_debug_symbols=true
+    use_unofficial_version_number=false
     # Clang is needed for this as well as additional patches/workarounds.
     # is_official_build=true
 
