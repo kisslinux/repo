@@ -12,6 +12,7 @@ done
     --disable-full-bootstrap \
     --disable-codegen-tests \
     --enable-vendor \
+    --enable-local-rust \
     --llvm-root=/usr \
     --build=x86_64-unknown-linux-musl \
     --target=x86_64-unknown-linux-musl \
