@@ -1,2 +1,2 @@
-libressl make
-linux-headers make
+#libressl make
+#linux-headers make
