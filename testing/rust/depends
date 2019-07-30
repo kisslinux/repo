@@ -1,2 +1,2 @@
-#python make
-#llvm   make
+python make
+llvm   make
