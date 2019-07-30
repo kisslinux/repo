@@ -43,8 +43,9 @@ set -- \
     use_system_harfbuzz=true \
     use_official_google_api_keys=false \
     use_unofficial_version_number=false \
-    remove_webcore_debug_symbols=true \
-    is_official_build=true
+    remove_webcore_debug_symbols=true
+    # Clang is needed for this as well as additional patches/workarounds.
+    # is_official_build=true
 
 for patch in *.patch; do
     patch -p1 < "$patch"
