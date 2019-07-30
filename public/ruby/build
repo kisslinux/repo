@@ -1,7 +1,9 @@
 #!/bin/sh -e
 
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --enable-shared \
+    --disable-rpath
 
 make
 make DESTDIR="$1" install
