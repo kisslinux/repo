@@ -1,0 +1,56 @@
+# Disable some background communication with clients2.google.com
+
+--- a/third_party/breakpad/breakpad/src/client/linux/sender/google_crash_report_sender.cc
++++ b/third_party/breakpad/breakpad/src/client/linux/sender/google_crash_report_sender.cc
+@@ -85,6 +85,7 @@ bool CheckForRequiredFlagsOrDie() {
+ }
+ 
+ int main(int argc, char *argv[]) {
++  return 0;
+   google::InitGoogleLogging(argv[0]);
+   google::ParseCommandLineFlags(&argc, &argv, true);
+   if (!CheckForRequiredFlagsOrDie()) {
+--- a/chrome/browser/tracing/crash_service_uploader.cc
++++ b/chrome/browser/tracing/crash_service_uploader.cc
+@@ -132,11 +132,16 @@ void TraceCrashServiceUploader::DoUpload
+   progress_callback_ = progress_callback;
+   done_callback_ = std::move(done_callback);
+ 
+-  base::PostTaskWithTraits(
+-      FROM_HERE, {base::TaskPriority::BEST_EFFORT},
+-      base::BindOnce(&TraceCrashServiceUploader::DoCompressOnBackgroundThread,
+-                     base::Unretained(this), file_contents, upload_mode,
+-                     upload_url_, std::move(metadata)));
++  if (!progress_callback_.is_null()) {
++    base::PostTaskWithTraits(
++      FROM_HERE, {content::BrowserThread::UI},
++      base::Bind(progress_callback_, 1, 1));
++  }
++  if (!done_callback_.is_null()) {
++    base::PostTaskWithTraits(
++      FROM_HERE, {content::BrowserThread::UI},
++      base::BindOnce(std::move(done_callback_), true, "Upload skipped."));
++  }
+ }
+ 
+ void TraceCrashServiceUploader::DoCompressOnBackgroundThread(
+@@ -207,11 +212,6 @@ void TraceCrashServiceUploader::DoCompre
+   std::string post_data;
+   SetupMultipart(product, version, std::move(metadata), "trace.json.gz",
+                  compressed_contents, &post_data);
+-
+-  base::PostTaskWithTraits(
+-      FROM_HERE, {content::BrowserThread::UI},
+-      base::BindOnce(&TraceCrashServiceUploader::CreateAndStartURLLoader,
+-                     base::Unretained(this), upload_url, post_data));
+ }
+ 
+ void TraceCrashServiceUploader::OnUploadError(
+@@ -309,6 +309,7 @@ bool TraceCrashServiceUploader::Compress
+ void TraceCrashServiceUploader::CreateAndStartURLLoader(
+     const std::string& upload_url,
+     const std::string& post_data) {
++  return;
+   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+   DCHECK(!simple_url_loader_);
+ 
