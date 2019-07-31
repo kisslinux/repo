@@ -20,6 +20,7 @@ patches/chromium-75-lss.patch
 patches/chromium-75-noexcept.patch
 patches/chromium-75-pure-virtual.patch
 patches/chromium-75-unique_ptr.patch
+patches/chromium-75.0.3770.80-no-zlib-mangle.patch
 patches/chromium-compiler-r9.patch
 patches/chromium-fix-char_traits.patch
 patches/chromium-optional-atk-r1.patch
@@ -38,6 +39,7 @@ patches/disable-google-host-detection.patch
 patches/disable-mei-preload.patch
 patches/disable-network-time-tracker.patch
 patches/disable-webrtc-log-uploader.patch
+patches/disable_swiftshader.patch
 patches/fix-building-without-mdns-and-service-discovery.patch
 patches/fix-building-without-safebrowsing.patch
 patches/fuzzers.patch
@@ -68,5 +70,3 @@ patches/safe_browsing-disable-incident-reporting.patch
 patches/safe_browsing-disable-reporting-of-safebrowsing-over.patch
 patches/unrar.patch
 patches/welcome-page.patch
-patches/disable_swiftshader.patch
-patches/chromium-75.0.3770.80-no-zlib-mangle.patch
