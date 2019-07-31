@@ -1,4 +1,4 @@
-#cmake  make
-#python make
-#zlib   make
-#llvm
+cmake  make
+python make
+zlib   make
+llvm
