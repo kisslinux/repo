@@ -69,3 +69,4 @@ patches/safe_browsing-disable-reporting-of-safebrowsing-over.patch
 patches/unrar.patch
 patches/welcome-page.patch
 patches/disable_swiftshader.patch
+patches/chromium-75.0.3770.80-no-zlib-mangle.patch

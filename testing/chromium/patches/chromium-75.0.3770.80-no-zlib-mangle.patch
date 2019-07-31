@@ -1,0 +1,14 @@
+diff -up chromium-75.0.3770.80/third_party/zlib/zconf.h.nozmangle chromium-75.0.3770.80/third_party/zlib/zconf.h
+--- chromium-75.0.3770.80/third_party/zlib/zconf.h.nozmangle	2019-06-05 11:12:30.420412467 -0400
++++ chromium-75.0.3770.80/third_party/zlib/zconf.h	2019-06-05 11:17:43.512683058 -0400
+@@ -8,10 +8,6 @@
+ #ifndef ZCONF_H
+ #define ZCONF_H
+ 
+-/* This include does prefixing as below, but with an updated set of names.  Also
+- * sets up export macros in component builds. */
+-#include "chromeconf.h"
+-
+ /*
+  * If you *really* need a unique prefix for all types and library functions,
+  * compile with -DZ_PREFIX. The "standard" zlib should be compiled without it.
