@@ -56,7 +56,7 @@ done
 find . -type f -name \*.py -exec sed -i '1s|python$|&2|' {} \;
 
 # Use 'clang' instead of 'gcc'.
-export CC=clang CXX=clang++ AR=ar NM=nm LD=lld
+export CC=clang CXX=clang++ AR=ar NM=nm LD=ld.lld
 export PATH=$PWD/fix-python-bin:$PATH
 
 # Make a temporary script to cause 'python' to resolve to python 2 and not 3.
