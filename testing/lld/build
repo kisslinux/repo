@@ -8,10 +8,6 @@ cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_EH=ON \
-    -DCLANG_BUILD_EXAMPLES=OFF \
-    -DCLANG_INCLUDE_DOCS=OFF \
-    -DCLANG_INCLUDE_TESTS=OFF \
-    -DLIBCLANG_BUILD_STATIC=ON \
     -Wno-dev -G "Unix Makefiles" ..
 
 make
