@@ -1,6 +1,8 @@
 alsa-lib           make
 bison              make
 bsd-compat-headers make
+clang              make
+lld                make
 ffmpeg             make
 fontconfig         make
 freetype           make
