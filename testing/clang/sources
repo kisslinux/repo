@@ -1,0 +1,3 @@
+http://llvm.org/releases/8.0.0/cfe-8.0.0.src.tar.xz
+patches/cfe-003-fix-unwind-chain-inclusion.patch
+patches/cfe-004-add-musl-triples.patch

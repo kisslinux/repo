@@ -1,0 +1,21 @@
+#!/bin/sh -e
+
+patch -p1 < cfe-003-fix-unwind-chain-inclusion.patch
+patch -p1 < cfe-004-add-musl-triples.patch
+
+mkdir -p build
+cd build
+
+cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DLLVM_ENABLE_RTTI=ON \
+    -DLLVM_ENABLE_EH=ON \
+    -DCLANG_BUILD_EXAMPLES=OFF \
+    -DCLANG_INCLUDE_DOCS=OFF \
+    -DCLANG_INCLUDE_TESTS=OFF \
+    -DLIBCLANG_BUILD_STATIC=ON \
+    -Wno-dev -G "Unix Makefiles" ..
+
+make
+make DESTDIR="$1" install
