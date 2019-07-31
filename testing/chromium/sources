@@ -20,7 +20,6 @@ patches/chromium-75-lss.patch
 patches/chromium-75-noexcept.patch
 patches/chromium-75-pure-virtual.patch
 patches/chromium-75-unique_ptr.patch
-patches/chromium-75.0.3770.80-no-zlib-mangle.patch
 patches/chromium-compiler-r9.patch
 patches/chromium-fix-char_traits.patch
 patches/chromium-optional-atk-r1.patch
