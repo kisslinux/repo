@@ -18,7 +18,7 @@ set -- \
     fatal_linker_warnings=false \
     host_toolchain=\"//build/toolchain/linux/unbundle:default\" \
     is_component_build=true \
-    is_clang=false \
+    is_clang=true \
     is_debug=false \
     linux_use_bundled_binutils=false \
     rtc_use_x11=true \
@@ -55,8 +55,8 @@ done
 # Fix 'python2' shebangs.
 find . -type f -name \*.py -exec sed -i '1s|python$|&2|' {} \;
 
-# Use 'gcc' instead of 'clang'.
-export CC=gcc CXX=g++ LD=g++ AR=ar NM=nm
+# Use 'clang' instead of 'gcc'.
+export CC=clang CXX=clang++ AR=ar NM=nm LD=lld
 export PATH=$PWD/fix-python-bin:$PATH
 
 # Make a temporary script to cause 'python' to resolve to python 2 and not 3.
