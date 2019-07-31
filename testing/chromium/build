@@ -37,7 +37,7 @@ set -- \
     use_jumbo_build=true \
     jumbo_file_merge_limit=20 \
     use_kerberos=false \
-    use_lld=false \
+    use_lld=true \
     icu_use_data_file=false \
     use_pulseaudio=false \
     use_sysroot=false \
