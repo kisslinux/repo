@@ -38,6 +38,7 @@ set -- \
     jumbo_file_merge_limit=20 \
     use_kerberos=false \
     use_lld=false \
+    icu_use_data_file=false \
     use_pulseaudio=false \
     use_sysroot=false \
     use_system_harfbuzz=true \
