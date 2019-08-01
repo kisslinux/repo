@@ -68,7 +68,7 @@ for patch in *.patch; do
 done
 
 # Use 'clang' instead of 'gcc'.
-export CC=clang CXX=clang++ AR=llvm-ar NM=llvm-nm LD=ld.lld
+export CC=clang CXX=clang++ AR=llvm-ar NM=llvm-nm LD=clang++
 export PATH=$PWD/fix-python-bin:$PATH
 
 # Make a temporary script to cause 'python' to resolve to python 2 and not 3.
