@@ -36,7 +36,7 @@ set -- \
     jumbo_file_merge_limit=25 \
     use_kerberos=false \
     enable_hangout_services_extension=false \
-    use_lld=true \
+    use_lld=false \
     icu_use_data_file=false \
     use_pulseaudio=false \
     use_sysroot=false \
