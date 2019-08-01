@@ -36,6 +36,7 @@ set -- \
     use_jumbo_build=true \
     jumbo_file_merge_limit=25 \
     use_kerberos=false \
+    enable_hangout_services_extension=false \
     use_lld=true \
     icu_use_data_file=false \
     use_pulseaudio=false \
@@ -44,7 +45,8 @@ set -- \
     use_official_google_api_keys=false \
     use_unofficial_version_number=false \
     fieldtrial_testing_like_official_build=false \
-    proprietary_codecs=false
+    proprietary_codecs=false \
+    target_cpu="x64"
     # Clang is needed for this as well as additional patches/workarounds.
     # is_official_build=true
 
