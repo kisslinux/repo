@@ -16,7 +16,6 @@ set -- \
     enable_swiftshader=false \
     fatal_linker_warnings=false \
     host_toolchain=\"//build/toolchain/linux/unbundle:default\" \
-    is_component_build=true \
     is_clang=true \
     is_debug=false \
     linux_use_bundled_binutils=false \
