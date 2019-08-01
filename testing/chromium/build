@@ -46,20 +46,11 @@ set -- \
     use_unofficial_version_number=false \
     fieldtrial_testing_like_official_build=false \
     proprietary_codecs=false \
-    target_cpu=\"x64\" \
-    is_official_build=true \
-    is_cfi=true
+    target_cpu=\"x64\"
 
 for patch in *.patch; do
     patch -p1 < "$patch"
 done
-
-# Allow building against system libraries in official builds.
-sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' \
-    tools/generate_shim_headers/generate_shim_headers.py
-
-# Fix 'python2' shebangs.
-find . -type f -name \*.py -exec sed -i '1s|python$|&2|' {} \;
 
 # Use 'clang' instead of 'gcc'.
 export CC=clang CXX=clang++ AR=ar NM=nm LD=ld.lld
@@ -92,7 +83,9 @@ done
 
 # Switch to system provided dependencies.
 python2 build/linux/unbundle/replace_gn_files.py \
-    --system-libraries ffmpeg fontconfig harfbuzz-ng libdrm libevent libjpeg libpng libwebp libxml libxslt opus re2 snappy yasm
+    --system-libraries ffmpeg fontconfig harfbuzz-ng libdrm libevent \
+                       libjpeg libpng libwebp libxml libxslt opus re2 \
+                       snappy yasm
 
 python2 tools/gn/bootstrap/bootstrap.py -s -v --gn-gen-args "$*"
 
