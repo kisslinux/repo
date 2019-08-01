@@ -69,7 +69,7 @@ mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
 
 # Use system libraries.
-for dep in ffmpeg fontconfig harfbuzz-ng libdrm libevent libjpeg \
+for dep in fontconfig harfbuzz-ng libdrm libevent libjpeg \
            libpng libwebp libxml libxslt opus re2 snappy yasm; do
     find . -type f -path "*third_party/$dep/*" \
         \! -path "*third_party/$dep/chromium/*" \
@@ -83,7 +83,7 @@ done
 
 # Switch to system provided dependencies.
 python2 build/linux/unbundle/replace_gn_files.py \
-    --system-libraries ffmpeg fontconfig harfbuzz-ng libdrm libevent \
+    --system-libraries fontconfig harfbuzz-ng libdrm libevent \
                        libjpeg libpng libwebp libxml libxslt opus re2 \
                        snappy yasm
 
