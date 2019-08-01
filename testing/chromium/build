@@ -20,7 +20,6 @@ set -- \
     enable_nacl_nonsfi=false \
     enable_native_notifications=false \
     enable_one_click_signin=false \
-    enable_plugins=false \
     enable_print_preview=false \
     enable_reading_list=false \
     enable_remoting=false \
