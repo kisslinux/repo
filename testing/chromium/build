@@ -35,7 +35,6 @@ set -- \
     is_component_build=false \
     is_debug=false \
     is_desktop_linux=true \
-    jumbo_file_merge_limit=25 \
     linux_use_bundled_binutils=false \
     proprietary_codecs=false \
     rtc_use_x11=true \
