@@ -46,7 +46,7 @@ set -- \
     use_unofficial_version_number=false \
     fieldtrial_testing_like_official_build=false \
     proprietary_codecs=false \
-    target_cpu="x64" \
+    target_cpu=\"x64\" \
     is_official_build=true \
     is_cfi=true
 
