@@ -43,7 +43,7 @@ set -- \
     use_system_harfbuzz=true \
     use_official_google_api_keys=false \
     use_unofficial_version_number=false \
-    fieldtrial_testing_like_official_build=false \
+    fieldtrial_testing_like_official_build=true \
     proprietary_codecs=false \
     target_cpu=\"x64\"
 
