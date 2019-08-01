@@ -14,6 +14,7 @@ set -- \
     enable_reporting=false \
     enable_service_discovery=false \
     enable_swiftshader=false \
+    enable_vr=false \
     fatal_linker_warnings=false \
     host_toolchain=\"//build/toolchain/linux/unbundle:default\" \
     is_clang=true \
