@@ -46,13 +46,17 @@ set -- \
     use_unofficial_version_number=false \
     fieldtrial_testing_like_official_build=false \
     proprietary_codecs=false \
-    target_cpu="x64"
-    # Clang is needed for this as well as additional patches/workarounds.
-    # is_official_build=true
+    target_cpu="x64" \
+    is_official_build=true \
+    is_cfi=true
 
 for patch in *.patch; do
     patch -p1 < "$patch"
 done
+
+# Allow building against system libraries in official builds.
+sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' \
+    tools/generate_shim_headers/generate_shim_headers.py
 
 # Fix 'python2' shebangs.
 find . -type f -name \*.py -exec sed -i '1s|python$|&2|' {} \;
