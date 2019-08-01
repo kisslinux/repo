@@ -7,6 +7,7 @@ set -- \
     clang_use_chrome_plugins=false \
     closure_compile=false \
     custom_toolchain=\"//build/toolchain/linux/unbundle:default\" \
+    enable_background_contents=false \
     enable_nacl=false \
     enable_nacl_nonsfi=false \
     enable_reading_list=false \
