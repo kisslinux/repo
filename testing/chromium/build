@@ -34,7 +34,7 @@ set -- \
     use_gnome_keyring=false \
     use_gold=false \
     use_jumbo_build=true \
-    jumbo_file_merge_limit=20 \
+    jumbo_file_merge_limit=25 \
     use_kerberos=false \
     use_lld=true \
     icu_use_data_file=false \
@@ -43,7 +43,8 @@ set -- \
     use_system_harfbuzz=true \
     use_official_google_api_keys=false \
     use_unofficial_version_number=false \
-    fieldtrial_testing_like_official_build=false
+    fieldtrial_testing_like_official_build=false \
+    proprietary_codecs=false
     # Clang is needed for this as well as additional patches/workarounds.
     # is_official_build=true
 
