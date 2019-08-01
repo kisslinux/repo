@@ -8,6 +8,17 @@ set -- \
     closure_compile=false \
     custom_toolchain=\"//build/toolchain/linux/unbundle:default\" \
     enable_background_contents=false \
+    enable_background_mode=false \
+    enable_basic_print_dialog=false \
+    enable_basic_printing=false \
+    enable_print_preview=false \
+    enable_captive_portal_detection=false \
+    enable_ipc_logging=false \
+    enable_iterator_debugging=false \
+    enable_media_remoting=false \
+    enable_native_notifications=false \
+    enable_one_click_signin=false \
+    enable_plugins=false \
     enable_nacl=false \
     enable_nacl_nonsfi=false \
     enable_reading_list=false \
@@ -20,6 +31,8 @@ set -- \
     host_toolchain=\"//build/toolchain/linux/unbundle:default\" \
     is_clang=true \
     is_debug=false \
+    is_desktop_linux=true \
+    is_component_build=false \
     linux_use_bundled_binutils=false \
     rtc_use_x11=true \
     safe_browsing_mode=0 \
@@ -34,6 +47,8 @@ set -- \
     use_gio=false \
     use_gnome_keyring=false \
     use_gold=false \
+    use_glib=false \
+    use_udev=false \
     use_jumbo_build=true \
     jumbo_file_merge_limit=25 \
     use_kerberos=false \
