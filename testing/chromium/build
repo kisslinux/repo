@@ -90,7 +90,7 @@ python2 tools/gn/bootstrap/bootstrap.py -s -v --gn-gen-args "$*"
 
 # All shells seem to support this despite the lack of a POSIX spec for it.
 # shellcheck disable=2039
-ulimit -n 2048 ||:
+ulimit -n 4096 ||:
 
 out/Release/gn gen out/Release \
     --script-executable=/usr/bin/python2
