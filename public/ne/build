@@ -1,11 +1,11 @@
 #!/bin/sh -e
 
 make \
-	PREFIX="/usr" \
-	LIBS="-lncursesw" \
-	DESTDIR="$1" \
-	build \
-	install
+   PREFIX="/usr" \
+   LIBS="-lncursesw" \
+   DESTDIR="$1" \
+   build \
+   install
 
 # Remove all doc files.
 rm -rf "$1/usr/share/doc"
