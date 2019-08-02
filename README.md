@@ -70,7 +70,7 @@ All package `build` and `post-install` scripts are subject to checks using `shel
 
 ## Code style
 
-- Indentation should be 4 spaces.
+- Indentation is 4 spaces.
 - Keep variables lowercase unless they're environment variables.
 - Use `#!/bin/sh -e`.
 - Use `/usr` as the prefix.
