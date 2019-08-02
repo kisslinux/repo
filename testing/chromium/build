@@ -49,7 +49,6 @@ set -- \
     use_custom_libcxx=false \
     use_dbus=false \
     use_gio=false \
-    use_glib=false \
     use_gnome_keyring=false \
     use_gold=false \
     use_jumbo_build=false \
@@ -59,7 +58,6 @@ set -- \
     use_pulseaudio=false \
     use_sysroot=false \
     use_system_harfbuzz=true \
-    use_udev=false \
     use_unofficial_version_number=false
 
 for patch in *.patch; do
