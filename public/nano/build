@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+./configure \
+	--prefix=/usr
+
+make
+make DESTDIR="$1" install
+
+# Remove all doc files.
+rm -rf "$1/usr/share/doc"
+
+# Remove all info files.
+rm -rf "$1/usr/share/info"
