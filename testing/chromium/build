@@ -58,7 +58,8 @@ set -- \
     use_pulseaudio=false \
     use_sysroot=false \
     use_system_harfbuzz=true \
-    use_unofficial_version_number=false
+    use_unofficial_version_number=false \
+    rtc_use_pipewire = false
 
 for patch in *.patch; do
     patch -p1 < "$patch"
