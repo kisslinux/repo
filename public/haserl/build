@@ -1,8 +1,8 @@
 #!/bin/sh -e
 
 ./configure \
-	--prefix=/usr \
-	--enable-bash-extensions
+    --prefix=/usr \
+    --enable-bash-extensions
 
 make
 make DESTDIR="$1" install
