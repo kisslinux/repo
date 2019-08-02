@@ -17,6 +17,7 @@ More information: <https://getkiss.org/pages/package-system/>
 * [Committing changes](#committing-changes)
 * [Pull requests](#pull-requests)
 * [Linting](#linting)
+* [Code style](#code-style)
 
 <!-- vim-markdown-toc -->
 
@@ -66,3 +67,10 @@ Ensure that the package builds successfully on your system before creating a pul
 ## Linting
 
 All package `build` and `post-install` scripts are subject to checks using `shellcheck`. Packages must pass the linter to be accepted into the repository. Exceptions can be made using `shellcheck disable=SCXXXX` with good reason.
+
+## Code style
+
+- Indentation should be 4 spaces.
+- Keep variables lowercase unless they're environment variables.
+- Use `#!/bin/sh -e`.
+- Use `/usr` as the prefix.
