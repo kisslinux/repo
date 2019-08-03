@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < libressl.patch
-
 cd wpa_supplicant
 mv ../.config .
 
