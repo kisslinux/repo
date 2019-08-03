@@ -35,3 +35,6 @@ DESTDIR="$1" ./mach install
 rm -rf "$1/usr/include"
 rm -rf "$1/usr/lib/firefox-devel"
 rm -rf "$1/usr/share/idl"
+
+# Install Ghack's user.js.
+cp -f ./user.js "$1/usr/lib/firefox/browser/defaults/preferences/vendor.js"
