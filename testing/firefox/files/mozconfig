@@ -15,7 +15,6 @@ ac_add_options --enable-system-pixman
 ac_add_options --enable-system-ffi
 
 ac_add_options --disable-gconf
-ac_add_options --disable-tests
 ac_add_options --disable-install-strip
 ac_add_options --disable-strip
 ac_add_options --disable-profiling
@@ -33,7 +32,6 @@ ac_add_options --enable-release
 ac_add_options --disable-pulseaudio
 ac_add_options --enable-alsa
 
-ac_add_options --disable-necko-wifi
 ac_add_options --disable-startup-notification
 
 # Respect the user's privacy.
@@ -50,3 +48,7 @@ ac_add_options --disable-updater
 ac_add_options --disable-dbus
 ac_add_options --disable-maintenance-service
 ac_add_options --disable-eme
+ac_add_options --disable-necko-wifi
+ac_add_options --disable-webrtc
+ac_add_options --disable-safe-browsing
+ac_add_options --disable-tests
