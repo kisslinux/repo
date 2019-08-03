@@ -1,6 +1,5 @@
 #!/bin/sh -e
 
-ls
 ./configure \
     --prefix=/usr \
     --disable-valgrind
