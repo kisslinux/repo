@@ -1,5 +1,0 @@
-#!/bin/sh -e
-
-install -D cdefs.h "$1/usr/include/sys/cdefs.h"
-install -D queue.h "$1/usr/include/sys/queue.h"
-install -D tree.h  "$1/usr/include/sys/tree.h"
