@@ -19,6 +19,10 @@ cd firefox
 
 mv mozconfig .mozconfig
 
+# Fix OOM errors.
+cores=$(nproc)
+printf '%s\n' "mk_add_options MOZ_MAKE_FLAGS=\"-j$cores -l$cores\"" >> .mozconfig
+
 for patch in *.patch; do
     patch -p1 < "$patch"
 done
