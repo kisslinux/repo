@@ -21,6 +21,8 @@ ac_add_options --disable-updater
 ac_add_options --disable-install-strip
 ac_add_options --disable-strip
 ac_add_options --disable-profiling
+ac_add_options --disable-maintenance-service
+ac_add_options --disable-em
 ac_add_options --enable-optimize="$CFLAGS"
 
 ac_add_options --enable-official-branding
