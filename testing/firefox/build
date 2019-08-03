@@ -14,6 +14,9 @@
 
 export PATH="$PWD/autoconf/bin:$PATH"
 
+# Fix linker errors at runtime.
+export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
+
 # Ensure that MOZ_TELEMETRY_REPORTING is unset.
 unset MOZ_TELEMETRY_REPORTING
 
