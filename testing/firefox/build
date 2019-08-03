@@ -3,7 +3,7 @@
 # Since this is a testing package, I intentionally disabled SC2164
 # for the time being. When we're done, re-enable it.
 
-# build autoconf 2.13 for Firefox's sole use
+# Build autoconf 2.13 for Firefox's sole use.
 (
     # shellcheck disable=SC2164
     cd autoconf2.13
