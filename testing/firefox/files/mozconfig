@@ -1,0 +1,43 @@
+ac_add_options --prefix=/usr
+ac_add_options --libdir=/usr/lib
+
+ac_add_options --with-system-nspr
+ac_add_options --with-system-nss
+ac_add_options --with-system-jpeg
+ac_add_options --with-system-zlib
+ac_add_options --with-system-bz2
+# We currently don't have libevent
+# ac_add_options --with-system-libevent
+ac_add_options --with-system-libvpx
+# XXX: the system's libpng doesn't have APNG support
+ac_add_options --without-system-png
+ac_add_options --enable-system-pixman
+ac_add_options --enable-system-ffi
+
+ac_add_options --disable-gconf
+ac_add_options --disable-tests
+ac_add_options --disable-crashreporter
+ac_add_options --disable-updater
+ac_add_options --disable-install-strip
+ac_add_options --disable-strip
+ac_add_options --disable-profiling
+ac_add_options --enable-optimize="$CFLAGS"
+
+ac_add_options --enable-official-branding
+ac_add_options --enable-application=browser
+
+# musl
+ac_add_options --disable-jemalloc
+ac_add_options --disable-gold
+ac_add_options --enable-release
+
+# ALSA/PulseAudio (removed in 70)
+ac_add_options --disable-pulseaudio
+ac_add_options --enable-alsa
+
+ac_add_options --disable-dbus
+ac_add_options --disable-necko-wifi
+ac_add_options --disable-startup-notification
+
+# Prevent OOM
+mk_add_options MOZ_MAKE_FLAGS="-j7 -l7"

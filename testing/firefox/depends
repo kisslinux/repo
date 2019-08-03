@@ -1,0 +1,12 @@
+cbindgen make
+gtk+2 make
+rust make
+zip make
+clang
+llvm
+libSM
+libXt
+libvpx
+nss
+gtk+3
+alsa-lib
