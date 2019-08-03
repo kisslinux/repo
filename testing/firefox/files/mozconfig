@@ -33,7 +33,6 @@ ac_add_options --disable-startup-notification
 
 # Respect the user's privacy.
 export MOZ_SERVICES_METRICS=0
-export MOZ_TELEMETRY_REPORTING=0
 export MOZ_PAY=0
 export MOZ_SERVICES_HEALTHREPORTER=0
 export MOZ_SERVICES_FXACCOUNTS=0
@@ -43,7 +42,6 @@ export MOZ_DEVICES=0
 ac_add_options --disable-crashreporter
 ac_add_options --disable-updater
 ac_add_options --disable-dbus
-ac_add_options --disable-maintenance-service
 ac_add_options --disable-eme
 ac_add_options --disable-necko-wifi
 ac_add_options --disable-webrtc
