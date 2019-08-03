@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Since this is a testing package, I intentionally disabled SC2164
+# for the time being. When we're done, re-enable it.
+
+# build autoconf 2.13 for Firefox's sole use
+(
+    # shellcheck disable=SC2164
+    cd autoconf2.13
+    ./configure --prefix="$PWD/../autoconf" --program-suffix=-2.13
+    make
+    make install
+)
+
+export PATH="$PWD/autoconf/bin:$PATH"
+
+# shellcheck disable=SC2164
+cd firefox
+
+mv mozconfig .mozconfig
+
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
+
+rm -f old-configure
+
+./mach build
+DESTDIR="$1" ./mach install
+
+rm -rf "$1/usr/include"
+rm -rf "$1/usr/lib/firefox-devel"
+rm -rf "$1/usr/share/idl"
