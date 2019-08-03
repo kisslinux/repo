@@ -40,4 +40,5 @@ rm -rf "$1/usr/lib/firefox-devel"
 rm -rf "$1/usr/share/idl"
 
 # Install Ghack's user.js.
+mkdir -p "$1/usr/lib/firefox/browser/defaults/preferences/"
 cp -f ./user.js "$1/usr/lib/firefox/browser/defaults/preferences/vendor.js"
