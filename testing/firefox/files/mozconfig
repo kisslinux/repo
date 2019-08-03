@@ -6,8 +6,6 @@ ac_add_options --with-system-nss
 ac_add_options --with-system-jpeg
 ac_add_options --with-system-zlib
 ac_add_options --with-system-bz2
-# We currently don't have libevent
-# ac_add_options --with-system-libevent
 ac_add_options --with-system-libvpx
 # XXX: the system's libpng doesn't have APNG support
 ac_add_options --without-system-png

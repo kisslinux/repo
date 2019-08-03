@@ -1,12 +1,12 @@
+alsa-lib
 cbindgen make
-gtk+2 make
-rust make
-zip make
 clang
-llvm
+gtk+2    make
+gtk+3
 libSM
 libXt
 libvpx
+llvm
 nss
-gtk+3
-alsa-lib
+rust     make
+zip      make
