@@ -3734,8 +3734,6 @@ onehome-remote   2198/tcp
 onehome-remote   2198/udp
 onehome-help     2199/tcp
 onehome-help     2199/udp
-ici              2200/tcp
-ici              2200/udp
 ats              2201/tcp
 ats              2201/udp
 imtc-map         2202/tcp
@@ -9829,6 +9827,7 @@ xprint-server    8100/tcp
 xprint-server    8100/udp
 ldoms-migr       8101/tcp
 kz-migr          8102/tcp
+skynetflow       8111/udp
 mtl8000-matrix   8115/tcp
 mtl8000-matrix   8115/udp
 cp-cluster       8116/tcp
@@ -10020,6 +10019,7 @@ ultraseek-http   8765/tcp
 ultraseek-http   8765/udp
 amcs             8766/tcp
 amcs             8766/udp
+core-of-source   8767/tcp
 dpap             8770/tcp
 dpap             8770/udp
 uec              8778/tcp
@@ -10258,6 +10258,7 @@ secure-ts        9318/tcp
 secure-ts        9318/udp
 guibase          9321/tcp
 guibase          9321/udp
+gnmi-gnoi        9339/tcp
 mpidcmgr         9343/tcp
 mpidcmgr         9343/udp
 mphlpdmc         9344/tcp
@@ -10594,6 +10595,7 @@ xoraya          11876/udp
 x2e-disc        11877/udp
 sysinfo-sp      11967/tcp
 sysinfo-sp      11967/udp
+tibsd           11971/tcp
 wmereceiving    11997/sctp
 wmedistribution 11998/sctp
 wmereporting    11999/sctp
@@ -10921,6 +10923,7 @@ irtrans         21000/tcp
 irtrans         21000/udp
 notezilla-lan   21010/tcp
 trinket-agent   21212/tcp
+cohesity-agent  21213/tcp
 aigairserver    21221/tcp
 rdm-tfs         21553/tcp
 dfserver        21554/tcp
