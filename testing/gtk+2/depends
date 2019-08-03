@@ -1,0 +1,10 @@
+atk
+atk-bridge-fake
+fribidi
+gdk-pixbuf
+libXcomposite
+libXi
+libXinerama
+libepoxy
+pango
+shared-mime-info
