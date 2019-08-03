@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Since this is a testing package, I intentionally disabled SC2164
 # for the time being. When we're done, re-enable it.
