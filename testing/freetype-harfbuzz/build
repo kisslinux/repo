@@ -29,7 +29,7 @@ build_freetype "$1" no
 
 # Point Harfbuzz to the Freetype files.
 export FREETYPE_CFLAGS="-I$PWD/freetype/include"
-export FREETYPE_LIBS="-L$PWD/freetype -lfreetype"
+export FREETYPE_LIBS="-L$1/usr/lib -lfreetype"
 
 build_harfbuzz "$1"
 
