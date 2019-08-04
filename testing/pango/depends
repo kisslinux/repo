@@ -1,5 +1,5 @@
 glib
-harfbuzz
+freetype-harfbuzz
 fontconfig
 fribidi
 cairo

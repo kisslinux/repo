@@ -1,4 +1,4 @@
-freetype   make
-libfontenc make
-xorgproto  make
-xtrans     make
+freetype-harfbuzz make
+libfontenc        make
+xorgproto         make
+xtrans            make

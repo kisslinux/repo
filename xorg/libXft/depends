@@ -1,4 +1,4 @@
-fontconfig make
-freetype   make
-libXrender make
-xorgproto  make
+fontconfig        make
+freetype-harfbuzz make
+libXrender        make
+xorgproto         make
