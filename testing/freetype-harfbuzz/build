@@ -1,0 +1,35 @@
+#!/bin/sh -e
+
+build_harfbuzz() (
+    cd harfbuzz
+
+    ./configure \
+        --prefix=/usr \
+        --with-glib
+
+    make
+    make DESTDIR="$1" install
+)
+
+build_freetype() (
+    cd freetype
+
+    CFLAGS="$CFLAGS -DDEFAULT_TT_INTERPRETER_VERSION=TT_INTERPRETER_VERSION_40" \
+    ./configure \
+        --prefix=/usr \
+        --enable-freetype-config \
+        --with-harfbuzz="$2"
+
+    make
+    make DESTDIR="$1" install
+)
+
+build_freetype "$1" no
+
+export LD_LIBRARY_PATH="$1/usr/lib"
+
+build_harfbuzz "$1"
+build_freetype "$1" yes
+
+# Remove a ton of HTML documentation.
+rm -rf "$1/usr/share/gtk-doc"
