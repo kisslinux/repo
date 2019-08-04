@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+python ./bootstrap.py
+python waf configure \
+    --prefix=/usr \
+    --mandir=/usr/share/man \
+    --confdir=/etc/mpv \
+    --enable-alsa \
+    --enable-libass \
+    --enable-libmpv-shared \
+    --enable-uchardet
+
+python waf build
+python waf install --destdir="$1"
