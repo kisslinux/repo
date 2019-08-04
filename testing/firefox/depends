@@ -3,7 +3,7 @@ cargo         make
 cbindgen      make
 clang         make
 ffmpeg
-freetype      make
+freetype-harfbuzz make
 gtk+2         make
 gtk+3
 libSM         make

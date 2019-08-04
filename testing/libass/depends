@@ -3,4 +3,4 @@ yasm make
 expat
 fribidi
 fontconfig
-freetype
+freetype-harfbuzz

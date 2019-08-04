@@ -1,4 +1,4 @@
-freetype    make
-libX11      make
-libXft      make
-libXinerama make
+freetype-harfbuzz make
+libX11            make
+libXft            make
+libXinerama       make
