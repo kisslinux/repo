@@ -1,13 +1,23 @@
 alsa-lib
-cbindgen make
-clang
-gtk+2    make
+cargo         make
+cbindgen      make
+clang         make
+ffmpeg
+freetype      make
+gtk+2         make
 gtk+3
-libSM
-libXt
+libSM         make
+libXcomposite make
+libXrender    make
+libXt         make
 libvpx
-llvm
-nodejs   make
+llvm          make
+nasm          make
+nodejs        make
 nss
-rust     make
-zip      make
+perl          make
+python        make
+python2       make
+rust          make
+yasm          make
+zip           make
