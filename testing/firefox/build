@@ -1,17 +1,13 @@
 #!/bin/sh -e
 
-# Since this is a testing package, I intentionally disabled SC2164
-# for the time being. When we're done, re-enable it.
-
 # Build autoconf 2.13 for Firefox's sole use.
+# See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
 (
-    # shellcheck disable=SC2164
     cd autoconf2.13
     ./configure --prefix="$PWD/../autoconf" --program-suffix=-2.13
     make
     make install
 )
-
 export PATH="$PWD/autoconf/bin:$PATH"
 
 # Fix linker errors at runtime.
@@ -20,7 +16,6 @@ export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 # Ensure that MOZ_TELEMETRY_REPORTING is unset.
 unset MOZ_TELEMETRY_REPORTING
 
-# shellcheck disable=SC2164
 cd firefox
 
 mv mozconfig .mozconfig
