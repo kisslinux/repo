@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < mesa-no-gettext.patch
-
 export CFLAGS="-DGLX_X86_READONLY_TEXT $CFLAGS"
 
 # Fix issues with musl and firefox.
