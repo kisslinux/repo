@@ -1,9 +1,11 @@
 #!/bin/sh -e
 
+triplet=$(cc -dumpmachine)
 export CFLAGS="$CFLAGS -UGDK_PIXBUF_DISABLE_DEPRECATED"
+
 ./configure \
-    --build="$(cc -dumpmachine)" \
-    --host="$(cc -dumpmachine)" \
+    --build="$triplet" \
+    --host="$triplet" \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
@@ -13,7 +15,6 @@ export CFLAGS="$CFLAGS -UGDK_PIXBUF_DISABLE_DEPRECATED"
     --with-xinput=yes
 
 sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
-# TODO: Make GTK+2 build with demos.
 sed -i -e 's/demos //g' Makefile
 
 make
@@ -21,4 +22,4 @@ make DESTDIR="$1" install
 
 # Remove a boat load of HTML documentation.
 rm -rf "$1/gtk-doc/"
-rm "$1/usr/bin/gtk-update-icon-cache"
+rm -f  "$1/usr/bin/gtk-update-icon-cache"
