@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < CVE-2019-11068.patch
+
 ./configure \
     --prefix=/usr
 
