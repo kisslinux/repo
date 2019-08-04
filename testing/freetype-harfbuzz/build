@@ -1,16 +1,5 @@
 #!/bin/sh -e
 
-build_harfbuzz() (
-    cd harfbuzz
-
-    ./configure \
-        --prefix=/usr \
-        --with-glib
-
-    make
-    make DESTDIR="$1" install
-)
-
 build_freetype() (
     cd freetype
 
@@ -24,11 +13,30 @@ build_freetype() (
     make DESTDIR="$1" install
 )
 
+build_harfbuzz() (
+    cd harfbuzz
+
+    ./configure \
+        --prefix=/usr \
+        --with-glib=yes \
+        --with-icu=no
+
+    make
+    make DESTDIR="$1" install
+)
+
 build_freetype "$1" no
 
-export LD_LIBRARY_PATH="$1/usr/lib"
+# Point Harfbuzz to the Freetype files.
+export FREETYPE_CFLAGS="-I$PWD/freetype/src"
+export FREETYPE_LIBS="-L$PWD/freetype/src/.libs -lfreetype2"
 
 build_harfbuzz "$1"
+
+# Point Freetype to the Harfbuzz files.
+export HARFBUZZ_CFLAGS="-I$PWD/harfbuzz/src"
+export HARFBUZZ_LIBS="-L$PWD/harfbuzz/src/.libs -lharfbuzz"
+
 build_freetype "$1" yes
 
 # Remove a ton of HTML documentation.
