@@ -1,1 +1,2 @@
 https://github.com/mesonbuild/meson/archive/0.51.1.tar.gz
+patches/no-gettext.patch
