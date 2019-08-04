@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 # Don't build with gettext.
-sed -i "s|subdir('po')||g"    -i meson.build
+sed -i "s|subdir('po')||g" meson.build
 
 meson \
     --prefix=/usr \
