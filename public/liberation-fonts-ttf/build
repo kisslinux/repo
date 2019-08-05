@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+mkdir -p "$1/usr/share/fonts/TTF"
+install -m644 *.ttf "$1/usr/share/fonts/TTF"
+
+# Install fontconfig files.
+mkdir -p "$1/etc/fonts/conf.avail"
+install -m644 30-0-liberation-mono.conf  "$1/etc/fonts/conf.avail"
+install -m644 30-0-liberation-sans.conf  "$1/etc/fonts/conf.avail"
+install -m644 30-0-liberation-serif.conf "$1/etc/fonts/conf.avail"
