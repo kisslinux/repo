@@ -8,6 +8,7 @@ gtk+2         make
 gtk+3
 libSM         make
 libXcomposite make
+libXcursor    make
 libXrender    make
 libXt         make
 libvpx
