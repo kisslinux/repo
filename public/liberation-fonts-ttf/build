@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 mkdir -p "$1/usr/share/fonts/TTF"
-install -m644 *.ttf "$1/usr/share/fonts/TTF"
+install -m644 -- *.ttf "$1/usr/share/fonts/TTF"
 
 # Install fontconfig files.
 mkdir -p "$1/etc/fonts/conf.avail"
