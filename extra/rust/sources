@@ -14,6 +14,5 @@ patches/0029-musl-dont-use-crt-static.patch
 patches/0030-libc-linkage.patch
 patches/0031-typenum-pmmx.patch
 patches/0091-lzma-sys-cross-ldflags.patch
-patches/0092-use-correct-llvm-cross.patch
 patches/0093-use-elfv2-everywhere.patch
 patches/llvm-with-dependencies.patch
