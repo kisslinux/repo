@@ -41,6 +41,9 @@ export libat_cv_have_ifunc=no
 make
 make DESTDIR="$1" install
 
+# add ldd, which in musl is baked into the .so
+ln -sf ../lib/ld-musl-x86_64.so.1 "$1"/bin/ldd
+
 # Save 35MB.
 find "$1" -name libgtkpeer.a  -delete
 find "$1" -name libgjsmalsa.a -delete
