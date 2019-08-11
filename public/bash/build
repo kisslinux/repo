@@ -9,3 +9,6 @@
 MAKEFLAGS="TERMCAP_LIB=/usr/lib/libncursesw.a $MAKEFLAGS"
 make
 make DESTDIR="$1" install
+
+# Remove all info files.
+rm -rf "$1/usr/share/info"
