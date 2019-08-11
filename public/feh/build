@@ -2,3 +2,6 @@
 
 make PREFIX=/usr exif=1 help=1 stat64=1
 make PREFIX=/usr DESTDIR="$1" install
+
+# Remove docs.
+rm -rf "$1/usr/share/doc"
