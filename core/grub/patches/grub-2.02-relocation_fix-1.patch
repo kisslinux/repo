@@ -1,0 +1,31 @@
+Submitted By:            Xi Ruoyao
+Date:                    2019-01-10
+Initial Package Version: 2.02
+Upstream Status:         Comitted
+Origin:                  Upstream git repository
+Description:             x86_64 assembler in binutils-2.31 generates
+                         R_X86_64_PLT32.  Grub2 should treat it as
+                         R_X86_64_PC32.
+
+diff -Naur grub-2.02.old/util/grub-mkimagexx.c grub-2.02.new/util/grub-mkimagexx.c
+--- grub-2.02.old/util/grub-mkimagexx.c	2017-04-24 17:16:00.000000000 +0800
++++ grub-2.02.new/util/grub-mkimagexx.c	2019-01-10 01:09:53.027377424 +0800
+@@ -832,6 +832,7 @@
+ 		  break;
+ 
+ 		case R_X86_64_PC32:
++		case R_X86_64_PLT32:
+ 		  {
+ 		    grub_uint32_t *t32 = (grub_uint32_t *) target;
+ 		    *t32 = grub_host_to_target64 (grub_target_to_host32 (*t32)
+diff -Naur grub-2.02.old/util/grub-module-verifier.c grub-2.02.new/util/grub-module-verifier.c
+--- grub-2.02.old/util/grub-module-verifier.c	2017-04-24 17:16:00.000000000 +0800
++++ grub-2.02.new/util/grub-module-verifier.c	2019-01-10 01:10:07.617378227 +0800
+@@ -19,6 +19,7 @@
+       -1
+     }, (int[]){
+       R_X86_64_PC32,
++      R_X86_64_PLT32,
+       -1
+     }
+   },
