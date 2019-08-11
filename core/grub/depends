@@ -1,0 +1,7 @@
+autoconf      make
+automake      make
+binutils      make
+bison         make
+flex          make
+linux-headers make
+python        make
