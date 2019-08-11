@@ -7,3 +7,6 @@
 
 make
 make DESTDIR="$1" install
+
+# Remove docs.
+rm -rf "$1/usr/share/doc"
