@@ -5,6 +5,8 @@ read -r version _ < "${0%/*}/version"
 
 mkdir -p "$1/boot" "$1/usr/lib/modules"
 
+make defconfig
+make menuconfig
 make
 
 make \
