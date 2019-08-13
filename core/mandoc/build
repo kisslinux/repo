@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+patch -p1 < pager.patch
+
+cat > configure.local <<EOF
+PREFIX=/usr
+MANDIR=/usr/share/man
+LIBDIR=/usr/lib
+CFLAGS="$CFLAGS"
+MANPATH_DEFAULT=/usr/share/man
+LN="ln -sf"
+EOF
+
+MANPATH_BASE=/usr/share/man ./configure
+make
+make -j1 DESTDIR="$1" base-install lib-install
