@@ -1,23 +1,21 @@
 #!/bin/sh -e
 
-gcc certdata2pem.c -o "mozilla/certdata2pem"
+gcc certdata2pem.c -o mozilla/certdata2pem
 
-sed -i mozilla/Makefile \
-        -e 's,python certdata2pem.py,./certdata2pem,g'
+sed -i'' -e 's,python certdata2pem.py,./certdata2pem,g' mozilla/Makefile
+patch -p1 < update-ca-certificates-destdir.patch
 
-patch -p1 -i update-ca-certificates-destdir.patch
 make
 
-cd "$1" || return 1
-
-install -m0755 -d usr/share/ca-certificates
-install -m0755 -d usr/bin
-install -m0755 -d usr/sbin
-install -m0755 -d etc/ssl/certs
-
-cd - || return 1
+install -m0755 -d "$1/usr/share/ca-certificates"
+install -m0755 -d "$1/usr/bin"
+install -m0755 -d "$1/usr/sbin"
+install -m0755 -d "$1/etc/ssl/certs"
 
 make DESTDIR="$1" install
 
-cd "$1/usr/share/ca-certificates" || return 1
-find . -name '*.crt' | sort | cut -b3- > "$1/etc/ca-certificates.conf"
+# Fix issues with 'libressl'.
+sed -i'' -e 's/ssl rehash/ssl certhash/' "$1/usr/sbin/update-ca-certificates"
+
+cd "$1/usr/share/ca-certificates" &&
+    find . -name '*.crt' | sort | cut -b3- > "$1/etc/ca-certificates.conf"
