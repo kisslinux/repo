@@ -1,7 +1,0 @@
-binutils make
-bison    make
-flex     make
-gmp      make
-libelf   make
-libressl make
-perl     make
