@@ -2,3 +2,4 @@ fakeroot
 file
 git
 rsync
+sudo
