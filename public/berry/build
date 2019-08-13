@@ -1,8 +1,0 @@
-#!/bin/sh -e
-
-make
-
-# The Makefile for 'berry' is broken.
-install -dm 755 "$1/usr/bin"
-install -m  755 berry  "$1/usr/bin"
-install -m  755 berryc "$1/usr/bin"
