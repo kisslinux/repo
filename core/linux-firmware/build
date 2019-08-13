@@ -1,7 +1,0 @@
-#!/bin/sh -e
-
-rm GPL-2 GPL-3
-
-mkdir -p  "$1/usr/lib/firmware"
-cp -R ./* "$1/usr/lib/firmware"
-
