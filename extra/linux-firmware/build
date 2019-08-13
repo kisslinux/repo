@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+mkdir -p  "$1/usr/lib/firmware"
+cp -R ./* "$1/usr/lib/firmware"
+
