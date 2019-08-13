@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+make
+make prefix="$1/usr" install
