@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-patch -p1 < pager.patch
+sed -i'' 's,"more -s","less",g' main.c
 
 cat > configure.local <<EOF
 PREFIX=/usr
