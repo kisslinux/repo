@@ -1,4 +1,2 @@
-ftp://ftp.gnu.org/gnu/grub/grub-2.02.tar.xz grub/
-patches/0008-Fix-packed-not-aligned-error-on-GCC-8.patch grub/
-patches/grub-2.02-relocation_fix-1.patch grub/
+ftp://ftp.gnu.org/gnu/grub/grub-2.04.tar.xz grub/
 files/grub.default
