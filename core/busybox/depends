@@ -1,2 +1,3 @@
+gzip
 libressl make
 linux-headers make
