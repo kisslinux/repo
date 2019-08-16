@@ -1,5 +1,5 @@
 automake         make
-libXau           make
+libXau
 libtool          make
 xcb-proto        make
 xorg-util-macros make
