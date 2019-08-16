@@ -15,7 +15,6 @@ libvpx
 llvm          make
 nasm          make
 nodejs        make
-nss
 perl          make
 python        make
 python2       make
