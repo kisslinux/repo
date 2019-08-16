@@ -1,4 +1,4 @@
-fontconfig make
-libX11     make
-libXft     make
+fontconfig
+libX11
+libXft
 ncurses    make
