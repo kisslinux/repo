@@ -1,4 +1,4 @@
 meson    make
 ninja    make
-mtdev    make
-libevdev make
+mtdev
+libevdev
