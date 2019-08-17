@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+patch -p0 < patch-src_libssl_compat_h.patch
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install
