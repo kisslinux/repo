@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+make CFLAGS="${CFLAGS} -DUSE_SSL" SSL_LIBS="-lssl -lcrypto"
+make BINDIR="$1/usr/bin" MANDIR="$1/usr/share/man" install
+
+mv "$1/usr/bin/htpasswd" "$1/usr/bin/mini_htpasswd"
+mv "$1/usr/share/man/man1/htpasswd.1" "$1/usr/share/man/man1/mini_htpasswd.1"
