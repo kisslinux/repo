@@ -1,1 +1,2 @@
-glib make
+glib
+libffi
