@@ -18,6 +18,8 @@ build_grub() (
         --sysconfdir=/etc \
         --disable-nls \
         --disable-werror \
+        --disable-grub-mkfont \
+        --disable-grub-mount \
         "$@"
 
     make
