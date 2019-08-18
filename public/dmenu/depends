@@ -1,5 +1,2 @@
-libxcb
-libXext
 libXinerama
-libXrender
-zlib
+xorg-server
