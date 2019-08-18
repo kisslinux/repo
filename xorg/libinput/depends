@@ -1,4 +1,4 @@
-meson    make
-ninja    make
-mtdev
+eudev
 libevdev
+meson    make
+mtdev
