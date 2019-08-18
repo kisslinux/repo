@@ -1,7 +1,6 @@
-libX11
-libXext
 libffi
 libpng
 mesa
 pixman
 fontconfig
+xorg-server
