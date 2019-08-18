@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+# Remove 'libelf' dependency.
+sed -i'' 's/if have_libelf/if not have_libelf/' gio/meson.build
+
 meson \
     --prefix=/usr \
     -Dman=false \
