@@ -1,11 +1,21 @@
 eudev
+freetype-harfbuzz
 libX11
+libXau
+libXdamage
+libXext
+libXfixes
 libXfont2
+libXxf86vm
 libdrm
 libepoxy
-libressl         make
+libfontenc
+libpciaccess
+libressl
+libxcb
 libxkbfile
-mesa             make
-pixman           make
+libxshmfence
+mesa
+pixman
 xinit
 xkeyboard-config
