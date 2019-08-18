@@ -4,6 +4,7 @@ baselayout      make
 binutils        make
 bison           make
 busybox         make
+bzip2           make
 ca-certificates make
 curl            make
 fakeroot        make
