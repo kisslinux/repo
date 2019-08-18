@@ -3,7 +3,16 @@
 patch -p0 < patch-src_libssl_compat_h.patch
 
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --disable-nls \
+    --disable-metalink \
+    --disable-websocket \
+    --disable-epoll
 
 make
 make DESTDIR="$1" install
+
+# Remove docs.
+rm -rf "$1/usr/share/doc"
+rm -rf "$1/usr/share/man/ru"
+rm -rf "$1/usr/share/man/pt"
