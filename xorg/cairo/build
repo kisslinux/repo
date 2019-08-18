@@ -16,7 +16,6 @@ sed -i'' "s/BUILD_SPHINX_FALSE='#'/BUILD_SPHINX_FALSE=/" configure
     --enable-xlib \
     --disable-trace \
     --disable-valgrind \
-    --disable-gobject \
     --disable-gtk-doc-html
 
 make
