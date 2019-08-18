@@ -1,11 +1,26 @@
 #!/bin/sh -e
 
+# Disable building 'cairo-sphinx'.
+sed -i'' "s/BUILD_SPHINX_TRUE=/BUILD_SPHINX_TRUE='#'/"   configure
+sed -i'' "s/BUILD_SPHINX_FALSE='#'/BUILD_SPHINX_FALSE=/" configure
+
 ./configure \
     --prefix=/usr \
     --disable-static \
     --enable-tee \
     --enable-gl \
-    --enable-egl
+    --enable-egl \
+    --enable-xlib-xcb \
+    --enable-xcb \
+    --enable-xlib-xrender \
+    --enable-xlib \
+    --disable-trace \
+    --disable-valgrind \
+    --disable-gobject \
+    --disable-gtk-doc-html
 
 make
 make DESTDIR="$1" install
+
+# Remove GTK docs.
+rm -rf "$1/usr/share/gtk-doc"
