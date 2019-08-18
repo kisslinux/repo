@@ -1,2 +1,3 @@
 glib
 libffi
+meson   make
