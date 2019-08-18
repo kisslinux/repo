@@ -1,10 +1,7 @@
 #!/bin/sh -e
 
 make
-make install
-
-# Work around no 'DESTDIR'.
-cp -a _install/. "$1"
+make CONFIG_PREFIX="$1" install
 
 # Fix package filesystem.
 mv "$1/bin/"* "$1/usr/bin"
