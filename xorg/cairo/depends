@@ -1,7 +1,9 @@
 fontconfig
+glib
 libffi
 libpng
+libXext
+libXrender
 mesa
 pixman
-xorg-server
 zlib
