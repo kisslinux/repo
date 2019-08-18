@@ -1,6 +1,7 @@
+fontconfig
 libffi
 libpng
 mesa
 pixman
-fontconfig
 xorg-server
+zlib
