@@ -11,4 +11,3 @@ make DESTDIR="$1" install
 # Remove unneeded files.
 rm -rf "$1/usr/share/doc"
 rm -rf "$1/usr/share/man/man3"
-rm -rf "$1/usr/share/X11/locale"
