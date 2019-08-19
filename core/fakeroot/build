@@ -17,3 +17,11 @@ ac_cv_func_capset=no \
     --disable-static
 
 make DESTDIR="$1" install
+
+# Remove docs.
+rm -rf "$1/usr/share/man/nl"
+rm -rf "$1/usr/share/man/pt"
+rm -rf "$1/usr/share/man/sv"
+rm -rf "$1/usr/share/man/fr"
+rm -rf "$1/usr/share/man/es"
+rm -rf "$1/usr/share/man/de"
