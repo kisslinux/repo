@@ -44,4 +44,7 @@ make
 make DESTDIR="$1" install
 
 # Remove a boat load of HTML documentation.
-rm -rf "$1/gtk-doc/"
+rm -rf "$1/usr/share/gtk-doc"
+
+# Remove gettext files.
+rm -rf "$1/usr/share/gettext"
