@@ -12,3 +12,6 @@ meson \
 
 ninja -C build
 DESTDIR="$1" ninja -C build install
+
+# Remove unneeded files.
+rm "$1/usr/share/gettext"
