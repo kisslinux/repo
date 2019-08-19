@@ -20,3 +20,6 @@
 
 make
 make DESTDIR="$1" install
+
+# Remove examples.
+rm -rf "$1/usr/share/ffmpeg/examples"
