@@ -5,3 +5,10 @@
 
 make
 make DESTDIR="$1" install
+
+# Grab the package version.
+IFS=. read -r ver1 ver2 _ < "${0%*/}/version"
+
+# Remove docs.
+rm -rf "$1/usr/doc"
+rm -rf "$1/usr/share/cmake-$ver1.$ver2/Help"
