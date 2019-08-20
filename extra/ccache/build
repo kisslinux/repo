@@ -1,0 +1,21 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --mandir=/usr/share/man \
+    --localstatedir=/var
+
+make
+
+install -Dm 755 ccache       "$1/usr/bin/ccache"
+install -Dm 644 doc/ccache.1 "$1/usr/share/man/man1/ccache.1"
+
+mkdir -p "$1/usr/lib/ccache/bin"
+
+triplet=$(cc -dumpmachine)
+
+for link in cc gcc g++ cpp c++ "$triplet-cc" "$triplet-gcc" \
+            "$triplet-g++" "$triplet-cpp" "$triplet-c++"; do
+    ln -sf /usr/bin/ccache "$1/usr/lib/ccache/bin/$link"
+done
