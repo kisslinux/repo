@@ -2,8 +2,7 @@
 
 ./configure \
     --prefix=/usr \
-    --without-ensurepip \
-    --help 2>&1 | less
+    --without-ensurepip
 
 make
 make DESTDIR="$1" install
