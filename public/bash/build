@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+for patch in bash50-0??; do
+    patch -p0 < "$patch"
+done
+
 ./configure \
     --prefix=/usr \
     --without-bash-malloc \
