@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --enable-cscope \
+    --enable-multibyte \
+    --with-tlib=ncursesw \
+    --with-ex-name=vim-ex \
+    --with-view-name=vim-view \
+    --disable-perlinterp \
+    --disable-pythoninterp \
+    --disable-rubyinterp \
+    --disable-workshop \
+    --disable-netbeans \
+    --disable-gpm \
+    --disable-hangulinput \
+    --disable-xim \
+    --disable-gui \
+    --disable-nls \
+    --without-x
+
+make
+make DESTDIR="$1" install
+
+# remove program provided by busybox
+rm -f "$1/usr/bin/xxd"
