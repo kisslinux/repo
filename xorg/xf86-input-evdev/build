@@ -1,7 +1,0 @@
-#!/bin/sh -e
-
-./configure \
-    --prefix=/usr --help 2>&1 | less
-
-make
-make DESTDIR="$1" install
