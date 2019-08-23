@@ -6,4 +6,4 @@ The data in each file is separated by lines and spaces. The repository and packa
 
 More information: <https://getkiss.org/pages/package-system/>
 
-**NOTE:** Contributions to this repository are made on a case-by-case basis. Community packages should go here: https://github.com/kisslinux/community
+**NOTE:** Contributions to this repository are made on a case-by-case basis. Community packages should go here: <https://github.com/kisslinux/community>
