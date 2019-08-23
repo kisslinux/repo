@@ -10,4 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Run shellcheck.
-      run: shellcheck -e 2034 */*/build */*/post-install
+      run: |
+        shopt -s nullglob
+        shellcheck -e 2034 */*/build */*/post-install
