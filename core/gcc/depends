@@ -1,5 +1,5 @@
+binutils
 bison
 flex
-zlib
 linux-headers
-binutils
+zlib
