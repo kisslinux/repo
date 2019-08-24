@@ -39,8 +39,6 @@ llvm-config = "/usr/bin/llvm-config"
 crt-static = false
 EOF
 
-DESTDIR="$1" ./x.py install -v
-
 python3 ./x.py build -j "$(nproc)"
 DESTDIR="$1" python3 ./x.py install
 
