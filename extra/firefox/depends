@@ -1,5 +1,4 @@
 alsa-lib
-cargo         make
 cbindgen      make
 clang         make
 ffmpeg
