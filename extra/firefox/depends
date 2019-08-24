@@ -6,6 +6,7 @@ ffmpeg
 freetype-harfbuzz make
 gtk+2         make
 gtk+3
+hicolor-icon-theme
 libSM
 libXcomposite
 libXcursor
