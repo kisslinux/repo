@@ -1,0 +1,4 @@
+cmake  make
+curl   make
+llvm   make
+python make

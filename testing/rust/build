@@ -1,0 +1,45 @@
+#!/bin/sh -e
+
+patch -p1 < musl-libressl.patch
+
+# 'rust' checksums files in vendor/, but we patch a few files.
+for vendor in libc openssl-sys; do
+    sed -i 's/\("files":{\)[^}]*/\1/' "vendor/$vendor/.cargo-checksum.json"
+done
+
+cat > config.toml <<EOF
+[llvm]
+link-shared = true
+
+[build]
+build = "x86_64-unknown-linux-musl"
+host = [ "x86_64-unknown-linux-musl" ]
+target = [ "x86_64-unknown-linux-musl" ]
+docs = false
+extended = true
+submodules = false
+python = "python3"
+locked-deps = true
+vendor = true
+
+[install]
+prefix = "/usr"
+
+[rust]
+channel = "stable"
+rpath = false
+codegen-units = 1
+debuginfo-level = 0
+backtrace = false
+jemalloc = false
+codegen-tests = false
+
+[target.x86_64-unknown-linux-musl]
+llvm-config = "/usr/bin/llvm-config"
+crt-static = false
+EOF
+
+DESTDIR="$1" ./x.py install -v
+
+python3 ./x.py build
+DESTDIR="$1" python3 ./x.py install
