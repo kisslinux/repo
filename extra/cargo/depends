@@ -1,7 +1,0 @@
-libressl
-rust
-zlib
-cmake make
-curl make
-pkgconf make
-python make
