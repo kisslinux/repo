@@ -2,5 +2,6 @@
 
 sed -i 's|Liberation Mono|Monospace|g' config.def.h
 
+sh
 make
 make PREFIX=/usr DESTDIR="$1" install
