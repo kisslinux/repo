@@ -1,0 +1,222 @@
+diff --git a/configure b/configure-posix
+index 3cf63e0..1e1fce5 100755
+--- a/configure-posix
++++ b/configure
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/bin/sh
+
+ if test x"$1" = x"-h" -o x"$1" = x"--help" ; then
+ cat <<EOF
+@@ -59,7 +59,7 @@ exit 1
+ fi
+
+ log_check() {
+-    echo -n "checking $1... " >> config.log
++    echo "checking $1... " >> config.log
+ }
+
+ log_ok() {
+@@ -78,13 +78,12 @@ cc_cflags() {
+     # several non gcc compilers issue an incredibly large number of warnings on high warning levels,
+     # suppress them by reducing the warning level rather than having to use #pragmas
+     for arg in $*; do
+-        [[ "$arg" = -falign-loops* ]] && arg=
++        case $arg in
++            -falign-loops*|-mpreferred-stack-boundary*|-l*|-L*) arg=
++        esac
+         [ "$arg" = -fno-tree-vectorize ] && arg=
+         [ "$arg" = -Wshadow ] && arg=
+         [ "$arg" = -Wno-maybe-uninitialized ] && arg=
+-        [[ "$arg" = -mpreferred-stack-boundary* ]] && arg=
+-        [[ "$arg" = -l* ]] && arg=
+-        [[ "$arg" = -L* ]] && arg=
+         if [ $compiler_style = MS ]; then
+             [ "$arg" = -ffast-math ] && arg="-fp:fast"
+             [ "$arg" = -Wall ] && arg=
+@@ -100,14 +99,14 @@ cc_cflags() {
+         fi
+         [ $compiler = CL -a "$arg" = -O3 ] && arg=-O2
+
+-        [ -n "$arg" ] && echo -n "$arg "
++        [ -n "$arg" ] && printf %s "$arg "
+     done
+ }
+
+ cl_ldflags() {
+     for arg in $*; do
+-        arg=${arg/LIBPATH/libpath}
+-        [ "${arg#-libpath:}" == "$arg" -a "${arg#-l}" != "$arg" ] && arg=${arg#-l}.lib
++        arg=$(echo "$arg" | sed -e 's/LIBPATH/libpath/')
++        [ "${arg#-libpath:}" = "$arg" -a "${arg#-l}" != "$arg" ] && arg=${arg#-l}.lib
+         [ "${arg#-L}" != "$arg" ] && arg=-libpath:${arg#-L}
+         [ "$arg" = -Wl,--large-address-aware ] && arg=-largeaddressaware
+         [ "$arg" = -s ] && arg=
+@@ -116,14 +115,17 @@ cl_ldflags() {
+         [ "$arg" = -Werror ] && arg=
+         [ "$arg" = -Wshadow ] && arg=
+         [ "$arg" = -Wmaybe-uninitialized ] && arg=
+-        [[ "$arg" = -Qdiag-error* ]] && arg=
+
+-        arg=${arg/pthreadGC/pthreadVC}
++        case $arg in
++            -Qdiag-error*) arg=
++        esac
++
++        arg=$(echo "$arg" | sed -e 's/pthreadGC/pthreadVC/')
+         [ "$arg" = avifil32.lib ] && arg=vfw32.lib
+         [ "$arg" = gpac_static.lib ] && arg=libgpac_static.lib
+         [ "$arg" = x264.lib ] && arg=libx264.lib
+
+-        [ -n "$arg" ] && echo -n "$arg "
++        [ -n "$arg" ] && printf %s "$arg "
+     done
+ }
+
+@@ -180,7 +182,7 @@ cpp_check() {
+     for arg in $1; do
+         echo "#include <$arg>" >> conftest.c
+     done
+-    echo -e "#if !($3) \n#error $4 \n#endif " >> conftest.c
++    printf '%b\n' "#if !($3) \n#error $4 \n#endif " >> conftest.c
+     if [ $compiler_style = MS ]; then
+         cpp_cmd="$CC conftest.c $(cc_cflags $CFLAGS $2) -P"
+     else
+@@ -329,11 +331,15 @@ rm -rf conftest*
+
+ # Construct a path to the specified directory relative to the working directory
+ relative_path() {
+-    local base="${PWD%/}"
+-    local path="$(cd "$1" >/dev/null; printf '%s/.' "${PWD%/}")"
+-    local up=''
++    base="${PWD%/}"
++    path="$(cd "$1" >/dev/null; printf '%s/.' "${PWD%/}")"
++    up=''
++
++    while :; do
++        case $path in
++            "$base/"*) break ;;
++        esac
+
+-    while [[ $path != "$base/"* ]]; do
+         base="${base%/*}"
+         up="../$up"
+     done
+@@ -564,48 +570,6 @@ trap 'rm -rf conftest*' EXIT
+ # test for use of compilers that require specific handling
+ cc_base="$(basename "$CC")"
+ QPRE="-"
+-if [[ $host_os = mingw* || $host_os = cygwin* ]]; then
+-    if [[ "$cc_base" = icl || "$cc_base" = icl[\ .]* ]]; then
+-        # Windows Intel Compiler creates dependency generation with absolute Windows paths, Cygwin's make does not support Windows paths.
+-        [[ $host_os = cygwin* ]] && die "Windows Intel Compiler support requires MSYS"
+-        compiler=ICL
+-        compiler_style=MS
+-        CFLAGS="$CFLAGS -Qstd=c99 -nologo -Qms0 -DHAVE_STRING_H -I\$(SRCPATH)/extras"
+-        QPRE="-Q"
+-        cpp_check '' '' '_MSC_VER >= 1400' || die "Windows Intel Compiler support requires Visual Studio 2005 or newer"
+-        if cpp_check '' '' 'defined(_M_AMD64) || defined(_M_X64)' ; then
+-            host_cpu=x86_64
+-        elif cpp_check '' '' 'defined(_M_IX86)' ; then
+-            host_cpu=i486
+-        fi
+-        if cc_check '' -Qdiag-error:10006,10157 ; then
+-            CHECK_CFLAGS="$CHECK_CFLAGS -Qdiag-error:10006,10157"
+-        fi
+-    elif [[ "$cc_base" = cl || "$cc_base" = cl[\ .]* ]]; then
+-        # Standard Microsoft Visual Studio
+-        compiler=CL
+-        compiler_style=MS
+-        CFLAGS="$CFLAGS -nologo -GS- -DHAVE_STRING_H -I\$(SRCPATH)/extras"
+-        cpp_check '' '' '_MSC_VER > 1800 || (_MSC_VER == 1800 && _MSC_FULL_VER >= 180030324)' || die "Microsoft Visual Studio support requires Visual Studio 2013 Update 2 or newer"
+-        if cpp_check '' '' 'defined(_M_AMD64) || defined(_M_X64)' ; then
+-            host_cpu=x86_64
+-        elif cpp_check '' '' 'defined(_M_IX86)' ; then
+-            host_cpu=i486
+-        elif cpp_check '' '' 'defined(_M_ARM64)' ; then
+-            host_cpu=aarch64
+-        elif cpp_check '' '' 'defined(_M_ARM)' ; then
+-            host_cpu=arm
+-        fi
+-    else
+-        # MinGW uses broken pre-VS2015 Microsoft printf functions unless it's told to use the POSIX ones.
+-        CFLAGS="$CFLAGS -D_POSIX_C_SOURCE=200112L"
+-    fi
+-else
+-    if [[ "$cc_base" = icc || "$cc_base" = icc[\ .]* ]]; then
+-        AR="xiar"
+-        compiler=ICC
+-    fi
+-fi
+
+ if [ $compiler = GNU ]; then
+     if cc_check '' -Werror=unknown-warning-option ; then
+@@ -653,18 +617,6 @@ case $host_os in
+         define HAVE_MALLOC_H
+         libm="-lm"
+         ;;
+-    cygwin*|mingw*|msys*)
+-        EXE=".exe"
+-        if [[ $host_os = cygwin* ]] && cpp_check "" "" "defined(__CYGWIN__)" ; then
+-            SYS="CYGWIN"
+-            define HAVE_MALLOC_H
+-        else
+-            SYS="WINDOWS"
+-            DEVNULL="NUL"
+-            cc_check '' -lshell32 && LDFLAGSCLI="$LDFLAGSCLI -lshell32"
+-            [ $compiler = GNU ] && RC="${RC-${cross_prefix}windres}" || RC="${RC-rc.exe}"
+-        fi
+-        ;;
+     sunos*|solaris*)
+         SYS="SunOS"
+         define HAVE_MALLOC_H
+@@ -705,30 +657,6 @@ LDFLAGS="$LDFLAGS $libm"
+ stack_alignment=4
+ case $host_cpu in
+     i*86)
+-        ARCH="X86"
+-        AS="${AS-nasm}"
+-        AS_EXT=".asm"
+-        ASFLAGS="$ASFLAGS -DARCH_X86_64=0 -I\$(SRCPATH)/common/x86/"
+-        if [ $compiler = GNU ]; then
+-            if [[ "$asm" == auto && "$CFLAGS" != *-march* ]]; then
+-                CFLAGS="$CFLAGS -march=i686"
+-            fi
+-            if [[ "$asm" == auto && "$CFLAGS" != *-mfpmath* ]]; then
+-                CFLAGS="$CFLAGS -mfpmath=sse -msse -msse2"
+-            fi
+-            CFLAGS="-m32 $CFLAGS"
+-            LDFLAGS="-m32 $LDFLAGS"
+-        fi
+-        if [ "$SYS" = MACOSX ]; then
+-            ASFLAGS="$ASFLAGS -f macho32 -DPREFIX"
+-        elif [ "$SYS" = WINDOWS -o "$SYS" = CYGWIN ]; then
+-            ASFLAGS="$ASFLAGS -f win32 -DPREFIX"
+-            LDFLAGS="$LDFLAGS -Wl,--large-address-aware"
+-            [ $compiler = GNU ] && LDFLAGS="$LDFLAGS -Wl,--dynamicbase,--nxcompat,--tsaware"
+-            [ $compiler = GNU ] && RCFLAGS="--target=pe-i386 $RCFLAGS"
+-        else
+-            ASFLAGS="$ASFLAGS -f elf32"
+-        fi
+         ;;
+     x86_64)
+         ARCH="X86_64"
+@@ -931,7 +859,7 @@ fi
+
+ if [ $asm = auto -a $ARCH = ARM ] ; then
+     # set flags so neon is built by default
+-    [ $compiler == CL ] || echo $CFLAGS | grep -Eq '(-mcpu|-march|-mfpu)' || CFLAGS="$CFLAGS -mcpu=cortex-a8 -mfpu=neon"
++    [ $compiler = CL ] || echo $CFLAGS | grep -Eq '(-mcpu|-march|-mfpu)' || CFLAGS="$CFLAGS -mcpu=cortex-a8 -mfpu=neon"
+
+     cc_check '' '' '__asm__("add r0, r1, r2");' && define HAVE_ARM_INLINE_ASM
+     if [ $compiler = CL ] && cpp_check '' '' 'defined(_M_ARM) && _M_ARM >= 7' ; then
+@@ -1576,7 +1504,8 @@ cat conftest.log >> config.log
+ cat conftest.log
+
+ [ "$SRCPATH" != "." ] && ln -sf ${SRCPATH}/Makefile ./Makefile
+-mkdir -p common/{aarch64,arm,mips,ppc,x86} encoder extras filters/video input output tools
++mkdir -p common/aarch64 common/arm common/mips common/ppc common/x86
++mkdir -p encoder extras filters/video input output tools
+
+ echo
+ echo "You can run 'make' or 'make fprofiled' now."
