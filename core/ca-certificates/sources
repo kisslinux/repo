@@ -1,3 +1,3 @@
-http://ftp.no.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_20190110.tar.xz
+https://hg.mozilla.org/mozilla-central/raw-file/1125aad05d5c39c2453c04ca6d037afaef16c296/security/nss/lib/ckfw/builtins/certdata.txt
 files/certdata2pem.c
-patches/update-ca-certificates-destdir.patch
+files/update-ca-certificates

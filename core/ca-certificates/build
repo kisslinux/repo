@@ -1,21 +1,30 @@
 #!/bin/sh -e
+#
+# ca-certificates version is based on commit?
+# There's no upstream version at all?!?!?
+# Not sure what to do here.
 
-gcc certdata2pem.c -o mozilla/certdata2pem
+cat > blacklist.txt <<EOF
+"Distrust: O=Egypt Trust, OU=VeriSign Trust Network (cert 1/3)"
+"Distrust: O=Egypt Trust, OU=VeriSign Trust Network (cert 2/3)"
+"Distrust: O=Egypt Trust, OU=VeriSign Trust Network (cert 3/3)"
+"Explicitly Distrust DigiNotar Root CA"
+"Explicitly Distrusted DigiNotar PKIoverheid G2"
+"MITM subCA 1 issued by Trustwave"
+"MITM subCA 2 issued by Trustwave"
+"TURKTRUST Mis-issued Intermediate CA 1"
+"TURKTRUST Mis-issued Intermediate CA 2"
+EOF
 
-sed -i'' -e 's,python certdata2pem.py,./certdata2pem,g' mozilla/Makefile
-patch -p1 < update-ca-certificates-destdir.patch
+gcc certdata2pem.c -o certdata2pem
+./certdata2pem certdata.txt
 
-make
-
-install -m0755 -d "$1/usr/share/ca-certificates"
+install -m0755 -d "$1/usr/share/ca-certificates/mozilla"
 install -m0755 -d "$1/usr/bin"
-install -m0755 -d "$1/usr/sbin"
 install -m0755 -d "$1/etc/ssl/certs"
 
-make DESTDIR="$1" install
+cp ./*.crt "$1/usr/share/ca-certificates/mozilla"
+cp update-ca-certificates "$1/usr/bin"
 
-# Fix issues with 'libressl'.
-sed -i'' -e 's/ssl rehash/ssl certhash/' "$1/usr/sbin/update-ca-certificates"
-
-cd "$1/usr/share/ca-certificates" &&
-    find . -name '*.crt' | sort | cut -b3- > "$1/etc/ca-certificates.conf"
+cd "$1/usr/share/ca-certificates"
+find . -name '*.crt' | sort | cut -b3- > "$1/etc/ca-certificates.conf"
