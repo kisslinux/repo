@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+# Avoid repeating environment variables.
+mk() (
+    make \
+        PREFIX=/usr \
+        ZLIB=no \
+        OPT="$CFLAGS" \
+        SHAREDIR=/usr/share/hwdata \
+        MANDIR=/usr/share/man \
+        SBINDIR=/usr/bin \
+        "$@"
+)
+
+mk all
+mk DESTDIR="$1" install install-lib
