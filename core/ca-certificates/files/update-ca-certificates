@@ -98,6 +98,7 @@ add() {
     echo "+$PEM" >> "$ADDED"
   fi
   # Add trailing newline to certificate, if it is missing (#635570)
+  # shellcheck disable=1003
   sed -e '$a\' "$CERT" >> "$TEMPBUNDLE"
 }
 
@@ -114,13 +115,13 @@ remove() {
 cd "$ETCCERTSDIR"
 if [ "$fresh" = 1 ]; then
   echo "Clearing symlinks in $ETCCERTSDIR..."
-  find . -type l -print | while read symlink
+  find . -type l -print | while read -r symlink
   do
     case $(readlink "$symlink") in
-      $CERTSDIR*|$LOCALCERTSDIR*) rm -f $symlink;;
+      "$CERTSDIR"*|"$LOCALCERTSDIR"*) rm -f "$symlink" ;;
     esac
   done
-  find . -type l -print | while read symlink
+  find . -type l -print | while read -r symlink
   do
     test -f "$symlink" || rm -f "$symlink"
   done
@@ -131,7 +132,7 @@ echo "Updating certificates in $ETCCERTSDIR..."
 
 # Add default certificate authorities if requested
 if [ "$default" = 1 ]; then
-  find -L "$CERTSDIR" -type f -name '*.crt' | sort | while read crt
+  find -L "$CERTSDIR" -type f -name '*.crt' | sort | while read -r crt
   do
     add "$crt"
   done
@@ -139,12 +140,12 @@ fi
 
 # Handle certificates that should be removed.  This is an explicit act
 # by prefixing lines in the configuration files with exclamation marks (!).
-sed -n -e '/^$/d' -e 's/^!//p' "$CERTSCONF" | while read crt
+sed -n -e '/^$/d' -e 's/^!//p' "$CERTSCONF" | while read -r crt
 do
   remove "$CERTSDIR/$crt"
 done
 
-sed -e '/^$/d' -e '/^#/d' -e '/^!/d' "$CERTSCONF" | while read crt
+sed -e '/^$/d' -e '/^#/d' -e '/^!/d' "$CERTSCONF" | while read -r crt
 do
   if ! test -f "$CERTSDIR/$crt"
   then
@@ -158,7 +159,7 @@ done
 # administrator.
 if [ -d "$LOCALCERTSDIR" ]
 then
-  find -L "$LOCALCERTSDIR" -type f -name '*.crt' | sort | while read crt
+  find -L "$LOCALCERTSDIR" -type f -name '*.crt' | sort | while read -r crt
   do
     add "$crt"
   done
@@ -174,7 +175,7 @@ then
   # only run if set of files has changed
   # Remove orphan symlinks found in ETCCERTSDIR to prevent `openssl certhash`
   # from exiting with an error. See #895482, #895473.
-  find $ETCCERTSDIR -type l ! -exec test -e {} \; -print | while read orphan
+  find "$ETCCERTSDIR" -type l ! -exec test -e {} \; -print | while read -r orphan
   do
     rm -f "$orphan"
     if [ "$verbose" = 1 ]; then
@@ -202,7 +203,7 @@ then
   echo "Running hooks in $HOOKSDIR..."
   VERBOSE_ARG=
   [ "$verbose" = 0 ] || VERBOSE_ARG="--verbose"
-  eval run-parts "$VERBOSE_ARG" --test -- "$HOOKSDIR" | while read hook
+  eval run-parts "$VERBOSE_ARG" --test -- "$HOOKSDIR" | while read -r hook
   do
     ( cat "$ADDED"
       cat "$REMOVED" ) | "$hook" || echo "E: $hook exited with code $?."
