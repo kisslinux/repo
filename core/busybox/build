@@ -1,24 +1,35 @@
 #!/bin/sh -e
 
+# Build and install regular busybox.
+# This excludes utilities which require 'suid' to function.
 make
-make CONFIG_PREFIX="$1" install
+make CONFIG_PREFIX="$1/usr" install
 
-# Fix package filesystem.
-mv "$1/bin/"* "$1/usr/bin"
-mv "$1/sbin/"* "$1/usr/bin"
-mv "$1/usr/sbin/"* "$1/usr/bin"
-rmdir "$1/bin" "$1/usr/sbin" "$1/sbin"
+# Rename the binary temporarily.
+mv "$1/usr/bin/busybox" "$1/usr/bin/busybox-nosuid"
 
-# Install runit services.
-install -Dm755 acpid.run "$1/etc/sv/acpid/run"
-install -Dm755 crond.run "$1/etc/sv/crond/run"
-install -Dm755 syslogd.run "$1/etc/sv/syslogd/run"
-ln -s /run/runit/supervise.acpid "$1/etc/sv/acpid/supervise"
-ln -s /run/runit/supervise.crond "$1/etc/sv/crond/supervise"
-ln -s /run/runit/supervise.syslogd "$1/etc/sv/syslogd/supervise"
+# Build and install suid busybox.
+# This _only_ includes utlities which require 'suid' to function.
+cp -f .config-suid .config
+make
+make CONFIG_PREFIX="$1/usr" install
 
-# Install busybox config.
-install -Dm644 busybox.conf "$1/etc/busybox.conf"
+# Aptly name the busybox binaries.
+mv "$1/usr/bin/busybox"        "$1/usr/bin/busybox-suid"
+mv "$1/usr/bin/busybox-nosuid" "$1/usr/bin/busybox"
+
+# Install the non-suid symlinks.
+"$1/usr/bin/busybox" --list | while read -r bin; do
+    ln -s busybox "$1/usr/bin/$bin"
+done
+
+# Install the suid symlinks.
+"$1/usr/bin/busybox-suid" --list | while read -r bin; do
+    ln -s busybox-suid "$1/usr/bin/$bin"
+done
+
+# Set suid on busybox suid.
+chmod +s "$1/usr/bin/busybox-suid"
 
 # Build and install a statically compiled busybox.
 # This is useful for instances where the system is broken
@@ -31,3 +42,11 @@ sleep 1
 sed -i'' "s/.*CONFIG_STATIC.*/CONFIG_STATIC=y/" .config
 make
 install -Dm755 busybox "$1/usr/lib/busybox"
+
+# Install runit services.
+install -Dm755 acpid.run           "$1/etc/sv/acpid/run"
+install -Dm755 crond.run           "$1/etc/sv/crond/run"
+install -Dm755 syslogd.run         "$1/etc/sv/syslogd/run"
+ln -s /run/runit/supervise.acpid   "$1/etc/sv/acpid/supervise"
+ln -s /run/runit/supervise.crond   "$1/etc/sv/crond/supervise"
+ln -s /run/runit/supervise.syslogd "$1/etc/sv/syslogd/supervise"

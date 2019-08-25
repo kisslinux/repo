@@ -1,6 +1,6 @@
 https://busybox.net/downloads/busybox-1.31.0.tar.bz2
 files/.config
+files/.config-suid
 files/acpid.run
 files/crond.run
 files/syslogd.run
-files/busybox.conf
