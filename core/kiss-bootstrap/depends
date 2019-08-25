@@ -14,14 +14,17 @@ gcc             make
 git             make
 gzip            make
 kiss            make
+libelf          make
 libressl        make
 libtool         make
 linux-headers   make
 m4              make
 make            make
+mandoc          make
 musl            make
 perl            make
 pkgconf         make
 rsync           make
+sudo            make
 xz              make
 zlib            make
