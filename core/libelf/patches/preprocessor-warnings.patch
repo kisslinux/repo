@@ -5,16 +5,16 @@ index c5cf90f..7e1e8df 100644
 @@ -45,7 +45,7 @@ typedef __libelf_u32_t		Elf32_Word;
  #define ELF32_FSZ_SWORD		4
  #define ELF32_FSZ_WORD		4
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
- 
+
  typedef __libelf_u64_t		Elf64_Addr;
  typedef __libelf_u16_t		Elf64_Half;
 @@ -93,7 +93,7 @@ typedef struct {
      Elf32_Half		e_shstrndx;
  } Elf32_Ehdr;
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  typedef struct {
@@ -23,7 +23,7 @@ index c5cf90f..7e1e8df 100644
 @@ -307,7 +307,7 @@ typedef struct {
      Elf32_Word		sh_entsize;
  } Elf32_Shdr;
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  typedef struct {
@@ -32,7 +32,7 @@ index c5cf90f..7e1e8df 100644
 @@ -434,7 +434,7 @@ typedef struct {
      Elf32_Half		st_shndx;
  } Elf32_Sym;
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  typedef struct {
@@ -41,7 +41,7 @@ index c5cf90f..7e1e8df 100644
 @@ -457,7 +457,7 @@ typedef struct {
  #define ELF32_ST_TYPE(i)	((i)&0xf)
  #define ELF32_ST_INFO(b,t)	(((b)<<4)+((t)&0xf))
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  #define ELF64_ST_BIND(i)	((i)>>4)
@@ -55,11 +55,11 @@ index c5cf90f..7e1e8df 100644
 +#if defined(__LIBELF64)
  #define ELF64_ST_VISIBILITY(o)	((o)&0x3)
  #endif /* __LIBELF64 */
- 
+
 @@ -521,7 +521,7 @@ typedef struct {
      Elf32_Sword		r_addend;
  } Elf32_Rela;
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  typedef struct {
@@ -68,7 +68,7 @@ index c5cf90f..7e1e8df 100644
 @@ -541,7 +541,7 @@ typedef struct {
  #define ELF32_R_TYPE(i)		((unsigned char)(i))
  #define ELF32_R_INFO(s,t)	(((s)<<8)+(unsigned char)(t))
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  #define ELF64_R_SYM(i)		((Elf64_Xword)(i)>>32)
@@ -77,7 +77,7 @@ index c5cf90f..7e1e8df 100644
 @@ -556,7 +556,7 @@ typedef struct {
      Elf32_Word		n_type;		/* descriptor type */
  } Elf32_Nhdr;
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  /* Solaris and GNU use this layout.  Be compatible. */
@@ -86,7 +86,7 @@ index c5cf90f..7e1e8df 100644
 @@ -587,7 +587,7 @@ typedef struct {
      Elf32_Word		p_align;
  } Elf32_Phdr;
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  typedef struct {
@@ -95,7 +95,7 @@ index c5cf90f..7e1e8df 100644
 @@ -654,7 +654,7 @@ typedef struct {
      } d_un;
  } Elf32_Dyn;
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  typedef struct {
@@ -104,19 +104,19 @@ index c5cf90f..7e1e8df 100644
 @@ -798,7 +798,7 @@ typedef struct {
      Elf32_Half		si_flags;
  } Elf32_Syminfo;
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  typedef struct {
      Elf64_Half		si_boundto;
      Elf64_Half		si_flags;
 @@ -863,7 +863,7 @@ typedef struct {
- 
+
  typedef Elf32_Half	Elf32_Versym;
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
- 
+
  typedef struct {
      Elf64_Half		vd_version;
 @@ -933,7 +933,7 @@ typedef Elf64_Half	Elf64_Versym;
@@ -125,16 +125,16 @@ index c5cf90f..7e1e8df 100644
   */
 -#if __LIBELF64
 +#if defined(__LIBELF64)
- 
+
  typedef struct {
      Elf32_Lword		m_value;
 @@ -973,7 +973,7 @@ typedef struct {
      } c_un;
  } Elf32_Cap;
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
- 
+
  typedef struct {
      Elf64_Xword     	c_tag;
 diff --git a/lib/gelf.h b/lib/gelf.h
@@ -144,14 +144,14 @@ index 5af0558..98a759c 100644
 @@ -22,15 +22,15 @@
  #ifndef _GELF_H
  #define _GELF_H
- 
+
 -#if __LIBELF_INTERNAL__
 +#if defined(__LIBELF_INTERNAL__)
  #include <libelf.h>
  #else /* __LIBELF_INTERNAL__ */
  #include <libelf/libelf.h>
  #endif /* __LIBELF_INTERNAL__ */
- 
+
 -#if __LIBELF_NEED_LINK_H
 +#if defined(__LIBELF_NEED_LINK_H)
  #include <link.h>
@@ -159,16 +159,16 @@ index 5af0558..98a759c 100644
 +#elif defined(__LIBELF_NEED_SYS_LINK_H)
  #include <sys/link.h>
  #endif /* __LIBELF_NEED_LINK_H */
- 
+
 @@ -46,7 +46,7 @@ extern "C" {
  # endif /* __STDC__ || defined(__cplusplus) */
  #endif /* __P */
- 
+
 -#if !__LIBELF64
 +#if !defined(__LIBELF64)
- 
+
  #error "GElf is not supported on this system."
- 
+
 @@ -71,7 +71,7 @@ typedef Elf64_Sym	GElf_Sym;
  /*
   * Symbol versioning
@@ -185,7 +185,7 @@ index 3ebd0f3..788482d 100644
 @@ -25,7 +25,7 @@
  #include <stddef.h>	/* for size_t */
  #include <sys/types.h>
- 
+
 -#if __LIBELF_INTERNAL__
 +#if defined(__LIBELF_INTERNAL__)
  #include <sys_elf.h>
@@ -194,7 +194,7 @@ index 3ebd0f3..788482d 100644
 @@ -224,7 +224,7 @@ extern Elf_Data *elf32_xlatetom __P((Elf_Data *__dst, const Elf_Data *__src,
   */
  extern long elf32_checksum __P((Elf *__elf));
- 
+
 -#if __LIBELF64
 +#if defined(__LIBELF64)
  /*
@@ -216,16 +216,16 @@ index b71a20d..722051b 100644
 @@ -92,7 +92,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  #  define STN_UNDEF	0
  # endif /* STN_UNDEF */
- 
+
 -# if __LIBELF64
 +# if defined(__LIBELF64)
- 
+
  #  ifndef ELF64_FSZ_ADDR
  #   define ELF64_FSZ_ADDR	8
 @@ -116,7 +116,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  #   define ELF64_R_INFO(s,t)	(((Elf64_Xword)(s)<<32)+((t)&0xffffffffL))
  #  endif /* ELF64_R_SYM */
- 
+
 -#  if __LIBELF64_LINUX
 +#  if defined(__LIBELF64_LINUX)
  typedef __libelf_u64_t	Elf64_Addr;
