@@ -130,7 +130,7 @@ int main(void)
     }
   }
   fclose(f);
-  
+
   while (blacklist) {
     node = (char**)*blacklist;
     free(blacklist);
