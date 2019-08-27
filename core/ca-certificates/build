@@ -3,6 +3,8 @@
 # ca-certificates version is based on commit?
 # There's no upstream version at all?!?!?
 # Not sure what to do here.
+#
+# Source: https://hg.mozilla.org/mozilla-central/file/tip/security/nss/lib/ckfw/builtins/certdata.txt
 
 cat > blacklist.txt <<EOF
 "Distrust: O=Egypt Trust, OU=VeriSign Trust Network (cert 1/3)"
