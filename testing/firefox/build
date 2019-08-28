@@ -1,0 +1,39 @@
+#!/bin/sh -e
+
+# Build autoconf 2.13 for Firefox's sole use.
+# See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
+(
+    cd autoconf2.13
+    ./configure --prefix="$PWD/../autoconf" --program-suffix=-2.13
+    make
+    make install
+)
+export PATH="$PWD/autoconf/bin:$PATH"
+
+# Fix linker errors at runtime.
+export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
+
+unset  MOZ_TELEMETRY_REPORTING
+export MOZ_NOSPAM=1
+
+cd firefox
+
+# Fix OOM errors.
+cores=$(nproc)
+printf '%s\n' "mk_add_options MOZ_MAKE_FLAGS=\"-j$cores -l$cores\"" >> mozconfig
+
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
+
+./mach build
+DESTDIR="$1" ./mach install
+
+rm -rf "$1/usr/include"
+rm -rf "$1/usr/lib/firefox-devel"
+rm -rf "$1/usr/share/idl"
+rm -rf "$1/usr/lib/firefox/gtk2"
+
+# Install Ghack's user.js.
+mkdir -p "$1/usr/lib/firefox/browser/defaults/preferences/"
+cp -f ./user.js "$1/usr/lib/firefox/browser/defaults/preferences/vendor.js"

@@ -1,0 +1,28 @@
+alsa-lib
+bzip2
+cbindgen      make
+clang         make
+ffmpeg
+freetype-harfbuzz make
+gtk+2         make
+gtk+3
+hicolor-icon-theme
+libSM
+libXcomposite
+libXcursor
+libXrender
+libXt
+libjpeg-turbo
+libffi
+libpng
+libvpx
+llvm          make
+nasm          make
+nodejs        make
+perl          make
+pixman
+python        make
+python2       make
+rust          make
+yasm          make
+zip           make
