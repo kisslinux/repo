@@ -2,9 +2,10 @@
 
 ./configure \
     --prefix=/usr \
-    --without-ensurepip
+    --with-ensurepip=install
 
 make
 make DESTDIR="$1" install
 
 ln -s python3 "$1/usr/bin/python"
+ln -s pip3    "$1/usr/bin/pip"
