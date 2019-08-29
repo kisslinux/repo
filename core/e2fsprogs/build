@@ -16,5 +16,8 @@
 make
 make MKDIR_P="install -d" DESTDIR="$1" install install-libs
 
+# Make static libraries writable.
+chmod -v u+w "$1/usr/lib/"*.a
+
 # Remove all info files.
 rm -rf "$1/usr/share/info"
