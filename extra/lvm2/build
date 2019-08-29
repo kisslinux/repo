@@ -9,3 +9,8 @@ patch -p1 < fix-stdio-usage.patch
 
 make
 make DESTDIR="$1" install
+
+# Make all libraries and binaries writable.
+chmod -v u+w "$1/usr/lib/"* \
+             "$1/usr/include/"* \
+             "$1/usr/sbin/"*
