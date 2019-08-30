@@ -10,7 +10,6 @@
     --disable-perlinterp \
     --disable-pythoninterp \
     --disable-rubyinterp \
-    --disable-workshop \
     --disable-netbeans \
     --disable-gpm \
     --disable-hangulinput \
