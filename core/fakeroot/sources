@@ -1,6 +1,0 @@
-https://deb.debian.org/debian/pool/main/f/fakeroot/fakeroot_1.23.orig.tar.xz
-patches/busybox_compat_force_abslibpath.patch
-patches/fakeroot-no64.patch
-patches/fakeroot-stdint.patch
-patches/silence-dlerror.patch
-patches/xstatjunk.patch
