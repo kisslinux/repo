@@ -13,7 +13,11 @@
     --with-passprompt="[sudo] password for %p: "
 
 make
-make DESTDIR="$1" install
+make \
+    DESTDIR="$1" \
+    install_uid="$(id -u)" \
+    install_gid="$(id -g)" \
+install
 
 # Remove docs.
 rm -rf "$1/usr/share/doc"
