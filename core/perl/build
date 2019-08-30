@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
-BUILD_ZLIB=0
-BUILD_BZIP2=0
+export BUILD_ZLIB=0
+export BUILD_BZIP2=0
 
 ./Configure \
     -des \
@@ -36,15 +36,9 @@ BUILD_BZIP2=0
 make
 make DESTDIR="$1" install
 
-# Remove all .pod files except for those in:
-# /usr/share/perl5/core_perl/pod/
-for d in "$1/usr/share/perl5/core_perl/"*; do
-    [ -d "$d" ] && [ "${d##*/}" != pod ] && {
-        find "$d" -name "*.pod" -delete
-    }
-done
-
-# Ditto.
-rm -f "$1/usr/share/perl5/core_perl/"*.pod
-find "$1/usr/lib" -name \*.pod -delete
+# Remove all .pod/packlist files.
+find "$1" -name "*.pod" -delete
 find "$1" -name .packlist -delete
+
+# Remove all documentation.
+rm -rf "$1/usr/share/man"
