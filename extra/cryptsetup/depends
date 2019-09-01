@@ -1,4 +1,4 @@
-json-c    make
+json-c
 lvm2
-popt      make
+popt
 util-linux
