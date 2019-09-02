@@ -1,4 +1,4 @@
-glib             make
-libX11           make
-libpng           make
+glib
+libX11
+libpng
 shared-mime-info make
