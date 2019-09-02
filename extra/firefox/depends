@@ -1,4 +1,5 @@
 alsa-lib
+bzip2
 cbindgen      make
 clang         make
 ffmpeg
@@ -11,11 +12,15 @@ libXcomposite
 libXcursor
 libXrender
 libXt
+libjpeg-turbo
+libffi
+libpng
 libvpx
 llvm          make
 nasm          make
 nodejs        make
 perl          make
+pixman
 python        make
 python2       make
 rust          make

@@ -13,22 +13,18 @@ export PATH="$PWD/autoconf/bin:$PATH"
 # Fix linker errors at runtime.
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 
-# Ensure that MOZ_TELEMETRY_REPORTING is unset.
-unset MOZ_TELEMETRY_REPORTING
+unset  MOZ_TELEMETRY_REPORTING
+export MOZ_NOSPAM=1
 
 cd firefox
 
-mv mozconfig .mozconfig
-
 # Fix OOM errors.
 cores=$(nproc)
-printf '%s\n' "mk_add_options MOZ_MAKE_FLAGS=\"-j$cores -l$cores\"" >> .mozconfig
+printf '%s\n' "mk_add_options MOZ_MAKE_FLAGS=\"-j$cores -l$cores\"" >> mozconfig
 
 for patch in *.patch; do
     patch -p1 < "$patch"
 done
-
-rm -f old-configure
 
 ./mach build
 DESTDIR="$1" ./mach install
