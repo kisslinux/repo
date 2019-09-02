@@ -29,19 +29,7 @@ done
 done
 
 # Set suid on busybox suid.
-chmod +s "$1/usr/bin/busybox-suid"
-
-# Build and install a statically compiled busybox.
-# This is useful for instances where the system is broken
-# and for making an initramfs.
-#
-# The sleep is required so that 'make' doesn't skip the
-# changes due to its 'mtime' checks.
-make defconfig
-sleep 1
-sed -i'' "s/.*CONFIG_STATIC.*/CONFIG_STATIC=y/" .config
-make
-install -Dm755 busybox "$1/usr/lib/busybox"
+chmod u+s "$1/usr/bin/busybox-suid"
 
 # Install runit services.
 install -Dm755 acpid.run           "$1/etc/sv/acpid/run"
