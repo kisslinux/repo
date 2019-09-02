@@ -1,2 +1,3 @@
 c4c78167fae325b47aebd8beb54b6041d6f6a56b3743f4bd5d79b15642f9d5d4  libressl-2.9.2.tar.gz
 b532a1587c6ba73f905db5021a4c6032d821b2e8b94155f762df250f8a6de811  getprogname-musl.patch
+57cedb6745330bc52df27fd5e80a0c7c757ad36beb3fe16a709cdb990e96087a  update-certdata.sh
