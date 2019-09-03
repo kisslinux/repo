@@ -1,0 +1,43 @@
+#!/bin/sh -e
+
+patch -p1 < portability.patch
+patch -p1 < fix-stdio-usage.patch
+patch -p1 < mlockall-default-config.patch
+patch -p1 < dash.patch
+
+# Dummy 'fmt' file.
+mkdir -p fakebin
+:> fakebin/fmt
+chmod +x fakebin/fmt
+
+export PATH=/usr/bin:$PWD/fakebin
+export MKDIR_P="install -d"
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --disable-selinux \
+    --disable-nls \
+    --disable-udev-systemd-background-jobs \
+    --enable-pkgconfig \
+    --enable-cmdlib \
+    --enable-udev_sync \
+    --enable-udev_rules \
+    --enable-dmeventd \
+    --with-cache=none \
+    --with-thin=none \
+    --with-default-dm-run-dir=/run \
+    --with-default-locking-dir=/run/lock/lvm \
+    --with-default-pid-dir=/run \
+    --with-default-run-dir=/run/lvm \
+    CLDFLAGS="$LDFLAGS"
+
+make
+make -j1 DESTDIR="$1" install
+
+# Make all libraries and binaries writable.
+chmod -v u+w "$1/usr/lib/"* \
+             "$1/usr/include/"* \
+             "$1/usr/bin/"*

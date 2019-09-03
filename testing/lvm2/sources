@@ -1,3 +1,5 @@
 https://mirrors.kernel.org/sourceware/lvm2/releases/LVM2.2.03.05.tgz
-patches/portability.patch
+patches/dash.patch
 patches/fix-stdio-usage.patch
+patches/mlockall-default-config.patch
+patches/portability.patch
