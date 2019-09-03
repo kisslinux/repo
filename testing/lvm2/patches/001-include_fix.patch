@@ -1,0 +1,13 @@
+diff --git a/lib/device/dev-type.c b/lib/device/dev-type.c
+index 4e35220..16ae94e 100644
+--- a/lib/device/dev-type.c
++++ b/lib/device/dev-type.c
+@@ -23,7 +23,7 @@
+ #include "lib/label/label.h"
+ 
+ #ifdef BLKID_WIPING_SUPPORT
+-#include <blkid.h>
++#include <blkid/blkid.h>
+ #endif
+ 
+ #ifdef UDEV_SYNC_SUPPORT

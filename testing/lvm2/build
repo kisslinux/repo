@@ -3,14 +3,19 @@
 patch -p1 < portability.patch
 patch -p1 < fix-stdio-usage.patch
 patch -p1 < mlockall-default-config.patch
-patch -p1 < dash.patch
+patch -p1 < musl-fix-include.patch
+patch -p1 < disable-symver.patch
+patch -p1 < 001-include_fix.patch
 
-# Dummy 'fmt' file.
+# POSIX sh 'fmt -1' script.
 mkdir -p fakebin
-:> fakebin/fmt
+cat > fakebin/fmt <<EOF
+#!/bin/sh -f
+printf '%s\n' \$(cat -)
+EOF
 chmod +x fakebin/fmt
 
-export PATH=/usr/bin:$PWD/fakebin
+export PATH=$PATH:$PWD/fakebin
 export MKDIR_P="install -d"
 
 ./configure \
@@ -20,22 +25,20 @@ export MKDIR_P="install -d"
     --localstatedir=/var \
     --disable-selinux \
     --disable-nls \
-    --disable-udev-systemd-background-jobs \
     --enable-pkgconfig \
+    --enable-fsadm \
+    --enable-dmeventd \
     --enable-cmdlib \
     --enable-udev_sync \
     --enable-udev_rules \
-    --enable-dmeventd \
-    --with-cache=none \
-    --with-thin=none \
+    --enable-symvers=no \
+    --disable-symvers \
     --with-default-dm-run-dir=/run \
     --with-default-locking-dir=/run/lock/lvm \
     --with-default-pid-dir=/run \
-    --with-default-run-dir=/run/lvm \
-    CLDFLAGS="$LDFLAGS"
+    --with-default-run-dir=/run/lvm
 
-make
-make -j1 DESTDIR="$1" install
+make V=1 DESTDIR="$1" install
 
 # Make all libraries and binaries writable.
 chmod -v u+w "$1/usr/lib/"* \
