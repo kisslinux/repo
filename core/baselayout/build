@@ -51,7 +51,7 @@ ln -s ../man "$1/usr/local/share/man"
 
 # /etc skeleton files.
 for f in fstab group host.conf hosts issue os-release \
-         passwd profile securetty shells; do
+         passwd profile securetty shells mime.types; do
     install -m 644 "$f" "$1/etc"
 done
 
