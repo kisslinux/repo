@@ -1,2 +1,2 @@
-https://downloads.sourceforge.net/libpng/libpng-1.6.37.tar.xz
+https://github.com/glennrp/libpng/archive/v1.6.37.tar.gz
 patches/libpng-1.6.37-apng.patch
