@@ -2,6 +2,7 @@
 
 export BUILD_ZLIB=0
 export BUILD_BZIP2=0
+export CFLAGS="$CFLAGS -DNO_POSIX_2008_LOCALE"
 
 ./Configure \
     -des \
