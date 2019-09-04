@@ -1,5 +1,18 @@
 #!/bin/sh -e
 
+# If 'file' is not available, mimic the output
+# required for KISS.
+mkdir -p fakebin
+cat > fakebin/file <<EOF
+#!/bin/sh
+echo 64-bit
+EOF
+chmod +x fakebin/file
+export PATH=$PATH:$PWD/fakebin
+
+# Use 'file' from '$PATH'.
+sed -i'' "s|/usr/bin/file|file|g" configure
+
 ./configure \
     --prefix=/usr \
     --with-pic
@@ -9,8 +22,7 @@ make DESTDIR="$1" install
 
 # Fix location for headers.
 mkdir -p "$1/usr/include"
-mv "$1/usr/lib/libffi-3.2.1/include/"*.h \
-   "$1/usr/include"
+mv    "$1/usr/lib/libffi-3.2.1/include/"*.h "$1/usr/include"
 rmdir "$1/usr/lib/libffi-3.2.1/include"
 
 sed -i -e '/^includedir=/{s,=.*,=/usr/include,g}' \
