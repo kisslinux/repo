@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+# A painful collection of patches, some written for KISS and
+# the others ported and modified from much older versions of LVM.
 patch -p1 < portability.patch
 patch -p1 < fix-stdio-usage.patch
 patch -p1 < mlockall-default-config.patch
@@ -7,15 +9,20 @@ patch -p1 < musl-fix-include.patch
 patch -p1 < disable-symver.patch
 patch -p1 < 001-include_fix.patch
 
-# POSIX sh 'fmt -1' script.
+# LVM2 calls 'fmt -1' throughout the build process.
+# This is a part of the GNU coreutils and is not included
+# in KISS. All 'fmt -1' does is split each word in a string
+# on a new line so lets just use the shell as an alternative.
 mkdir -p fakebin
 cat > fakebin/fmt <<EOF
 #!/bin/sh -f
 printf '%s\n' \$(cat -)
 EOF
 chmod +x fakebin/fmt
-
 export PATH=$PATH:$PWD/fakebin
+
+# The build fails when using busybox's 'mkdir'(?),
+# swap to using 'install -d' instead which works.
 export MKDIR_P="install -d"
 
 ./configure \
@@ -38,7 +45,7 @@ export MKDIR_P="install -d"
     --with-default-pid-dir=/run \
     --with-default-run-dir=/run/lvm
 
-make V=1 DESTDIR="$1" install
+make DESTDIR="$1" install || sh
 
 # Make all libraries and binaries writable.
 chmod -v u+w "$1/usr/lib/"* \
