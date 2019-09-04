@@ -1,13 +1,17 @@
 #!/bin/sh -e
 
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --syslibdir=/usr/lib
 
 make
 make DESTDIR="$1" install
 
-mv "$1/lib/ld-musl-x86_64.so.1" "$1/usr/lib"
-rmdir "$1/lib"
-
 mkdir -p "$1/usr/bin"
 ln -s "/usr/lib/ld-musl-x86_64.so.1" "$1/usr/bin/ldd"
+
+# Install BSD compatibility headers.
+mkdir -p   "$1/usr/include/sys"
+cp cdefs.h "$1/usr/include/sys"
+cp queue.h "$1/usr/include/sys"
+cp tree.h  "$1/usr/include/sys"
