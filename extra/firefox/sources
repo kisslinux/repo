@@ -1,13 +1,13 @@
-https://archive.mozilla.org/pub/firefox/releases/68.1.0esr/source/firefox-68.1.0esr.source.tar.xz firefox/
+https://archive.mozilla.org/pub/firefox/releases/69.0/source/firefox-69.0.source.tar.xz firefox/
 https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz autoconf2.13/
 https://raw.githubusercontent.com/ghacksuserjs/ghacks-user.js/6618bf5f7693a15c77f863b6c5d9dabd5f72972a/user.js firefox/
 files/mozconfig firefox/
 files/stab.h firefox/toolkit/crashreporter/google-breakpad/src/
 patches/fix-fortify-system-wrappers.patch firefox/
-patches/fix-musl.patch firefox/
 patches/fix-sandbox-membarrier.patch firefox/
 patches/fix-seccomp-bpf.patch firefox/
 patches/fix-toolkit.patch firefox/
 patches/fix-tools.patch firefox/
 patches/fix-webrtc-glibcisms.patch firefox/
 patches/mallinfo.patch firefox/
+patches/firefox-69-no-dbus.patch firefox/
