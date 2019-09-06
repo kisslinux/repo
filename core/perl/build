@@ -2,44 +2,35 @@
 
 export BUILD_ZLIB=0
 export BUILD_BZIP2=0
-export CFLAGS="$CFLAGS -DNO_POSIX_2008_LOCALE"
+export LDFLAGS="$LDFLAGS -pthread"
+export CFLAGS="$CFLAGS -DNO_POSIX_2008_LOCALE -D_GNU_SOURCE"
 
 ./Configure \
     -des \
-    -Dcccdlflags='-fPIC' \
-    -Dcccdlflags='-fPIC' \
-    -Dccdlflags='-rdynamic' \
     -Dprefix=/usr \
-    -Dprivlib=/usr/share/perl5/core_perl \
-    -Darchlib=/usr/lib/perl5/core_perl \
     -Dvendorprefix=/usr \
-    -Dvendorlib=/usr/share/perl5/vendor_perl \
-    -Dvendorarch=/usr/lib/perl5/vendor_perl \
-    -Dsiteprefix=/usr/local \
-    -Dsitelib=/usr/local/share/perl5/site_perl \
-    -Dsitearch=/usr/local/lib/perl5/site_perl \
-    -Dlocincpth=' ' \
-    -Doptimize="$CFLAGS" \
-    -Duselargefiles \
-    -Dusethreads \
+    -Dusevendorprefix \
     -Duseshrplib \
-    -Dd_semctl_semun \
-    -Dman1dir=/usr/share/man/man1 \
-    -Dman3dir=/usr/share/man/man3 \
-    -Dinstallman1dir=/usr/share/man/man1 \
-    -Dinstallman3dir=/usr/share/man/man3 \
-    -Dman1ext='1' \
-    -Dman3ext='3pm' \
-    -Dcf_by='KISS' \
-    -Ud_csh \
-    -Dusenm
+    -Dusesoname \
+    -Dusethreads \
+    -Dinc_version_list=none \
+    -Dd_sockaddr_in6=define \
+    -Dcccdlflags=-fPIC \
+    -Dccflags="$CFLAGS" \
+    -Dlddlflags="-shared $LDFLAGS" \
+    -Dldflags="$LDFLAGS" \
+    -Doptimize="-Wall $CFLAGS" \
+ 	-Dperl_static_inline="static __inline__" \
+    -Dd_static_inline
 
 make
 make DESTDIR="$1" install
 
-# Remove all .pod/packlist files.
-find "$1" -name "*.pod" -delete
+# Remove all unneeded files.
+find "$1" -name \*.pod -delete
 find "$1" -name .packlist -delete
-
-# Remove all documentation.
-rm -rf "$1/usr/share/man"
+find "$1" -name README\* -delete
+find "$1" -name TODO\* -delete
+find "$1" -name Change\* -delete
+find "$1" -name \*.bs -delete
+find "$1" -name \*.0 -type f -delete
