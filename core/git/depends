@@ -1,4 +1,3 @@
-autoconf make
 curl
 libressl
 zlib

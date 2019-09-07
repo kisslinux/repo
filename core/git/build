@@ -1,9 +1,21 @@
 #!/bin/sh -e
 
-make configure
-
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    ac_cv_snprintf_returns_bogus=no \
+    ac_cv_fread_reads_directories=yes \
+    NO_GETTEXT=YesPlease \
+    NO_SVN_TESTS=YesPlease \
+    NO_TCLTK=YesPlease \
+    NO_EXPAT=YesPlease \
+    NO_NSEC=YesPlease \
+    NO_PYTHON=YesPlease \
+    NO_PERL=YesPlease \
+    NO_SYS_POLL_H=1
 
 make
-make DESTDIR="$1" install
+make \
+    DESTDIR="$1" \
+    NO_CROSS_DIRECTORY_HARDLINKS=1 \
+    NO_INSTALL_HARDLINKS=1 \
+    install
