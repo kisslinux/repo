@@ -3,14 +3,9 @@
 # Grub is built in a function so the script argument needs to be stored.
 pkg_dir=$1
 
-# Change naming from GNU/Linux to Linux.
-sed 's|GNU/Linux|Linux|' -i grub/util/grub.d/10_linux.in
-
 build_grub() (
-    cp -R grub "grub-${1##*=}"
+    cp -a grub "grub-${1##*=}"
     cd "grub-${1##*=}"
-
-    autoreconf
 
     ./configure \
         --prefix=/usr \
@@ -34,14 +29,12 @@ install -Dm0644 grub.default "$1/etc/default/grub"
 
 # Remove gdb debugging files.
 (
-    cd "$pkg_dir"
-    rm -f usr/lib/grub/*/*.module
-    rm -f usr/lib/grub/*/*.image
-    rm -f usr/lib/grub/*/kernel.exec
-    rm -f usr/lib/grub/*/gdb_grub
-    rm -f usr/lib/grub/*/gmodule.pl
-    rm -f usr/lib/charset.alias
-) ||:
+    cd "$pkg_dir/usr/lib"
 
-# Remove unneedded file by musl
-rm -f "$1/usr/lib/charset.alias"
+    rm -f grub/*/*.module
+    rm -f grub/*/*.image
+    rm -f grub/*/kernel.exec
+    rm -f grub/*/gdb_grub
+    rm -f grub/*/gmodule.pl
+    rm -f charset.alias
+)

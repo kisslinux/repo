@@ -1,5 +1,3 @@
-autoconf      make
-automake      make
 binutils      make
 bison         make
 flex          make
