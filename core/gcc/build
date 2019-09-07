@@ -2,11 +2,11 @@
 
 # Make sure gmp is built with generic options.
 cp -v gcc/gmp/configfsf.guess gcc/gmp/config.guess
-cp -v gcc/gmp/configfsf.sub gcc/gmp/config.sub
+cp -v gcc/gmp/configfsf.sub   gcc/gmp/config.sub
 
 # Use lib not lib64 by default.
 sed -i '/m64=/s/lib64/lib/' gcc/gcc/config/i386/t-linux64
-sed -i 's/lib64/lib/' gcc/gcc/config/i386/linux64.h
+sed -i 's/lib64/lib/'       gcc/gcc/config/i386/linux64.h
 
 # Build must happen outside of gcc source.
 mkdir -p gcc-build
