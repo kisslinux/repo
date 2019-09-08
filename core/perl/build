@@ -34,3 +34,6 @@ find "$1" -name TODO\* -delete
 find "$1" -name Change\* -delete
 find "$1" -name \*.bs -delete
 find "$1" -name \*.0 -type f -delete
+
+# Fix permissions.
+find "$1/usr/lib" -type f -exec chmod 644 {} \;
