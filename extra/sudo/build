@@ -3,13 +3,14 @@
 ./configure \
     --prefix=/usr \
     --disable-nls \
-    --with-ignore-dot \
-    --with-insults=disabled \
-    --with-all-insults \
-    --without-sendmail \
-    --with-logfac=auth \
+    --disable-pam-session \
     --disable-root-mailer \
     --enable-pie \
+    --without-pam \
+    --without-sendmail \
+    --with-ignore-dot \
+    --with-insults=disabled \
+    --with-logfac=auth \
     --with-passprompt="[sudo] password for %p: "
 
 make
@@ -17,7 +18,7 @@ make \
     DESTDIR="$1" \
     install_uid="$(id -u)" \
     install_gid="$(id -g)" \
-install
+    install
 
 # Remove docs.
 rm -rf "$1/usr/share/doc"
