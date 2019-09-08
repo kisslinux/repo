@@ -35,8 +35,6 @@ done
 
 install -dm 1777 "$1/var/tmp"
 install -dm 1777 "$1/var/spool/mail"
-install -dm 0777 "$1/var/cache/kiss"
-install -dm 0777 "$1/var/db/kiss"
 
 ln -s spool/mail  "$1/var/mail"
 ln -s ../run      "$1/var/run"
