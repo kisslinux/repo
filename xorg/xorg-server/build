@@ -9,6 +9,7 @@
     --enable-dri \
     --enable-dri2 \
     --enable-dri3 \
+    --enable-glamor \
     --enable-xorg \
     --enable-config-udev \
     --enable-config-udev-kms \
