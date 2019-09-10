@@ -34,6 +34,24 @@ rm -rf "$1/usr/lib/firefox-devel"
 rm -rf "$1/usr/share/idl"
 rm -rf "$1/usr/lib/firefox/gtk2"
 
-# Install Ghack's user.js.
+# Disable nasty features by default.
+# This extends the Ghacks user.js file.
+cat >> user.js <<EOF
+// Disable DNS over HTTPS.
+user_pref("network.trr.mode", 5);
+
+// Disable location aware browsing.
+user_pref("geo.enabled", false);
+
+// Disable auto extension updates/installs.
+user_pref("extensions.update.enabled", false);
+user_pref("extensions.update.autoUpdateDefault", false);
+
+// Disable Screenshots extension.
+user_pref("extensions.screenshots.disabled", true);
+user_pref("extensions.screenshots.upload-disabled", true);
+EOF
+
+# Install Ghacks user.js.
 mkdir -p "$1/usr/lib/firefox/browser/defaults/preferences/"
 cp -f ./user.js "$1/usr/lib/firefox/browser/defaults/preferences/vendor.js"
