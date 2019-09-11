@@ -1,11 +1,13 @@
 #!/bin/sh -e
 
+patch -p1 < python3-always-pip.patch
+
 ./configure \
     --prefix=/usr \
     --enable-shared \
     --with-system-expat \
     --with-system-ffi \
-    --with-ensurepip=install
+    --with-ensurepip=yes
 
 make
 make DESTDIR="$1" install
