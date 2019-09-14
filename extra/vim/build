@@ -16,7 +16,7 @@
     --disable-xim \
     --disable-gui \
     --disable-nls \
-    --with-x
+    --without-x
 
 make
 make DESTDIR="$1" install
