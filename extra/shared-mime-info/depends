@@ -1,2 +1,4 @@
-libxml2
 glib
+libxml2
+xz
+zlib
