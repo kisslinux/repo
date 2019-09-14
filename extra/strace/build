@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+export CFLAGS="$CFLAGS -Dsigcontext_struct=sigcontext"
+
+./configure \
+    --prefix=/usr \
+    --enable-mpers=no
+
+make
+make DESTDIR="$1" install
