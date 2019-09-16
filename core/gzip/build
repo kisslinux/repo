@@ -6,8 +6,6 @@
 make
 make DESTDIR="$1" install
 
-# Remove all info files.
+# Remove unneeded files.
 rm -rf "$1/usr/share/info"
-
-# Remove conflicting file.
-rm -f "$1/usr/lib/charset.alias"
+rm -f  "$1/usr/lib/charset.alias"
