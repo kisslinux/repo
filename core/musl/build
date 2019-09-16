@@ -11,7 +11,6 @@ mkdir -p "$1/usr/bin"
 ln -s "/usr/lib/ld-musl-x86_64.so.1" "$1/usr/bin/ldd"
 
 # Install BSD compatibility headers.
-mkdir -p   "$1/usr/include/sys"
-cp cdefs.h "$1/usr/include/sys"
-cp queue.h "$1/usr/include/sys"
-cp tree.h  "$1/usr/include/sys"
+install -Dm 755 cdefs.h "$1/usr/include/sys/cdefs.h"
+install -Dm 755 queue.h "$1/usr/include/sys/cdefs.h"
+install -Dm 755 tree.h  "$1/usr/include/sys/cdefs.h"
