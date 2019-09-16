@@ -4,13 +4,10 @@
     --prefix=/usr \
     --sysconfdir=/etc
 
-mkdir -p "$1/usr/bin"
-
 make
 make DESTDIR="$1" install
 
-cd "$1/usr/bin"
-ln -s pkgconf pkg-config
+ln -s pkgconf "$1/usr/bin/pkg-config"
 
 # Remove docs.
 rm -rf "$1/usr/share/doc"
