@@ -27,12 +27,12 @@ make
 make DESTDIR="$1" install
 
 # Remove all unneeded files.
-find "$1" -name \*.pod -delete
-find "$1" -name .packlist -delete
-find "$1" -name README\* -delete
-find "$1" -name TODO\* -delete
-find "$1" -name Change\* -delete
-find "$1" -name \*.bs -delete
+find "$1" -name \*.pod       -delete
+find "$1" -name .packlist    -delete
+find "$1" -name README\*     -delete
+find "$1" -name TODO\*       -delete
+find "$1" -name Change\*     -delete
+find "$1" -name \*.bs        -delete
 find "$1" -name \*.0 -type f -delete
 
 # Fix permissions.
