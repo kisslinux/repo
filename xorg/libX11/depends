@@ -1,3 +1,4 @@
-libxcb    make
-xorgproto make
+libXau
+libxcb
+xorgproto
 xtrans    make
