@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.31.0
-# Sun Aug 25 16:51:34 2019
+# Wed Sep 18 12:37:29 2019
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -36,7 +36,7 @@ CONFIG_BUSYBOX_EXEC_PATH="/proc/self/exe"
 # CONFIG_FEATURE_CLEAN_UP is not set
 CONFIG_FEATURE_SYSLOG_INFO=y
 CONFIG_FEATURE_SYSLOG=y
-# CONFIG_PLATFORM_LINUX is not set
+CONFIG_PLATFORM_LINUX=y
 
 #
 # Build Options
@@ -490,11 +490,11 @@ CONFIG_INIT_TERMINAL_TYPE=""
 #
 # Login/Password Management Utilities
 #
-# CONFIG_FEATURE_SHADOWPASSWDS is not set
-# CONFIG_USE_BB_PWD_GRP is not set
-# CONFIG_USE_BB_SHADOW is not set
-# CONFIG_USE_BB_CRYPT is not set
-# CONFIG_USE_BB_CRYPT_SHA is not set
+CONFIG_FEATURE_SHADOWPASSWDS=y
+CONFIG_USE_BB_PWD_GRP=y
+CONFIG_USE_BB_SHADOW=y
+CONFIG_USE_BB_CRYPT=y
+CONFIG_USE_BB_CRYPT_SHA=y
 # CONFIG_ADD_SHELL is not set
 # CONFIG_REMOVE_SHELL is not set
 # CONFIG_ADDGROUP is not set
