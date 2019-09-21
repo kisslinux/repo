@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+# Don't use 'sys/cdefs.h' from system.
+sed -i'' -e '/sys\/cdefs.h/d' configure
+
 ./configure \
     --prefix=/usr \
     --datadir=/usr/share/openssh \
