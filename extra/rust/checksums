@@ -1,3 +1,2 @@
 120e7020d065499cc6b28759ff04153bfdc2ac9b5adeb252331a4eb87cbe38c3  rustc-1.37.0-src.tar.gz
 0341881feff659cf705671d663157113fdc752d9bfb0cdfd5fc75daa65bdf1d5  musl-libressl.patch
-a86b97ec4431b77488ab0b14306e9876f4f10a39ed626bee405713c1e4ef29c0  rust-fix-llvm-9.patch
