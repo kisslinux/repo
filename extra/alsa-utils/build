@@ -6,7 +6,6 @@
     --disable-nls   \
     --with-curses=ncursesw \
     --disable-xmlto \
-    --without-debug \
     --prefix=/usr
 
 make
