@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+# Fix upstream build bug.
+mkdir -p deps/v8/test/torque
+cp test-torque.tq deps/v8/test/torque
+
 export PYTHON=python2
 
 chmod +x configure
