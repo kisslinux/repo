@@ -1,7 +1,8 @@
-diff -ruN rustc-1.37.0-src-orig/src/bootstrap/compile.rs rustc-1.37.0-src/src/bootstrap/compile.rs
---- rustc-1.37.0-src-orig/src/bootstrap/compile.rs	2019-08-12 23:27:22.000000000 -0700
-+++ rustc-1.37.0-src/src/bootstrap/compile.rs	2019-08-17 02:56:03.893753627 -0700
-@@ -116,28 +116,6 @@
+diff --git a/src/bootstrap/compile.rs b/src/bootstrap/compile.rs
+index 4cd793ada..562cf3e05 100644
+--- a/src/bootstrap/compile.rs
++++ b/src/bootstrap/compile.rs
+@@ -115,28 +115,6 @@ impl Step for Std {
  fn copy_third_party_objects(builder: &Builder<'_>, compiler: &Compiler, target: Interned<String>) {
      let libdir = builder.sysroot_libdir(*compiler, target);
  
@@ -30,10 +31,11 @@ diff -ruN rustc-1.37.0-src-orig/src/bootstrap/compile.rs rustc-1.37.0-src/src/bo
      // Copies libunwind.a compiled to be linked wit x86_64-fortanix-unknown-sgx.
      //
      // This target needs to be linked to Fortanix's port of llvm's libunwind.
-diff -ruN rustc-1.37.0-src-orig/src/bootstrap/sanity.rs rustc-1.37.0-src/src/bootstrap/sanity.rs
---- rustc-1.37.0-src-orig/src/bootstrap/sanity.rs	2019-08-12 23:27:22.000000000 -0700
-+++ rustc-1.37.0-src/src/bootstrap/sanity.rs	2019-08-17 03:06:51.725807452 -0700
-@@ -176,34 +176,6 @@
+diff --git a/src/bootstrap/sanity.rs b/src/bootstrap/sanity.rs
+index 4e3930c8d..3b1095480 100644
+--- a/src/bootstrap/sanity.rs
++++ b/src/bootstrap/sanity.rs
+@@ -187,34 +187,6 @@ pub fn check(build: &mut Build) {
              }
          }
  
@@ -68,10 +70,11 @@ diff -ruN rustc-1.37.0-src-orig/src/bootstrap/sanity.rs rustc-1.37.0-src/src/boo
          if target.contains("msvc") {
              // There are three builds of cmake on windows: MSVC, MinGW, and
              // Cygwin. The Cygwin build does not have generators for Visual
-diff -ruN rustc-1.37.0-src-orig/src/librustc_target/spec/linux_musl_base.rs rustc-1.37.0-src/src/librustc_target/spec/linux_musl_base.rs
---- rustc-1.37.0-src-orig/src/librustc_target/spec/linux_musl_base.rs	2019-08-12 23:27:22.000000000 -0700
-+++ rustc-1.37.0-src/src/librustc_target/spec/linux_musl_base.rs	2019-08-17 02:56:53.553119774 -0700
-@@ -26,7 +26,7 @@
+diff --git a/src/librustc_target/spec/linux_musl_base.rs b/src/librustc_target/spec/linux_musl_base.rs
+index e294e6398..17fecb3b2 100644
+--- a/src/librustc_target/spec/linux_musl_base.rs
++++ b/src/librustc_target/spec/linux_musl_base.rs
+@@ -26,7 +26,7 @@ pub fn opts() -> TargetOptions {
      base.post_link_objects_crt.push("crtn.o".to_string());
  
      // These targets statically link libc by default
@@ -80,37 +83,43 @@ diff -ruN rustc-1.37.0-src-orig/src/librustc_target/spec/linux_musl_base.rs rust
      // These targets allow the user to choose between static and dynamic linking.
      base.crt_static_respected = true;
  
-diff -ruN rustc-1.37.0-src-orig/src/libunwind/build.rs rustc-1.37.0-src/src/libunwind/build.rs
---- rustc-1.37.0-src-orig/src/libunwind/build.rs	2019-08-12 23:27:22.000000000 -0700
-+++ rustc-1.37.0-src/src/libunwind/build.rs	2019-08-17 03:07:40.245230990 -0700
-@@ -11,9 +11,7 @@
-         #[cfg(feature = "llvm-libunwind")]
+diff --git a/src/libunwind/build.rs b/src/libunwind/build.rs
+index da31a49dd..dd0b89227 100644
+--- a/src/libunwind/build.rs
++++ b/src/libunwind/build.rs
+@@ -13,9 +13,7 @@ fn main() {
+         #[cfg(all(not(bootstrap), feature = "llvm-libunwind"))]
          llvm_libunwind::compile();
      } else if target.contains("linux") {
 -        if target.contains("musl") {
 -            // musl is handled in lib.rs
 -        } else if !target.contains("android") {
-+         if !target.contains("android") {
++        if !target.contains("android") {
              println!("cargo:rustc-link-lib=gcc_s");
          }
      } else if target.contains("freebsd") {
-diff -ruN rustc-1.37.0-src-orig/src/libunwind/lib.rs rustc-1.37.0-src/src/libunwind/lib.rs
---- rustc-1.37.0-src-orig/src/libunwind/lib.rs	2019-08-12 23:27:22.000000000 -0700
-+++ rustc-1.37.0-src/src/libunwind/lib.rs	2019-08-17 03:06:59.005720850 -0700
-@@ -21,8 +21,3 @@
-         pub use libunwind::*;
+diff --git a/src/libunwind/lib.rs b/src/libunwind/lib.rs
+index 8d9164471..9a6411c60 100644
+--- a/src/libunwind/lib.rs
++++ b/src/libunwind/lib.rs
+@@ -20,11 +20,6 @@ cfg_if::cfg_if! {
      }
  }
--
+ 
 -#[cfg(target_env = "musl")]
 -#[link(name = "unwind", kind = "static", cfg(target_feature = "crt-static"))]
 -#[link(name = "gcc_s", cfg(not(target_feature = "crt-static")))]
 -extern {}
-diff -ruN rustc-1.37.0-src-orig/vendor/libc/src/unix/mod.rs rustc-1.37.0-src/vendor/libc/src/unix/mod.rs
---- rustc-1.37.0-src-orig/vendor/libc/src/unix/mod.rs	2019-08-13 01:30:01.000000000 -0700
-+++ rustc-1.37.0-src/vendor/libc/src/unix/mod.rs	2019-08-17 02:56:21.273531120 -0700
-@@ -306,13 +306,6 @@
-     } else if #[cfg(feature = "use_std")] {
+-
+ #[cfg(target_os = "redox")]
+ #[link(name = "gcc_eh", kind = "static-nobundle", cfg(target_feature = "crt-static"))]
+ #[link(name = "gcc_s", cfg(not(target_feature = "crt-static")))]
+diff --git a/vendor/libc/src/unix/mod.rs b/vendor/libc/src/unix/mod.rs
+index 8295dfc02..c1740ff5d 100644
+--- a/vendor/libc/src/unix/mod.rs
++++ b/vendor/libc/src/unix/mod.rs
+@@ -296,13 +296,6 @@ cfg_if! {
+     } else if #[cfg(feature = "std")] {
          // cargo build, don't pull in anything extra as the libstd dep
          // already pulls in all libs.
 -    } else if #[cfg(target_env = "musl")] {
@@ -123,14 +132,15 @@ diff -ruN rustc-1.37.0-src-orig/vendor/libc/src/unix/mod.rs rustc-1.37.0-src/ven
      } else if #[cfg(target_os = "emscripten")] {
          #[link(name = "c")]
          extern {}
-diff -ruN rustc-1.37.0-src-orig/vendor/openssl-sys/build/main.rs rustc-1.37.0-src/vendor/openssl-sys/build/main.rs
---- rustc-1.37.0-src-orig/vendor/openssl-sys/build/main.rs	2019-08-13 01:30:02.000000000 -0700
-+++ rustc-1.37.0-src/vendor/openssl-sys/build/main.rs	2019-08-17 02:55:12.634414453 -0700
-@@ -183,27 +183,30 @@
+diff --git a/vendor/openssl-sys/build/main.rs b/vendor/openssl-sys/build/main.rs
+index 02b93b90a..ff66ca180 100644
+--- a/vendor/openssl-sys/build/main.rs
++++ b/vendor/openssl-sys/build/main.rs
+@@ -183,27 +183,30 @@ See rust-openssl README for more information:
      if let Some(libressl_version) = libressl_version {
          println!("cargo:libressl_version_number={:x}", libressl_version);
  
-+	let major = (libressl_version >> 28) as u8;
++        let major = (libressl_version >> 28) as u8;
          let minor = (libressl_version >> 20) as u8;
          let fix = (libressl_version >> 12) as u8;
 -        let (minor, fix) = match (minor, fix) {
