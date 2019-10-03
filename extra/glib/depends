@@ -1,3 +1,4 @@
 libffi
 meson make
 util-linux
+zlib
