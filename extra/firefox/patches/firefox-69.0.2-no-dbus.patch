@@ -18,7 +18,7 @@ index 9aef82c139..8f2400e746 100644
 @@ -76,19 +76,6 @@ dependencies = [
   "winapi 0.3.6 (git+https://github.com/froydnj/winapi-rs?branch=aarch64)",
  ]
- 
+
 -[[package]]
 -name = "audio_thread_priority"
 -version = "0.15.0"
@@ -76,7 +76,7 @@ index 659d4f94f6..9fe6583fb2 100644
  #include "nsIWorkerDebuggerManager.h"
  #include "nsGeolocation.h"
 -#include "audio_thread_priority.h"
- 
+
  #if !defined(XP_WIN)
  #  include "mozilla/Omnijar.h"
 diff --git a/dom/media/GraphRunner.cpp b/dom/media/GraphRunner.cpp
@@ -88,13 +88,13 @@ index f764623737..73811c0f8c 100644
  #include "prthread.h"
  #include "Tracing.h"
 -#include "audio_thread_priority.h"
- 
+
  namespace mozilla {
- 
+
 @@ -93,9 +92,6 @@ bool GraphRunner::OneIteration(GraphTime aStateEnd) {
  void GraphRunner::Run() {
    PR_SetCurrentThreadName("GraphRunner");
- 
+
 -  atp_handle* handle =
 -      atp_promote_current_thread_to_real_time(0, mGraph->GraphRate());
 -
@@ -104,21 +104,21 @@ index f764623737..73811c0f8c 100644
 @@ -111,10 +107,6 @@ void GraphRunner::Run() {
      mMonitor.Notify();
    }
- 
+
 -  if (handle) {
 -    atp_demote_current_thread_from_real_time(handle);
 -  }
 -
    dom::WorkletThread::DeleteCycleCollectedJSContext();
  }
- 
+
 diff --git a/dom/media/moz.build b/dom/media/moz.build
 index 8f89e7b940..524bb3a4de 100644
 --- a/dom/media/moz.build
 +++ b/dom/media/moz.build
 @@ -89,7 +89,6 @@ XPIDL_SOURCES += [
  XPIDL_MODULE = 'dom_media'
- 
+
  EXPORTS += [
 -    '../../third_party/rust/audio_thread_priority/audio_thread_priority.h',
      'ADTSDecoder.h',
@@ -135,35 +135,8 @@ index 90fa464f2a..60039f3117 100644
 -audio_thread_priority = "0.15.0"
  lazy_static = "1.2.0"
  cfg-if = "0.1.0"
-diff --git a/media/audioipc/client/src/context.rs b/media/audioipc/client/src/context.rs
-index 6c959d4fac..e04a28e890 100644
---- a/media/audioipc/client/src/context.rs
-+++ b/media/audioipc/client/src/context.rs
-@@ -4,7 +4,6 @@
- // accompanying file LICENSE for details
- 
- use assert_not_in_callback;
--use audio_thread_priority::promote_current_thread_to_real_time;
- use audioipc::codec::LengthDelimitedCodec;
- use audioipc::platformhandle_passing::{framed_with_platformhandles, FramedWithPlatformHandles};
- use audioipc::{core, rpc};
-@@ -86,14 +85,6 @@ fn open_server_stream() -> Result<audioipc::MessageStream> {
- }
- 
- fn register_thread(callback: Option<extern "C" fn(*const ::std::os::raw::c_char)>) {
--    match promote_current_thread_to_real_time(0, 48000) {
--        Ok(_) => {
--            info!("Audio thread promoted to real-time.");
--        }
--        Err(_) => {
--            warn!("Could not promote thread to real-time.");
--        }
--    }
-     if let Some(func) = callback {
-         let thr = thread::current();
-         let name = CString::new(thr.name().unwrap()).unwrap();
 diff --git a/media/audioipc/client/src/lib.rs b/media/audioipc/client/src/lib.rs
-index 302ca87a91..9b30a2643e 100644
+index 848559607b..9b30a2643e 100644
 --- a/media/audioipc/client/src/lib.rs
 +++ b/media/audioipc/client/src/lib.rs
 @@ -14,7 +14,6 @@ extern crate libc;
@@ -174,7 +147,7 @@ index 302ca87a91..9b30a2643e 100644
  #[macro_use]
  extern crate lazy_static;
  #[macro_use]
-@@ -32,13 +31,11 @@ use std::os::raw::{c_char, c_int};
+@@ -32,7 +31,6 @@ use std::os::raw::{c_char, c_int};
  use stream::ClientStream;
  use std::sync::{Mutex};
  use futures_cpupool::CpuPool;
@@ -182,37 +155,14 @@ index 302ca87a91..9b30a2643e 100644
  cfg_if! {
      if #[cfg(target_os = "linux")] {
          use std::sync::{Arc, Condvar};
-         use std::ffi::CString;
-         use std::thread;
--        use audio_thread_priority::promote_current_thread_to_real_time;
-     }
- }
- 
-@@ -46,7 +43,6 @@ type InitParamsTls = std::cell::RefCell<Option<CpuPoolInitParams>>;
- 
+@@ -45,7 +43,6 @@ type InitParamsTls = std::cell::RefCell<Option<CpuPoolInitParams>>;
+
  thread_local!(static IN_CALLBACK: std::cell::RefCell<bool> = std::cell::RefCell::new(false));
  thread_local!(static CPUPOOL_INIT_PARAMS: InitParamsTls = std::cell::RefCell::new(None));
 -thread_local!(static G_PRIORITY_HANDLES: std::cell::RefCell<Vec<RtPriorityHandle>> = std::cell::RefCell::new(vec![]));
- 
+
  lazy_static! {
      static ref G_THREAD_POOL: Mutex<Option<CpuPool>> = Mutex::new(None);
-@@ -119,16 +115,6 @@ cfg_if! {
- 
-             let register_thread = move || {
-                 if let Some(func) = thread_create_callback {
--                    match promote_current_thread_to_real_time(0, 48000) {
--                        Ok(handle) => {
--                            G_PRIORITY_HANDLES.with(|handles| {
--                                (handles.borrow_mut()).push(handle);
--                            });
--                        }
--                        Err(_) => {
--                            warn!("Could not promote audio threads to real-time during initialization.");
--                        }
--                    }
-                     let thr = thread::current();
-                     let name = CString::new(thr.name().unwrap()).unwrap();
-                     func(name.as_ptr());
 diff --git a/media/audioipc/server/Cargo.toml b/media/audioipc/server/Cargo.toml
 index 8daa952823..62b6d838ea 100644
 --- a/media/audioipc/server/Cargo.toml
@@ -222,11 +172,11 @@ index 8daa952823..62b6d838ea 100644
  tokio-core = "0.1"
  tokio-uds = "0.1.7"
 -audio_thread_priority = "0.15.0"
- 
+
  [dependencies.error-chain]
  version = "0.11.0"
 diff --git a/media/audioipc/server/src/lib.rs b/media/audioipc/server/src/lib.rs
-index eff54e6bb6..df1a6a3396 100644
+index 776c6e5000..df1a6a3396 100644
 --- a/media/audioipc/server/src/lib.rs
 +++ b/media/audioipc/server/src/lib.rs
 @@ -18,7 +18,6 @@ extern crate libc;
@@ -234,30 +184,9 @@ index eff54e6bb6..df1a6a3396 100644
  extern crate tokio_core;
  extern crate tokio_uds;
 -extern crate audio_thread_priority;
- 
+
  use audioipc::core;
  use audioipc::platformhandle_passing::framed_with_platformhandles;
-@@ -29,7 +28,6 @@ use futures::Future;
- use std::error::Error;
- use std::os::raw::c_void;
- use std::ptr;
--use audio_thread_priority::promote_current_thread_to_real_time;
- 
- mod server;
- 
-@@ -59,12 +57,6 @@ fn run() -> Result<ServerWrapper> {
- 
-     let callback_thread = try!(
-         core::spawn_thread("AudioIPC Callback RPC", || {
--            match promote_current_thread_to_real_time(0, 48000) {
--                Ok(_) => { }
--                Err(_) => {
--                    debug!("Failed to promote audio callback thread to real-time.");
--                }
--            }
-             trace!("Starting up cubeb audio callback event loop thread...");
-             Ok(())
-         }).or_else(|e| {
 diff --git a/toolkit/library/rust/shared/Cargo.toml b/toolkit/library/rust/shared/Cargo.toml
 index c659552cdc..71b9d64942 100644
 --- a/toolkit/library/rust/shared/Cargo.toml
@@ -267,7 +196,7 @@ index c659552cdc..71b9d64942 100644
  bookmark_sync = { path = "../../../components/places/bookmark_sync", optional = true }
  shift_or_euc_c = "0.1.0"
 -audio_thread_priority = "0.15.0"
- 
+
  [build-dependencies]
  rustc_version = "0.2"
 diff --git a/toolkit/library/rust/shared/lib.rs b/toolkit/library/rust/shared/lib.rs
@@ -275,9 +204,9 @@ index c5ff9e10dc..a648c7ea13 100644
 --- a/toolkit/library/rust/shared/lib.rs
 +++ b/toolkit/library/rust/shared/lib.rs
 @@ -48,8 +48,6 @@ extern crate shift_or_euc_c;
- 
+
  extern crate arrayvec;
- 
+
 -extern crate audio_thread_priority;
 -
  use std::boxed::Box;
