@@ -16,6 +16,7 @@ This is my (*Dylan Araps'*) public key which will be used for repository signing
     <summary>Click to view the public key.</summary>
 
 <p>
+
 ```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -69,6 +70,7 @@ e1I=
 =7sQn
 -----END PGP PUBLIC KEY BLOCK-----
 \```
+
 </p>
 
 </details>
