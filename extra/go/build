@@ -48,7 +48,6 @@ rm -f  "$1/usr/share/go/doc/articles/wiki/get.bin"
 rm -f  "$1/usr/lib/go/pkg/tool/"*/api
 rm -rf "$1/usr/lib/go/pkg/bootstrap"
 rm -rf "$1/usr/lib/go/pkg/obj"
-rm -rf "$1/usr/lib/go/pkg/obj/go-build/"*
 
 cd "$1/usr/lib/go/src"
 
