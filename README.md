@@ -15,7 +15,7 @@ Repository signing is now fully functional, however it is opt-in (*for now*).
 See [link](https://github.com/kisslinux/kiss/issues/60#issuecomment-538341425) for how to enable repository signing.
 
 <details>
-    <summary>Click to view the public key.</summary>
+    <summary>Click to view (Dylan Araps') public key.</summary>
 
 <p>
 
