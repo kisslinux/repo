@@ -8,7 +8,7 @@ More information: <https://getkiss.org/>
 
 **NOTE:** Contributions to this repository are made on a case-by-case basis. Community packages should go here: <https://github.com/kisslinux/community>
 
-## Public Key
+## Repository signing
 
 This is my (*Dylan Araps'*) public key which will be used for repository signing. Repository signing is now fully functional, however it is opt-in (*for now*).
 
