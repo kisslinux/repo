@@ -10,7 +10,7 @@ More information: <https://getkiss.org/>
 
 ## Repository signing
 
-This is my (*Dylan Araps'*) public key which will be used for repository signing. Repository signing is now fully functional, however it is opt-in (*for now*).
+Repository signing is now fully functional, however it is opt-in (*for now*).
 
 See [link](https://github.com/kisslinux/kiss/issues/60#issuecomment-538341425) for how to enable repository signing.
 
