@@ -21,7 +21,6 @@ export libat_cv_have_ifunc=no
     --disable-libmpx \
     --disable-libmudflap \
     --disable-libsanitizer \
-    --disable-nls \
     --disable-werror \
     --disable-fixed-point \
     --disable-libstdcxx-pch \
