@@ -4,7 +4,7 @@ patch -p1 < preprocessor-warnings.patch
 
 ./configure \
     --prefix=/usr \
-    --disable-nls
+    --enable-nls=auto
 
 make
 make prefix="$1/usr" install
