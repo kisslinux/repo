@@ -2,7 +2,6 @@
 
 ./configure \
     --prefix=/usr \
-    --disable-nls \
     --disable-pam-session \
     --disable-root-mailer \
     --enable-pie \
