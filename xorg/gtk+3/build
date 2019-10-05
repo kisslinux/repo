@@ -16,7 +16,6 @@ sed -i'' '/atk_bridge_adaptor_init/d' gtk/a11y/gtkaccessibility.c
     --enable-xcomposite \
     --enable-xdamage \
     --enable-x11-backend \
-    --disable-nls \
     --enable-debug=no \
     --disable-schemas-compile \
     --disable-cups \
