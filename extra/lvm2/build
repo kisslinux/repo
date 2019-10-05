@@ -31,7 +31,6 @@ export MKDIR_P="install -d"
     --sysconfdir=/etc \
     --localstatedir=/var \
     --disable-selinux \
-    --disable-nls \
     --enable-pkgconfig \
     --enable-fsadm \
     --enable-dmeventd \
