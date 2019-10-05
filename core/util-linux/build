@@ -8,7 +8,6 @@
     --bindir=/usr/bin \
     --sbindir=/usr/bin \
     --libdir=/usr/lib \
-    --disable-nls \
     --enable-libuuid \
     --enable-libblkid \
     --enable-fsck \
