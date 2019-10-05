@@ -9,8 +9,7 @@
     --disable-libuuid \
     --disable-libblkid \
     --disable-elf-shlibs \
-    --disable-fsck \
-    --disable-nls
+    --disable-fsck
 
 # MKDIR_P fixes an install issue on musl/busybox.
 make
