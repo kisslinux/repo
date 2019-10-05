@@ -10,10 +10,8 @@
 )
 export PATH="$PWD/autoconf/bin:$PATH"
 
-# Fix linker errors at runtime.
-export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
-
 unset  MOZ_TELEMETRY_REPORTING
+export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 export MOZ_NOSPAM=1
 
 cd firefox
@@ -33,25 +31,9 @@ rm -rf "$1/usr/include"
 rm -rf "$1/usr/lib/firefox-devel"
 rm -rf "$1/usr/share/idl"
 rm -rf "$1/usr/lib/firefox/gtk2"
+rm -f "$1/usr/lib/firefox/browser/features/fxmonitor@mozilla.org.xpi"
+rm -f "$1/usr/lib/firefox/browser/features/screenshots@mozilla.org.xpi"
+rm -f "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi"
+rm -f "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi"
 
-# Disable nasty features by default.
-# This extends the Ghacks user.js file.
-cat >> user.js <<EOF
-// Disable DNS over HTTPS.
-user_pref("network.trr.mode", 5);
-
-// Disable location aware browsing.
-user_pref("geo.enabled", false);
-
-// Disable auto extension updates/installs.
-user_pref("extensions.update.enabled", false);
-user_pref("extensions.update.autoUpdateDefault", false);
-
-// Disable Screenshots extension.
-user_pref("extensions.screenshots.disabled", true);
-user_pref("extensions.screenshots.upload-disabled", true);
-EOF
-
-# Install Ghacks user.js.
-mkdir -p "$1/usr/lib/firefox/browser/defaults/preferences/"
-cp -f ./user.js "$1/usr/lib/firefox/browser/defaults/preferences/vendor.js"
+install -D vendor.js "$1/usr/lib/firefox/browser/defaults/preferences/vendor.js"
