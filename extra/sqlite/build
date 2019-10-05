@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+sed -i'' -e 's/ -ltinfo//g' configure
+
+./configure \
+    --prefix=/usr \
+    --enable-threadsafe \
+    --enable-dynamic-extensions \
+    --enable-fts5
+
+make -j 1
+make DESTDIR="$1" install
