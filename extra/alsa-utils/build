@@ -2,8 +2,7 @@
 
 ./configure \
     --disable-alsaconf \
-    --disable-bat   \
-    --disable-nls   \
+    --disable-bat \
     --with-curses=ncursesw \
     --disable-xmlto \
     --prefix=/usr
