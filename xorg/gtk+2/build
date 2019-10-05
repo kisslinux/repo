@@ -9,7 +9,6 @@ export CFLAGS="$CFLAGS -UGDK_PIXBUF_DISABLE_DEPRECATED"
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
-    --disable-nls \
     --enable-debug=no \
     --disable-gtk-doc \
     --with-xinput=yes
