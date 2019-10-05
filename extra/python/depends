@@ -1,4 +1,5 @@
 bzip2
 expat
 libffi
+sqlite
 zlib
