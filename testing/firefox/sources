@@ -1,0 +1,13 @@
+https://archive.mozilla.org/pub/firefox/releases/70.0b12/source/firefox-70.0b12.source.tar.xz firefox/
+https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz autoconf2.13/
+https://raw.githubusercontent.com/ghacksuserjs/ghacks-user.js/335299a0cfc083e86e1b88e849999b5daffd5a58/user.js firefox/
+files/mozconfig firefox/
+files/stab.h firefox/toolkit/crashreporter/google-breakpad/src/
+patches/fix-fortify-system-wrappers.patch firefox/
+patches/fix-sandbox-membarrier.patch firefox/
+patches/fix-seccomp-bpf.patch firefox/
+patches/fix-toolkit.patch firefox/
+patches/fix-tools.patch firefox/
+patches/fix-webrtc-glibcisms.patch firefox/
+patches/mallinfo.patch firefox/
+patches/firefox-70-no-dbus.patch firefox/

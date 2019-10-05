@@ -1,0 +1,182 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 77a03dd398..cbfd1d4b2e 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -81,19 +81,6 @@ dependencies = [
+  "winapi 0.3.6 (git+https://github.com/froydnj/winapi-rs?branch=aarch64)",
+ ]
+
+-[[package]]
+-name = "audio_thread_priority"
+-version = "0.19.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "cfg-if 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+- "dbus 0.6.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.60 (registry+https://github.com/rust-lang/crates.io-index)",
+- "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+- "mach 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.6 (git+https://github.com/froydnj/winapi-rs?branch=aarch64)",
+-]
+-
+ [[package]]
+ name = "audioipc"
+ version = "0.2.4"
+@@ -125,7 +112,6 @@ dependencies = [
+ name = "audioipc-client"
+ version = "0.4.0"
+ dependencies = [
+- "audio_thread_priority 0.19.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "audioipc 0.2.4",
+  "cubeb-backend 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
+  "futures 0.1.23 (registry+https://github.com/rust-lang/crates.io-index)",
+@@ -139,7 +125,6 @@ dependencies = [
+ name = "audioipc-server"
+ version = "0.2.3"
+ dependencies = [
+- "audio_thread_priority 0.19.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "audioipc 0.2.4",
+  "cubeb-core 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
+  "error-chain 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
+@@ -1247,7 +1232,6 @@ name = "gkrust-shared"
+ version = "0.1.0"
+ dependencies = [
+  "arrayvec 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+- "audio_thread_priority 0.19.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "audioipc-client 0.4.0",
+  "audioipc-server 0.2.3",
+  "authenticator 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+@@ -3877,7 +3861,6 @@ dependencies = [
+ "checksum atomic 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)" = "c210c1f4db048cda477b652d170572d84c9640695835f17663595d3bd543fc28"
+ "checksum atomic_refcell 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "fb2dcb6e6d35f20276943cc04bb98e538b348d525a04ac79c10021561d202f21"
+ "checksum atty 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)" = "9a7d5b8723950951411ee34d271d99dddcc2035a16ab25310ea2c8cfd4369652"
+-"checksum audio_thread_priority 0.19.1 (registry+https://github.com/rust-lang/crates.io-index)" = "4c1e4aab7f57d8334168073cd0d0f11c7d1f7f3aabef84a1733a42629d0da80c"
+ "checksum authenticator 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)" = "ec149e5d5d4caa2c9ead53a8ce1ea9c4204c388c65bf3b96c2d1dc0fcf4aeb66"
+ "checksum autocfg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "a6d640bee2da49f60a4068a7fae53acde8982514ab7bae8b8cea9e88cbcfd799"
+ "checksum backtrace 0.3.9 (registry+https://github.com/rust-lang/crates.io-index)" = "89a47830402e9981c5c41223151efcced65a0510c13097c769cede7efb34782a"
+diff --git a/dom/ipc/ContentChild.cpp b/dom/ipc/ContentChild.cpp
+index 8b2b2938cf..774c2a17ab 100644
+--- a/dom/ipc/ContentChild.cpp
++++ b/dom/ipc/ContentChild.cpp
+@@ -106,7 +106,6 @@
+ #include "nsIStringBundle.h"
+ #include "nsIWorkerDebuggerManager.h"
+ #include "nsGeolocation.h"
+-#include "audio_thread_priority.h"
+ #include "nsIConsoleService.h"
+
+ #if !defined(XP_WIN)
+diff --git a/dom/media/GraphRunner.cpp b/dom/media/GraphRunner.cpp
+index f764623737..73811c0f8c 100644
+--- a/dom/media/GraphRunner.cpp
++++ b/dom/media/GraphRunner.cpp
+@@ -13,7 +13,6 @@
+ #include "nsISupportsImpl.h"
+ #include "prthread.h"
+ #include "Tracing.h"
+-#include "audio_thread_priority.h"
+
+ namespace mozilla {
+
+@@ -93,9 +92,6 @@ bool GraphRunner::OneIteration(GraphTime aStateEnd) {
+ void GraphRunner::Run() {
+   PR_SetCurrentThreadName("GraphRunner");
+
+-  atp_handle* handle =
+-      atp_promote_current_thread_to_real_time(0, mGraph->GraphRate());
+-
+   MonitorAutoLock lock(mMonitor);
+   while (true) {
+     while (mThreadState == ThreadState::Wait) {
+@@ -111,10 +107,6 @@ void GraphRunner::Run() {
+     mMonitor.Notify();
+   }
+
+-  if (handle) {
+-    atp_demote_current_thread_from_real_time(handle);
+-  }
+-
+   dom::WorkletThread::DeleteCycleCollectedJSContext();
+ }
+
+diff --git a/dom/media/moz.build b/dom/media/moz.build
+index 13601cbf36..06c65024c1 100644
+--- a/dom/media/moz.build
++++ b/dom/media/moz.build
+@@ -100,7 +100,6 @@ XPIDL_SOURCES += [
+ XPIDL_MODULE = 'dom_media'
+
+ EXPORTS += [
+-    '../../third_party/rust/audio_thread_priority/audio_thread_priority.h',
+     'ADTSDecoder.h',
+     'ADTSDemuxer.h',
+     'AsyncLogger.h',
+diff --git a/media/audioipc/client/Cargo.toml b/media/audioipc/client/Cargo.toml
+index 6167a6254f..b813998396 100644
+--- a/media/audioipc/client/Cargo.toml
++++ b/media/audioipc/client/Cargo.toml
+@@ -9,7 +9,6 @@ description = "Cubeb Backend for talking to remote cubeb server."
+ edition = "2018"
+
+ [dependencies]
+-audio_thread_priority = "0.19.1"
+ audioipc = { path="../audioipc" }
+ cubeb-backend = "0.5.5"
+ futures = { version="0.1.18", default-features=false, features=["use_std"] }
+diff --git a/media/audioipc/client/src/lib.rs b/media/audioipc/client/src/lib.rs
+index fc64ab9a26..552b39fd1e 100644
+--- a/media/audioipc/client/src/lib.rs
++++ b/media/audioipc/client/src/lib.rs
+@@ -18,7 +18,6 @@ mod stream;
+
+ use crate::context::ClientContext;
+ use crate::stream::ClientStream;
+-use audio_thread_priority::RtPriorityHandle;
+ use audioipc::{PlatformHandle, PlatformHandleType};
+ use cubeb_backend::{capi, ffi};
+ use futures_cpupool::CpuPool;
+@@ -35,7 +34,6 @@ type InitParamsTls = std::cell::RefCell<Option<CpuPoolInitParams>>;
+
+ thread_local!(static IN_CALLBACK: std::cell::RefCell<bool> = std::cell::RefCell::new(false));
+ thread_local!(static CPUPOOL_INIT_PARAMS: InitParamsTls = std::cell::RefCell::new(None));
+-thread_local!(static G_PRIORITY_HANDLES: std::cell::RefCell<Vec<RtPriorityHandle>> = std::cell::RefCell::new(vec![]));
+
+ lazy_static! {
+     static ref G_THREAD_POOL: Mutex<Option<CpuPool>> = Mutex::new(None);
+diff --git a/media/audioipc/server/Cargo.toml b/media/audioipc/server/Cargo.toml
+index 51e86331d5..1749702fd0 100644
+--- a/media/audioipc/server/Cargo.toml
++++ b/media/audioipc/server/Cargo.toml
+@@ -9,7 +9,6 @@ description = "Remote cubeb server"
+ edition = "2018"
+
+ [dependencies]
+-audio_thread_priority = "0.19.1"
+ audioipc = { path = "../audioipc" }
+ cubeb-core = "0.5.5"
+ futures = "0.1.18"
+diff --git a/toolkit/library/rust/shared/Cargo.toml b/toolkit/library/rust/shared/Cargo.toml
+index 116fbf7e1d..742fff9098 100644
+--- a/toolkit/library/rust/shared/Cargo.toml
++++ b/toolkit/library/rust/shared/Cargo.toml
+@@ -42,7 +42,6 @@ bitsdownload = { path = "../../../components/bitsdownload", optional = true }
+ storage = { path = "../../../../storage/rust" }
+ bookmark_sync = { path = "../../../components/places/bookmark_sync", optional = true }
+ shift_or_euc_c = "0.1.0"
+-audio_thread_priority = "0.19.1"
+ mdns_service = { path="../../../../media/mtransport/mdns_service" }
+
+ [build-dependencies]
+diff --git a/toolkit/library/rust/shared/lib.rs b/toolkit/library/rust/shared/lib.rs
+index 0475d4b221..a07411c308 100644
+--- a/toolkit/library/rust/shared/lib.rs
++++ b/toolkit/library/rust/shared/lib.rs
+@@ -50,8 +50,6 @@ extern crate shift_or_euc_c;
+
+ extern crate arrayvec;
+
+-extern crate audio_thread_priority;
+-
+ extern crate mdns_service;
+
+ use std::boxed::Box;
