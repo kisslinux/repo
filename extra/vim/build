@@ -15,7 +15,6 @@
     --disable-hangulinput \
     --disable-xim \
     --disable-gui \
-    --disable-nls \
     --without-x
 
 make
