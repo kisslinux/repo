@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+export LDFLAGS="-Wl,-z,lazy"
+
+autoreconf -i
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib \
+    --with-default-dri=3
+
+make
+make DESTDIR="$1" install
+
+# Remove uneeded files.
+rm -rf "$1/usr/share/polkit-1"
