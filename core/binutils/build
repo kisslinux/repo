@@ -7,7 +7,6 @@
     --enable-targets=x86_64-pep \
     --disable-multilib \
     --disable-werror \
-    --disable-nls \
     --with-mmap \
     --with-system-zlib
 
