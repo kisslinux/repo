@@ -3,7 +3,6 @@
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
-    --disable-nls \
     --enable-noexecstack
 
 make
