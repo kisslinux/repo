@@ -52,6 +52,8 @@ pref("intl.charset.fallback.override", "windows-1252");
 //
 
 pref("app.update.auto", false);
+pref("app.update.enabled", false);
+pref("browser.newtabbage.enabled", false);
 pref("browser.search.update", false);
 pref("extensions.getAddons.showPane", false);
 pref("extensions.htmlaboutaddons.recommendations.enabled", false);
@@ -74,6 +76,7 @@ pref("toolkit.telemetry.cachedClientID", "");
 pref("security.protectionspopup.recordEventTelemetry", false);
 pref("security.identitypopup.recordEventTelemetry", false);
 pref("privacy.trackingprotection.origin_telemetry.enabled", false);
+pref("privacy.trackingprotection.pbmode.enabled", false);
 pref("permissions.eventTelemetry.enabled", false);
 pref("browser.urlbar.eventTelemetry.enabled", false);
 pref("toolkit.coverage.opt-out", true);
@@ -111,6 +114,14 @@ pref("datareporting.policy.dataSubmissionPolicyVersion", 2);
 pref("browser.webapps.checkForUpdates", 0);
 pref("browser.webapps.updateCheckUrl", "http://127.0.0.1/");
 pref("dom.flyweb.enabled", false);
+pref("services.sync.autoconnect", false);
+pref("services.sync.engine.addons", false);
+pref("services.sync.engine.bookmarks", false);
+pref("services.sync.engine.history", false);
+pref("services.sync.engine.passwords", false);
+pref("services.sync.engine.prefs", false);
+pref("services.sync.engine.tabs", false);
+pref("extensions.webservice.discoverURL", "");
 
 // Firefox connects to cloudfront on startup unless
 // these are false/blank.
@@ -128,6 +139,8 @@ pref("browser.safebrowsing.downloads.remote.enabled", false);
 pref("browser.safebrowsing.downloads.remote.url", "");
 pref("browser.safebrowsing.downloads.remote.block_potentially_unwanted", false);
 pref("browser.safebrowsing.downloads.remote.block_uncommon", false);
+pref("browser.safebrowsing.provider.mozilla.updateURL", "");
+pref("browser.safebrowsing.provider.mozilla.gethashURL", "");
 
 //
 // EXPERIMENTS
@@ -161,6 +174,7 @@ pref("network.http.keep-alive.timeout",	15);
 pref("network.predictor.enabled", false);
 pref("network.predictor.enable-prefetch", false);
 pref("network.http.speculative-parallel-limit", 0);
+pref("browser.startup.page", 0);
 pref("browser.send_pings", false);
 pref("browser.send_pings.require_same_host", true);
 pref("network.dns.blockDotOnion", true);
