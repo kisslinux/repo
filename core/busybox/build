@@ -2,7 +2,7 @@
 
 # Build and install regular busybox.
 # This excludes utilities which require 'suid' to function.
-make CC="$CC"
+make CC="${CC:-gcc}"
 make CONFIG_PREFIX="$1/usr" install
 
 # Rename the binary temporarily.
@@ -11,7 +11,7 @@ mv "$1/usr/bin/busybox" "$1/usr/bin/busybox-nosuid"
 # Build and install suid busybox.
 # This _only_ includes utlities which require 'suid' to function.
 cp -f .config-suid .config
-make CC="$CC"
+make CC="${CC:-gcc}"
 make CONFIG_PREFIX="$1/usr" install
 
 # Aptly name the busybox binaries.
