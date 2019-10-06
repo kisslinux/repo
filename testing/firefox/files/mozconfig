@@ -29,7 +29,7 @@ ac_add_options --disable-debug-symbols
 ac_add_options --disable-callgrind
 ac_add_options --disable-vtune
 
-# musl
+# Settings for musl.
 ac_add_options --disable-elf-hack
 ac_add_options --disable-gold
 ac_add_options --disable-jemalloc
