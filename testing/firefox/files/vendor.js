@@ -111,7 +111,11 @@ pref("datareporting.policy.dataSubmissionPolicyVersion", 2);
 pref("browser.webapps.checkForUpdates", 0);
 pref("browser.webapps.updateCheckUrl", "http://127.0.0.1/");
 pref("dom.flyweb.enabled", false);
+
+// Firefox connects to cloudfront on startup unless
+// these are false/blank.
 pref("browser.selfsupport.url",	"");
+pref("keyword.enabled", false);
 
 //
 // "SAFE" BROWSING
