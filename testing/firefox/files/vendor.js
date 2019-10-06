@@ -18,6 +18,8 @@ pref("browser.newtab.preload", false);
 pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 pref("browser.newtabpage.activity-stream.telemetry", false);
 pref("browser.newtabpage.activity-stream.telemetry.ping.endpoint", "");
+pref("browser.newtabpage.activity-stream.telemetry.ut.events", false);
+pref("browser.newtabpage.activity-stream.telemetry.structuredIngestion", false);
 pref("browser.newtabpage.activity-stream.feeds.snippets", false);
 pref("browser.newtabpage.activity-stream.asrouter.providers.snippets", "");
 pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
@@ -64,6 +66,16 @@ pref("toolkit.telemetry.bhrPing.enabled", false);
 pref("toolkit.telemetry.firstShutdownPing.enabled", false);
 pref("toolkit.telemetry.hybridContent.enabled", false);
 pref("toolkit.telemetry.coverage.opt-out", true);
+pref("toolkit.telemetry.shutdownPingSender.enabledFirstSession", false);
+pref("toolkit.telemetry.server_owner", "");
+pref("toolkit.telemetry.geckoview.streaming", false);
+pref("toolkit.telemetry.ecosystemtelemetry.enabled", false);
+pref("toolkit.telemetry.cachedClientID", "");
+pref("security.protectionspopup.recordEventTelemetry", false);
+pref("security.identitypopup.recordEventTelemetry", false);
+pref("privacy.trackingprotection.origin_telemetry.enabled", false);
+pref("permissions.eventTelemetry.enabled", false);
+pref("browser.urlbar.eventTelemetry.enabled", false);
 pref("toolkit.coverage.opt-out", true);
 pref("toolkit.coverage.endpoint.base", "");
 pref("datareporting.healthreport.uploadEnabled", false);
@@ -119,6 +131,7 @@ pref("browser.safebrowsing.downloads.remote.block_uncommon", false);
 
 pref("app.normandy.enabled", false);
 pref("app.normandy.api_url", "");
+pref("app.normandy.user_id", "");
 pref("extensions.systemAddon.update.url", "");
 pref("browser.ping-centre.telemetry", false);
 pref("extensions.screenshots.disabled", true);
@@ -423,7 +436,8 @@ pref("pdfjs.disabled", true);
 
 // Taken from TOR browser.
 pref("general.buildID.override", "20100101");
-pref("browser.startup.homepage_override.buildID",i "20100101");
+pref("browser.startup.homepage_override.buildID", "20100101");
+pref("toolkit.telemetry.previousBuildID", "20100101");
 
 //
 // DOWNLOADS
