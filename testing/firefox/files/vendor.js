@@ -5,6 +5,8 @@
 // - OpenBSD,
 // - GHacks user.js
 // - pyllyukko/user.js
+// - anarcat/firefox-tmp
+// - Debian
 
 //
 // STARTUP
