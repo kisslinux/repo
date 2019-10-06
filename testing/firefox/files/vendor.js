@@ -205,7 +205,6 @@ pref("network.protocol-handler.expose.data", true);
 // SEARCH / AUTOFILL / FORMS
 //
 
-pref("keyword.enabled", false);
 pref("browser.fixup.alternate.enabled", false);
 pref("browser.urlbar.trimURLs", false);
 pref("browser.sessionhistory.max_entries", 10);
