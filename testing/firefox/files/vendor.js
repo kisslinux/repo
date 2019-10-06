@@ -51,8 +51,6 @@ pref("intl.charset.fallback.override", "windows-1252");
 
 pref("app.update.auto", false);
 pref("browser.search.update", false);
-pref("dom.ipc.plugins.flash.subprocess.crashreporter.enabled", false);
-pref("dom.ipc.plugins.reportCrashURL", false);
 pref("extensions.getAddons.showPane", false);
 pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 pref("toolkit.telemetry.unified", false);
@@ -79,6 +77,7 @@ pref("browser.slowStartup.notificationDisabled", true);
 pref("network.http.sendRefererHeader", 2);
 pref("network.http.referer.spoofSource", true);
 pref("app.shield.optoutstudies.enabled", false);
+pref("extensions.shield-recipe-client.enabled",	false);
 pref("browser.discovery.enabled", false);
 pref("breakpad.reportURL", "");
 pref("browser.tabs.crashReporting.sendReport", false);
@@ -99,6 +98,8 @@ pref("datareporting.policy.firstRunTime", 0);
 pref("datareporting.policy.dataSubmissionPolicyVersion", 2);
 pref("browser.webapps.checkForUpdates", 0);
 pref("browser.webapps.updateCheckUrl", "http://127.0.0.1/");
+pref("dom.flyweb.enabled", false);
+pref("browser.selfsupport.url",	"");
 
 //
 // "SAFE" BROWSING
@@ -118,7 +119,6 @@ pref("browser.safebrowsing.downloads.remote.block_uncommon", false);
 
 pref("app.normandy.enabled", false);
 pref("app.normandy.api_url", "");
-pref("extensions.systemAddon.update.enabled", false);
 pref("extensions.systemAddon.update.url", "");
 pref("browser.ping-centre.telemetry", false);
 pref("extensions.screenshots.disabled", true);
@@ -128,6 +128,10 @@ pref("extensions.formautofill.available", "off");
 pref("extensions.formautofill.creditCards.enabled", false);
 pref("extensions.formautofill.heuristics.enabled", false);
 pref("extensions.webcompat-reporter.enabled", false);
+pref("experiments.supported", false);
+pref("experiments.enabled",	false);
+pref("experiments.manifest.uri", "");
+pref("network.allow-experiments", false);
 
 //
 // IMPLICIT OUTBOUND CONNECTIONS
@@ -136,11 +140,15 @@ pref("extensions.webcompat-reporter.enabled", false);
 pref("network.prefetch-next", false);
 pref("network.dns.disablePrefetch", true);
 pref("network.dns.disablePrefetchFromHTTPS", true);
+pref("network.http.keep-alive.timeout",	15);
 pref("network.predictor.enabled", false);
 pref("network.predictor.enable-prefetch", false);
 pref("network.http.speculative-parallel-limit", 0);
 pref("browser.send_pings", false);
 pref("browser.send_pings.require_same_host", true);
+pref("network.dns.blockDotOnion", true);
+pref("browser.casting.enabled",	false);
+pref("browser.aboutHomeSnippets.updateUrl",	"");
 
 //
 // PROTOCOLS
@@ -260,6 +268,7 @@ pref("privacy.userContext.longPressBehavior", 2);
 //
 
 pref("plugin.state.flash", 0);
+pref("plugin.state.java", 0);
 pref("media.gmp-widevinecdm.visible", false);
 pref("media.gmp-widevinecdm.enabled", false);
 pref("media.eme.enabled", false);
@@ -271,6 +280,9 @@ pref("media.gmp-gmpopenh264.provider.enabled", false);
 pref("plugins.hide_infobar_for_missing_plugin", true);
 pref("plugins.hide_infobar_for_outdated_plugin", true);
 pref("plugins.notifyMissingFlash", false);
+pref("dom.ipc.plugins.flash.subprocess.crashreporter.enabled", false);
+pref("dom.ipc.plugins.reportCrashURL", false);
+pref("plugins.click_to_play", true);
 
 //
 // CAMERA / MIC
@@ -377,12 +389,9 @@ pref("dom.gamepad.enabled",	false);
 pref("dom.enable_resource_timing",	false);
 pref("dom.archivereader.enabled", false);
 pref("camera.control.face_detection.enabled", false);
-pref("intl.accept_languages", "en-US, en");
 pref("browser.search.countryCode", "US");
 pref("browser.search.region", "US");
-pref("browser.search.geoip.url", "");
 pref("intl.locale.matchOS", false);
-pref("browser.search.geoSpecificDefaults", false);
 pref("clipboard.autocopy", false);
 pref("browser.fixup.alternate.enabled",	false);
 pref("media.video_stats.enabled", false);
@@ -408,10 +417,9 @@ pref("network.protocol-handler.expose.about", true);
 pref("network.protocol-handler.expose.chrome", true);
 pref("network.protocol-handler.expose.blob", true);
 pref("network.protocol-handler.expose.data", true);
-pref("extensions.getAddons.cache.enabled", false);
-pref("lightweightThemes.update.enabled", false);
-pref("plugin.state.flash",	0);
-pref("plugin.state.java", 0);
+pref("devtools.chrome.enabled",	false);
+pref("devtools.debugger.force-local", true);
+pref("pdfjs.disabled", true);
 
 // Taken from TOR browser.
 pref("general.buildID.override", "20100101");
@@ -431,6 +439,11 @@ pref("browser.download.hide_plugins_without_extensions", false);
 
 pref("extensions.enabledScopes", 5);
 pref("extensions.autoDisableScopes", 15);
+pref("xpinstall.signatures.required", true);
+pref("extensions.getAddons.cache.enabled",	false);
+pref("lightweightThemes.update.enabled", false);
+pref("extensions.systemAddon.update.enabled", false);
+pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr", false);
 
 //
 // STORAGE
@@ -492,6 +505,7 @@ pref("loop.server", "");
 pref("loop.soft_start_hostname", "");
 pref("loop.support_url", "");
 pref("loop.throttled2", false);
+pref("loop.logDomains",	false);
 pref("browser.pocket.enabled", false);
 pref("browser.pocket.api", "");
 pref("browser.pocket.site", "");
