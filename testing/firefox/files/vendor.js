@@ -594,9 +594,6 @@ pref("privacy.sanitize.timeSpan", 0);
 
 pref("privacy.firstparty.isolate", true);
 pref("privacy.firstparty.isolate.restrict_opener_access", true);
-pref("privacy.resistFingerprinting", true);
-pref("privacy.resistFingerprinting.block_mozAddonManager", true);
-pref("privacy.resistFingerprinting.letterboxing", true);
 pref("browser.startup.blankWindow", false);
 
 //
