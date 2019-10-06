@@ -147,6 +147,23 @@ pref("services.settings.server", "");
 pref("datareporting.healthreport.documentServerURI", "");
 pref("general.useragent.updates.enabled", false);
 pref("general.useragent.updates.url", "");
+pref("identity.fxaccounts.auth.uri", "");
+pref("identity.fxaccounts.remote.root", "");
+pref("identity.fxaccounts.skipDeviceRegistration", true);
+pref("browser.translation.bing.authURL", "");
+pref("browser.translation.bing.translateArrayURL", "");
+pref("browser.translation.yandex.translateURLOverride", "");
+pref("browser.translation.engine", "bing");
+pref("browser.aboutHomeSnippets.updateUrl", "nonexistent://test");
+pref("browser.newtabpage.activity-stream.default.sites", "")
+pref("browser.newtabpage.activity-stream.telemetry", false)
+pref("browser.newtabpage.activity-stream.tippyTop.service.endpoint", "")
+pref("browser.uitour.pinnedTabUrl", "");
+pref("browser.uitour.url", "");
+pref("browser.search.isUS", true);
+pref("browser.search.countryCode", "US");
+pref("browser.ping-centre.staging.endpoint", "");
+pref("browser.ping-centre.production.endpoint", "");
 
 // Firefox connects to cloudfront on startup unless
 // these are false/blank.
@@ -210,7 +227,6 @@ pref("browser.send_pings", false);
 pref("browser.send_pings.require_same_host", true);
 pref("network.dns.blockDotOnion", true);
 pref("browser.casting.enabled",	false);
-pref("browser.aboutHomeSnippets.updateUrl",	"");
 
 //
 // PROTOCOLS
@@ -446,7 +462,6 @@ pref("browser.helperApps.deleteTempFileOnExit", true);
 pref("browser.pagethumbnails.capturing_disabled", true);
 pref("browser.tabs.remote.allowLinkedWebInFileUriProcess", false);
 pref("browser.uitour.enabled", false);
-pref("browser.uitour.url", "");
 pref("devtools.chrome.enabled", false);
 pref("devtools.debugger.remote-enabled", false);
 pref("devtools.webide.enabled", false);
@@ -471,7 +486,6 @@ pref("dom.gamepad.enabled",	false);
 pref("dom.enable_resource_timing",	false);
 pref("dom.archivereader.enabled", false);
 pref("camera.control.face_detection.enabled", false);
-pref("browser.search.countryCode", "US");
 pref("browser.search.region", "US");
 pref("intl.locale.matchOS", false);
 pref("clipboard.autocopy", false);
