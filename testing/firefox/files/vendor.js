@@ -12,11 +12,12 @@
 // STARTUP
 //
 
-pref("browser.newtabpage.directory.source", "");
-pref("browser.newtabpage.directory.ping", "");
-pref("browser.newtabpage.introShown", true);
-pref("browser.newtabpage.enabled", false);
 pref("browser.newtab.preload", false);
+pref("browser.newtabpage.directory.ping", "");
+pref("browser.newtabpage.directory.source", "");
+pref("browser.newtabpage.enabled", false);
+pref("browser.newtabpage.enhanced", false);
+pref("browser.newtabpage.introShown", false);
 pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 pref("browser.newtabpage.activity-stream.telemetry", false);
 pref("browser.newtabpage.activity-stream.telemetry.ping.endpoint", "");
