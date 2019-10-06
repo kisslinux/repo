@@ -444,6 +444,8 @@ pref("extensions.getAddons.cache.enabled",	false);
 pref("lightweightThemes.update.enabled", false);
 pref("extensions.systemAddon.update.enabled", false);
 pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr", false);
+pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
+pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
 
 //
 // STORAGE

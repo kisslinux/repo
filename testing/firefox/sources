@@ -3,6 +3,7 @@ https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz autoconf2.13/
 files/mozconfig firefox/
 files/stab.h firefox/toolkit/crashreporter/google-breakpad/src/
 files/vendor.js firefox/
+files/policies.json firefox/
 patches/fix-fortify-system-wrappers.patch firefox/
 patches/fix-sandbox-membarrier.patch firefox/
 patches/fix-seccomp-bpf.patch firefox/

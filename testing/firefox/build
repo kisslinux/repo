@@ -12,7 +12,7 @@
     make
     make install
 )
-export PATH="$PWD/autoconf/bin:$PATH"
+export PATH=$PWD/autoconf/bin:$PATH
 
 unset  MOZ_TELEMETRY_REPORTING
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
@@ -24,7 +24,7 @@ for patch in *.patch; do
     patch -p1 < "$patch"
 done
 
-./mach -j "$(nproc)" -l "$(nproc)" build
+./mach build
 DESTDIR="$1" ./mach install
 
 rm -rf "$1/usr/include"
@@ -37,3 +37,4 @@ rm -f  "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi"
 rm -f  "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi"
 
 install -D vendor.js "$1/usr/lib/firefox/browser/defaults/preferences/vendor.js"
+install -D policies.json "$1/usr/lib/firefox/distribution/policies.json"

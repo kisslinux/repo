@@ -1,0 +1,17 @@
+{
+	"policies": {
+		"DisableAppUpdate": true,
+		"DisableFirefoxStudies": true,
+		"DisablePocket": true,
+		"DisableTelemetry": true,
+        "DisableFirefoxStudies": true,
+        "DisableFeedbackCommands": true,
+        "DisableFirefoxScreenshots": true,
+        "DisableSystemAddonUpdate": true,
+        "DontCheckDefaultBrowser": true,
+        "ExtensionUpdate": false,
+        "NetworkPrediction": false,
+		"DontCheckDefaultBrowser": true,
+        "CaptivePortal": false
+	}
+}
