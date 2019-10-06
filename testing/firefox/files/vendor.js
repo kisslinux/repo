@@ -26,7 +26,6 @@ pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false);
 pref("browser.newtabpage.activity-stream.showSponsored", false);
 pref("browser.newtabpage.activity-stream.feeds.discoverystreamfeed", false);
-pref("browser.shell.checkDefaultBrowser", false);
 
 //
 // GEO
@@ -85,6 +84,10 @@ pref("datareporting.healthreport.uploadEnabled", false);
 pref("datareporting.policy.dataSubmissionEnabled", false);
 pref("datareporting.healthreport.about.reportUrl", "127.0.0.1");
 pref("datareporting.healthreport.documentServerURI", "127.0.0.1");
+pref("datareporting.policy.dataSubmissionPolicyBypassNotification", true);
+pref("datareporting.policy.firstRunURL", "");
+pref("startup.homepage_welcome_url.additional", "");
+pref("browser.startup.firstrunSkipsHomepage", true);
 pref("healthreport.uploadEnabled", false);
 pref("social.toast-notifications.enabled", false);
 pref("datareporting.healthreport.service.enabled", false);
@@ -102,7 +105,6 @@ pref("captivedetect.canonicalURL", "");
 pref("network.captive-portal-service.enabled", false);
 pref("network.connectivity-service.enabled", false);
 pref("extensions.blocklist.enabled", false);
-pref("extensions.blocklist.url", "");
 pref("privacy.announcements.enabled", false);
 pref("browser.snippets.enabled", false);
 pref("browser.snippets.syncPromo.enabled", false);
@@ -122,6 +124,25 @@ pref("services.sync.engine.passwords", false);
 pref("services.sync.engine.prefs", false);
 pref("services.sync.engine.tabs", false);
 pref("extensions.webservice.discoverURL", "");
+pref("browser.shell.checkDefaultBrowser", false);
+pref("shell.checkDefaultClient", false);
+pref("browser.newtabpage.directory.source", 'data:application/json,{}');
+pref("browser.urlbar.suggest.searches", false);
+pref("geo.wifi.scan", false);
+pref("dom.push.connection.enabled", false);
+pref("extensions.update.url", "");
+pref("extensions.update.background.url", "");
+pref("extensions.blocklist.detailsURL", "");
+pref("extensions.blocklist.itemURL", "");
+pref("extensions.blocklist.url", "");
+pref("extensions.hotfix.url", "");
+pref("extensions.getAddons.get.url", "");
+pref("extensions.getAddons.getWithPerformance.url", "");
+pref("extensions.getAddons.search.browseURL", "");
+pref("services.settings.server", "");
+pref("datareporting.healthreport.documentServerURI", "");
+pref("general.useragent.updates.enabled", false);
+pref("general.useragent.updates.url", "");
 
 // Firefox connects to cloudfront on startup unless
 // these are false/blank.
@@ -141,6 +162,11 @@ pref("browser.safebrowsing.downloads.remote.block_potentially_unwanted", false);
 pref("browser.safebrowsing.downloads.remote.block_uncommon", false);
 pref("browser.safebrowsing.provider.mozilla.updateURL", "");
 pref("browser.safebrowsing.provider.mozilla.gethashURL", "");
+pref("browser.safebrowsing.provider.google.gethashURL", "");
+pref("browser.safebrowsing.provider.google.updateURL", "");
+pref("browser.safebrowsing.provider.google4.gethashURL", "");
+pref("browser.safebrowsing.provider.google4.updateURL", "");
+pref("privacy.trackingprotection.introURL", "");
 
 //
 // EXPERIMENTS
@@ -162,6 +188,7 @@ pref("experiments.supported", false);
 pref("experiments.enabled",	false);
 pref("experiments.manifest.uri", "");
 pref("network.allow-experiments", false);
+pref("privacy.trackingprotection.enabled", false);
 
 //
 // IMPLICIT OUTBOUND CONNECTIONS
@@ -231,7 +258,6 @@ pref("browser.search.suggest.enabled", false);
 pref("browser.urlbar.usepreloadedtopurls.enabled", false);
 pref("browser.urlbar.speculativeConnect.enabled", false);
 pref("browser.formfill.enable", false);
-pref("browser.urlbar.suggest.searches", false);
 pref("browser.taskbar.lists.enabled", false);
 pref("browser.taskbar.lists.frequent.enabled", false);
 pref("browser.taskbar.lists.recent.enabled", false);
@@ -471,6 +497,7 @@ pref("browser.download.hide_plugins_without_extensions", false);
 
 pref("extensions.enabledScopes", 5);
 pref("extensions.autoDisableScopes", 15);
+pref("extensions.update.enabled", false);
 pref("xpinstall.signatures.required", true);
 pref("extensions.getAddons.cache.enabled",	false);
 pref("lightweightThemes.update.enabled", false);
