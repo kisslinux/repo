@@ -14,7 +14,7 @@
 
 pref("browser.newtab.preload", false);
 pref("browser.newtabpage.directory.ping", "");
-pref("browser.newtabpage.directory.source", "");
+pref("browser.newtabpage.directory.source", "data:application/json,{}");
 pref("browser.newtabpage.enabled", false);
 pref("browser.newtabpage.enhanced", false);
 pref("browser.newtabpage.introShown", false);
@@ -158,9 +158,9 @@ pref("browser.translation.bing.translateArrayURL", "");
 pref("browser.translation.yandex.translateURLOverride", "");
 pref("browser.translation.engine", "bing");
 pref("browser.aboutHomeSnippets.updateUrl", "nonexistent://test");
-pref("browser.newtabpage.activity-stream.default.sites", "")
-pref("browser.newtabpage.activity-stream.telemetry", false)
-pref("browser.newtabpage.activity-stream.tippyTop.service.endpoint", "")
+pref("browser.newtabpage.activity-stream.default.sites", "");
+pref("browser.newtabpage.activity-stream.telemetry", false);
+pref("browser.newtabpage.activity-stream.tippyTop.service.endpoint", "");
 pref("browser.uitour.pinnedTabUrl", "");
 pref("browser.uitour.url", "");
 pref("browser.search.isUS", true);
@@ -284,7 +284,7 @@ pref("browser.formfill.enable", false);
 pref("browser.taskbar.lists.enabled", false);
 pref("browser.taskbar.lists.frequent.enabled", false);
 pref("browser.taskbar.lists.recent.enabled", false);
-pref("browser.taskbar.lists.tasks.enabled", false)
+pref("browser.taskbar.lists.tasks.enabled", false);
 pref("browser.taskbar.previews.enable", false);
 
 //
