@@ -475,7 +475,6 @@ pref("offline-apps.allow_by_default", false);
 //
 
 pref("privacy.sanitize.sanitizeOnShutdown", true);
-pref("privacy.clearOnShutdown.cache", true);
 pref("privacy.clearOnShutdown.formdata", true);
 pref("privacy.clearOnShutdown.offlineApps", true);
 pref("privacy.clearOnShutdown.sessions", true);
