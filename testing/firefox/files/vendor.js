@@ -464,9 +464,6 @@ pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false
 // STORAGE
 //
 
-pref("network.cookie.cookieBehavior", 1);
-pref("network.cookie.thirdparty.sessionOnly", true);
-pref("network.cookie.thirdparty.nonsecureSessionOnly", true);
 pref("browser.cache.offline.enable", false);
 pref("offline-apps.allow_by_default", false);
 
@@ -476,10 +473,7 @@ pref("offline-apps.allow_by_default", false);
 
 pref("privacy.sanitize.sanitizeOnShutdown", true);
 pref("privacy.clearOnShutdown.cache", true);
-pref("privacy.clearOnShutdown.cookies", true);
-pref("privacy.clearOnShutdown.downloads", true);
 pref("privacy.clearOnShutdown.formdata", true);
-pref("privacy.clearOnShutdown.history", true);
 pref("privacy.clearOnShutdown.offlineApps", true);
 pref("privacy.clearOnShutdown.sessions", true);
 pref("privacy.clearOnShutdown.siteSettings", false);
