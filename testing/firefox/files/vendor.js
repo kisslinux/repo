@@ -313,6 +313,7 @@ pref("media.gmp-manager.url.override", "data:text/plain,");
 pref("browser.eme.ui.enabled", false);
 pref("media.eme.apiVisible", false);
 pref("media.gmp-provider.enabled", false);
+pref("media.gmp-gmpopenh264.enabled", false);
 pref("media.gmp-gmpopenh264.provider.enabled", false);
 pref("plugins.hide_infobar_for_missing_plugin", true);
 pref("plugins.hide_infobar_for_outdated_plugin", true);
@@ -435,6 +436,7 @@ pref("media.video_stats.enabled", false);
 pref("devtools.chrome.enabled",	false);
 pref("devtools.debugger.force-local", true);
 pref("pdfjs.disabled", true);
+pref("browser.startup.homepage_override.mstone", "ignore");
 
 // Taken from TOR browser.
 pref("general.buildID.override", "20100101");
