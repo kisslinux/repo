@@ -276,7 +276,6 @@ pref("security.ssl3.dhe_rsa_aes_256_sha", false);
 // FONTS
 //
 
-pref("browser.display.use_document_fonts", 0);
 pref("gfx.font_rendering.opentype_svg.enabled", false);
 pref("gfx.font_rendering.graphite.enabled", false);
 
