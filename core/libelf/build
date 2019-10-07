@@ -1,6 +1,5 @@
 #!/bin/sh -e
 
-sh
 patch -p1 < preprocessor-warnings.patch
 
 ./configure \
