@@ -11,6 +11,3 @@ autoreconf -i
 
 make
 make DESTDIR="$1" install
-
-# Remove uneeded files.
-rm -rf "$1/usr/share/polkit-1"

@@ -27,7 +27,3 @@ sed -i'' '/atk_bridge_adaptor_init/d' gtk/a11y/gtkaccessibility.c
 
 make
 make DESTDIR="$1" install
-
-# Remove unneeded files.
-rm -rf "$1/usr/share/gtk-doc"
-rm -rf "$1/usr/share/gettext"

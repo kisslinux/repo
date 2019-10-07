@@ -38,6 +38,3 @@ export HARFBUZZ_CFLAGS="-I$PWD/harfbuzz/src"
 export HARFBUZZ_LIBS="-L$PWD/harfbuzz/src/.libs -lharfbuzz"
 
 build_freetype "$1" yes
-
-# Remove a ton of HTML documentation.
-rm -rf "$1/usr/share/gtk-doc"

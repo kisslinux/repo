@@ -19,6 +19,5 @@ sed -i -e 's/demos //g' Makefile
 make
 make DESTDIR="$1" install
 
-# Remove a boat load of HTML documentation.
-rm -rf "$1/gtk-doc/"
+# Conflicts with GTK+3.
 rm -f  "$1/usr/bin/gtk-update-icon-cache"

@@ -20,6 +20,3 @@ sed -i'' "s/BUILD_SPHINX_FALSE='#'/BUILD_SPHINX_FALSE=/" configure
 
 make
 make DESTDIR="$1" install
-
-# Remove GTK docs.
-rm -rf "$1/usr/share/gtk-doc"
