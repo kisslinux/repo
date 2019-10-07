@@ -45,9 +45,6 @@ find "$1" -name libgtkpeer.a  -delete
 find "$1" -name libgjsmalsa.a -delete
 find "$1" -name libgij.a      -delete
 
-# Remove all info files.
-rm -rf "$1/usr/share/info"
-
 # Some legacy programs will expect cc
 ln -s gcc "$1/usr/bin/cc"
 
