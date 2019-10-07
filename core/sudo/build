@@ -18,6 +18,3 @@ make \
     install_uid="$(id -u)" \
     install_gid="$(id -g)" \
     install
-
-# Remove docs.
-rm -rf "$1/usr/share/doc"
