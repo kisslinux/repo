@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
 cd wpa_supplicant
-mv ../.config .
 
 make LIBDIR=/usr/lib BINDIR=/usr/bin
 make LIBDIR=/usr/lib BINDIR=/usr/bin  DESTDIR="$1" install
