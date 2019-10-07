@@ -5,7 +5,3 @@
 
 make
 make DESTDIR="$1" install
-
-# Remove unneeded files.
-rm -rf "$1/usr/share/info"
-rm -rf "$1/usr/share/doc"

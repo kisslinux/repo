@@ -13,8 +13,5 @@ meson \
 ninja -C build
 DESTDIR="$1" ninja -C build install
 
-# Remove unneeded files.
-rm -rf "$1/usr/share/gettext"
-
 # Purge gdbus.
 rm -rf "$1/usr/bin/gdbus"

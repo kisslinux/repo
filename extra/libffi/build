@@ -14,6 +14,3 @@ rmdir "$1/usr/lib/libffi-3.2.1/include"
 
 sed -i -e '/^includedir=/{s,=.*,=/usr/include,g}' \
     "$1/usr/lib/pkgconfig/libffi.pc"
-
-# Remove all info files.
-rm -rf "$1/usr/share/info"
