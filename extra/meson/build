@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < no-gettext.patch
-
 python setup.py build
 python setup.py install \
     --root="$1" \
