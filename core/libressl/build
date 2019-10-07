@@ -10,6 +10,3 @@ make
 make DESTDIR="$1" install
 
 install -Dm 755 update-certdata.sh "$1/etc/ssl"
-
-# Remove majority of man pages (2700 files~).
-rm -rf "$1/usr/share/man/man3"
