@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
+export DESTDIR="$1"
 export CFLAGS="-DGLX_X86_READONLY_TEXT $CFLAGS"
 
 # Fix issues with musl and firefox.
@@ -16,5 +17,4 @@ meson \
     . output
 
 ninja -C output
-
-DESTDIR="$1" ninja -C output install
+ninja -C output install
