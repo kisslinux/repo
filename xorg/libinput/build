@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+export DESTDIR="$1"
+
 meson \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -11,5 +13,4 @@ meson \
     . output
 
 ninja -C output
-
-DESTDIR="$1" ninja -C output install
+ninja -C output install
