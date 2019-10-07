@@ -7,7 +7,6 @@ meson \
     --prefix=/usr \
     -Dman=false \
     -Dfam=false \
-    -Dnls=disabled \
     . build
 
 ninja -C build
