@@ -7,6 +7,3 @@ patch -p0 < libtheora-1.1.1-libpng16.patch
 
 make
 make DESTDIR="$1" install
-
-# Remove docs.
-rm -rf "$1/usr/share/doc"
