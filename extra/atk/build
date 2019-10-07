@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
-# Don't build with gettext.
-sed -i "s|subdir('po')||g" meson.build
+export DESTDIR="$1"
 
 meson \
     --prefix=/usr \
@@ -12,5 +11,4 @@ meson \
     . output
 
 ninja -C output
-
-DESTDIR="$1" ninja -C output install
+ninja -C output install
