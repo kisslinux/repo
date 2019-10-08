@@ -1,15 +1,17 @@
 #!/bin/sh -e
+
 patch -p1 < fix-gcc9-dp.h.patch
 patch -p1 < fix-gcc9.patch
 
-make libdir=/usr/lib/ \
-     bindir=/usr/bin/ \
-     mandir=/usr/share/man/ \
-     includedir=/usr/include/
+# Avoid repeating ourselves.
+mk() {
+    make \
+        libdir=/usr/lib/ \
+        bindir=/usr/bin/ \
+        mandir=/usr/share/man/ \
+        includedir=/usr/include/ \
+        "$@"
+}
 
-make libdir=/usr/lib/ \
-     bindir=/usr/bin/ \
-     mandir=/usr/share/man/ \
-     includedir=/usr/include/ \
-     DESTDIR="$1" \
-     install
+mk
+mk DESTDIR="$1" install
