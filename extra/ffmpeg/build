@@ -10,7 +10,6 @@
     --enable-libopus \
     --enable-libvorbis \
     --enable-libtheora \
-    --enable-libwavpack \
     --enable-libvpx \
     --enable-libx264 \
     --enable-libx265 \
