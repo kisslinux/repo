@@ -1,4 +1,7 @@
 #!/bin/sh -e
+#
+# We bypass the build system entirely as it has
+# a mandatory dependency on gettext.
 
 # Grab the package version.
 read -r version _ < "${0%/*}/version"
