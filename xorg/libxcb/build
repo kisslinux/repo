@@ -3,8 +3,7 @@
 sed -i'' 's/pthread-stubs //' configure
 
 ./configure \
-    --prefix=/usr \
-    --disable-build-docs
+    --prefix=/usr
 
 make
 make DESTDIR="$1" install
