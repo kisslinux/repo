@@ -1,8 +1,9 @@
 #!/bin/sh -e
 
-cmake ./source \
+cmake \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_BUILD_TYPE=Release \
+    ./source
 
 make
 make DESTDIR="$1" install
