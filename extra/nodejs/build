@@ -2,9 +2,7 @@
 
 export PYTHON=python2
 
-chmod +x configure
-
-./configure \
+sh ./configure \
     --prefix=/usr
 
 make
