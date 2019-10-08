@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 # Force a Python 3 build.
-sed -i'' 's/\(2, 7\)/(3, 7)/' configure
+sed -i'' '/sys.exit(1)/d' configure
 
 sh ./configure \
     --prefix=/usr
