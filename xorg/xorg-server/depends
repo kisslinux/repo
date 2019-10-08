@@ -1,3 +1,4 @@
+bzip2
 eudev
 freetype-harfbuzz
 libX11
@@ -19,4 +20,5 @@ mesa
 pixman
 xinit
 xkeyboard-config
-xtrans
+xtrans make
+zlib

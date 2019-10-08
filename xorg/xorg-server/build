@@ -1,7 +1,10 @@
 #!/bin/sh -e
 
+patch -p1 < rootless_modesetting.patch
+
 ./configure \
     --prefix=/usr \
+    --localstatedir=/var \
     --disable-systemd-logind \
     --disable-xwayland \
     --disable-unit-tests \
@@ -20,6 +23,3 @@ make
 make DESTDIR="$1" install
 
 rm -f "$1/usr/share/X11/xorg.conf.d/10-evdev.conf"
-
-# Set suid for xorg.
-chmod u+s "$1/usr/bin/Xorg"
