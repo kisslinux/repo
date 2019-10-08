@@ -49,6 +49,6 @@ EOF
 sed -i"" 's/<config.h>/"config.h"/' update-mime-database.c
 
 # shellcheck disable=2046
-gcc -o "$1/usr/bin/update-mime-database" \
+"${CC:-gcc}" -o "$1/usr/bin/update-mime-database" \
     $(pkg-config --libs --cflags glib-2.0 libxml-2.0) \
     update-mime-database.c
