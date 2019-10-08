@@ -2,15 +2,16 @@
 
 ./configure \
     --prefix=/usr \
+    --includedir=/usr/include \
     --with-pic
 
 make
 make DESTDIR="$1" install
 
 # Fix location for headers.
-mkdir -p "$1/usr/include"
-mv    "$1/usr/lib/libffi-3.2.1/include/"*.h "$1/usr/include"
-rmdir "$1/usr/lib/libffi-3.2.1/include"
+mv    "$1/usr/lib/libffi-3.2.1/include/" "$1/usr"
+rmdir "$1/usr/lib/libffi-3.2.1"
 
+# Fix location inside pkgconfig file.
 sed -i -e '/^includedir=/{s,=.*,=/usr/include,g}' \
     "$1/usr/lib/pkgconfig/libffi.pc"
