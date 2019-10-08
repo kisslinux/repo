@@ -3,13 +3,11 @@
 pkg_dir=$1
 
 make
-make DESTDIR="$pkg_dir" install
+make DESTDIR="$1" install
 
-set -- africa antarctica asia australasia \
-       europe northamerica southamerica pacificnew \
-       etcetera backward systemv factory
+set -- africa asia australasia europe northamerica southamerica
 
-./zic -d "${pkg_dir}/usr/share/zoneinfo" "$@"
-./zic -d "${pkg_dir}/usr/share/zoneinfo/posix" "$@"
-./zic -d "${pkg_dir}/usr/share/zoneinfo/right" -L leapseconds "$@"
-./zic -d "${pkg_dir}/usr/share/zoneinfo" -p America/New_York
+./zic -d "$pkg_dir/usr/share/zoneinfo" "$@"
+./zic -d "$pkg_dir/usr/share/zoneinfo/posix" "$@"
+./zic -d "$pkg_dir/usr/share/zoneinfo/right" -L leapseconds "$@"
+./zic -d "$pkg_dir/usr/share/zoneinfo" -p America/New_York
