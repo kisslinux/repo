@@ -1,6 +1,12 @@
 #!/bin/sh -e
 
-sed -e "s|generic CC=gcc CPP=\"gcc -E\"|zips CC=${CC:-gcc} CPP=\"$CPP -E\" CFLAGS=\"-DLARGE_FILE_SUPPORT $CFLAGS \${CFLAGS_NOOPT}\" LFLAGS2=\"$LDFLAGS\"|g" -i unix/Makefile
+make \
+    prefix=/usr \
+    CC="${CC:-gcc} $CFLAGS $CXXFLAGS" \
+    -f unix/Makefile generic
 
-make -f unix/Makefile prefix=/usr generic_gcc
-make prefix="$1/usr" MANDIR="$1/usr/share/man/man1" -f unix/Makefile install
+make \
+    prefix="$1/usr" \
+    MANDIR="$1/usr/share/man/man1" \
+    -f unix/Makefile install
+
