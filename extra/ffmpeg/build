@@ -18,7 +18,7 @@
     --enable-libdrm \
     --disable-debug
 
-make
+make CC="${CC:-gcc}"
 make DESTDIR="$1" install
 
 # Remove examples.
