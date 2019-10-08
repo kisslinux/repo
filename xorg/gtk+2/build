@@ -1,11 +1,8 @@
 #!/bin/sh -e
 
-triplet=$(cc -dumpmachine)
 export CFLAGS="$CFLAGS -UGDK_PIXBUF_DISABLE_DEPRECATED"
 
 ./configure \
-    --build="$triplet" \
-    --host="$triplet" \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
@@ -13,11 +10,9 @@ export CFLAGS="$CFLAGS -UGDK_PIXBUF_DISABLE_DEPRECATED"
     --disable-gtk-doc \
     --with-xinput=yes
 
-sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
-sed -i -e 's/demos //g' Makefile
-
 make
 make DESTDIR="$1" install
 
-# Conflicts with GTK+3.
 rm -f  "$1/usr/bin/gtk-update-icon-cache"
+rm -f  "$1/usr/bin/gtk-demo"
+rm -rf "$1/usr/share/gtk-2.0/demo"
