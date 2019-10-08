@@ -2,10 +2,9 @@
 
 patch -p1 < efivar.patch
 
-make EXTRA_CFLAGS=-Os EFIDIR=/boot/EFI
+make \
+    EXTRA_CFLAGS=-Os \
+    EFIDIR=/boot/EFI
 
-install -d "$1/usr/bin/"
-install -Dm0755 src/efibootmgr "$1/usr/bin/efibootmgr"
-
-install -d "$1/usr/share/man/man8/"
+install -Dm0755 src/efibootmgr   "$1/usr/bin/efibootmgr"
 install -Dm0644 src/efibootmgr.8 "$1/usr/share/man/man8/efibootmgr.8"
