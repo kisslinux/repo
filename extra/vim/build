@@ -19,6 +19,3 @@
 
 make
 make DESTDIR="$1" install
-
-# remove program provided by busybox
-rm -f "$1/usr/bin/xxd"
