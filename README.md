@@ -12,7 +12,7 @@ More information: <https://getkiss.org/>
 
 Repository signing is now fully functional, however it is opt-in (*for now*).
 
-See [link](https://github.com/kisslinux/kiss/issues/60#issuecomment-538341425) for how to enable repository signing.
+See [link](https://getkiss.org/pages/install/#enable-repository-signing) for how to enable repository signing.
 
 <details>
     <summary>Click to view (Dylan Araps') public key.</summary>
