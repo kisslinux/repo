@@ -1,0 +1,3 @@
+libXi
+xorg-util-macros make
+xorgproto        make
