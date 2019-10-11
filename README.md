@@ -4,14 +4,9 @@
 <p align="center">
 <a href="https://repology.org/repository/kiss_main"><b>[Repology]</b></a>
 <a href="https://getkiss.org"><b>[Website]</b></a>
+<a href="https://github.com/topics/kiss-repo"><b>[User Repositories]</b></a>
+<a href="https://getkiss.org/pages/package-system"><b>[Package System]</b></a>
 </p>
-
-
-## List of user repositories
-
-**TIP**: Use the repository topic `#kiss-repo`.
-
-**https://github.com/topics/kiss-repo**
 
 
 ## Repository signing
