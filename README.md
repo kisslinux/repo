@@ -8,6 +8,11 @@ More information: <https://getkiss.org/>
 
 **NOTE:** Contributions to this repository are made on a case-by-case basis. Community packages should go here: <https://github.com/kisslinux/community>
 
+## List of user repositories
+
+- Dylan Araps: https://github.com/dylanaraps/dylan-kiss
+
+
 ## Repository signing
 
 Repository signing is now fully functional, however it is opt-in (*for now*).
