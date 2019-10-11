@@ -1,4 +1,5 @@
-# KISS Package System
+<p align="center"><img src="https://user-images.githubusercontent.com/6799467/66638514-9e37eb80-ec04-11e9-901f-5dfdabb421db.png" width="350px"></p>
+<h1 align="center">Official Repositories</h1>
 
 The package system was built specifically for KISS and employs a UNIX-like file model. Instead of the typical shell script with variables, arrays and functions; this system uses easily parseable plain text files.
 
