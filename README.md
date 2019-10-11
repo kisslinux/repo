@@ -1,13 +1,8 @@
 <p align="center"><img src="https://user-images.githubusercontent.com/6799467/66638514-9e37eb80-ec04-11e9-901f-5dfdabb421db.png" width="350px"></p>
 <h2 align="center">Official Repositories</h2>
 
-The package system was built specifically for KISS and employs a UNIX-like file model. Instead of the typical shell script with variables, arrays and functions; this system uses easily parseable plain text files.
+[[**Repology**]](https://repology.org/repository/kiss_main) [[**Website**]](https://getkiss.org)
 
-The data in each file is separated by lines and spaces. The repository and packages can be manipulated and read using any programming language. The build script (for each package) can be written in whatever language you desire.
-
-More information: <https://getkiss.org/>
-
-**NOTE:** Contributions to this repository are made on a case-by-case basis. Community packages should go here: <https://github.com/kisslinux/community>
 
 ## List of user repositories
 
