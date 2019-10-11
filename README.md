@@ -12,8 +12,6 @@
 
 ## Repository signing
 
-Repository signing is now fully functional, however it is opt-in (*for now*).
-
 See [link](https://getkiss.org/pages/install/#enable-repository-signing) for how to enable repository signing.
 
 <details>
