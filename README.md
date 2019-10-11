@@ -1,7 +1,7 @@
 <p align="center"><img src="https://user-images.githubusercontent.com/6799467/66638514-9e37eb80-ec04-11e9-901f-5dfdabb421db.png" width="350px"></p>
 <h2 align="center">Official Repositories</h2>
 
-[[**Repology**]](https://repology.org/repository/kiss_main) [[**Website**]](https://getkiss.org)
+<p align="center">[[**Repology**]](https://repology.org/repository/kiss_main) [[**Website**]](https://getkiss.org)</p>
 
 
 ## List of user repositories
