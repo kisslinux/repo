@@ -10,7 +10,9 @@ More information: <https://getkiss.org/>
 
 ## List of user repositories
 
-- Dylan Araps: https://github.com/dylanaraps/dylan-kiss
+**TIP**: Use the repository topic `#kiss-repo`.
+
+**https://github.com/topics/kiss-repo**
 
 
 ## Repository signing
