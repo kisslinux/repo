@@ -2,9 +2,8 @@
 <h2 align="center">Official Repositories</h2>
 
 <p align="center">
-
-[[**Repology**]](https://repology.org/repository/kiss_main) [[**Website**]](https://getkiss.org)
-
+<a href="https://repology.org/repository/kiss_main"><b>[Repology]</b></a>
+<a href="https://getkiss.org"><b>[Website]</b></a>
 </p>
 
 
