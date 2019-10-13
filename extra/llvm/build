@@ -16,5 +16,5 @@ cmake \
     -DLLVM_BUILD_TESTS=OFF \
     -Wno-dev -G "Unix Makefiles" ..
 
-make -j "$(nproc || echo 2)"
+make
 make DESTDIR="$1" install
