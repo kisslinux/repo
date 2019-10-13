@@ -10,8 +10,5 @@
     --with-mmap \
     --with-system-zlib
 
-make MAKEINFO=:
-
-make MAKEINFO=: \
-     DESTDIR="$1" \
-     install
+make
+make DESTDIR="$1" install
