@@ -5,5 +5,3 @@
 
 make
 make DESTDIR="$1" install
-
-rm -f "$1/usr/lib/charset.alias"
