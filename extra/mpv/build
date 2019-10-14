@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
-python ./bootstrap.py
+ln -s waf-2.0.18 waf
+
 python waf configure \
     --prefix=/usr \
     --mandir=/usr/share/man \
