@@ -35,5 +35,4 @@ install -Dm0644 grub.default "$1/etc/default/grub"
     rm -f grub/*/kernel.exec
     rm -f grub/*/gdb_grub
     rm -f grub/*/gmodule.pl
-    rm -f charset.alias
 )
