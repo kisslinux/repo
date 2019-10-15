@@ -1,5 +1,18 @@
 #!/bin/sh -e
 
+# This package mimics the download process of rust's 'x.py'
+# bootstrap library to allow for the removal of the internet
+# connection requirement per build further enabling checksums
+# and signature verification by KISS.
+{
+    cache_dir=build/cache/2019-08-15
+    mkdir -p "$cache_dir"
+
+    for tarball in *.tar.gz\#no-extract; do
+        mv -f "$tarball" "$cache_dir/${tarball%%\#no-extract}"
+    done
+}
+
 patch -p1 < musl-libressl.patch
 
 # 'rust' checksums files in 'vendor/', but we patch a few files.
