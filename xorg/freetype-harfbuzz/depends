@@ -9,6 +9,7 @@ libXfixes
 libXrender
 libXxf86vm
 libdrm
+libpng
 libxcb
 libxshmfence
 mesa
