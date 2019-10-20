@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p0 < getprogname-musl.patch
-
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc
