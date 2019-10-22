@@ -1,7 +1,4 @@
 https://mirrors.kernel.org/sourceware/lvm2/releases/LVM2.2.03.05.tgz
 patches/fix-stdio-usage.patch
-patches/mlockall-default-config.patch
 patches/portability.patch
-patches/musl-fix-include.patch
 patches/disable-symver.patch
-patches/001-include_fix.patch
