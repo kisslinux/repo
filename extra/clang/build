@@ -1,8 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < cfe-003-fix-unwind-chain-inclusion.patch
-patch -p1 < cfe-004-add-musl-triples.patch
-
 mkdir -p build
 cd build
 

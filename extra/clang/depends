@@ -1,4 +1,5 @@
 cmake  make
-python make
-zlib   make
 llvm
+python make
+xz
+zlib
