@@ -1,9 +1,12 @@
 #!/bin/sh -e
 
-# Force a Python 3 build.
-sed -i'' '/sys.exit(1)/d' configure
+# Python 3 support (but not > 3.5).
+sed -i -e 's/(3, 5)/(3, 8)/' configure
 
-sh ./configure \
+# Fix broken npm.
+sed -i -e "s/: '10/: '13/g"  deps/npm/lib/utils/unsupported.js
+
+./configure \
     --prefix=/usr
 
 make
