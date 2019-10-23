@@ -2,8 +2,8 @@
 
 ./configure \
     --prefix=/usr \
-    --build=x86_64-pc-linux-musl \
-    --host=x86_64-pc-linux-musl \
+    --build="$(cc -dumpmachine)" \
+    --host="$(cc -dumpmachine)" \
     --enable-targets=x86_64-pep \
     --disable-multilib \
     --disable-werror \
