@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cat <<EOF
+
+NOTE: You must be a part of the [1mvideo[m group
+      for xorg-server to work.
+
+-> addgroup USER video
+
+EOF
