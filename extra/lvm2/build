@@ -1,8 +1,5 @@
 #!/bin/sh -e
 
-# A painful few patches, some written for KISS and the others
-# ported and modified from much older versions of LVM.
-patch -p1 < portability.patch
 patch -p1 < fix-stdio-usage.patch
 patch -p1 < disable-symver.patch
 
