@@ -2,4 +2,4 @@
 fa1d98bf18fb49ff58a70d51ff7924e4d1975f7812dc5217ea31652bf8b7bca4  rust-std-1.37.0-x86_64-unknown-linux-musl.tar.gz#no-extract
 1981b67c0cbcaf37f40ee9576d6d1b9a554019e571fc4c49ee9457cf011e0f75  rustc-1.37.0-x86_64-unknown-linux-musl.tar.gz#no-extract
 cbc10b662b36be72f94803bf3a977051648ccef29d914fede1fa7fff04c784b4  cargo-0.38.0-x86_64-unknown-linux-musl.tar.gz#no-extract
-9987f344bbce0424199b1fc65dfd3136b7c562520a371f01ce79321dc55019cf  musl-libressl.patch
+bdc6fa240226860d613c03d19180b810c389d5fa3a21dfc574e01c1c838b201a  musl-libressl.patch
