@@ -1,0 +1,13 @@
+diff -r 22ced1a079e0 accessible/ipc/extension/other/moz.build
+--- a/accessible/ipc/extension/other/moz.build	Mon Sep 16 22:30:52 2019 +0300
++++ b/accessible/ipc/extension/other/moz.build	Tue Sep 17 23:17:02 2019 +0200
+@@ -9,7 +9,8 @@
+ 
+ IPDL_SOURCES += ['PDocAccessiblePlatformExt.ipdl']
+ 
+-if CONFIG['ACCESSIBILITY']:
++#if CONFIG['ACCESSIBILITY']:
++if 1:
+     EXPORTS.mozilla.a11y += [
+         'DocAccessiblePlatformExtChild.h',
+         'DocAccessiblePlatformExtParent.h',
