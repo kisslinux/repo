@@ -206,7 +206,6 @@ pref("media.gmp-manager.url", "");
 // Firefox connects to cloudfront on startup unless
 // these are false/blank.
 pref("browser.selfsupport.url",	"");
-pref("keyword.enabled", false);
 
 //
 // "SAFE" BROWSING
