@@ -7,8 +7,7 @@ python waf configure \
     --mandir=/usr/share/man \
     --confdir=/etc/mpv \
     --enable-alsa \
-    --enable-libass \
-    --enable-libmpv-shared
+    --enable-libass
 
 python waf build
 python waf install --destdir="$1"
