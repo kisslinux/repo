@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-cd bin
+cd contrib
 
 for bin in *; do
     install -D "$bin" "$1/usr/bin/$bin"
