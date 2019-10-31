@@ -1,6 +1,0 @@
-https://releases.llvm.org/9.0.0/llvm-9.0.0.src.tar.xz llvm/
-https://releases.llvm.org/9.0.0/cfe-9.0.0.src.tar.xz clang/
-https://releases.llvm.org/9.0.0/compiler-rt-9.0.0.src.tar.xz compiler-rt/
-https://releases.llvm.org/9.0.0/libcxx-9.0.0.src.tar.xz libcxx/
-https://releases.llvm.org/9.0.0/libcxxabi-9.0.0.src.tar.xz libcxxabi/
-https://releases.llvm.org/9.0.0/libunwind-9.0.0.src.tar.xz libunwind/
