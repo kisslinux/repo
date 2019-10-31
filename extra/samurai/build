@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+make PREFIX=/usr
+make PREFIX=/usr DESTDIR="$1" install
+
+ln -s samu "$1/usr/bin/ninja"

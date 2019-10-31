@@ -1,8 +1,0 @@
-#!/bin/sh -e
-
-patch -p1 < fix-musl.patch
-
-python configure.py \
-    --bootstrap
-
-install -m755 -D ninja "$1/usr/bin/ninja"

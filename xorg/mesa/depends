@@ -13,7 +13,6 @@ libxcb
 libxshmfence
 llvm
 meson        make
-ninja        make
 python       make
 python-mako  make
 xorgproto

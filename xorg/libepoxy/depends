@@ -1,3 +1,2 @@
 mesa  make
 meson make
-ninja make
