@@ -1,4 +1,4 @@
-<p align="center"><img src="https://user-images.githubusercontent.com/6799467/66638514-9e37eb80-ec04-11e9-901f-5dfdabb421db.png" width="350px"></p>
+<p align="center"><h1>KISS 💋</h1></p>
 <h2 align="center">Official Repositories</h2>
 
 <p align="center">
