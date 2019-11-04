@@ -1,4 +1,4 @@
-<p align="center"><h1>KISS 💋</h1></p>
+<h1 align="center">KISS 💋</h1>
 <h2 align="center">Official Repositories</h2>
 
 <p align="center">
