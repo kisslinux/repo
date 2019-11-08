@@ -1,0 +1,5 @@
+https://static.rust-lang.org/dist/rustc-1.39.0-src.tar.gz
+https://static.rust-lang.org/dist/2019-09-26/rust-std-1.38.0-x86_64-unknown-linux-musl.tar.gz?no-extract
+https://static.rust-lang.org/dist/2019-09-26/rustc-1.38.0-x86_64-unknown-linux-musl.tar.gz?no-extract
+https://static.rust-lang.org/dist/2019-09-26/cargo-0.39.0-x86_64-unknown-linux-musl.tar.gz?no-extract
+patches/musl-libressl.patch

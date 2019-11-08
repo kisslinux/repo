@@ -1,0 +1,128 @@
+diff --git a/src/bootstrap/compile.rs b/src/bootstrap/compile.rs
+index 6ea32edfb..9d6d10f7f 100644
+--- a/src/bootstrap/compile.rs
++++ b/src/bootstrap/compile.rs
+@@ -122,7 +122,7 @@ fn copy_third_party_objects(builder: &Builder<'_>, compiler: &Compiler, target:
+     // with a glibc-targeting toolchain, given we have the appropriate startup
+     // files. As those shipped with glibc won't work, copy the ones provided by
+     // musl so we have them on linux-gnu hosts.
+-    if target.contains("musl") {
++    if target.contains("noop") {
+         for &obj in &["crt1.o", "crti.o", "crtn.o"] {
+             builder.copy(
+                 &builder.musl_root(target).unwrap().join("lib").join(obj),
+diff --git a/src/bootstrap/sanity.rs b/src/bootstrap/sanity.rs
+index bffe748f3..40f9f597f 100644
+--- a/src/bootstrap/sanity.rs
++++ b/src/bootstrap/sanity.rs
+@@ -188,7 +188,7 @@ pub fn check(build: &mut Build) {
+         }
+ 
+         // Make sure musl-root is valid
+-        if target.contains("musl") {
++        if target.contains("noop") {
+             // If this is a native target (host is also musl) and no musl-root is given,
+             // fall back to the system toolchain in /usr before giving up
+             if build.musl_root(*target).is_none() && build.config.build == *target {
+diff --git a/src/librustc_target/spec/linux_musl_base.rs b/src/librustc_target/spec/linux_musl_base.rs
+index e294e6398..17fecb3b2 100644
+--- a/src/librustc_target/spec/linux_musl_base.rs
++++ b/src/librustc_target/spec/linux_musl_base.rs
+@@ -26,7 +26,7 @@ pub fn opts() -> TargetOptions {
+     base.post_link_objects_crt.push("crtn.o".to_string());
+ 
+     // These targets statically link libc by default
+-    base.crt_static_default = true;
++    base.crt_static_default = false;
+     // These targets allow the user to choose between static and dynamic linking.
+     base.crt_static_respected = true;
+ 
+diff --git a/src/libunwind/build.rs b/src/libunwind/build.rs
+index f24d957d6..4632212fd 100644
+--- a/src/libunwind/build.rs
++++ b/src/libunwind/build.rs
+@@ -10,7 +10,7 @@ fn main() {
+         // Build the unwinding from libunwind C/C++ source code.
+         llvm_libunwind::compile();
+     } else if target.contains("linux") {
+-        if target.contains("musl") {
++        if target.contains("noop") {
+             // linking for musl is handled in lib.rs
+             llvm_libunwind::compile();
+         } else if !target.contains("android") {
+diff --git a/src/libunwind/lib.rs b/src/libunwind/lib.rs
+index 8d9164471..3adaaf43d 100644
+--- a/src/libunwind/lib.rs
++++ b/src/libunwind/lib.rs
+@@ -20,7 +20,7 @@ cfg_if::cfg_if! {
+     }
+ }
+ 
+-#[cfg(target_env = "musl")]
++#[cfg(target_env = "noop")]
+ #[link(name = "unwind", kind = "static", cfg(target_feature = "crt-static"))]
+ #[link(name = "gcc_s", cfg(not(target_feature = "crt-static")))]
+ extern {}
+diff --git a/vendor/libc/src/unix/mod.rs b/vendor/libc/src/unix/mod.rs
+index 721d24116..26bf271cd 100644
+--- a/vendor/libc/src/unix/mod.rs
++++ b/vendor/libc/src/unix/mod.rs
+@@ -296,7 +296,7 @@ cfg_if! {
+     } else if #[cfg(feature = "std")] {
+         // cargo build, don't pull in anything extra as the libstd dep
+         // already pulls in all libs.
+-    } else if #[cfg(target_env = "musl")] {
++    } else if #[cfg(target_env = "noop")] {
+         #[cfg_attr(feature = "rustc-dep-of-std",
+                    link(name = "c", kind = "static",
+                         cfg(target_feature = "crt-static")))]
+diff --git a/vendor/openssl-sys/build/main.rs b/vendor/openssl-sys/build/main.rs
+index 02b93b90a..27deca5fe 100644
+--- a/vendor/openssl-sys/build/main.rs
++++ b/vendor/openssl-sys/build/main.rs
+@@ -183,27 +183,30 @@ See rust-openssl README for more information:
+     if let Some(libressl_version) = libressl_version {
+         println!("cargo:libressl_version_number={:x}", libressl_version);
+ 
++        let major = (libressl_version >> 28) as u8;
+         let minor = (libressl_version >> 20) as u8;
+         let fix = (libressl_version >> 12) as u8;
+-        let (minor, fix) = match (minor, fix) {
+-            (5, 0) => ('5', '0'),
+-            (5, 1) => ('5', '1'),
+-            (5, 2) => ('5', '2'),
+-            (5, _) => ('5', 'x'),
+-            (6, 0) => ('6', '0'),
+-            (6, 1) => ('6', '1'),
+-            (6, 2) => ('6', '2'),
+-            (6, _) => ('6', 'x'),
+-            (7, _) => ('7', 'x'),
+-            (8, 0) => ('8', '0'),
+-            (8, 1) => ('8', '1'),
+-            (8, _) => ('8', 'x'),
+-            (9, 0) => ('9', '0'),
++        let (major, minor, fix) = match (major, minor, fix) {
++            (2, 5, 0) => ('2', '5', '0'),
++            (2, 5, 1) => ('2', '5', '1'),
++            (2, 5, 2) => ('2', '5', '2'),
++            (2, 5, _) => ('2', '5', 'x'),
++            (2, 6, 0) => ('2', '6', '0'),
++            (2, 6, 1) => ('2', '6', '1'),
++            (2, 6, 2) => ('2', '6', '2'),
++            (2, 6, _) => ('2', '6', 'x'),
++            (2, 7, _) => ('2', '7', 'x'),
++            (2, 8, 0) => ('2', '8', '0'),
++            (2, 8, 1) => ('2', '8', '1'),
++            (3, 0, _) => ('3', '0', 'x'),
++            (2, 9, 0) => ('2', '9', '0'),
++            (2, 9, _) => ('2', '9', 'x'),
++            (3, 0, 0) => ('3', '0', '0'),
+             _ => version_error(),
+         };
+ 
+         println!("cargo:libressl=true");
+-        println!("cargo:libressl_version=2{}{}", minor, fix);
++        println!("cargo:libressl_version={}{}{}", major, minor, fix);
+         println!("cargo:version=101");
+         Version::Libressl
+     } else {

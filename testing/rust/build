@@ -1,0 +1,56 @@
+#!/bin/sh -e
+
+# This package mimics the download process of rust's 'x.py'
+# bootstrap library to allow for the removal of the internet
+# connection requirement per build further enabling checksums
+# and signature verification by KISS.
+{
+    cache_dir=build/cache/2019-09-26
+    mkdir -p "$cache_dir"
+
+    for tarball in *.tar.gz\?no-extract; do
+        mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
+    done
+}
+
+patch -p1 < musl-libressl.patch
+
+# 'rust' checksums files in 'vendor/', but we patch a few files.
+for vendor in libc openssl-sys; do
+    sed -i 's/\("files":{\)[^}]*/\1/' "vendor/$vendor/.cargo-checksum.json"
+done
+
+cat > config.toml <<EOF
+[llvm]
+link-shared = true
+
+[build]
+build = "x86_64-unknown-linux-musl"
+host = [ "x86_64-unknown-linux-musl" ]
+target = [ "x86_64-unknown-linux-musl" ]
+docs = false
+extended = true
+submodules = false
+python = "python3"
+locked-deps = true
+vendor = true
+
+[install]
+prefix = "/usr"
+
+[rust]
+channel = "stable"
+rpath = false
+codegen-units = 1
+debuginfo-level = 0
+backtrace = false
+jemalloc = false
+codegen-tests = false
+
+[target.x86_64-unknown-linux-musl]
+llvm-config = "/usr/bin/llvm-config"
+crt-static = false
+EOF
+
+python3 ./x.py build -j "$(nproc)"
+DESTDIR="$1" python3 ./x.py install
