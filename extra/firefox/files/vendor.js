@@ -100,7 +100,7 @@ pref("social.toast-notifications.enabled", false);
 pref("datareporting.healthreport.service.enabled", false);
 pref("browser.slowStartup.notificationDisabled", true);
 pref("network.http.sendRefererHeader", 2);
-pref("network.http.referer.spoofSource", true);
+pref("network.http.referer.spoofSource", false);
 pref("app.shield.optoutstudies.enabled", false);
 pref("extensions.shield-recipe-client.enabled",	false);
 pref("browser.discovery.enabled", false);
@@ -383,7 +383,7 @@ pref("gfx.font_rendering.graphite.enabled", false);
 // HEADERS / REFERERS
 //
 
-pref("network.http.referer.XOriginPolicy", 1);
+pref("network.http.referer.XOriginPolicy", 2);
 pref("network.http.referer.XOriginTrimmingPolicy", 0);
 pref("network.http.referer.hideOnionSource", true);
 pref("privacy.donottrackheader.enabled", true);
