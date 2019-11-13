@@ -1,9 +1,10 @@
 #!/bin/sh -e
 
-cmake \
+export DESTDIR="$1"
+
+cmake source \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
-    ./source
 
-make
-make DESTDIR="$1" install
+cmake --build .
+cmake --install .
