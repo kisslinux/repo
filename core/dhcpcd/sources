@@ -1,3 +1,2 @@
-https://roy.marples.name/downloads/dhcpcd/dhcpcd-8.1.1.tar.xz
-patches/dhcpcd-fix-musl.patch
+https://roy.marples.name/downloads/dhcpcd/dhcpcd-8.1.2.tar.xz
 files/dhcpcd.run

@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < dhcpcd-fix-musl.patch
-
 ./configure \
     --prefix=/usr \
     --sbindir=/usr/bin \
