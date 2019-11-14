@@ -1,9 +1,8 @@
 #!/bin/sh -e
 
-mkdir -p build
-cd build
+export DESTDIR="$1"
 
-cmake \
+cmake -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_ENABLE_RTTI=ON \
@@ -12,7 +11,7 @@ cmake \
     -DCLANG_INCLUDE_DOCS=OFF \
     -DCLANG_INCLUDE_TESTS=OFF \
     -DLIBCLANG_BUILD_STATIC=ON \
-    -Wno-dev -G "Unix Makefiles" ..
+    -Wno-dev
 
-make
-make DESTDIR="$1" install
+cmake --build   build
+cmake --install build
