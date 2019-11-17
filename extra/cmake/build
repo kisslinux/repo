@@ -7,14 +7,23 @@ if kiss l cmake; then
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_INSTALL_LIBDIR=/usr/lib \
         -DCMAKE_SHARED_LIBS=True \
-        -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_USE_SYSTEM_CURL=True \
+        -DCMAKE_USE_SYSTEM_EXPAT=True \
+        -DCMAKE_USE_SYSTEM_ZLIB=True \
+        -DCMAKE_USE_SYSTEM_BZIP2=True
 
     cmake --build   build
     DESTDIR="$1" cmake --install build
 
 else
     ./configure \
-        --prefix=/usr
+        --prefix=/usr \
+        --system-curl \
+        --system-expat \
+        --system-zlib \
+        --system-bzip2 \
+        --parallel="$(nproc)"
 
     make
     make DESTDIR="$1" install
