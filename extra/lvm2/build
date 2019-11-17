@@ -4,16 +4,11 @@ patch -p1 < fix-stdio-usage.patch
 patch -p1 < disable-symver.patch
 
 # LVM2 calls 'fmt -1' throughout the build process.
-# This is a part of the GNU coreutils and is not included
-# in KISS. All 'fmt -1' does is split each word in a string
-# on a new line so lets just use the shell as an alternative.
-mkdir -p fakebin
-cat > fakebin/fmt <<EOF
-#!/bin/sh -f
-printf '%s\n' \$(cat -)
-EOF
-chmod +x fakebin/fmt
-export PATH=$PATH:$PWD/fakebin
+# Busybox doesn't provide this command, however
+# all it does is split words one per line and
+# 'tr' can be used in its place.
+sed -i'' 's/fmt -1/tr " " "\\n"/' make.tmpl.in
+sed -i'' 's/fmt -1/tr " " "\\n"/' libdm/make.tmpl.in
 
 # The build fails when using busybox's 'mkdir'(?),
 # swap to using 'install -d' instead which works.
