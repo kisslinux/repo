@@ -1,10 +1,24 @@
 #!/bin/sh -e
 
-./configure \
-    --prefix=/usr
+# Use cmake to build cmake if installed.
+# This leads to a much faster build.
+if kiss l cmake; then
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+        -DCMAKE_SHARED_LIBS=True \
+        -DCMAKE_BUILD_TYPE=Release
 
-make
-make DESTDIR="$1" install
+    cmake --build   build
+    DESTDIR="$1" cmake --install build
+
+else
+    ./configure \
+        --prefix=/usr
+
+    make
+    make DESTDIR="$1" install
+fi
 
 # Grab the package version.
 IFS=. read -r ver1 ver2 _ < "${0%/*}/version"
