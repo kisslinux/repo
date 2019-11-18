@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-sed -i'' 's,"more -s","less",g' main.c
+sed -i 's,"more -s","less",g' main.c
 
 cat > configure.local <<EOF
 PREFIX=/usr
