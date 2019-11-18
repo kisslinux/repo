@@ -46,7 +46,7 @@ cat << EOF > config.h
 EOF
 
 # Fix config.h include.
-sed -i"" 's/<config.h>/"config.h"/' update-mime-database.c
+sed -i 's/<config.h>/"config.h"/' update-mime-database.c
 
 # shellcheck disable=2046
 "${CC:-gcc}" -o "$1/usr/bin/update-mime-database" \
