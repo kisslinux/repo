@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-sed -i'' -e 's/ -ltinfo//g' configure
+sed -i 's/ -ltinfo//g' configure
 
 ./configure \
     --prefix=/usr \
