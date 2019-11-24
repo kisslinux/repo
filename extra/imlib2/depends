@@ -1,9 +1,0 @@
-freetype-harfbuzz
-libXext
-
-# By default, gif and tiff are commented. You can enable support for
-# both formats by uncommenting giflib and tiff.
-# giflib
-libjpeg-turbo
-libpng
-# tiff
