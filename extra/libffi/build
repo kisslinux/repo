@@ -10,4 +10,8 @@ make DESTDIR="$1" install
 # Maintain compatibility and avoid the need
 # for rebuilds of all packages linking to
 # libffi.
+#
+# ABI incompatibility only affects AArch64.
+# See: https://github.com/libffi/libffi/commit/c02c341
+#      https://github.com/libffi/libffi/issues/528
 ln -s libffi.so.7 "$1/usr/lib/libffi.so.6"
