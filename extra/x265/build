@@ -4,7 +4,7 @@ export DESTDIR="$1"
 
 cmake source \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=Release
 
 cmake --build .
 cmake --install .
