@@ -5,11 +5,11 @@
 # connection requirement per build further enabling checksums
 # and signature verification by KISS.
 {
-    cache_dir=build/cache/2019-08-15
+    cache_dir=build/cache/2019-09-26
     mkdir -p "$cache_dir"
 
-    for tarball in *.tar.gz\#no-extract; do
-        mv -f "$tarball" "$cache_dir/${tarball%%\#no-extract}"
+    for tarball in *.tar.gz\?no-extract; do
+        mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
     done
 }
 
