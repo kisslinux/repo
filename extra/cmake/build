@@ -11,7 +11,8 @@ if kiss l cmake; then
         -DCMAKE_USE_SYSTEM_CURL=True \
         -DCMAKE_USE_SYSTEM_EXPAT=True \
         -DCMAKE_USE_SYSTEM_ZLIB=True \
-        -DCMAKE_USE_SYSTEM_BZIP2=True
+        -DCMAKE_USE_SYSTEM_BZIP2=True \
+        -DBUILD_TESTING=OFF
 
     cmake --build   build
     DESTDIR="$1" cmake --install build
