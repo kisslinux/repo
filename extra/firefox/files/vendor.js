@@ -530,7 +530,6 @@ pref("browser.fixup.alternate.enabled",	false);
 pref("media.video_stats.enabled", false);
 pref("devtools.chrome.enabled",	false);
 pref("devtools.debugger.force-local", true);
-pref("pdfjs.disabled", true);
 pref("browser.startup.homepage_override.mstone", "ignore");
 
 // Taken from TOR browser.

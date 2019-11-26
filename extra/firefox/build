@@ -12,13 +12,11 @@
     make
     make install
 )
+
 export PATH=$PWD/autoconf/bin:$PATH
-
-unset  MOZ_TELEMETRY_REPORTING
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
-export MOZ_NOSPAM=1
-
-cd firefox
+export CC=${CC:-gcc}
+export CXX=${CXX:-g++}
 
 for patch in *.patch; do
     patch -p1 < "$patch"
