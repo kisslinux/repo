@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+export CPPFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA=1"
+
 sed -i 's/ -ltinfo//g' configure
 
 ./configure \
