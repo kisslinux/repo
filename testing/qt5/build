@@ -1,0 +1,32 @@
+#!/bin/sh -e
+
+./configure \
+    -confirm-license \
+    -opensource \
+    -prefix /usr \
+    -docdir /usr/share/doc/qt \
+    -headerdir /usr/include/qt \
+    -archdatadir /usr/lib/qt \
+    -datadir /usr/share/qt \
+    -sysconfdir /etc/xdg \
+    -examplesdir /usr/share/doc/qt/examples \
+    -nomake examples \
+    -nomake tests \
+    -optimized-qmake \
+    -no-openssl \
+    -no-separate-debug-info \
+    -no-pch \
+    -no-dbus \
+    -no-accessibility \
+    -no-gtk \
+    -no-glib \
+    -system-libjpeg \
+    -system-libpng \
+    -system-sqlite \
+    -system-zlib \
+    -system-freetype \
+    -system-harfbuzz \
+    -qpa xcb
+
+make
+make INSTALL_ROOT="$1" install
