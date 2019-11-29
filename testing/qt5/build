@@ -19,14 +19,13 @@
     -no-dbus \
     -no-accessibility \
     -no-gtk \
-    -no-glib \
     -system-libjpeg \
     -system-libpng \
     -system-sqlite \
     -system-zlib \
     -system-freetype \
     -system-harfbuzz \
-    -qpa xcb
+    -system-xcb
 
 make
 make INSTALL_ROOT="$1" install
