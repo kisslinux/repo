@@ -1,0 +1,42 @@
+#!/bin/sh -e
+
+# Build autoconf 2.13 for Firefox's sole use.
+# See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
+(
+    cd autoconf2.13
+
+    ./configure \
+        --prefix="$PWD/../autoconf" \
+        --program-suffix=-2.13
+
+    make
+    make install
+)
+
+export PATH=$PWD/autoconf/bin:$PATH
+export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
+export CC=${CC:-gcc}
+export CXX=${CXX:-g++}
+
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
+
+# Fix OOM errors.
+cores=$(nproc)
+printf '%s\n' "mk_add_options MOZ_MAKE_FLAGS=\"-j$cores -l$cores\"" >> mozconfig
+
+./mach build
+DESTDIR="$1" ./mach install
+
+rm -rf "$1/usr/include"
+rm -rf "$1/usr/lib/firefox-devel"
+rm -rf "$1/usr/share/idl"
+rm -rf "$1/usr/lib/firefox/gtk2"
+rm -f  "$1/usr/lib/firefox/browser/features/fxmonitor@mozilla.org.xpi"
+rm -f  "$1/usr/lib/firefox/browser/features/screenshots@mozilla.org.xpi"
+rm -f  "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi"
+rm -f  "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi"
+
+install -D vendor.js "$1/usr/lib/firefox/browser/defaults/preferences/vendor.js"
+install -D policies.json "$1/usr/lib/firefox/distribution/policies.json"

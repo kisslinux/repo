@@ -1,0 +1,59 @@
+ac_add_options --prefix=/usr
+ac_add_options --libdir=/usr/lib
+
+ac_add_options --enable-official-branding
+ac_add_options --enable-optimize="$CFLAGS"
+ac_add_options --enable-install-strip
+ac_add_options --enable-strip
+
+ac_add_options --without-system-nspr
+ac_add_options --without-system-nss
+ac_add_options --with-system-jpeg
+ac_add_options --with-system-zlib
+ac_add_options --with-system-bz2
+ac_add_options --with-system-png
+
+# System 'libvpx' is too new.
+ac_add_options --without-system-libvpx
+
+ac_add_options --with-system-pixman
+ac_add_options --with-system-ffi
+
+ac_add_options --disable-gconf
+ac_add_options --disable-profiling
+ac_add_options --disable-accessibility
+ac_add_options --disable-tests
+ac_add_options --disable-system-extension-dirs
+ac_add_options --disable-parental-controls
+ac_add_options --disable-debug-symbols
+ac_add_options --disable-callgrind
+ac_add_options --disable-vtune
+
+# Settings for musl.
+ac_add_options --disable-elf-hack
+ac_add_options --disable-gold
+ac_add_options --disable-jemalloc
+ac_add_options --enable-release
+
+# ALSA/PulseAudio (removed in 70 (still present in 71b4(?!))
+ac_add_options --disable-pulseaudio
+ac_add_options --enable-alsa
+
+ac_add_options --disable-startup-notification
+
+# Respect the user.
+ac_add_options MOZ_SERVICES_METRICS=
+ac_add_options MOZ_PAY=
+ac_add_options MOZ_SERVICES_HEALTHREPORTER=
+ac_add_options MOZ_SERVICES_FXACCOUNTS=
+ac_add_options MOZ_SERVICES_METRICS=
+ac_add_options MOZ_DATA_REPORTING=
+ac_add_options MOZ_DEVICES=
+ac_add_options MOZ_REQUIRE_SIGNING=
+ac_add_options MOZ_TELEMETRY_REPORTING=
+ac_add_options --disable-crashreporter
+ac_add_options --disable-updater
+ac_add_options --disable-dbus
+ac_add_options --disable-eme
+ac_add_options --disable-necko-wifi
+ac_add_options --disable-webrtc
