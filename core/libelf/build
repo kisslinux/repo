@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-sed -i 's/-I/-isystem /g' libelf.pc.in
+printf ",s/-I/-isystem \nw\nq" | ed libelf.pc.in >/dev/null
 
 ./configure \
     --prefix=/usr \

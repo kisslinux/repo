@@ -17,7 +17,8 @@ patch -p1 < musl-libressl.patch
 
 # 'rust' checksums files in 'vendor/', but we patch a few files.
 for vendor in libc openssl-sys; do
-    sed -i 's/\("files":{\)[^}]*/\1/' "vendor/$vendor/.cargo-checksum.json"
+    printf ',s/\("files":{\)[^}]*/\\1\nw\nq' |
+        ed "vendor/$vendor/.cargo_checksum.json" >/dev/null
 done
 
 cat > config.toml <<EOF

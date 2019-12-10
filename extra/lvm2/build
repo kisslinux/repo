@@ -7,8 +7,10 @@ patch -p1 < disable-symver.patch
 # Busybox doesn't provide this command, however
 # all it does is split words one per line and
 # 'tr' can be used in its place.
-sed -i 's/fmt -1/tr " " "\\n"/' \
-    make.tmpl.in libdm/make.tmpl.in
+for i in make.tmpl.in libdm/make.tmpl.in
+do
+    printf ",s/fmt -1/tr ' ' '\\\n'\nw\nq" | ed $i >/dev/null
+done
 
 # The build fails when using busybox's 'mkdir'(?),
 # swap to using 'install -d' instead which works.

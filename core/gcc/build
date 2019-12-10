@@ -5,8 +5,8 @@ cp -v gcc/gmp/configfsf.guess gcc/gmp/config.guess
 cp -v gcc/gmp/configfsf.sub   gcc/gmp/config.sub
 
 # Use lib not lib64 by default.
-sed -i '/m64=/s/lib64/lib/' gcc/gcc/config/i386/t-linux64
-sed -i 's/lib64/lib/'       gcc/gcc/config/i386/linux64.h
+printf "/m64=/s/lib64/lib\nw\nq" | ed gcc/gcc/config/i386/t-linux64 >/dev/null
+printf ",s/lib64/lib\nw\nq" | ed gcc/gcc/config/i386/linux64.h >/dev/null
 
 # Build must happen outside of gcc source.
 mkdir -p gcc-build

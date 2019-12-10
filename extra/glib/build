@@ -3,7 +3,8 @@
 export DESTDIR="$1"
 
 # Remove 'libelf' dependency.
-sed -i 's/if have_libelf/if not have_libelf/' gio/meson.build
+printf ",s/if have_libelf/if not have_libelf\nw\nq" |
+    ed gio/meson.build >/dev/null
 
 meson \
     --prefix=/usr \

@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
-sed -i 's/pthread-stubs //' configure
+printf ",s/pthread-stubs //\nw\nq" |
+    ed configure >/dev/null
 
 ./configure \
     --prefix=/usr
