@@ -13,3 +13,4 @@ patches/fix-webrtc-glibcisms.patch
 patches/mallinfo.patch
 patches/firefox-71-no-dbus.patch
 patches/firefox-71-no-accessibility.patch
+patches/firefox-fix-cbindgen.patch
