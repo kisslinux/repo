@@ -333,9 +333,6 @@ pref("network.auth.subresource-http-auth-allow", 1);
 // CACHE
 //
 
-pref("browser.cache.disk.enable", false);
-pref("browser.sessionstore.privacy_level", 2);
-pref("browser.sessionstore.interval", 30000);
 pref("toolkit.winRegisterApplicationRestart", false);
 pref("browser.shell.shortcutFavicons", false);
 pref("alerts.showFavicons", false);
@@ -552,7 +549,7 @@ pref("browser.download.hide_plugins_without_extensions", false);
 pref("extensions.enabledScopes", 5);
 pref("extensions.autoDisableScopes", 15);
 pref("extensions.update.enabled", false);
-pref("xpinstall.signatures.required", true);
+pref("xpinstall.signatures.required", false);
 pref("extensions.getAddons.cache.enabled",	false);
 pref("lightweightThemes.update.enabled", false);
 pref("extensions.systemAddon.update.enabled", false);
@@ -564,27 +561,7 @@ pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false
 // STORAGE
 //
 
-pref("browser.cache.offline.enable", false);
 pref("offline-apps.allow_by_default", false);
-
-//
-// SHUTDOWN
-//
-
-pref("privacy.sanitize.sanitizeOnShutdown", true);
-pref("privacy.clearOnShutdown.formdata", true);
-pref("privacy.clearOnShutdown.offlineApps", true);
-pref("privacy.clearOnShutdown.sessions", true);
-pref("privacy.clearOnShutdown.siteSettings", false);
-pref("privacy.cpd.cache", true);
-pref("privacy.cpd.cookies", true);
-pref("privacy.cpd.formdata", true);
-pref("privacy.cpd.history", true);
-pref("privacy.cpd.offlineApps", true);
-pref("privacy.cpd.passwords", false);
-pref("privacy.cpd.sessions", true);
-pref("privacy.cpd.siteSettings", false);
-pref("privacy.sanitize.timeSpan", 0);
 
 //
 // ISOLATION
