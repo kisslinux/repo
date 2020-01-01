@@ -1,5 +1,5 @@
-b4a1f6b6a93931f270691aba4fc85eee032fecda973e6b9c774cd06857609357  rustc-1.39.0-src.tar.gz
-56b87fdca1f41b634285593cae42fdbd5fe9632ef502336679362b283ed53c22  rust-std-1.38.0-x86_64-unknown-linux-musl.tar.gz?no-extract
-bb0166cbb1d31bcb09d79224e7ac43a80d9448b7199b5392a3852b3ec71840aa  rustc-1.38.0-x86_64-unknown-linux-musl.tar.gz?no-extract
-bbf58bf638c5c4cf86caaa1bfe2835b3856d4ef46447c9942d5e59cc7654c5e4  cargo-0.39.0-x86_64-unknown-linux-musl.tar.gz?no-extract
-122b5d9b83778882bdd64d40fea98982f7d1db510e09fc64a4ece5add4fd99a2  musl-libressl.patch
+dd97005578defc10a482bff3e4e728350d2099c60ffcf1f5e189540c39a549ad  rustc-1.40.0-src.tar.gz
+9c6b49e161e53c174b4fd46825a96b78854cfbcd0971ce846d4edd33c2b5f275  rust-std-1.39.0-x86_64-unknown-linux-musl.tar.gz?no-extract
+07a9705dd77c6859ef921389dc6a958a297030e53571fe015163c79aa93d1e43  rustc-1.39.0-x86_64-unknown-linux-musl.tar.gz?no-extract
+c3a04bfe988f84dc4bffd8b4fef29f2ad461483fd22e4bf329d2189e16213d0c  cargo-0.40.0-x86_64-unknown-linux-musl.tar.gz?no-extract
+bc6a567b76c3186ac868c13831c402c595015ad48e047387b32f833af460f7fa  musl-libressl.patch

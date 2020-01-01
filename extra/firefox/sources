@@ -1,16 +1,12 @@
-https://archive.mozilla.org/pub/firefox/releases/71.0/source/firefox-71.0.source.tar.xz
+https://archive.mozilla.org/pub/firefox/candidates/72.0-candidates/build2/source/firefox-72.0.source.tar.xz
 https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz autoconf2.13/
 files/mozconfig
 files/stab.h toolkit/crashreporter/google-breakpad/src/
-files/vendor.js
-files/policies.json
 patches/fix-fortify-system-wrappers.patch
-patches/fix-sandbox-membarrier.patch
 patches/fix-seccomp-bpf.patch
 patches/fix-toolkit.patch
 patches/fix-tools.patch
 patches/fix-webrtc-glibcisms.patch
 patches/mallinfo.patch
-patches/firefox-71-no-dbus.patch
-patches/firefox-71-no-accessibility.patch
-patches/firefox-fix-cbindgen.patch
+patches/firefox-72-no-dbus.patch
+patches/firefox-72-no-accessibility.patch

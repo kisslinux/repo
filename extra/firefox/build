@@ -37,6 +37,3 @@ rm -f  "$1/usr/lib/firefox/browser/features/fxmonitor@mozilla.org.xpi"
 rm -f  "$1/usr/lib/firefox/browser/features/screenshots@mozilla.org.xpi"
 rm -f  "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi"
 rm -f  "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi"
-
-install -D vendor.js "$1/usr/lib/firefox/browser/defaults/preferences/vendor.js"
-install -D policies.json "$1/usr/lib/firefox/distribution/policies.json"
