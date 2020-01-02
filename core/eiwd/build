@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-autoreconf -fis
-
 ./configure \
     --prefix=/usr \
     --localstatedir=/var
