@@ -4,7 +4,6 @@
     --prefix=/usr \
     --enable-cscope \
     --enable-multibyte \
-    --with-tlib=ncursesw \
     --with-ex-name=vim-ex \
     --with-view-name=vim-view \
     --disable-perlinterp \
