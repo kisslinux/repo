@@ -16,6 +16,18 @@
 make
 make DESTDIR="$1" install
 
+# Force ncurses to link against wide-character ncurses library.
+for lib in ncurses form panel menu; do
+    rm -f "$1/usr/lib/lib${lib}.so"
+    printf '%s\n' "INPUT(-l${lib}w)" > "$1/usr/lib/lib${lib}.so"
+    chmod 755 "$1/usr/lib/lib${lib}.so"
+    ln -sf "lib${lib}w.a" "$1/usr/lib/lib${lib}.a"
+done
+
+# Some packages look for libcurses instead of libncurses when building.
+printf '%s\n' "INPUT(-lncursesw)" > "$1/usr/lib/libcursesw.so"
+ln -s libncurses.so "$1/usr/lib/libcurses.so"
+
 # These conflict with busybox's.
 rm -f "$1/usr/bin/clear"
 rm -f "$1/usr/bin/reset"
