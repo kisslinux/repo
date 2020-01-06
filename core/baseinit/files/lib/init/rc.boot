@@ -182,12 +182,12 @@ main() {
 
 main
 
-echo this works
+echo this works...
 [ -f "/etc/rc.conf" ] && . /etc/rc.conf
-# . /etc/rc.d/sinit_getty.sh
-# . /etc/rc.d/sinit_runit.sh
+. /etc/rc.d/sinit_getty.sh
+. /etc/rc.d/sinit_runit.sh
 
-echo below doesnt work why
-for file in /etc/rc.d/*.sh; do
-    [ -r "$file" ] && . "$file"
-done || sh -l
+# echo below is what I need and it doesnt work -  why?
+# for file in /etc/rc.d/*.sh; do
+# [ -r "$file" ] && . "$file"
+# done
