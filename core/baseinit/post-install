@@ -11,4 +11,3 @@ NOTE: If you require the daemon, it can be
 -> ln -s /etc/sv/udevd/ /var/service/
 
 EOF
-

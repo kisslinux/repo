@@ -1,1 +1,4 @@
-https://github.com/kisslinux/kiss-init/archive/0.1.5.tar.gz
+files/etc/inittab
+files/etc/rc.conf
+files/lib/init/rc.boot
+files/lib/init/rc.shutdown

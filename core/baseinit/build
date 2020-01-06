@@ -1,6 +1,9 @@
 #!/bin/sh -e
 
-mkdir -p "$1/usr"
+install -Dm 755 rc.boot "$1/lib/init/rc.boot"
+install -Dm 755 rc.shutdown "$1/lib/init/rc.shutdown"
 
-cp -R etc "$1"
-cp -R lib "$1/usr/lib"
+install -Dm 755 rc.conf "$1/etc/rc.conf"
+mkdir -p /etc/rc.d
+
+install -Dm 755 inittab "$1/etc/inittab"
