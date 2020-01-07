@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 patch -p1 < efivar.patch
+patch -p1 < fix-verbose.patch
 
 make \
     EXTRA_CFLAGS=-Os \
