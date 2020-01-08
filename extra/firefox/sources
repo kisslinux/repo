@@ -1,4 +1,4 @@
-https://archive.mozilla.org/pub/firefox/candidates/72.0-candidates/build2/source/firefox-72.0.source.tar.xz
+https://archive.mozilla.org/pub/firefox/releases/72.0.1/source/firefox-72.0.1.source.tar.xz
 https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz autoconf2.13/
 files/mozconfig
 files/stab.h toolkit/crashreporter/google-breakpad/src/
