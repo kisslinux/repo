@@ -1,7 +1,11 @@
 #!/bin/sh -e
 
-patch -p1 < fix-gcc9-dp.h.patch
-patch -p1 < fix-gcc9.patch
+# The order here matters.
+patch -p1 < b98ba8921010d03f46704a476c69861515deb1ca.patch
+patch -p1 < c3c553db85ff10890209d0fe48fb4856ad68e4e0.patch
+patch -p1 < 0dad6d78a7fb5f6c5fb4a1d646040539db6cf865.patch
+patch -p1 < fdb803402fb32fa6d020bac57a40c7efe4aabb7d.patch
+patch -p1 < 4e04afc2df9bbc26e5ab524b53a6f4f1e61d7c9e.patch
 
 # Avoid repeating ourselves.
 mk() {
