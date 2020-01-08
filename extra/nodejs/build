@@ -1,8 +1,5 @@
 #!/bin/sh -e
 
-# Python 3 support (but not for > 3.5).
-sed -i 's/(3, 5)/(3, 8)/' configure
-
 ./configure \
     --prefix=/usr
 
