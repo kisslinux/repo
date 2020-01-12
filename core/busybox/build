@@ -32,9 +32,7 @@ done
 chmod u+s "$1/usr/bin/busybox-suid"
 
 # Install runit services.
-install -Dm755 acpid.run           "$1/etc/sv/acpid/run"
 install -Dm755 crond.run           "$1/etc/sv/crond/run"
 install -Dm755 syslogd.run         "$1/etc/sv/syslogd/run"
-ln -s /run/runit/supervise.acpid   "$1/etc/sv/acpid/supervise"
 ln -s /run/runit/supervise.crond   "$1/etc/sv/crond/supervise"
 ln -s /run/runit/supervise.syslogd "$1/etc/sv/syslogd/supervise"
