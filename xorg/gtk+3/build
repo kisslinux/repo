@@ -7,6 +7,9 @@ sed -i 's/ATK_PACKAGES="atk atk-bridge-2.0"/ATK_PACKAGES="atk"/' \
 sed -i '/<atk-bridge.h>/d;/atk_bridge_adaptor_init/d' \
     gtk/a11y/gtkaccessibility.c
 
+# Don't build GTK examples/demos/testsuite.
+sed -i 's/demos tests testsuite examples/tests/' Makefile.am Makefile.in
+
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -23,6 +26,7 @@ sed -i '/<atk-bridge.h>/d;/atk_bridge_adaptor_init/d' \
     --disable-cups \
     --disable-papi \
     --disable-cloudprint \
+    --disable-glibtest \
     --enable-introspection=no \
     --enable-colord=no \
     --enable-gtk-doc-html=no
