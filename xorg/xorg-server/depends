@@ -18,7 +18,6 @@ libxkbfile
 libxshmfence
 mesa
 pixman
-xinit
 xkeyboard-config
 xtrans make
 zlib
