@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < fontconfig-fix-1744377.patch
+
 ./configure \
     --prefix=/usr \
     --localstatedir=/var \
