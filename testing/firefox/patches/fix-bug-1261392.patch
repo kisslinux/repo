@@ -1,25 +1,17 @@
---- a/tools/profiler/core/platform.h	2017-05-27 11:44:06.733119794 +0000
-+++ b/tools/profiler/core/platform.h	2017-05-27 11:46:16.004253520 +0000
-@@ -54,10 +54,11 @@
- #include <vector>
- #include "StackTop.h"
- 
--// We need a definition of gettid(), but old glibc versions don't provide a
--// wrapper for it.
+diff --git a/tools/profiler/core/platform-linux-android.cpp b/tools/profiler/core/platform-linux-android.cpp
+index 07857f2..92e693c 100644
+--- a/tools/profiler/core/platform-linux-android.cpp
++++ b/tools/profiler/core/platform-linux-android.cpp
+@@ -72,12 +72,7 @@ using namespace mozilla;
+ int profiler_current_process_id() { return getpid(); }
+
+ int profiler_current_thread_id() {
+-  // glibc doesn't provide a wrapper for gettid().
 -#if defined(__GLIBC__)
-+// We need a definition of gettid(), but Linux libc implementations don't
-+// provide a wrapper for it (except for Bionic)
-+#if defined(__linux__)
- #  include <unistd.h>
-+#if !defined(__BIONIC__)
- #  include <sys/syscall.h>
- #  define gettid() static_cast<pid_t>(syscall(SYS_gettid))
-+#endif
-@@ -71,6 +72,7 @@
-   return (pid_t) syscall(SYS_thread_selfid);
+   return static_cast<int>(static_cast<pid_t>(syscall(SYS_gettid)));
+-#else
+-  return static_cast<int>(gettid());
+-#endif
  }
- #endif
-+#endif
- 
- #ifdef XP_WIN
- #include <windows.h>
+
+ void* GetStackTop(void* aGuess) { return aGuess; }
