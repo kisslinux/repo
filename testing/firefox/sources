@@ -7,4 +7,5 @@ patches/fix-seccomp-bpf.patch
 patches/fix-toolkit.patch
 patches/fix-tools.patch
 patches/fix-webrtc-glibcisms.patch
+patches/fix-bug-1261392.patch
 patches/mallinfo.patch

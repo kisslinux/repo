@@ -18,13 +18,18 @@ export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 export CC=${CC:-gcc}
 export CXX=${CXX:-g++}
 
+# Keep memory usage as low as possible.
+export LDFLAGS="$LDFLAGS -Wl,--as-needed -Wl,--no-keep-memory -Wl,--stats"
+export MOZ_LINK_FLAGS=$LDFLAGS
+export MOZ_DEBUG_FLAGS=-g0
+export RUSTFLAGS=-Cdebuginfo=0
+
 for patch in *.patch; do
     patch -p1 < "$patch"
 done
 
-# Fix OOM errors.
-cores=$(nproc)
-printf '%s\n' "mk_add_options MOZ_MAKE_FLAGS=\"-j$cores -l$cores\"" >> mozconfig
+printf 'mk_add_options MOZ_MAKE_FLAGS="%s"\n' \
+    "${MAKEFLAGS:--j1 -l1}" >> mozconfig
 
 ./mach build
 DESTDIR="$1" ./mach install
