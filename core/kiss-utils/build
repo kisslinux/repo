@@ -1,7 +1,3 @@
 #!/bin/sh -e
 
-cd contrib
-
-for bin in *; do
-    install -D "$bin" "$1/usr/bin/$bin"
-done
+install -D contrib/* -t "$1/usr/bin"
