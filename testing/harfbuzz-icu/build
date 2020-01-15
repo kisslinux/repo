@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+# Will store the built package's files to
+# allow us to cherry-pick the ICU related files.
+mkdir -p tmp
+
+./configure \
+    --prefix=/usr \
+    --with-glib=yes \
+    --with-icu=yes
+
+make
+make DESTDIR="$PWD/tmp" install
+
+install -Dt "$1/usr/lib"              tmp/usr/lib/libharfbuzz-icu*
+install -Dt "$1/usr/lib/pkgconfig"    tmp/usr/lib/pkgconfig/harfbuzz-icu.pc
+install -Dt "$1/usr/include/harfbuzz" tmp/usr/include/harfbuzz/hb-icu.h
