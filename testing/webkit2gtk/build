@@ -4,6 +4,7 @@ for patch in *.patch; do
     patch -p1 < "$patch"
 done
 
+# Remove gettext requirement.
 sed -i 's/ngettext/printf/g' Tools/MiniBrowser/gtk/BrowserDownloadsBar.c
 sed -i '/po_files *.po/d'    Source/WebCore/platform/gtk/po/CMakeLists.txt
 sed -i '/^GETTEXT_C/d'       Source/WebCore/platform/gtk/po/CMakeLists.txt
