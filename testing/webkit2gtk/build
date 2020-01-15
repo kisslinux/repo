@@ -7,7 +7,6 @@ done
 sed -i 's/ngettext/printf/g' Tools/MiniBrowser/gtk/BrowserDownloadsBar.c
 sed -i '/po_files *.po/d'    Source/WebCore/platform/gtk/po/CMakeLists.txt
 sed -i '/^GETTEXT_C/d'       Source/WebCore/platform/gtk/po/CMakeLists.txt
-# rm -rf Source/WebCore/platform/gtk/po
 
 export DESTDIR="$1"
 
