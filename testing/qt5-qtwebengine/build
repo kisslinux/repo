@@ -4,14 +4,20 @@ for patch in *.patch; do
     patch -p1 < "$patch"
 done
 
-sed -i 's/dbus//g' \
-    src/buildtools/config/support.pri
+# Disable dbus.
+{
+    sed -i 's/dbus//g' \
+        src/buildtools/config/support.pri
 
-sed -i 's/use_dbus.*/use_dbus=false/' \
-    src/3rdparty/chromium/build/config/features.gni
+    sed -i 's/use_dbus.*/use_dbus=false/' \
+        src/3rdparty/chromium/build/config/features.gni
+}
+
+# Fix nasm hardcoded glibcism
+sed -i '/CANONICALIZE_FILE_NAME/d' \
+    src/3rdparty/chromium/third_party/nasm/config/config-linux.h
 
 qmake -- \
-    -feature-webengine-system-icu \
     -feature-webengine-system-ninja \
     -feature-webengine-system-zlib \
     -feature-webengine-system-harfbuzz \
@@ -21,9 +27,10 @@ qmake -- \
     -feature-webengine-system-opus \
     -feature-webengine-system-libwebp \
     -feature-webengine-system-ffmpeg \
+    -no-feature-webengine-system-icu \
     -no-feature-webengine-system-glib \
     -no-feature-webengine-webrtc \
     -no-feature-webengine-proprietary-codecs \
 
-make
+make -j1
 make install INSTALL_ROOT="$1"
