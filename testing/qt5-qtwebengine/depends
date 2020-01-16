@@ -1,0 +1,20 @@
+bison make
+flex  make
+gperf make
+ffmpeg
+fontconfig
+freetype-harfbuzz
+libXcomposite
+libXcursor
+libXi
+libxml2
+libXslt
+libXtst
+libdrm
+samurai make
+python2 make
+qt5
+qt5-declarative
+icu
+zlib
+libevent

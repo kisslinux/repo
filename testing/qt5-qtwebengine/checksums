@@ -1,0 +1,5 @@
+74f8c11cc318612c8d9dc87cf791badb1efe7080c10d8b3ed5843b249a942d32  qtwebengine-everywhere-src-5.14.0.tar.xz
+1be1f8e2851f6420f0676fb4f1562368125f93da8bff977be741f85bb453a9fe  0004-mkspecs-Allow-builds-with-libc-glibc.patch
+a58627c95fef502a1a9eeaa29f77bd60d17ab39dd51c994dcc7073fe7590232e  0021-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-.patch
+fe8057b83f02f19e169faa9e4e6ebd11a4e3ba33453ea46df6672293edf9dd09  0022-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get.patch
+bd58ef5468799716187e0783c9c0a595eeb17ac619104c35b456c58350cf9b3e  0023-chromium-musl-pread-pwrite.patch

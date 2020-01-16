@@ -1,0 +1,5 @@
+http://download.qt-project.org/official_releases/qt/5.14/5.14.0/submodules/qtwebengine-everywhere-src-5.14.0.tar.xz
+patches/0004-mkspecs-Allow-builds-with-libc-glibc.patch
+patches/0021-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-.patch
+patches/0022-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get.patch
+patches/0023-chromium-musl-pread-pwrite.patch

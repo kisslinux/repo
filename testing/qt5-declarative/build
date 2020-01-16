@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+qmake
+
+make
+make install INSTALL_ROOT="$1"

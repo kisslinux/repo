@@ -1,0 +1,26 @@
+From 71d55292cdd72dcf1ed5eb4ba7299433a35a4bb0 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 12 Nov 2019 19:53:59 -0800
+Subject: [PATCH] mkspecs: Allow builds with libc != glibc
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/buildtools/config/support.pri | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/src/buildtools/config/support.pri b/src/buildtools/config/support.pri
+index 5bdd808d..19540787 100644
+--- a/src/buildtools/config/support.pri
++++ b/src/buildtools/config/support.pri
+@@ -89,11 +89,6 @@ defineTest(qtwebengine_checkErrorForLinux) {
+         return(false)
+     }
+ 
+-    !qtConfig(webengine-system-glibc) {
+-        qtwebengine_skipBuild("A suitable version >= 2.27 of libc required to build QtWebEngine could not be found.")
+-        return(false)
+-    }
+-
+     !qtConfig(webengine-system-khr) {
+         qtwebengine_skipBuild("Khronos development headers required to build QtWebEngine are missing (see mesa/libegl1-mesa-dev)")
+         return(false)

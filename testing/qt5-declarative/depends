@@ -1,0 +1,17 @@
+bzip2
+expat
+freetype-harfbuzz
+glib
+libX11
+libXau
+libXdamage
+libXext
+libXfixes
+libXxf86vm
+libdrm
+libpng
+libxcb
+libxshmfence
+mesa
+qt5
+zlib

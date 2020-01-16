@@ -1,0 +1,56 @@
+From 8f16cec0583c9de1ceb2c34a3bea527096f34075 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 25 Sep 2018 12:59:05 -0700
+Subject: [PATCH] chromium: musl: elf_reader.cc: include <sys/reg.h> to get
+ __WORDSIZE on musl libc
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ chromium/third_party/breakpad/breakpad/configure.ac            | 2 +-
+ .../breakpad/breakpad/src/common/dwarf/elf_reader.cc           | 3 ++-
+ .../breakpad/breakpad/src/common/linux/elf_core_dump.h         | 1 +
+ 3 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/3rdparty/chromium/third_party/breakpad/breakpad/configure.ac b/src/3rdparty/chromium/third_party/breakpad/breakpad/configure.ac
+index 492d09038f9..a6403ed8c3c 100644
+--- a/src/3rdparty/chromium/third_party/breakpad/breakpad/configure.ac
++++ b/src/3rdparty/chromium/third_party/breakpad/breakpad/configure.ac
+@@ -72,7 +72,7 @@ AC_ARG_ENABLE(m32,
+ AC_HEADER_STDC
+ AC_SYS_LARGEFILE
+ AX_PTHREAD
+-AC_CHECK_HEADERS([a.out.h sys/random.h])
++AC_CHECK_HEADERS([a.out.h sys/random.h sys/reg.h])
+ AC_CHECK_FUNCS([arc4random getrandom])
+
+ AX_CXX_COMPILE_STDCXX(11, noext, mandatory)
+diff --git a/src/3rdparty/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc b/src/3rdparty/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc
+index 4135a51a980..be92b792d3c 100644
+--- a/src/3rdparty/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc
++++ b/src/3rdparty/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc
+@@ -29,10 +29,11 @@
+ #ifndef _GNU_SOURCE
+ #define _GNU_SOURCE  // needed for pread()
+ #endif
+-
++#include <config.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <sys/mman.h>
++#include <sys/reg.h>
+ #include <unistd.h>
+ #include <fcntl.h>
+ #include <string.h>
+diff --git a/src/3rdparty/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h b/src/3rdparty/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h
+index d03c7a88d38..28b55ab6300 100644
+--- a/src/3rdparty/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h
++++ b/src/3rdparty/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h
+@@ -33,6 +33,7 @@
+ #ifndef COMMON_LINUX_ELF_CORE_DUMP_H_
+ #define COMMON_LINUX_ELF_CORE_DUMP_H_
+
++#include <sys/reg.h>
+ #include <elf.h>
+ #include <link.h>
+ #include <stddef.h>
