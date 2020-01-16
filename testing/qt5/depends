@@ -2,6 +2,7 @@ bison make
 flex  make
 freetype-harfbuzz
 gperf make
+libxkbcommon
 libICE
 libSM
 libX11
