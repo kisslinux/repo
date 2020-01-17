@@ -1,0 +1,23 @@
+From 04a11fa6f38987091b6b65244950d3d83579c9a8 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 7 Jul 2017 14:54:38 -0700
+Subject: [PATCH] chromium: musl: linux != glibc, make the distinction
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ chromium/base/allocator/allocator_check.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/chromium/base/allocator/allocator_check.cc b/chromium/base/allocator/allocator_check.cc
+index 5fb86467dde..9864858eb67 100644
+--- a/src/3rdparty/chromium/base/allocator/allocator_check.cc
++++ b/src/3rdparty/chromium/base/allocator/allocator_check.cc
+@@ -27,7 +27,7 @@ bool IsAllocatorInitialized() {
+   // Set by allocator_shim_override_ucrt_symbols_win.h when the
+   // shimmed _set_new_mode() is called.
+   return g_is_win_shim_layer_initialized;
+-#elif defined(OS_LINUX) && defined(USE_TCMALLOC) && \
++#elif defined(__GLIBC__) && defined(USE_TCMALLOC) && \
+     !defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
+ // From third_party/tcmalloc/chromium/src/gperftools/tcmalloc.h.
+ // TODO(primiano): replace with an include once base can depend on allocator.

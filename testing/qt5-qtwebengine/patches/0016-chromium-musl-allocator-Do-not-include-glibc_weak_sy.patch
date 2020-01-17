@@ -1,0 +1,24 @@
+From 59ab7f11b90bd2114ff8cc16d6502e0ad6bb6538 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 7 Jul 2017 15:09:02 -0700
+Subject: [PATCH] chromium: musl: allocator: Do not include glibc_weak_symbols
+ for musl
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ chromium/base/allocator/allocator_shim.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/chromium/base/allocator/allocator_shim.cc b/chromium/base/allocator/allocator_shim.cc
+index e6838ebda84..7296cc9ed81 100644
+--- a/src/3rdparty/chromium/base/allocator/allocator_shim.cc
++++ b/src/3rdparty/chromium/base/allocator/allocator_shim.cc
+@@ -351,7 +351,7 @@ ALWAYS_INLINE void ShimAlignedFree(void* address, void* context) {
+ // In the case of tcmalloc we also want to plumb into the glibc hooks
+ // to avoid that allocations made in glibc itself (e.g., strdup()) get
+ // accidentally performed on the glibc heap instead of the tcmalloc one.
+-#if defined(USE_TCMALLOC)
++#if defined(USE_TCMALLOC) && defined(__GLIBC__)
+ #include "base/allocator/allocator_shim_override_glibc_weak_symbols.h"
+ #endif
+

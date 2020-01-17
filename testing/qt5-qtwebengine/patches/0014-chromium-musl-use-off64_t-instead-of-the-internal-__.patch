@@ -1,0 +1,62 @@
+From 5cde4d2fb5affc6e739dba412453b4bf076f19e9 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 7 Jul 2017 14:38:37 -0700
+Subject: [PATCH] chromium: musl: use off64_t instead of the internal __off64_t
+
+- only do the glibc 32-bit ABI check for mmap/mmap64 on gnu libc. musl
+  does not support the 32-bit ABI.
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ .../tcmalloc/chromium/src/malloc_hook_mmap_linux.h     | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h b/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
+index 17415aaf538..59c1b6fb5f6 100644
+--- a/src/3rdparty/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
++++ b/src/3rdparty/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
+@@ -60,7 +60,7 @@
+
+ static inline void* do_mmap64(void *start, size_t length,
+                               int prot, int flags,
+-                              int fd, __off64_t offset) __THROW {
++                              int fd, off64_t offset) __THROW {
+   // The original gperftools uses sys_mmap() here.  But, it is not allowed by
+   // Chromium's sandbox.
+   return (void*)syscall(SYS_mmap, start, length, prot, flags, fd, offset);
+@@ -73,7 +73,7 @@ static inline void* do_mmap64(void *start, size_t length,
+
+ static inline void* do_mmap64(void *start, size_t length,
+                               int prot, int flags,
+-                              int fd, __off64_t offset) __THROW {
++                              int fd, off64_t offset) __THROW {
+   void *result;
+
+   // Try mmap2() unless it's not supported
+@@ -144,7 +144,7 @@ static inline void* do_mmap64(void *start, size_t length,
+
+ extern "C" {
+   void* mmap64(void *start, size_t length, int prot, int flags,
+-               int fd, __off64_t offset  ) __THROW
++               int fd, off64_t offset  ) __THROW
+     ATTRIBUTE_SECTION(malloc_hook);
+   void* mmap(void *start, size_t length,int prot, int flags,
+              int fd, off_t offset) __THROW
+@@ -159,7 +159,7 @@ extern "C" {
+ }
+
+ extern "C" void* mmap64(void *start, size_t length, int prot, int flags,
+-                        int fd, __off64_t offset) __THROW {
++                        int fd, off64_t offset) __THROW {
+   MallocHook::InvokePreMmapHook(start, length, prot, flags, fd, offset);
+   void *result;
+   if (!MallocHook::InvokeMmapReplacement(
+@@ -170,7 +170,7 @@ extern "C" void* mmap64(void *start, size_t length, int prot, int flags,
+   return result;
+ }
+
+-# if !defined(__USE_FILE_OFFSET64) || !defined(__REDIRECT_NTH)
++# if defined(__GLIBC__) && (!defined(__USE_FILE_OFFSET64) || !defined(__REDIRECT_NTH))
+
+ extern "C" void* mmap(void *start, size_t length, int prot, int flags,
+                       int fd, off_t offset) __THROW {

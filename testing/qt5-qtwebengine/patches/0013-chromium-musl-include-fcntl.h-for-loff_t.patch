@@ -1,0 +1,22 @@
+From e087d26af9bdd2f045f8a81fdd2688c50b77e938 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 7 Jul 2017 14:37:49 -0700
+Subject: [PATCH] chromium: musl: include fcntl.h for loff_t
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ .../tcmalloc/chromium/src/base/linux_syscall_support.h           | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h b/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
+index ca5936d6e63..5484dbadfbd 100644
+--- a/src/3rdparty/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
++++ b/src/3rdparty/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
+@@ -154,6 +154,7 @@ extern "C" {
+ #include <stddef.h>
+ #include <stdint.h>
+ #include <string.h>
++#include <fcntl.h>
+ #include <sys/ptrace.h>
+ #include <sys/resource.h>
+ #include <sys/time.h>

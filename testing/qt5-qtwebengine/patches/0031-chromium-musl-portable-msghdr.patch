@@ -1,0 +1,35 @@
+initialize msghdr in a compatible manner
+
+msghdr stuct from socket.h is not same between musl and glibc
+where musl claims to be more posix  compliant where as glibc seems
+to fill whats needed for linux sizewise and chooses long enough types
+which maybe questionable, therefore constructing a structure with explicit
+constructor is not going to work correctly for musl and glibc at same time
+
+see
+https://git.musl-libc.org/cgit/musl/commit/arch/x86_64/bits/socket.h?id=7168790763cdeb794df52be6e3b39fbb021c5a64
+
+This fix initialized the struct to 0 first and then sets the struct elements
+by name, so we dont have to hard code the positions of elements when initializing
+structure
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+--- a/src/3rdparty/chromium/net/socket/udp_socket_posix.cc
++++ b/src/3rdparty/chromium/net/socket/udp_socket_posix.cc
+@@ -1193,8 +1193,12 @@ SendResult UDPSocketPosixSender::Interna
+   for (auto& buffer : buffers)
+     msg_iov->push_back({const_cast<char*>(buffer->data()), buffer->length()});
+   msgvec->reserve(buffers.size());
+-  for (size_t j = 0; j < buffers.size(); j++)
+-    msgvec->push_back({{nullptr, 0, &msg_iov[j], 1, nullptr, 0, 0}, 0});
++  for (size_t j = 0; j < buffers.size(); j++) {
++    struct msghdr m = {0};
++    m.msg_iov = &msg_iov[j];
++    m.msg_iovlen = 1;
++    msgvec->push_back({m, 0});
++  }
+   int result = HANDLE_EINTR(Sendmmsg(fd, &msgvec[0], buffers.size(), 0));
+   SendResult send_result(0, 0, std::move(buffers));
+   if (result < 0) {
