@@ -1,0 +1,5 @@
+extra-cmake-modules make
+cmake make
+qt5-qtwebengine
+qt5-webchannel
+qt5-x11extras

@@ -16,3 +16,4 @@ patches/0022-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get.patch
 patches/0023-chromium-musl-pread-pwrite.patch
 patches/0030-chromium-musl-execinfo.patch
 patches/0031-chromium-musl-portable-msghdr.patch
+patches/0032-chromium-musl-sandbox.patch

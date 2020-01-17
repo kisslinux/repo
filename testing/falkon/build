@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+export DESTDIR="$1"
+
+patch -p1 < 0001-falkon-no-execinfo.patch
+
+# Get rid of i18n.
+rm -rf po poqm
+
+# Fix missing include in latest Qt.
+sed -i 's/\(Settings>\)/\1\n#include <QFile>/' \
+    src/plugins/VerticalTabs/verticaltabsplugin.cpp
+
+cmake -B build \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+    -DCMAKE_SHARED_LIBS=True \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DDISABLE_DBUS=ON
+
+cmake --build   build
+cmake --install build

@@ -25,6 +25,11 @@ sed -i '/execinfo.h/d' \
 sed -i '/use_udev/s/=.*/=false/' \
     src/3rdparty/chromium/build/config/features.gni
 
+# The build fails if qtwebengine is already installed.
+find . -name '*.pr[fio]' | while read -r file; do
+    sed -i "s#INCLUDEPATH += #&\$\$QTWEBENGINE_ROOT/include #" "$file"
+done
+
 qmake QMAKE_CXXFLAGS=-DQT_NO_ACCESSIBILITY -- \
     -feature-webengine-system-ninja \
     -feature-webengine-system-zlib \
@@ -35,10 +40,10 @@ qmake QMAKE_CXXFLAGS=-DQT_NO_ACCESSIBILITY -- \
     -feature-webengine-system-opus \
     -feature-webengine-system-libwebp \
     -feature-webengine-system-ffmpeg \
+    -feature-webengine-proprietary-codecs \
     -no-feature-webengine-system-icu \
     -no-feature-webengine-system-glib \
-    -no-feature-webengine-webrtc \
-    -no-feature-webengine-proprietary-codecs
+    -no-feature-webengine-webrtc
 
 make
 make install INSTALL_ROOT="$1"

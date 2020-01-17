@@ -24,8 +24,7 @@
     -system-sqlite \
     -system-zlib \
     -system-freetype \
-    -system-harfbuzz \
-    -system-xcb
+    -system-harfbuzz
 
 make
 make INSTALL_ROOT="$1" install
