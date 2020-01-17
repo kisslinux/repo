@@ -25,7 +25,7 @@ sed -i '/execinfo.h/d' \
 sed -i '/use_udev/s/=.*/=false/' \
     src/3rdparty/chromium/build/config/features.gni
 
-qmake -- \
+qmake QMAKE_CXXFLAGS=-DQT_NO_ACCESSIBILITY -- \
     -feature-webengine-system-ninja \
     -feature-webengine-system-zlib \
     -feature-webengine-system-harfbuzz \
@@ -38,7 +38,7 @@ qmake -- \
     -no-feature-webengine-system-icu \
     -no-feature-webengine-system-glib \
     -no-feature-webengine-webrtc \
-    -no-feature-webengine-proprietary-codecs \
+    -no-feature-webengine-proprietary-codecs
 
 make
 make install INSTALL_ROOT="$1"

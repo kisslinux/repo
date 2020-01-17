@@ -1,0 +1,37 @@
+From 312f6955af1dc6ea61bbd48bece794c1257822fa Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Tue, 12 Dec 2017 16:06:14 +0200
+Subject: [PATCH] musl: don't use pvalloc as it's not available on musl
+
+Change-Id: I7145463ac7b9560e7459d3384a3db108bd727403
+Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+---
+ src/core/api/qtbug-61521.cpp | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/src/core/api/qtbug-61521.cpp b/src/core/api/qtbug-61521.cpp
+index 002a1af2..8fd2da36 100644
+--- a/src/core/api/qtbug-61521.cpp
++++ b/src/core/api/qtbug-61521.cpp
+@@ -74,10 +74,6 @@ SHIM_SYMBOL_VERSION(valloc);
+ void* __valloc(size_t size)
+     SHIM_ALIAS_SYMBOL(ShimValloc);
+ 
+-SHIM_SYMBOL_VERSION(pvalloc);
+-void* __pvalloc(size_t size)
+-    SHIM_ALIAS_SYMBOL(ShimPvalloc);
+-
+ SHIM_SYMBOL_VERSION(posix_memalign);
+ int __posix_memalign(void** r, size_t a, size_t s)
+     SHIM_ALIAS_SYMBOL(ShimPosixMemalign);
+@@ -110,10 +106,6 @@ SHIM_HIDDEN void* ShimValloc(size_t size) {
+     return  valloc(size);
+ }
+ 
+-SHIM_HIDDEN void* ShimPvalloc(size_t size) {
+-    return pvalloc(size);
+-}
+-
+ SHIM_HIDDEN int ShimPosixMemalign(void** r, size_t a, size_t s) {
+     return posix_memalign(r,a,s);
+ }
