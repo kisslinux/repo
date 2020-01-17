@@ -4,7 +4,7 @@ for patch in *.patch; do
     patch -p1 < "$patch"
 done
 
-# Disable dbus.
+# Remove dbus dependency.
 {
     sed -i 's/dbus//g' \
         src/buildtools/config/support.pri
@@ -16,6 +16,14 @@ done
 # Fix nasm hardcoded glibcism
 sed -i '/CANONICALIZE_FILE_NAME/d' \
     src/3rdparty/chromium/third_party/nasm/config/config-linux.h
+
+# Remove glibc header.
+sed -i '/execinfo.h/d' \
+    src/3rdparty/chromium/base/debug/stack_trace_posix.cc
+
+# Remove udev dependency.
+sed -i '/use_udev/s/=.*/=false/' \
+    src/3rdparty/chromium/build/config/features.gni
 
 qmake -- \
     -feature-webengine-system-ninja \
@@ -32,5 +40,5 @@ qmake -- \
     -no-feature-webengine-webrtc \
     -no-feature-webengine-proprietary-codecs \
 
-make -j1
+make
 make install INSTALL_ROOT="$1"

@@ -1,0 +1,52 @@
+From 4b16ad982ff10945a37a7dd90735a5a1be3d6a8b Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 7 Jul 2017 14:09:06 -0700
+Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ chromium/base/process/process_metrics_posix.cc    | 4 ++--
+ chromium/base/trace_event/malloc_dump_provider.cc | 2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/chromium/base/process/process_metrics_posix.cc b/chromium/base/process/process_metrics_posix.cc
+index 5763432aa4f..ff00b7307c0 100644
+--- a/src/3rdparty/chromium/base/process/process_metrics_posix.cc
++++ b/src/3rdparty/chromium/base/process/process_metrics_posix.cc
+@@ -109,14 +109,14 @@ size_t ProcessMetrics::GetMallocUsage() {
+   malloc_statistics_t stats = {0};
+   malloc_zone_statistics(nullptr, &stats);
+   return stats.size_in_use;
+-#elif defined(OS_LINUX) || defined(OS_ANDROID)
++#elif defined(__GLIBC__) || defined(OS_ANDROID)
+   struct mallinfo minfo = mallinfo();
+ #if defined(USE_TCMALLOC)
+   return minfo.uordblks;
+ #else
+   return minfo.hblkhd + minfo.arena;
+ #endif
+-#elif defined(OS_FUCHSIA)
++#else
+   // TODO(fuchsia): Not currently exposed. https://crbug.com/735087.
+   return 0;
+ #endif
+diff --git a/chromium/base/trace_event/malloc_dump_provider.cc b/chromium/base/trace_event/malloc_dump_provider.cc
+index 0077d8b0aec..c69f893f4e9 100644
+--- a/src/3rdparty/chromium/base/trace_event/malloc_dump_provider.cc
++++ b/src/3rdparty/chromium/base/trace_event/malloc_dump_provider.cc
+@@ -77,6 +77,7 @@ MallocDumpProvider::~MallocDumpProvider() = default;
+ // the current process.
+ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+                                       ProcessMemoryDump* pmd) {
++#if defined(__GLIBC__)
+   {
+     base::AutoLock auto_lock(emit_metrics_on_memory_dump_lock_);
+     if (!emit_metrics_on_memory_dump_)
+@@ -172,6 +173,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+                           MemoryAllocatorDump::kUnitsBytes,
+                           resident_size - allocated_objects_size);
+   }
++#endif // __GLIBC__
+   return true;
+ }
+

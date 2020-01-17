@@ -1,6 +1,9 @@
 http://download.qt-project.org/official_releases/qt/5.14/5.14.0/submodules/qtwebengine-everywhere-src-5.14.0.tar.xz
 patches/0004-mkspecs-Allow-builds-with-libc-glibc.patch
+patches/0012-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch
+patches/0017-chromium-musl-Use-correct-member-name-__si_fields-fr.patch
 patches/0020-chromium-musl-Adjust-default-pthread-stack-size.patch
 patches/0021-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-.patch
 patches/0022-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get.patch
 patches/0023-chromium-musl-pread-pwrite.patch
+patches/0030-chromium-musl-execinfo.patch

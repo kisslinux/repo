@@ -13,8 +13,13 @@ make -j1 -C nss nss_build_all
 # TODO: Maybe install nss-config. Nothing uses it yet
 #       and this build system is terrible so shhh.
 install -Dt "$1/usr/include/nss" -m644 dist/public/nss/*.h
+install -Dt "$1/usr/include/nss" -m644 dist/Linux*/include/*.h
 install -Dt "$1/usr/lib"               dist/Linux*/lib/*.so
 install -Dt "$1/usr/lib"         -m644 dist/Linux*/lib/*.chk
+
+# Yucky. This is needed by qtwebengine.
+install -Dt "$1/usr/include/nss/obsolete" \
+    -m644 dist/Linux*/include/obsolete/*.h
 
 # Install the NSPR files. This is a joint package as I'd
 # rather not juggle which version of NSPR works best with NSS.
