@@ -1,5 +1,6 @@
-extra-cmake-modules make
 cmake make
+extra-cmake-modules make
 qt5-qtwebengine
+qt5-svg
 qt5-webchannel
 qt5-x11extras
