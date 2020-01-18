@@ -11,10 +11,15 @@ rm -rf po poqm
 sed -i 's/\(Settings>\)/\1\n#include <QFile>/' \
     src/plugins/VerticalTabs/verticaltabsplugin.cpp
 
+# Remove unused xcb-util dependency.
+sed -i 's/XCB UTIL/XCB/' CMakeLists.txt
+sed -i '/xcb_atom.h/d'   src/lib/app/browserwindow.cpp
+
 cmake -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=/usr/lib \
     -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_TESTING=OFF \
     -DDISABLE_DBUS=ON
 
 cmake --build   build
