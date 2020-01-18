@@ -19,6 +19,7 @@
     -no-dbus \
     -no-accessibility \
     -no-gtk \
+    -no-glib \
     -system-libjpeg \
     -system-libpng \
     -system-sqlite \
