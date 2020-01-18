@@ -13,8 +13,8 @@ printf 'Installing firefox-bin\n'
 # The tarball is hosted on GitHub which doesn't allow
 # for the file naming scheme the package manager uses
 # for its built tarballs (pkg#ver-rel.tar.gz).
-mv -f "firefox-bin.68.4.1esr-2.tar.gz.no-extract" \
-      "firefox#68.4.1esr-2.tar.gz"
+mv -f "firefox-bin.68.4.1esr-1.tar.gz?no-extract" \
+      "firefox#68.4.1esr-1.tar.gz"
 
 # Install the package as you would any other you have
 # built yourself. In reality, I could have just given
@@ -23,7 +23,7 @@ mv -f "firefox-bin.68.4.1esr-2.tar.gz.no-extract" \
 #
 # I'm nice though and want this to fit into the system
 # like any other package.
-KISS_FORCE=1 kiss i "$PWD/firefox#68.4.1esr-2.tar.gz"
+KISS_FORCE=1 kiss i "$PWD/firefox#68.4.1esr-1.tar.gz"
 
 cat <<EOF
 
