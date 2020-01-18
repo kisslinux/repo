@@ -14,7 +14,6 @@ sed -i 's/\(Settings>\)/\1\n#include <QFile>/' \
 cmake -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=/usr/lib \
-    -DCMAKE_SHARED_LIBS=True \
     -DCMAKE_BUILD_TYPE=Release \
     -DDISABLE_DBUS=ON
 
