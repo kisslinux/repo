@@ -19,3 +19,5 @@ cmake -B build \
 
 cmake --build   build
 cmake --install build
+
+install -Dm755 falkon-privacy "$1/usr/bin/falkon-privacy"

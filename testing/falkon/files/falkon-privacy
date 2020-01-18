@@ -1,0 +1,28 @@
+#!/bin/sh
+
+exec falkon \
+    --disable-file-system \
+    --disable-gpu-watchdog \
+    --disable-notifications \
+    --disable-permissions-api \
+    --disable-presentation-api \
+    --disable-print-preview \
+    --disable-remote-playback-api \
+    --disable-renderer-accessibility \
+    --disable-shared-workers \
+    --disable-speech-api \
+    --disable-sync \
+    --disable-wake-on-wifi \
+    --disable-webgl \
+    --disable-3d-apis \
+    --disable-media-session-api \
+    --disable-background-networking \
+    --force-webrtc-ip-handling-policy=default_public_interface_only \
+    --webview-disable-safebrowsing-support \
+    --google-base-url about:blank \
+    --google-apis-url about:blank \
+    --google-url about:blank \
+    --connectivity-check-url about:blank \
+    --crash-server-url about:blank \
+    --cryptauth-http-host about:blank \
+    "$@"
