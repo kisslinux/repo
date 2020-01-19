@@ -14,6 +14,7 @@
     -nomake tests \
     -optimized-qmake \
     -no-openssl \
+    -no-libudev \
     -no-separate-debug-info \
     -no-pch \
     -no-dbus \
