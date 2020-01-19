@@ -2,6 +2,10 @@
 
 export DESTDIR="$1"
 
+# Meson build has no support for automatically using
+# udev if available. This simply does the same.
+kiss l eudev >/dev/null 2>&1 || udev=false
+
 meson \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -10,6 +14,8 @@ meson \
     -Ddocumentation=false \
     -Dtests=false \
     -Dlibwacom=false \
+    -Dudev="${udev:=true}" \
+    -Dtools="$udev" \
     . output
 
 ninja -C output
