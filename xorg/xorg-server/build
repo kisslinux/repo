@@ -14,8 +14,6 @@ patch -p1 < rootless_modesetting.patch
     --enable-dri3 \
     --enable-glamor \
     --enable-xorg \
-    --enable-config-udev \
-    --enable-config-udev-kms \
     --with-sha1=libcrypto \
     --with-systemd-daemon=off
 
