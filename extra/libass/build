@@ -1,8 +1,14 @@
 #!/bin/sh -e
 
+patch -p1 < no-fribidi.patch
+
+sed -i 's/as_fn_error.*fribidi/: 0 "/'  configure
+sed -i '/pkg_requires="fribidi >= .*/d' configure
+
 ./configure \
     --prefix=/usr \
-    --enable-fontconfig
+    --enable-fontconfig \
+    --disable-harfbuzz
 
 make
 make DESTDIR="$1" install
