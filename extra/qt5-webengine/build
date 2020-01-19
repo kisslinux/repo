@@ -13,6 +13,15 @@ done
         src/3rdparty/chromium/build/config/features.gni
 }
 
+# Remove udev dependency.
+{
+sed -i '/use_udev/s/=.*/=false/' \
+    src/3rdparty/chromium/build/config/features.gni
+
+sed -i 's/\(use_udev=\)true/\1false/' \
+    src/buildtools/config/linux.pri
+}
+
 # Fix nasm hardcoded glibcism
 sed -i '/CANONICALIZE_FILE_NAME/d' \
     src/3rdparty/chromium/third_party/nasm/config/config-linux.h
@@ -20,10 +29,6 @@ sed -i '/CANONICALIZE_FILE_NAME/d' \
 # Remove glibc header.
 sed -i '/execinfo.h/d' \
     src/3rdparty/chromium/base/debug/stack_trace_posix.cc
-
-# Remove udev dependency.
-sed -i '/use_udev/s/=.*/=false/' \
-    src/3rdparty/chromium/build/config/features.gni
 
 # The build fails if qtwebengine is already installed.
 find . -name '*.pr[fio]' | while read -r file; do
