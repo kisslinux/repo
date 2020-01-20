@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --disable-wayland
+
+make
+make DESTDIR="$1" install
