@@ -34,5 +34,9 @@ chmod u+s "$1/usr/bin/busybox-suid"
 # Install runit services.
 install -Dm755 crond.run           "$1/etc/sv/crond/run"
 install -Dm755 syslogd.run         "$1/etc/sv/syslogd/run"
+install -Dm755 mdev.run            "$1/etc/sv/mdev/run"
 ln -s /run/runit/supervise.crond   "$1/etc/sv/crond/supervise"
 ln -s /run/runit/supervise.syslogd "$1/etc/sv/syslogd/supervise"
+ln -s /run/runit/supervise.mdev    "$1/etc/sv/mdev/supervise"
+
+install -Dm644 mdev.conf "$1/etc/mdev.conf"

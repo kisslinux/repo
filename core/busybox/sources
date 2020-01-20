@@ -3,3 +3,5 @@ files/.config
 files/.config-suid
 files/crond.run
 files/syslogd.run
+files/mdev.run
+files/mdev.conf
