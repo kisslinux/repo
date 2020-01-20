@@ -1,6 +1,5 @@
 autoconf make
 automake make
-eudev
 libXScrnSaver
 libXcursor
 libXinerama
