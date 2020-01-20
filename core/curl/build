@@ -12,6 +12,7 @@
     --disable-ares \
     --without-libidn \
     --without-librtmp \
+    --without-icu \
     --with-pic \
     --with-ca-fallback
 
