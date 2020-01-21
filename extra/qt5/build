@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+export CXXFLAGS="$CXXFLAGS -DQLOGGING_HAVE_BACKTRACE=0"
+
 ./configure \
     -confirm-license \
     -opensource \
