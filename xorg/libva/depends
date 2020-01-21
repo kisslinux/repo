@@ -1,0 +1,5 @@
+libX11
+libXext
+libXfixes
+libdrm
+mesa
