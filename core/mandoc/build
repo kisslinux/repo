@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 sed -i 's,"more -s","less",g' main.c
+sed -i "s/CC=.*/CC='$CC'/"    configure
 
 cat > configure.local <<EOF
 PREFIX=/usr
