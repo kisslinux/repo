@@ -13,6 +13,7 @@
     --without-libidn \
     --without-librtmp \
     --without-icu \
+    --without-libpsl \
     --with-pic \
     --with-ca-fallback
 
