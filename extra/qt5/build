@@ -1,6 +1,8 @@
 #!/bin/sh -e
 
-export CXXFLAGS="$CXXFLAGS -DQLOGGING_HAVE_BACKTRACE=0"
+# Don't link against execinfo.h.
+sed -i 's/define QLOG/define N/g' \
+    ./src/corelib/global/qlogging.cpp
 
 ./configure \
     -confirm-license \
