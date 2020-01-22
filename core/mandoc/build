@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < mandoc-no-warn.patch
+
 sed -i 's,"more -s","less",g' main.c
 sed -i "s/CC=.*/CC='$CC'/"    configure
 
@@ -9,18 +11,10 @@ MANDIR=/usr/share/man
 LIBDIR=/usr/lib
 CC="${CC:-gcc}"
 CFLAGS="$CFLAGS"
-MANPATH_DEFAULT=/usr/share/man
 LN="ln -sf"
 EOF
 
-MANPATH_BASE=/usr/share/man ./configure
+./configure
+
 make
-make -j1 DESTDIR="$1" base-install lib-install
-
-# Make binaries writable.
-chmod -v u+w "$1/usr/bin/"*
-
-# Remove all development files.
-rm -rf "$1/usr/include" \
-       "$1/usr/lib" \
-       "$1/usr/share/man/man3"
+make -j1 DESTDIR="$1" base-install
