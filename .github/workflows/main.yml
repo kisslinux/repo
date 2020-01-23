@@ -13,8 +13,3 @@ jobs:
       run: |
         shopt -s nullglob
         shellcheck */*/build */*/post-install
-        .github/workflows/maintainers
-    - uses: actions/upload-artifact@v1
-      with:
-        name: maintainers
-        path: ./maintainers
