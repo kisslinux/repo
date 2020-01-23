@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+for file in */*/version; do
+    pkg=${file%/*}
+    # author=$(git log -1 --format="tformat:%an	%ae" "$file")
+    author="Dylan Araps	dylan.araps@gmail.com"
+
+    printf '%s\t%s\n' "$pkg" "$author"
+done > maintainers
