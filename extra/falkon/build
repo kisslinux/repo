@@ -2,7 +2,9 @@
 
 export DESTDIR="$1"
 
-patch -p1 < 0001-falkon-no-execinfo.patch
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
 
 # Get rid of i18n.
 rm -rf po poqm
