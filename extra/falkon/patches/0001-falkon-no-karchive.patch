@@ -1,0 +1,78 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 207c90a5..46484769 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -55,7 +55,7 @@ endif()
+
+ if (UNIX AND NOT APPLE AND NOT NO_X11)
+     add_definitions(-DQZ_WS_X11)
+-    find_package(XCB REQUIRED COMPONENTS XCB UTIL)
++    find_package(XCB REQUIRED COMPONENTS XCB)
+     find_package(Qt5 ${QT_MIN_VERSION} REQUIRED COMPONENTS X11Extras)
+ endif()
+ if (WIN32)
+@@ -88,9 +88,6 @@ endif()
+ # Mandatory: OpenSSL
+ find_package(OpenSSL REQUIRED)
+
+-# Mandatory: KF5
+-find_package(KF5 REQUIRED COMPONENTS Archive)
+-
+ # KF5I18n: Mandatory with downloaded translations (only for ki18n_install)
+ if (EXISTS "${CMAKE_SOURCE_DIR}/po")
+     find_package(KF5I18n REQUIRED)
+diff --git a/src/lib/CMakeLists.txt b/src/lib/CMakeLists.txt
+index 3b7efff0..70416b47 100644
+--- a/src/lib/CMakeLists.txt
++++ b/src/lib/CMakeLists.txt
+@@ -156,7 +156,6 @@ set(SRCS ${SRCS}
+     plugins/pluginproxy.cpp
+     plugins/plugins.cpp
+     plugins/speeddial.cpp
+-    plugins/ocssupport.cpp
+     plugins/qml/qmlpluginloader.cpp
+     plugins/qml/qmlplugin.cpp
+     plugins/qml/qmlplugins.cpp
+@@ -352,7 +351,6 @@ target_link_libraries(FalkonPrivate
+     Qt5::PrintSupport
+     Qt5::QuickWidgets
+     Qt5::WebChannel
+-    KF5::Archive
+     ${OPENSSL_CRYPTO_LIBRARY}
+ )
+
+diff --git a/src/lib/app/browserwindow.cpp b/src/lib/app/browserwindow.cpp
+index 5481f369..368bae43 100644
+--- a/src/lib/app/browserwindow.cpp
++++ b/src/lib/app/browserwindow.cpp
+@@ -81,7 +81,6 @@
+ #ifdef QZ_WS_X11
+ #include <QX11Info>
+ #include <xcb/xcb.h>
+-#include <xcb/xcb_atom.h>
+ #endif
+
+ static const int savedWindowVersion = 2;
+diff --git a/src/lib/webengine/webpage.cpp b/src/lib/webengine/webpage.cpp
+index 5037b1cb..af1461f8 100644
+--- a/src/lib/webengine/webpage.cpp
++++ b/src/lib/webengine/webpage.cpp
+@@ -42,7 +42,6 @@
+ #include "ui_jsprompt.h"
+ #include "passwordmanager.h"
+ #include "scripts.h"
+-#include "ocssupport.h"
+
+ #include <iostream>
+
+@@ -454,10 +453,6 @@ bool WebPage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::Navigatio
+         }
+     }
+
+-    if (url.scheme() == QL1S("ocs") && OcsSupport::instance()->handleUrl(url)) {
+-        return false;
+-    }
+-
+     const bool result = QWebEnginePage::acceptNavigationRequest(url, type, isMainFrame);
+
+     if (result) {

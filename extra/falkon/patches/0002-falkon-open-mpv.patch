@@ -1,5 +1,5 @@
 diff --git a/src/plugins/CMakeLists.txt b/src/plugins/CMakeLists.txt
-index 54b28ba9..bcd42cc9 100644
+index bfcf593..21b4db6 100644
 --- a/src/plugins/CMakeLists.txt
 +++ b/src/plugins/CMakeLists.txt
 @@ -8,6 +8,7 @@ add_subdirectory(PIM)
@@ -7,9 +7,9 @@ index 54b28ba9..bcd42cc9 100644
  add_subdirectory(TabManager)
  add_subdirectory(VerticalTabs)
 +add_subdirectory(OpenInMpv)
- 
- if (GNOME_KEYRING_FOUND)
-     add_subdirectory(GnomeKeyringPasswords)
+
+ if (ENABLE_KDE_FRAMEWORKS_INTEGRATION_PLUGIN)
+     add_subdirectory(KDEFrameworksIntegration)
 diff --git a/src/plugins/OpenInMpv/CMakeLists.txt b/src/plugins/OpenInMpv/CMakeLists.txt
 new file mode 100644
 index 00000000..5f7d66a6
@@ -375,7 +375,7 @@ index 00000000..1b4ab0d4
 +public:
 +	explicit OpenInMpv();
 +
-+	DesktopFile metaData() const override;
++	DesktopFile metaData() const;
 +	void init(InitState state, const QString &settingsPath) override;
 +	void unload() override;
 +	bool testPlugin() override;

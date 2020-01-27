@@ -1,4 +1,4 @@
-74f8c11cc318612c8d9dc87cf791badb1efe7080c10d8b3ed5843b249a942d32  qtwebengine-everywhere-src-5.14.0.tar.xz
+4ec77040a876a83aa2a833ebfe7b3e88dcc167ceb317095eb226a0b8d455e887  qtwebengine-everywhere-src-5.14.1.tar.xz
 908735d4f7e4fc9307e177ac9da3419e5801a7740094073c03f9f33600b9767e  0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch
 1be1f8e2851f6420f0676fb4f1562368125f93da8bff977be741f85bb453a9fe  0004-mkspecs-Allow-builds-with-libc-glibc.patch
 9cd813f5a0b39795dd8f8822f30f9fd4fd4952bad4b4037cf0bf0f2918a56541  0011-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch
