@@ -1,3 +1,3 @@
 #!/bin/sh -e
 
-install -D contrib/* -t "$1/usr/bin"
+install -t "$1/usr/bin" -D contrib/*
