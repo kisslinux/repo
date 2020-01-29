@@ -2,8 +2,7 @@
 
 export DESTDIR="$1"
 
-sed 's/SHARED/STATIC/' gmmlib/Source/GmmLib/CMakeLists.txt > _
-mv -f _ gmmlib/Source/GmmLib/CMakeLists.txt
+sed -i 's/SHARED/STATIC/' gmmlib/Source/GmmLib/CMakeLists.txt
 
 cd media
 

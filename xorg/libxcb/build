@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
-sed 's/pthread-stubs //' configure > _
-mv -f _ configure
+sed -i 's/pthread-stubs //' configure
 
 ./configure \
     --prefix=/usr
