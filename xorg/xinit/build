@@ -7,4 +7,5 @@
 make
 make DESTDIR="$1" install
 
-sed -i 's/enable_xauth=1/enable_xauth=0/' "$1/usr/bin/startx"
+sed 's/enable_xauth=1/enable_xauth=0/' "$1/usr/bin/startx" > _
+mv -f _ "$1/usr/bin/startx"
