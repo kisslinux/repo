@@ -8,7 +8,7 @@
 <a href="https://getkiss.org/pages/package-system"><b>[Package System]</b></a>
 </p>
 
-<br><br>
+<br>
 
 ## Repository signing
 
