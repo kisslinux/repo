@@ -5,15 +5,15 @@
 # connection requirement per build further enabling checksums
 # and signature verification by KISS.
 {
-    cache_dir=build/cache/2019-11-07
+    cache_dir=build/cache/2019-12-19
     mkdir -p "$cache_dir"
 
-    for tarball in *.tar.gz\?no-extract; do
+    for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
     done
 }
 
-patch -p1 < musl-libressl.patch
+patch -p1 < musl.patch
 
 # 'rust' checksums files in 'vendor/', but we patch a few files.
 for vendor in libc openssl-sys; do
