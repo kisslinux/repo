@@ -3,7 +3,8 @@
 ./configure \
     --prefix=/usr \
     --with-xkb-rules-symlink=xfree86,xorg \
-    --enable-compat-rules
+    --enable-compat-rules \
+    --without-xsltproc
 
 make
 make DESTDIR="$1" install
