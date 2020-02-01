@@ -1,5 +1,13 @@
 #!/bin/sh -e
 
+cat > makeinfo <<EOF
+#!/bin/sh
+printf 'makeinfo (GNU texinfo) 5.2\n'
+EOF
+
+chmod +x makeinfo
+export PATH=$PATH:$PWD
+
 ./configure \
     --prefix=/usr \
     --build=x86_64-pc-linux-musl \
@@ -7,6 +15,7 @@
     --enable-targets=x86_64-pep \
     --disable-multilib \
     --disable-werror \
+    --disable-nls \
     --with-mmap \
     --with-system-zlib
 
