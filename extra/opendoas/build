@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
-sed -i '/chown/d'   bsd.prog.mk
-sed -i 's/111/755/' Makefile
+sed -i '/chown/d' bsd.prog.mk
 
 ./configure \
     --enable-static \
