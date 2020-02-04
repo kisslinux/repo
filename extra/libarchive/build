@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --without-nettle \
+    --without-openssl \
+    --without-xml2 \
+    --without-expat
+
+make
+make DESTDIR="$1" install
+
+ln -s bsdcat  "$1/usr/bin/cat"
+ln -s bsdcpio "$1/usr/bin/cpio"
+ln -s bsdtar  "$1/usr/bin/tar"
