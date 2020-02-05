@@ -1,6 +1,10 @@
-#!/bin/sh -e
+#!/bin/sh -ef
 
-mkdir -p "$1/usr"
+mkdir -p "$1/usr/bin"
 
 cp -R etc "$1"
 cp -R lib "$1/usr/lib"
+
+# Disable warning as CFLAGS must work this way.
+# shellcheck disable=2086
+"${CC:-gcc}" -o "$1/usr/bin/kpow" bin/kpow.c $CFLAGS -static
