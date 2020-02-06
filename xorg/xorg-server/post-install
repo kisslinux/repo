@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Give Xorg setgid to /dev/input.
+chown :input "$1/usr/bin/Xorg"
+chmod g+s    "$1/usr/bin/Xorg"
+
 cat <<EOF
 
 NOTE: You must be a part of the [1mvideo[m group
