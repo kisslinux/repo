@@ -2,16 +2,6 @@
 
 cat <<EOF
 
-NOTE: You must be a part of the [1minput[m group
-      for libinput to work.
-
-NOTE: This groups based permissions model may not
-      be suitable if KISS will be used as a multi
-      user system. Further configuration can be
-      done at your own discretion.
-
--> addgroup USER input
-
 NOTE: You also need [1mxf86-input-libinput[m.
 
 EOF
