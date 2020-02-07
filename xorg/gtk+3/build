@@ -27,6 +27,7 @@ sed -i 's/demos tests testsuite examples/tests/' Makefile.am Makefile.in
     --disable-papi \
     --disable-cloudprint \
     --disable-glibtest \
+    --disable-installed-tests \
     --enable-introspection=no \
     --enable-colord=no \
     --enable-gtk-doc-html=no
