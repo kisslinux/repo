@@ -2,6 +2,8 @@
 
 export DESTDIR="$1"
 
+sed -i "/subdir('tests')/d" meson.build
+
 meson \
     --prefix=/usr \
     --sysconfdir=/etc \
