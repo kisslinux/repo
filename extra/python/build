@@ -2,6 +2,12 @@
 
 patch -p1 < python3-always-pip.patch
 
+# Remove util-linux dependency.
+cat >> Modules/Setup <<EOF
+*disabled*
+_uuid
+EOF
+
 ./configure \
     --prefix=/usr \
     --enable-shared \
