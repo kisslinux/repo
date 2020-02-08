@@ -13,6 +13,7 @@ meson \
     -Dpng=true \
     -Ddocs=false \
     -Dman=false \
+    -Dgio_sniffing=false \
     -Dinstalled_tests=false \
     -Dbuiltin_loaders=all \
     . output

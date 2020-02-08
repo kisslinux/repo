@@ -1,5 +1,4 @@
 glib
 libX11
 libpng
-meson            make
-shared-mime-info make
+meson  make
