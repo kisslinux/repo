@@ -1,19 +1,26 @@
 #!/bin/sh -e
 
+export LDFLAGS="$LDFLAGS -static"
+
 ./configure \
     --prefix=/usr \
     --sbindir=/usr/bin \
     --sysconfdir=/etc \
     --enable-symlink-install \
+    --enable-libuuid \
+    --enable-libblkid \
     --disable-uuidd \
-    --disable-libuuid \
-    --disable-libblkid \
-    --disable-elf-shlibs \
-    --disable-fsck
+    --disable-fsck \
+    --disable-elf-shlibs
 
 # MKDIR_P fixes an install issue on musl/busybox.
 make
-make MKDIR_P="install -d" DESTDIR="$1" install install-libs
+make MKDIR_P="install -d" DESTDIR="$1" install-progs-recursive
 
-# Make static libraries writable.
-chmod -v u+w "$1/usr/lib/"*.a
+# Remove utilities which conflict with util-linux.
+rm -f "$1/usr/bin/blkid" \
+      "$1/usr/bin/uuidgen" \
+      "$1/usr/bin/findfs" \
+      "$1/usr/share/man/man8/findfs.8" \
+      "$1/usr/share/man/man8/blkid.8" \
+      "$1/usr/share/man/man1/uuidgen.1"
