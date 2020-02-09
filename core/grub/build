@@ -3,6 +3,9 @@
 # Grub is built in a function so the script argument needs to be stored.
 pkg_dir=$1
 
+# Fix -pie linker errors.
+sed -i '/EFIEMU64_LINK_FORMAT=/s/"$/ -no-pie"/' grub/configure
+
 build_grub() (
     cp -a grub "grub-${1##*=}"
     cd "grub-${1##*=}"
