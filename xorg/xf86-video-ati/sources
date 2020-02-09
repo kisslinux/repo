@@ -1,1 +1,2 @@
 https://x.org/releases/individual/driver/xf86-video-ati-19.1.0.tar.gz
+patches/rootless-ati.patch

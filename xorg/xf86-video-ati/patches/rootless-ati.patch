@@ -1,0 +1,15 @@
+diff --git a/src/radeon_kms.c b/src/radeon_kms.c
+index b3db7c4..e85aee5 100644
+--- a/src/radeon_kms.c
++++ b/src/radeon_kms.c
+@@ -2168,6 +2168,10 @@ static Bool radeon_set_drm_master(ScrnInfoPtr pScrn)
+         return TRUE;
+ #endif
+ 
++    err = drmIsMaster(pRADEONEnt->fd);
++    if (err)
++      return TRUE;
++
+     err = drmSetMaster(pRADEONEnt->fd);
+     if (err)
+         ErrorF("Unable to retrieve master\n");

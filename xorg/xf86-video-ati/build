@@ -2,6 +2,8 @@
 
 export LDFLAGS="-Wl,-z,lazy"
 
+patch -p1 < rootless-ati.patch
+
 ./configure \
     --prefix=/usr
 
