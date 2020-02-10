@@ -1,10 +1,11 @@
 #!/bin/sh -e
 
 ./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
     --disable-alsaconf \
     --disable-bat \
-    --disable-xmlto \
-    --prefix=/usr
+    --disable-xmlto
 
 make
 make DESTDIR="$1" install
