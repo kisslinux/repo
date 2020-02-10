@@ -4,6 +4,7 @@
     --prefix=/usr \
     --datadir=/usr/share/openssh \
     --sysconfdir=/etc/ssh \
+    --sbindir=/usr/bin \
     --without-selinux \
     --with-privsep-user=nobody \
     --with-mantype=doc \
