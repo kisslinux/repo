@@ -9,8 +9,9 @@ cat > configure.local <<EOF
 PREFIX=/usr
 MANDIR=/usr/share/man
 LIBDIR=/usr/lib
+SBINDIR=/usr/bin
 CC="${CC:-gcc}"
-CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -fPIE"
 LN="ln -sf"
 EOF
 
