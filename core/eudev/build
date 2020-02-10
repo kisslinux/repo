@@ -3,6 +3,7 @@
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
+    --sbindir=/usr/bin \
     --enable-hwdb \
     --disable-introspection
 
