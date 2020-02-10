@@ -7,4 +7,6 @@
 make
 make DESTDIR="$1" install
 
-sed -i 's/enable_xauth=1/enable_xauth=0/' "$1/usr/bin/startx"
+# Make xauth optional.
+sed -i 's#enable_xauth=1#command -v xauth >/dev/null \&\&&||enable_xauth=0#' \
+    "$1/usr/bin/startx"
