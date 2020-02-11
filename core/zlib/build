@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-export CFLAGS="$CFLAGS -fPIE"
-
 ./configure \
     --prefix=/usr \
     --libdir=/usr/lib \
