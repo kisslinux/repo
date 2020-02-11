@@ -2,8 +2,7 @@
 
 # This package mimics the download process of rust's 'x.py'
 # bootstrap library to allow for the removal of the internet
-# connection requirement per build further enabling checksums
-# and signature verification by KISS.
+# connection requirement per build.
 {
     cache_dir=build/cache/2019-12-19
     mkdir -p "$cache_dir"
