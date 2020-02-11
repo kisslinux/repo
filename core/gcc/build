@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
 patch -p1 < invalid_tls_model.patch
-patch -p1 < static-pie.patch
 
 # Make sure gmp is built with generic options.
 cp -v gcc/gmp/configfsf.guess gcc/gmp/config.guess
