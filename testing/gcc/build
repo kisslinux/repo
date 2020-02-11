@@ -1,0 +1,52 @@
+#!/bin/sh -e
+
+# Make sure gmp is built with generic options.
+cp -v gcc/gmp/configfsf.guess gcc/gmp/config.guess
+cp -v gcc/gmp/configfsf.sub   gcc/gmp/config.sub
+
+# Use lib not lib64 by default.
+sed -i '/m64=/s/lib64/lib/' gcc/gcc/config/i386/t-linux64
+sed -i 's/lib64/lib/'       gcc/gcc/config/i386/linux64.h
+
+# Build must happen outside of gcc source.
+mkdir -p gcc-build
+cd gcc-build
+
+export libat_cv_have_ifunc=no
+
+../gcc/configure \
+    --prefix=/usr \
+    --disable-multilib \
+    --disable-symvers \
+    --disable-libmpx \
+    --disable-libmudflap \
+    --disable-libsanitizer \
+    --disable-werror \
+    --disable-fixed-point \
+    --disable-libstdcxx-pch \
+    --enable-checking=release \
+    --mandir=/usr/share/man \
+    --infodir=/usr/share/info \
+    --with-system-zlib \
+    --enable-__cxa_atexit \
+    --enable-default-pie \
+    --enable-default-ssp \
+    --enable-shared \
+    --enable-threads \
+    --enable-tls \
+    --enable-languages=c,c++ \
+    --build=x86_64-pc-linux-musl
+
+make
+make DESTDIR="$1" install
+
+# Save 35MB.
+find "$1" -name libgtkpeer.a  -delete
+find "$1" -name libgjsmalsa.a -delete
+find "$1" -name libgij.a      -delete
+
+# Some legacy programs will expect cc
+ln -s gcc "$1/usr/bin/cc"
+
+# POSIX compliance.
+install -Dm755 ../c99 "$1/usr/bin/c99"
