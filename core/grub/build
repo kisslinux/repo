@@ -1,6 +1,11 @@
 #!/bin/sh -e
 
-# Grub is built in a function so the script argument needs to be stored.
+# Strip '-march' from 'CFLAGS' as per advice from upstream.
+# Fixes build fails on specific hardware.
+CFLAGS=$(printf %s "$CFLAGS" | sed 's/-march=\w* //g')
+
+# Grub is built in a function so the script argument 
+# needs to be stored.
 pkg_dir=$1
 
 build_grub() (
