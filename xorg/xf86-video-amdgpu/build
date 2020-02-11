@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < rootless-amdgpu.patch
+
 export LDFLAGS="-Wl,-z,lazy"
 
 ./configure \

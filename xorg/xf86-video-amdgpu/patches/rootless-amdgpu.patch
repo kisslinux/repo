@@ -1,0 +1,15 @@
+diff --git a/src/amdgpu_kms.c b/src/amdgpu_kms.c
+index 6a60f54..169085e 100644
+--- a/src/amdgpu_kms.c
++++ b/src/amdgpu_kms.c
+@@ -1823,6 +1823,10 @@ static Bool amdgpu_set_drm_master(ScrnInfoPtr pScrn)
+ 		return TRUE;
+ #endif
+ 
++    err = drmIsMaster(pAMDGPUEnt->fd);
++    if (err)
++      return TRUE;
++
+ 	err = drmSetMaster(pAMDGPUEnt->fd);
+ 	if (err)
+ 		ErrorF("Unable to retrieve master\n");
