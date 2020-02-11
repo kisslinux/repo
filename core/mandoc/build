@@ -11,7 +11,7 @@ MANDIR=/usr/share/man
 LIBDIR=/usr/lib
 SBINDIR=/usr/bin
 CC="${CC:-gcc}"
-CFLAGS="$CFLAGS -fPIE"
+CFLAGS="$CFLAGS"
 LN="ln -sf"
 EOF
 
