@@ -14,6 +14,10 @@ sed -i 's/fmt -1/tr " " "\\n"/' \
 # swap to using 'install -d' instead which works.
 export MKDIR_P="install -d"
 
+# Build system requires bash
+# https://www.redhat.com/archives/linux-lvm/2020-January/msg00004.html
+export CONFIG_SHELL=/bin/bash
+
 ./configure \
     --prefix=/usr \
     --sbindir=/usr/bin \
@@ -36,6 +40,6 @@ export MKDIR_P="install -d"
 make DESTDIR="$1" install
 
 # Make all libraries and binaries writable.
-chmod -v u+w "$1/usr/lib/"* \
-             "$1/usr/include/"* \
-             "$1/usr/bin/"*
+chmod u+w "$1/usr/lib/"* \
+          "$1/usr/include/"* \
+          "$1/usr/bin/"*
