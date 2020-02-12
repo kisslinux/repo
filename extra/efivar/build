@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+export CC="${CC:-cc}"
+
 # The order here matters.
 patch -p1 < b98ba8921010d03f46704a476c69861515deb1ca.patch
 patch -p1 < c3c553db85ff10890209d0fe48fb4856ad68e4e0.patch
