@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
-make CC="${CC:-gcc} $CFLAGS -fPIC $LDFLAGS" -f Makefile-libbz2_so
-make CC="${CC:-gcc} $CFLAGS -fPIC $LDFLAGS" bzip2recover libbz2.a
+make CC="${CC:-cc} $CFLAGS -fPIC $LDFLAGS" -f Makefile-libbz2_so
+make CC="${CC:-cc} $CFLAGS -fPIC $LDFLAGS" bzip2recover libbz2.a
 
 for bin in bzip2-shared bzdiff bzgrep bzip2recover bzmore; do
     install -Dm755 "$bin" "$1/usr/bin/${bin%%-shared}"
