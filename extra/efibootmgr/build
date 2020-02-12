@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+export CC="${CC:-cc}"
+
 patch -p1 < efivar.patch
 
 make \
