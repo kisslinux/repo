@@ -20,11 +20,11 @@ export CFLAGS="$CFLAGS -DNO_POSIX_2008_LOCALE -D_GNU_SOURCE"
     -Dlddlflags="-shared $LDFLAGS" \
     -Dldflags="$LDFLAGS" \
     -Doptimize="-Wall $CFLAGS" \
-    -Dcc="${CC:-gcc}" \
+    -Dcc="${CC:-cc}" \
     -Dar="${AR:-ar}" \
     -Dnm="${NM:-nm}" \
     -Dranlib="${RANLIB:-ranlib}" \
- 	-Dperl_static_inline="static __inline__" \
+    -Dperl_static_inline="static __inline__" \
     -Dd_static_inline
 
 make
