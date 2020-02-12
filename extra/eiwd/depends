@@ -1,2 +1,4 @@
-libtool make
+autoconf make
+automake make
+libtool  make
 openresolv
