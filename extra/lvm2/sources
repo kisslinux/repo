@@ -1,3 +1,0 @@
-https://mirrors.kernel.org/sourceware/lvm2/releases/LVM2.2.03.08.tgz
-patches/fix-stdio-usage.patch
-patches/disable-symver.patch
