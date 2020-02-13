@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < efivar.patch
-
 make \
     CC="${CC:-cc}" \
     EXTRA_CFLAGS=-Os \
