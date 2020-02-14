@@ -1,8 +1,8 @@
 #!/bin/sh -e
 
-export LDFLAGS="-Wl,-z,lazy"
-
 patch -p1 < rootless-ati.patch
+
+export LDFLAGS="-Wl,-z,lazy"
 
 ./configure \
     --prefix=/usr
