@@ -9,4 +9,3 @@ make \
     prefix="$1/usr" \
     MANDIR="$1/usr/share/man/man1" \
     -f unix/Makefile install
-
