@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 patch -p1 < mandoc-no-warn.patch
+patch -p1 < Makefile-do-not-use-cd.patch
 
 sed -i '/int dummy/d' compat_err.c
 sed -i 's,"more -s","less",g' main.c

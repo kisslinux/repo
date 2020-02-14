@@ -1,0 +1,29 @@
+This patch ensures that the Makefile would work without needing GNU
+make just to install it.
+---
+diff --git a/Makefile b/Makefile
+index f4e2954..7a5c9f4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -410,16 +410,15 @@ base-install: mandoc demandoc soelim
+ 	mkdir -p $(DESTDIR)$(MANDIR)/man8
+ 	$(INSTALL_PROGRAM) mandoc demandoc $(DESTDIR)$(BINDIR)
+ 	$(INSTALL_PROGRAM) soelim $(DESTDIR)$(BINDIR)/$(BINM_SOELIM)
+-	cd $(DESTDIR)$(BINDIR) && $(LN) mandoc $(BINM_MAN)
+-	cd $(DESTDIR)$(BINDIR) && $(LN) mandoc $(BINM_APROPOS)
+-	cd $(DESTDIR)$(BINDIR) && $(LN) mandoc $(BINM_WHATIS)
+-	cd $(DESTDIR)$(SBINDIR) && \
+-		$(LN) ${BIN_FROM_SBIN}/mandoc $(BINM_MAKEWHATIS)
++	$(LN) mandoc $(DESTDIR)$(BINDIR)/$(BINM_MAN)
++	$(LN) mandoc $(DESTDIR)$(BINDIR)/$(BINM_APROPOS)
++	$(LN) mandoc $(DESTDIR)$(BINDIR)/$(BINM_WHATIS)
++	$(LN) ${BIN_FROM_SBIN}/mandoc $(DESTDIR)$(SBINDIR)/$(BINM_MAKEWHATIS)
+ 	$(INSTALL_MAN) mandoc.1 demandoc.1 $(DESTDIR)$(MANDIR)/man1
+ 	$(INSTALL_MAN) soelim.1 $(DESTDIR)$(MANDIR)/man1/$(BINM_SOELIM).1
+ 	$(INSTALL_MAN) man.1 $(DESTDIR)$(MANDIR)/man1/$(BINM_MAN).1
+ 	$(INSTALL_MAN) apropos.1 $(DESTDIR)$(MANDIR)/man1/$(BINM_APROPOS).1
+-	cd $(DESTDIR)$(MANDIR)/man1 && $(LN) $(BINM_APROPOS).1 $(BINM_WHATIS).1
++	$(LN) $(BINM_APROPOS).1 $(DESTDIR)$(MANDIR)/man1/$(BINM_WHATIS).1
+ 	$(INSTALL_MAN) man.conf.5 $(DESTDIR)$(MANDIR)/man5/$(MANM_MANCONF).5
+ 	$(INSTALL_MAN) mandoc.db.5 $(DESTDIR)$(MANDIR)/man5
+ 	$(INSTALL_MAN) man.7 $(DESTDIR)$(MANDIR)/man7/$(MANM_MAN).7
