@@ -18,7 +18,7 @@
 make
 make DESTDIR="$1" install
 
-install -m 755 contrib/ssh-copy-id "$1/usr/bin/ssh-copy-id"
+install -m 755 contrib/ssh-copy-id   "$1/usr/bin/ssh-copy-id"
 install -m 644 contrib/ssh-copy-id.1 "$1/usr/share/man/man8/ssh-copy-id.1"
 
 # Install runit services.
