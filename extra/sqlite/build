@@ -10,5 +10,5 @@ sed -i 's/ -ltinfo//g' configure
     --enable-dynamic-extensions \
     --enable-fts5
 
-make -j 1
+make -j1
 make DESTDIR="$1" install
