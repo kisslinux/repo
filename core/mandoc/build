@@ -11,7 +11,7 @@ PREFIX=/usr
 MANDIR=/usr/share/man
 LIBDIR=/usr/lib
 SBINDIR=/usr/bin
-CC="${CC:-gcc}"
+CC="${CC:-cc}"
 CFLAGS="$CFLAGS"
 LN="ln -sf"
 EOF
