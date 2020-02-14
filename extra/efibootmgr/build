@@ -1,9 +1,6 @@
 #!/bin/sh -e
 
-make \
-    CC="${CC:-cc}" \
-    EXTRA_CFLAGS=-Os \
-    EFIDIR=/boot/EFI
+make CC="${CC:-cc}" EFIDIR=/boot/EFI efibootmgr
 
 install -Dm0755 src/efibootmgr   "$1/usr/bin/efibootmgr"
 install -Dm0644 src/efibootmgr.8 "$1/usr/share/man/man8/efibootmgr.8"
