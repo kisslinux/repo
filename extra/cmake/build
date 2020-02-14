@@ -1,8 +1,8 @@
 #!/bin/sh -e
 
-# Use cmake to build cmake if installed.
-# This leads to a much faster build.
 if kiss l cmake; then
+    export DESTDIR=$1
+
     cmake -B build \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_INSTALL_LIBDIR=/usr/lib \
@@ -15,7 +15,7 @@ if kiss l cmake; then
         -DBUILD_TESTING=OFF
 
     cmake --build   build
-    DESTDIR="$1" cmake --install build
+    cmake --install build
 
 else
     ./configure \
@@ -23,16 +23,11 @@ else
         --system-curl \
         --system-expat \
         --system-zlib \
-        --system-bzip2 \
-        --parallel="$(nproc)"
+        --system-bzip2
 
     make
     make DESTDIR="$1" install
 fi
 
-# Grab the package version.
-IFS=. read -r ver1 ver2 _ < "${0%/*}/version"
-
-# Remove docs.
 rm -rf "$1/usr/doc"
-rm -rf "$1/usr/share/cmake-$ver1.$ver2/Help"
+rm -rf "$1/usr/share/cmake"-?.?/Help
