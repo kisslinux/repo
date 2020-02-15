@@ -35,7 +35,8 @@ export libat_cv_have_ifunc=no
     --enable-threads \
     --enable-tls \
     --enable-languages=c,c++ \
-    --build=x86_64-pc-linux-musl
+    --build=x86_64-pc-linux-musl \
+    --disable-bootstrap
 
 make
 make DESTDIR="$1" install
@@ -50,3 +51,11 @@ ln -s gcc "$1/usr/bin/cc"
 
 # POSIX compliance.
 install -Dm755 ../c99 "$1/usr/bin/c99"
+
+# Symlink for LTO.
+{
+    mkdir -p "$1/usr/lib/bfd-plugins"
+
+    ln -s /usr/libexec/gcc/x86_64-pc-linux-musl/10.0.1/liblto_plugin.so \
+          "$1/usr/lib/bfd-plugins/liblto_plugin.so"
+}
