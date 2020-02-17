@@ -2,6 +2,9 @@
 
 export LDFLAGS="-Wl,-z,lazy"
 
+# Fix build fail with GCC 10.
+export CFLAGS="$CFLAGS -fcommon"
+
 autoreconf -i
 
 ./configure \
