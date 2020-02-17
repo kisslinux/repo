@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 export DESTDIR="$1"
-export CFLAGS="-DGLX_X86_READONLY_TEXT $CFLAGS"
+export CFLAGS="-DGLX_X86_READONLY_TEXT $CFLAGS -fcommon"
 
 # Fix issues with musl and firefox.
 # https://bugs.freedesktop.org/show_bug.cgi?id=35268
