@@ -9,18 +9,38 @@ export LDFLAGS="$LDFLAGS -static"
     --enable-symlink-install \
     --enable-libuuid \
     --enable-libblkid \
+    --disable-nls \
     --disable-uuidd \
     --disable-fsck \
     --disable-elf-shlibs
 
 # MKDIR_P fixes an install issue on musl/busybox.
 make
-make MKDIR_P="install -d" DESTDIR="$1" install-progs-recursive
+make MKDIR_P="install -d" DESTDIR="$1" install
 
-# Remove utilities which conflict with util-linux.
-rm -f "$1/usr/bin/blkid" \
-      "$1/usr/bin/uuidgen" \
-      "$1/usr/bin/findfs" \
-      "$1/usr/share/man/man8/findfs.8" \
-      "$1/usr/share/man/man8/blkid.8" \
-      "$1/usr/share/man/man1/uuidgen.1"
+# Our e2fsprogs build uses the private libblkid
+# and libuuid libraries which ship with it.
+#
+# It is then built statically which allows us to
+# remove the libraries entirely.
+#
+# This is all done to remove the util-linux
+# dependency from this package.
+#
+# The build system doesn't provide a target
+# for this so we must do it ourselves.
+rm -rf \
+    "$1/usr/bin/blkid" \
+    "$1/usr/bin/uuidgen" \
+    "$1/usr/bin/findfs" \
+    "$1/usr/share/man/man8/findfs.8" \
+    "$1/usr/share/man/man8/blkid.8" \
+    "$1/usr/share/man/man3/libblkid.3" \
+    "$1/usr/share/man/man3/"uuid* \
+    "$1/usr/share/man/man1/uuidgen.1" \
+    "$1/usr/lib/pkgconfig/uuid.pc" \
+    "$1/usr/lib/pkgconfig/blkid.pc" \
+    "$1/usr/lib/libuuid.a" \
+    "$1/usr/lib/libblkid.a" \
+    "$1/usr/include/blkid" \
+    "$1/usr/include/uuid"
