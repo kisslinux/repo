@@ -1,6 +1,8 @@
 #!/bin/sh -e
 
 ./configure \
+    --cc="${CC:-cc}" \
+    --cxx="${CXX:-c++}" \
     --prefix=/usr \
     --enable-shared \
     --enable-gpl \
@@ -18,8 +20,7 @@
     --enable-libdrm \
     --disable-debug
 
-make CC="${CC:-cc}"
+make
 make DESTDIR="$1" install
 
-# Remove examples.
 rm -rf "$1/usr/share/ffmpeg/examples"
