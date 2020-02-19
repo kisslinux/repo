@@ -1,16 +1,18 @@
 #!/bin/sh -e
 
+export DESTDIR="$1"
 export LDFLAGS="-Wl,-z,lazy"
 
 # Fix build fail with GCC 10.
 export CFLAGS="$CFLAGS -fcommon"
 
-autoreconf -i
-
-./configure \
+meson \
     --prefix=/usr \
     --libexecdir=/usr/lib \
-    --with-default-dri=3
+    -Ddefault-dri=3 \
+    -Dxvmc=false \
+    -Dvalgrind=false \
+    . build
 
-make
-make DESTDIR="$1" install
+ninja -C build
+ninja -C build install
