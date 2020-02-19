@@ -1,7 +1,8 @@
 #!/bin/sh -e
 
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --shared-zlib
 
 make
 make DESTDIR="$1" install
