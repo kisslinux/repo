@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+# WHY WHY WHY WHY WHY.
+patch -p1 < adduser-no-setgid.patch
+
 # Build and install regular busybox.
 # This excludes utilities which require 'suid' to function.
 make CC="${CC:-gcc}"

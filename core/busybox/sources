@@ -1,4 +1,5 @@
 https://busybox.net/downloads/busybox-1.31.1.tar.bz2
+patches/adduser-no-setgid.patch
 files/.config
 files/.config-suid
 files/crond.run

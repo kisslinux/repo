@@ -1,0 +1,12 @@
+diff --git a/loginutils/adduser.c b/loginutils/adduser.c
+index 850c810..68db3cb 100644
+--- a/loginutils/adduser.c
++++ b/loginutils/adduser.c
+@@ -299,7 +299,6 @@ int adduser_main(int argc UNUSED_PARAM, char **argv)
+ 		}
+ 		if ((mkdir_err != 0 && errno != EEXIST)
+ 		 || chown(pw.pw_dir, pw.pw_uid, pw.pw_gid) != 0
+-		 || chmod(pw.pw_dir, 02755) != 0 /* set setgid bit on homedir */
+ 		) {
+ 			bb_simple_perror_msg(pw.pw_dir);
+ 		}
