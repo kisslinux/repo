@@ -5,6 +5,7 @@
     --sysconfdir=/etc \
     --sbindir=/usr/bin \
     --enable-hwdb \
+    --enable-blkid=auto \
     --disable-introspection
 
 make
