@@ -1,7 +1,8 @@
 #!/bin/sh -e
 
-# WHY WHY WHY WHY WHY.
-patch -p1 < adduser-no-setgid.patch
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
 
 # Build and install regular busybox.
 # This excludes utilities which require 'suid' to function.
