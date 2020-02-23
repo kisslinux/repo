@@ -1,8 +1,8 @@
 #!/bin/sh -e
 
-install -D kiss         "$1/usr/bin/kiss"
-install -D kiss_path.sh "$1/etc/profile.d/kiss_path.sh"
-install -D kiss.1       "$1/usr/share/man/man1/kiss.1"
+install -D kiss           "$1/usr/bin/kiss"
+install -D kiss_path.sh   "$1/etc/profile.d/kiss_path.sh"
+install -D -m 0644 kiss.1 "$1/usr/share/man/man1/kiss.1"
 
 install -t "$1/usr/bin" -D contrib/*
 
