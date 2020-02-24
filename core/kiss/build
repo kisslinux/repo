@@ -4,4 +4,11 @@ install -D kiss         "$1/usr/bin/kiss"
 install -D kiss_path.sh "$1/etc/profile.d/kiss_path.sh"
 install -Dm 644 kiss.1  "$1/usr/share/man/man1/kiss.1"
 
+# Install kiss utilities.
 cp contrib/* "$1/usr/bin/"
+
+# Install distribution documentation.
+for doc in faq guidestones install package-system style; do
+    install -Dm644 "docs/site/$doc.txt" \
+                   "$1/usr/share/doc/kiss/$doc.txt"
+done
