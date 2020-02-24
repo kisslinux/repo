@@ -1,2 +1,3 @@
 https://w1.fi/releases/wpa_supplicant-2.9.tar.gz
+https://github.com/sabotage-linux/libnl-tiny/archive/4225e93bec5304abee3386213213718367e54a93.tar.gz libnl
 files/.config wpa_supplicant/
