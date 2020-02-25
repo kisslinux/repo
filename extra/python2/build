@@ -11,4 +11,4 @@ rm "$1/usr/bin/2to3"
 rm "$1/usr/bin/python"
 
 # Make static library writable.
-chmod -v u+w "$1/usr/lib/libpython"*.a
+chmod u+w "$1/usr/lib/libpython"*.a
