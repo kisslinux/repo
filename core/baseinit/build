@@ -7,4 +7,6 @@ cp -R lib "$1/usr/lib"
 
 # Disable warning as CFLAGS must work this way.
 # shellcheck disable=2086
-"${CC:-cc}" -o "$1/usr/bin/kpow" bin/kpow.c $CFLAGS -static
+for bin in kpow kall; do
+    "${CC:-cc}" -o "$1/usr/bin/$bin" "bin/$bin.c" $CFLAGS -static
+done
