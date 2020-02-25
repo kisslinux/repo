@@ -1,5 +1,29 @@
 #!/bin/sh -e
 
+# Install python-mako which is solely needed for mesa
+# and thus contained in this build.
+{
+    cd mako
+
+    python3 setup.py build
+    python3 setup.py install \
+        --prefix=/usr \
+        --root="$PWD/dist"
+
+    # Use a glob to avoid having to figure out the Python
+    # version for the path below.
+    cd dist/usr/lib/python*/site-packages
+
+    # Set the PYTHONPATH so python knows where to find mako.
+    # The one liner simply appends the existing path and
+    # handles the case where an unset PYTHONPATH breaks
+    # python as it will only contain our new addition.
+    PYTHONPATH=$PWD:$(python -c "import sys; print(':'.join(sys.path))")
+
+    cd -; cd ..
+}
+
+export PYTHONPATH
 export DESTDIR="$1"
 export CFLAGS="-DGLX_X86_READONLY_TEXT $CFLAGS -fcommon"
 
