@@ -2,11 +2,9 @@
 
 export DESTDIR="$1"
 
-# Remove 'libelf' dependency.
+# Remove 'libelf' and 'util-linux' dependencies.
 sed -i 's/if have_libelf/if not have_libelf/' gio/meson.build
-
-# Remove 'util-linux' dependency.
-sed -i 's/libmount_dep.found()/false/' meson.build
+sed -i 's/libmount_dep.found()/false/'        meson.build
 
 # Don't build tests.
 find . -type f -name meson.build -exec sed -i "/subdir('tests')/d" {} +
@@ -17,6 +15,7 @@ meson \
     -Dinstalled_tests=false \
     -Dman=false \
     -Dfam=false \
+    -Dinternal_pcre=true \
     . build
 
 ninja -C build
