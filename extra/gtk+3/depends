@@ -10,5 +10,4 @@ libXinerama
 libXrandr
 libepoxy
 pango
-perl   make
 python make
