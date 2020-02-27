@@ -2,9 +2,12 @@
 
 export CFLAGS="-static $CFLAGS"
 
+sed -i 's/perl/awk -f/;s/mkproto.pl/mkproto.awk/' Makefile.in
+
 ./configure \
     --prefix=/usr \
-    --with-included-popt
+    --with-included-popt \
+    --without-included-zlib
 
 make
 make DESTDIR="$1" install
