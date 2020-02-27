@@ -1,109 +1,47 @@
 #!/bin/sh
-
 # converts the <rules>.xml file to the old format <rules>.lst file
-#
-# Usage:
-#
-# sh xml2lst.sh < filename.xml > filename.lst
-#
-# author Ivan Pascal
+# Usage: xml2lst < filename.xml > filename.lst
 
-configitem=0 
-modellist=0 
-layout=0 
-configitem=0 
-variant=0 
-comment=0
+var=0 com=0 nam=''
 
 printf '! model\n'
-
-while read -r line || [ "$line" ]; do
-    case $line in
-        *'<configItem>'*)   configitem=1 ;;
-        *'</configItem>'*)  configitem=0 ;;
-        *'<modelList>'*)    modellist=1  ;;
-        *'</modelList>'*)   break ;;
-
-        *'<name>'*)         
-            name=${line##*<name>}
-            name=${name%%</name>*}
-        ;;
-
-        *'<description>'*)
-            desc=${line##*<description>}
-            desc=${desc%%</description>*}
-
-            [ "$configitem" -eq 0 ] || [ "$modellist" -eq 0 ] ||
-                printf '  %-15s %s\n' "$name" "$desc"
-        ;;
-    esac
-done
+while read -r l || [ "$l" ]; do case $l in
+    *'<name>'*)         n=${l#*>} n=${n%<*};;
+    *'<description>'*)  l=${l#*>}; printf '  %-15s %s\n' "$n" "${l%<*}" ;;
+    *'</modelList>'*)   break
+esac; done
 
 printf '\n! layout\n'
+while read -r l || [ "$l" ]; do case $l in
+    *'<variantList>'*)  var=1;;
+    *'</variantList>'*) var=0;;
+    *'</layoutList>'*)  break;;
 
-while read -r line || [ "$line" ]; do
-    case $line in
-        *'<layoutList>'*|*'<layout>'*)     layout=1 ;;
-        *'</layout>'*)                     layout=0 ;;
-        *'<configItem>'*)                  configitem=1 ;;
-        *'</configItem>'*)                 configitem=0 ;;
-        *'<variantList>'*|*'<variant>'*)   variant=1 ;;
-        *'</variantList>'*|*'</variant>'*) variant=0 ;;
-        *'</layoutList>'*)                 break ;;
-    esac
+    *'<name>'*) 
+        l="${l#*>}"
+        [ "$var" -eq 0 ] && ln=${l%<*} || n=${l%<*}
+    ;;
 
-    if [ "$layout" -ne 0 ]; then
-        if [ "${variant}" -ne 0 ]; then
-            case $line in
-                *'<name>'*) 
-                    name=${line##*<name>} 
-                    name=${name%%</name>*}
-                ;;
+    *'<description>'*)
+        l=${l#*>}
 
-                *'<description>'*)
-                    line="$lname: ${line##*<description>}"
-                    line=${line%%</description>*}
-                    names="$names  $(printf '%-15s %s' "$name" "$line")
-"
-                ;;
-            esac
+        case $var in
+            0) printf '  %-15s %s\n' "${ln}" "${l%<*}" ;;
+            *) nam="${nam%x}  $(printf '%-15s %s: %s\nx' "$n" "$ln" "${l%<*}")"
+        esac
+    ;;
+esac; done
 
-        elif [ "$configitem" -ne 0 ]; then
-            case $line in
-                *'<name>'*) 
-                    lname=${line##*<name>}
-                    lname=${lname%%</name>*}
-                ;;
+printf '\n! variant\n%s\n! option\n' "${nam%x}"
+while read -r l || [ "$l" ]; do case $l in
+    *'-->'*)            com=0;;
+    *'<!--'*)           com=1;;
+    *'</optionList>'*)  break;;
+    *'<name>'*)         n=${l#*>} n=${n%<*} ;;
 
-                *'<description>'*)
-                    line=${line##*<description>}
-                    line=${line%%</description>*}
-                    printf '  %-15s %s\n' "$lname" "$line"
-                ;;
-            esac
-        fi
-    fi
-done
+    *'<description>'*)  
+        l=${l#*>}
 
-printf '\n! variant\n%s\n! option\n' "$names"
-
-while read -r line || [ "$line" ]; do
-    case $line in
-        *'-->'*)           comment=0;;
-        *'<!--'*)          comment=1;;
-        *'</optionList>'*) break;;
-
-        *'<name>'*)
-            name=${line##*<name>} 
-            name=${name%%</name>*}
-        ;;
-
-        *'<description>'*)
-            line=${line##*<description>}
-            line=${line%%</description>*}
-
-            [ "$comment" -ne 0 ] ||
-                printf '  %-20s %s\n' "$name" "$line"
-        ;;
-    esac
-done
+        [ "$com" -ne 0 ] || printf '  %-20s %s\n' "$n" "${l%<*}"
+    ;;
+esac; done
