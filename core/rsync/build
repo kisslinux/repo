@@ -1,8 +1,10 @@
 #!/bin/sh -e
 
-export CFLAGS="-static $CFLAGS"
-
+# Swap to awk script instead of perl script
+# for building rsync. See files/mkproto.awk.
 sed -i 's/perl/awk -f/;s/mkproto.pl/mkproto.awk/' Makefile.in
+
+export CFLAGS="-static $CFLAGS"
 
 ./configure \
     --prefix=/usr \
