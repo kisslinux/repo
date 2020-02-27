@@ -1,20 +1,19 @@
 #!/bin/sh -e
 
+patch -p1 < musl.patch
+
 # This package mimics the download process of rust's 'x.py'
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
 {
-    cache_dir=build/cache/2019-12-19
-    mkdir -p "$cache_dir"
+    mkdir -p "${cache_dir:=build/cache/2019-12-19}"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
     done
 }
 
-patch -p1 < musl.patch
-
-# 'rust' checksums files in 'vendor/', but we patch a few files.
+# 'rust' checksums files in 'vendor/', but we patch a few.
 for vendor in libc openssl-sys; do
     sed -i 's/\("files":{\)[^}]*/\1/' "vendor/$vendor/.cargo-checksum.json"
 done
@@ -24,32 +23,41 @@ cat > config.toml <<EOF
 link-shared = true
 
 [build]
-build = "x86_64-unknown-linux-musl"
-host = [ "x86_64-unknown-linux-musl" ]
+build  = "x86_64-unknown-linux-musl"
+host   = [ "x86_64-unknown-linux-musl" ]
 target = [ "x86_64-unknown-linux-musl" ]
-docs = false
-extended = true
-submodules = false
-python = "python3"
-locked-deps = true
-vendor = true
+
+docs           = false
+compiler-docs  = false
+extended       = true
+submodules     = false
+python         = "python3"
+locked-deps    = true
+vendor         = true
+sanitizers     = false
+profiler       = false
+full-bootstrap = false
 
 [install]
 prefix = "/usr"
 
 [rust]
-channel = "stable"
-rpath = false
-codegen-units = 1
-debuginfo-level = 0
-backtrace = false
-jemalloc = false
-codegen-tests = false
+channel          = "stable"
+rpath            = false
+codegen-units    = 1
+debuginfo-level  = 0
+debug            = false
+backtrace        = false
+jemalloc         = false
+debug-assertions = false
+codegen-tests    = false
 
 [target.x86_64-unknown-linux-musl]
 llvm-config = "/usr/bin/llvm-config"
-crt-static = false
+crt-static  = false
 EOF
 
+export DESTDIR="$1" 
+
 python3 ./x.py build -j "$(nproc)"
-DESTDIR="$1" python3 ./x.py install
+python3 ./x.py install
