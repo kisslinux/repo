@@ -1,2 +1,2 @@
 cmake make
-yasm  make
+nasm  make
