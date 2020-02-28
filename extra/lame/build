@@ -2,7 +2,6 @@
 
 ./configure \
     --prefix=/usr \
-    --enable-nasm \
     --enable-shared
 
 make
