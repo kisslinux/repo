@@ -18,6 +18,7 @@
     --enable-libxvid \
     --enable-libwebp \
     --enable-libdrm \
+    --x86asmexe=nasm \
     --disable-debug
 
 make

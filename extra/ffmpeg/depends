@@ -1,14 +1,12 @@
-pkgconf make
-perl make
-yasm make
 alsa-lib
 lame
 libass
 libogg
 libtheora
 libvorbis
-libwebp
 libvpx
+libwebp
+nasm make
 opus
 x264
 x265
