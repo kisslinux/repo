@@ -17,7 +17,7 @@ patch -p1 < fix-busybox-diff.patch
     --disable-install-docs \
     --disable-install-srcs \
     --disable-install-bins \
-    --as=yasm
+    --as=nasm
 
 make
 make DESTDIR="$1" install

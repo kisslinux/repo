@@ -1,2 +1,2 @@
+nasm make
 perl make
-yasm make
