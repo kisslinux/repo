@@ -47,6 +47,5 @@ pixman
 python        make
 python2       make
 rust          make
-yasm          make
 zip           make
 zlib

@@ -6,14 +6,27 @@
     cd autoconf2.13
 
     ./configure \
-        --prefix="$PWD/../autoconf" \
+        --prefix="$PWD/../junk" \
         --program-suffix=-2.13
 
     make
     make install
 )
 
-export PATH=$PWD/autoconf/bin:$PATH
+# Build yasm for Firefox's sole use.
+# Firefox is the only package which needs it
+# and upstream is kinda dead.
+(
+    cd yasm
+
+    ./configure \
+        --prefix="$PWD/../junk"
+
+    make
+    make install
+)
+
+export PATH=$PWD/junk/bin:$PATH
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 export CC=${CC:-gcc}
 export CXX=${CXX:-g++}
