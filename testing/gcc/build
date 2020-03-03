@@ -24,6 +24,8 @@ export libat_cv_have_ifunc=no
     --disable-werror \
     --disable-fixed-point \
     --disable-libstdcxx-pch \
+    --disable-nls \
+    --without-included-gettext \
     --enable-checking=release \
     --mandir=/usr/share/man \
     --infodir=/usr/share/info \
