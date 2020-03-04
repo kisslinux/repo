@@ -1,8 +1,15 @@
 #!/bin/sh -e
 
+export DESTDIR="$1" 
+
 ./configure \
     --prefix=/usr \
-    --shared-zlib
+    --shared-zlib \
+    --without-intl \
+    --without-etw \
+    --without-dtrace \
+    --without-report \
+    --ninja
 
-make
-make DESTDIR="$1" install
+ninja -C out/Release
+tools/install.py install "$1" /usr
