@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+export CFLAGS="$CFLAGS -fPIC"
+
+patch -p1 < git-tiny.patch
+
 cat > config.mak <<EOF
 NO_GETTEXT=YesPlease
 NO_SVN_TESTS=YesPlease
@@ -7,6 +11,8 @@ NO_TCLTK=YesPlease
 NO_EXPAT=YesPlease
 NO_NSEC=YesPlease
 NO_PYTHON=YesPlease
+NO_PERL=YesPlease
+NO_SVN_TESTS=YesPlease
 NO_SYS_POLL_H=1
 NO_CROSS_DIRECTORY_HARDLINKS=1
 NO_INSTALL_HARDLINKS=1

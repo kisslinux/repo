@@ -1,0 +1,107 @@
+--- Makefile
++++ Makefile
+@@ -809,9 +809,7 @@
+ 
+ TEST_SHELL_PATH = $(SHELL_PATH)
+ 
+-LIB_FILE = libgit.a
+-XDIFF_LIB = xdiff/lib.a
+-VCSSVN_LIB = vcs-svn/lib.a
++LIB_FILE = libgit.so
+ 
+ GENERATED_H += command-list.h
+ 
+@@ -1158,7 +1156,7 @@
+ THIRD_PARTY_SOURCES += sha1collisiondetection/%
+ THIRD_PARTY_SOURCES += sha1dc/%
+ 
+-GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB)
++GITLIBS = common-main.o $(LIB_FILE)
+ EXTLIBS =
+ 
+ GIT_USER_AGENT = git/$(GIT_VERSION)
+@@ -1199,7 +1197,7 @@
+ endif
+ 
+ ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS)
+-ALL_LDFLAGS = $(LDFLAGS)
++ALL_LDFLAGS = $(LDFLAGS) -Wl,-rpath,$(gitexecdir_SQ)
+ 
+ comma := ,
+ empty :=
+@@ -1875,7 +1873,7 @@
+ ifndef V
+ 	QUIET_CC       = @echo '   ' CC $@;
+ 	QUIET_AR       = @echo '   ' AR $@;
+-	QUIET_LINK     = @echo '   ' LINK $@;
++	QUIET_LINK     = @echo '   ' CCLD $@;
+ 	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
+ 	QUIET_GEN      = @echo '   ' GEN $@;
+ 	QUIET_LNCP     = @echo '   ' LN/CP $@;
+@@ -2118,7 +2116,7 @@
+ 	'-DGIT_MAN_PATH="$(mandir_relative_SQ)"' \
+ 	'-DGIT_INFO_PATH="$(infodir_relative_SQ)"'
+ 
+-git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
++git$X: GIT-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+ 		$(filter %.o,$^) $(LIBS)
+ 
+@@ -2457,9 +2455,8 @@
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
+ 
+-git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAGS $(GITLIBS) $(VCSSVN_LIB)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS) \
+-	$(VCSSVN_LIB)
++git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAGS $(GITLIBS)
++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
+ 
+ $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
+ 	$(QUIET_LNCP)$(RM) $@ && \
+@@ -2471,14 +2468,8 @@
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
+ 
+-$(LIB_FILE): $(LIB_OBJS)
+-	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+-
+-$(XDIFF_LIB): $(XDIFF_OBJS)
+-	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+-
+-$(VCSSVN_LIB): $(VCSSVN_OBJS)
+-	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
++$(LIB_FILE): $(LIB_OBJS) $(BUILTIN_OBJS) $(XDIFF_OBJS) $(VCSSVN_OBJS) git.o
++	$(QUIET_LINK)$(RM) $@ && $(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -lz -lpthread -shared -o $@ $^
+ 
+ export DEFAULT_EDITOR DEFAULT_PAGER
+ 
+@@ -2754,9 +2745,9 @@
+ 
+ .PHONY: test perf
+ 
+-t/helper/test-line-buffer$X: $(VCSSVN_LIB)
++t/helper/test-line-buffer$X: $(LIB_FILE)
+ 
+-t/helper/test-svn-fe$X: $(VCSSVN_LIB)
++t/helper/test-svn-fe$X: $(LIB_FILE)
+ 
+ .PRECIOUS: $(TEST_OBJS)
+ 
+@@ -2876,6 +2867,7 @@
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++	$(INSTALL) $(LIB_FILE) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) -m 644 $(SCRIPT_LIB) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
+ ifdef MSVC
+@@ -3096,7 +3088,7 @@
+ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) *.res
+ 	$(RM) $(OBJECTS)
+-	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
++	$(RM) $(LIB_FILE)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) $(FUZZ_PROGRAMS)
