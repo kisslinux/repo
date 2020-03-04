@@ -13,7 +13,6 @@ gdk-pixbuf
 glib
 gtk+2         make
 gtk+3
-hicolor-icon-theme
 libICE
 libSM
 libX11
