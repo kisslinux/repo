@@ -1,15 +1,17 @@
 #!/bin/sh -e
 
-export DESTDIR="$1" 
-
 ./configure \
-    --prefix=/usr \
     --shared-zlib \
     --without-intl \
     --without-etw \
     --without-dtrace \
     --without-report \
+    --without-node-snapshot \
+    --without-node-code-cache \
     --ninja
 
 ninja -C out/Release
 tools/install.py install "$1" /usr
+
+# Remove unneeded headers.
+rm -rf "$1/usr/include/node/openssl"
