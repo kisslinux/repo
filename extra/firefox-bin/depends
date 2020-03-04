@@ -10,7 +10,6 @@ fribidi
 gdk-pixbuf
 glib
 gtk+3
-hicolor-icon-theme
 libICE
 libSM
 libX11
