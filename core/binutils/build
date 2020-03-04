@@ -20,7 +20,7 @@ export PATH=$PATH:$PWD
     --disable-readline \
     --disable-gprof \
     --with-mmap \
-    --with-system-zlib 
+    --with-system-zlib
 
 make
 make DESTDIR="$1" install
