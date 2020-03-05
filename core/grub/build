@@ -17,6 +17,7 @@ build_grub() (
         --sbindir=/usr/bin \
         --sysconfdir=/etc \
         --disable-werror \
+        --disable-nls \
         --disable-grub-mkfont \
         --disable-grub-mount \
         "$@"
