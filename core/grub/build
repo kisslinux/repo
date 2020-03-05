@@ -1,5 +1,15 @@
 #!/bin/sh -e
 
+# Grub expects Python but it isn't actually needed. Give
+# it something fake so that configure passes.
+export PYTHON=/bin/true
+
+# Disable the post-python mv calls as a means of disabling
+# the Python tooling. The /bin/true above will create a
+# blank file, this prevents the blank file from overwriting
+# the existing one.
+sed -i 's/mv $@.new $@/:/g' grub/Makefile.in
+
 # Strip '-march' from 'CFLAGS' as per advice from upstream.
 # Fixes build fails on specific hardware.
 CFLAGS=$(printf %s "$CFLAGS" | sed 's/-march=[^ ]*//g')
