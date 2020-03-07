@@ -1,0 +1,15 @@
+diff --git a/src/nv_driver.c b/src/nv_driver.c
+index 185bba7..7927128 100644
+--- a/src/nv_driver.c
++++ b/src/nv_driver.c
+@@ -501,6 +501,10 @@ NVEnterVT(VT_FUNC_ARGS_DECL)
+ 	      (pNVEnt->platform_dev->flags & XF86_PDEV_SERVER_FD)))
+ #endif
+ 	{
++		ret = drmIsMaster(pNv->dev->fd);
++		if (ret)
++			return TRUE;
++        
+ 		ret = drmSetMaster(pNv->dev->fd);
+ 		if (ret)
+ 			ErrorF("Unable to get master: %s\n", strerror(errno));
