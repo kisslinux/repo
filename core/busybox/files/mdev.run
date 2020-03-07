@@ -1,2 +1,8 @@
 #!/bin/sh
+
+# Null the legacy hotplugger as the
+# service will take over from here.
+printf /bin/true 2>/dev/null \
+    > /proc/sys/kernel/hotplug
+
 exec mdev -df
