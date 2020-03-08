@@ -1,3 +1,6 @@
 #!/bin/sh -e
 
-cp -R usr "$1"
+make \
+    headers_install \
+    INSTALL_HDR_PATH="$1/usr" \
+    HOSTCC="${CC:-cc}"
