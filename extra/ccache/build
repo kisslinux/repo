@@ -13,9 +13,9 @@ install -Dm 644 doc/ccache.1 "$1/usr/share/man/man1/ccache.1"
 
 mkdir -p "$1/usr/lib/ccache/bin"
 
-triplet=$(cc -dumpmachine)
+host=$(cc -dumpmachine)
 
-for link in cc gcc g++ cpp c++ "$triplet-cc" "$triplet-gcc" \
-            "$triplet-g++" "$triplet-cpp" "$triplet-c++"; do
+for link in cc gcc g++ cpp c++ clang clang++ \
+            "$host-cc" "$host-gcc" "$host-g++" "$host-cpp" "$host-c++"; do
     ln -sf /usr/bin/ccache "$1/usr/lib/ccache/bin/$link"
 done
