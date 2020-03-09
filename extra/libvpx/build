@@ -2,18 +2,24 @@
 
 patch -p1 < fix-busybox-diff.patch
 
+# Remove the perl requirement from configure
+# as we have removed the perl requirement
+# ourselves :-).
+sed -i 's/perl/:/g' configure
+
 ./configure \
     --prefix=/usr \
     --enable-vp8 \
     --enable-vp9 \
-    --disable-tools \
-    --disable-examples \
-    --disable-docs \
     --enable-experimental \
     --enable-runtime-cpu-detect \
     --enable-shared \
     --enable-postproc \
     --enable-pic \
+    --disable-tools \
+    --disable-examples \
+    --disable-docs \
+    --disable-unit-tests \
     --disable-install-docs \
     --disable-install-srcs \
     --disable-install-bins \
