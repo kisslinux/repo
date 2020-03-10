@@ -33,7 +33,7 @@ export CXX=${CXX:-g++}
 
 # Keep memory usage as low as possible.
 export LDFLAGS="$LDFLAGS -Wl,--as-needed -Wl,--no-keep-memory -Wl,--stats"
-export MOZ_LINK_FLAGS=$LDFLAGS
+export MOZ_LINK_FLAGS="$LDFLAGS"
 export MOZ_DEBUG_FLAGS=-g0
 export RUSTFLAGS=-Cdebuginfo=0
 
