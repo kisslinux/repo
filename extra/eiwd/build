@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/bin \
+    --localstatedir=/var \
+    --disable-client \
+    --disable-dbus-policy \
+    --disable-dbus \
+    --disable-systemd-service \
+    --disable-monitor \
+    --disable-manual-pages \
+    --disable-wired
+
+make
+make DESTDIR="$1" install
