@@ -1,5 +1,5 @@
-https://static.rust-lang.org/dist/rustc-1.41.1-src.tar.xz
-https://static.rust-lang.org/dist/2019-12-19/rust-std-1.40.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-https://static.rust-lang.org/dist/2019-12-19/rustc-1.40.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-https://static.rust-lang.org/dist/2019-12-19/cargo-0.41.0-x86_64-unknown-linux-musl.tar.xz?no-extract
+https://static.rust-lang.org/dist/rustc-1.42.0-src.tar.xz
+https://static.rust-lang.org/dist/2020-02-27/rust-std-1.41.1-x86_64-unknown-linux-musl.tar.xz?no-extract
+https://static.rust-lang.org/dist/2020-02-27/rustc-1.41.1-x86_64-unknown-linux-musl.tar.xz?no-extract
+https://static.rust-lang.org/dist/2020-02-27/cargo-0.42.0-x86_64-unknown-linux-musl.tar.xz?no-extract
 patches/musl.patch

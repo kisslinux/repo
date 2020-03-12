@@ -6,7 +6,7 @@ patch -p1 < musl.patch
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
 {
-    mkdir -p "${cache_dir:=build/cache/2019-12-19}"
+    mkdir -p "${cache_dir:=build/cache/2020-02-27}"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
