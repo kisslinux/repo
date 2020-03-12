@@ -1,1 +1,41 @@
 https://github.com/eqrion/cbindgen/archive/v0.13.1.tar.gz
+
+# This is a pre-generated list of crate dependencies from the
+# "kiss-cargo-urlgen" utility. This allows us to pre-cache
+# each of the required dependencies and avoid the network
+# requirement during build.
+https://static.crates.io/crates/ansi_term/ansi_term-0.11.0.crate vendor
+https://static.crates.io/crates/atty/atty-0.2.13.crate vendor
+https://static.crates.io/crates/bitflags/bitflags-1.2.1.crate vendor
+https://static.crates.io/crates/c2-chacha/c2-chacha-0.2.3.crate vendor
+https://static.crates.io/crates/cfg-if/cfg-if-0.1.10.crate vendor
+https://static.crates.io/crates/clap/clap-2.33.0.crate vendor
+https://static.crates.io/crates/getrandom/getrandom-0.1.13.crate vendor
+https://static.crates.io/crates/itoa/itoa-0.4.4.crate vendor
+https://static.crates.io/crates/libc/libc-0.2.66.crate vendor
+https://static.crates.io/crates/log/log-0.4.8.crate vendor
+https://static.crates.io/crates/ppv-lite86/ppv-lite86-0.2.6.crate vendor
+https://static.crates.io/crates/proc-macro2/proc-macro2-1.0.6.crate vendor
+https://static.crates.io/crates/quote/quote-1.0.2.crate vendor
+https://static.crates.io/crates/rand/rand-0.7.2.crate vendor
+https://static.crates.io/crates/rand_chacha/rand_chacha-0.2.1.crate vendor
+https://static.crates.io/crates/rand_core/rand_core-0.5.1.crate vendor
+https://static.crates.io/crates/rand_hc/rand_hc-0.2.0.crate vendor
+https://static.crates.io/crates/redox_syscall/redox_syscall-0.1.56.crate vendor
+https://static.crates.io/crates/remove_dir_all/remove_dir_all-0.5.2.crate vendor
+https://static.crates.io/crates/ryu/ryu-1.0.2.crate vendor
+https://static.crates.io/crates/serde/serde-1.0.104.crate vendor
+https://static.crates.io/crates/serde_derive/serde_derive-1.0.104.crate vendor
+https://static.crates.io/crates/serde_json/serde_json-1.0.44.crate vendor
+https://static.crates.io/crates/strsim/strsim-0.8.0.crate vendor
+https://static.crates.io/crates/syn/syn-1.0.11.crate vendor
+https://static.crates.io/crates/tempfile/tempfile-3.1.0.crate vendor
+https://static.crates.io/crates/textwrap/textwrap-0.11.0.crate vendor
+https://static.crates.io/crates/toml/toml-0.5.5.crate vendor
+https://static.crates.io/crates/unicode-width/unicode-width-0.1.7.crate vendor
+https://static.crates.io/crates/unicode-xid/unicode-xid-0.2.0.crate vendor
+https://static.crates.io/crates/vec_map/vec_map-0.8.1.crate vendor
+https://static.crates.io/crates/wasi/wasi-0.7.0.crate vendor
+https://static.crates.io/crates/winapi/winapi-0.3.8.crate vendor
+https://static.crates.io/crates/winapi-i686-pc-windows-gnu/winapi-i686-pc-windows-gnu-0.4.0.crate vendor
+https://static.crates.io/crates/winapi-x86_64-pc-windows-gnu/winapi-x86_64-pc-windows-gnu-0.4.0.crate vendor

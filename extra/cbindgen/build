@@ -1,8 +1,56 @@
 #!/bin/sh -e
+#
+# Seeing as this is the only rust package in the
+# repositories (other than rust itself), this will
+# also serve as a reference to writing network-free
+# rust-based packages.
 
-cargo fetch \
-    --locked
+# Set the CARGO_HOME variable to the current directory
+# to prevent cargo from touching '$HOME/.cargo'. This
+# keeps the build contained to the package manager's
+# domain.
+export CARGO_HOME=$PWD
 
+# Extract each crate and generate a checksum file.
+# This effectively mimics 'cargo vendor' without the
+# network requirement.
+#
+# This allows the package manager to cache each crate
+# and handle them as regular sources.
+(
+    cd vendor
+
+    for crate in *.crate; do
+        tar xf "$crate"
+
+        # Strip the filename from the sha256sum output.
+        sha256=$(sha256sum "$crate")
+        sha256=${sha256%% *}
+
+        printf '{"package":"%s","files":{}}\n' "$sha256" \
+            > "${crate%.crate}/.cargo-checksum.json"
+    done
+)
+
+# Cargo reads a "global" configuration file from $CARGO_HOME,
+# as we've set it to $PWD this is where we'll be storing the
+# vendor config.
+mkdir -p .cargo
+
+# Create the configuration file to tell cargo to look in the
+# 'vendor' directory for the already downloaded sources
+# rather than crates.io (over network).
+cat <<EOF > .cargo/config
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
+
+# Use the '--frozen' flag to tell cargo to skip the network
+# and use whatever dependencies are in the Cargo.[toml|lock]
+# files.
 cargo build \
     --release \
     --frozen
