@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+# Workaround for GCC 10 until upstream
+# fixes the '-fno-common' issues.
+export CFLAGS="$CFLAGS -fcommon"
+
 ./configure \
     --prefix=/usr \
     --disable-valgrind
