@@ -1,5 +1,5 @@
-binutils      make
-bison         make
-flex          make
-linux-headers make
+binutils make
+bison    make
+flex     make
+m4       make
 xz
