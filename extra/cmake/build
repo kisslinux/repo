@@ -5,8 +5,6 @@ if kiss l cmake; then
 
     cmake -B build \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_INSTALL_LIBDIR=/usr/lib \
-        -DCMAKE_SHARED_LIBS=True \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_USE_SYSTEM_CURL=True \
         -DCMAKE_USE_SYSTEM_EXPAT=True \
