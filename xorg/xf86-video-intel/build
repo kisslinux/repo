@@ -1,9 +1,7 @@
 #!/bin/sh -e
 
 export DESTDIR="$1"
-export LDFLAGS="-Wl,-z,lazy"
-
-# Fix build fail with GCC 10.
+export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
 export CFLAGS="$CFLAGS -fcommon"
 
 meson \
