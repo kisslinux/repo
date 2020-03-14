@@ -1,5 +1,4 @@
 binutils
-bison
-flex
-linux-headers
+bison  make
+flex   make
 zlib
