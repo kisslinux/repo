@@ -2,7 +2,8 @@
 
 patch -p1 < rootless-amdgpu.patch
 
-export LDFLAGS="-Wl,-z,lazy"
+export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
+export CFLAGS="$CFLAGS -fcommon"
 
 ./configure \
     --prefix=/usr
