@@ -1,5 +1,6 @@
 libXau
 libxcb
+m4 make
 xcb-util
 xcb-util-image
 xcb-util-renderutil
