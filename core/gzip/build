@@ -1,7 +1,9 @@
 #!/bin/sh -e
 
-./configure \
-    --prefix=/usr
+make CC="${CC:-cc} -static"
 
-make
-make DESTDIR="$1" install
+install -Dm755 pigz   "$1/usr/bin/pigz"
+install -Dm644 pigz.1 "$1/usr/share/man/man1/pigz.1"
+
+ln -sf pigz   "$1/usr/bin/gzip"
+ln -sf pigz.1 "$1/usr/share/man/man1/gzip.1"
