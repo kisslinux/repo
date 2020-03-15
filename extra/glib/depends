@@ -1,3 +1,4 @@
+libelf
 libffi
 meson make
 zlib
