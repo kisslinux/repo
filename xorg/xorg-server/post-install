@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Give Xorg setgid to /dev/input.
-chown :input "$1/usr/bin/Xorg"
-chmod g+s    "$1/usr/bin/Xorg"
+chown :input "$KISS_ROOT/usr/bin/Xorg"
+chmod g+s    "$KISS_ROOT/usr/bin/Xorg"
 
 cat <<EOF
 
