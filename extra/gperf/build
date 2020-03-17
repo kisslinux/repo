@@ -1,9 +1,7 @@
 #!/bin/sh -e
 
 ./configure \
-    --prefix=/usr \
-    --without-xmlto \
-    --disable-specs
+    --prefix=/usr
 
 make
 make DESTDIR="$1" install
