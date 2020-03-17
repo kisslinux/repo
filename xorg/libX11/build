@@ -3,6 +3,8 @@
 CFLAGS_FOR_BUILD=-fPIC \
 ./configure \
     --prefix=/usr \
+    --without-xmlto \
+    --disable-specs \
     --enable-static
 
 make
