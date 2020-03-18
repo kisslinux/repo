@@ -4,6 +4,7 @@
     --prefix=/usr \
     --sysconfdir=/etc \
     --sbindir=/usr/bin \
+    --bindir=/usr/bin \
     --enable-hwdb \
     --enable-blkid=auto \
     --disable-introspection
