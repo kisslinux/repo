@@ -3,8 +3,8 @@
 patch -p1 < invalid_tls_model.patch
 
 # Make sure gmp is built with generic options.
-cp -v gcc/gmp/configfsf.guess gcc/gmp/config.guess
-cp -v gcc/gmp/configfsf.sub   gcc/gmp/config.sub
+cp gcc/gmp/configfsf.guess gcc/gmp/config.guess
+cp gcc/gmp/configfsf.sub   gcc/gmp/config.sub
 
 # Use lib not lib64 by default.
 sed -i '/m64=/s/lib64/lib/' gcc/gcc/config/i386/t-linux64
