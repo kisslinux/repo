@@ -3,6 +3,7 @@ patches/adduser-no-setgid.patch
 patches/fsck-resolve-uuid.patch
 files/.config
 files/.config-suid
+files/acpid.run
 files/crond.run
 files/syslogd.run
 files/mdev.run
