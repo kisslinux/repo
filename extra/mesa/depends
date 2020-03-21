@@ -12,6 +12,7 @@ libelf
 libxcb
 libxshmfence
 llvm
+m4           make
 meson        make
 python       make
 xorgproto
