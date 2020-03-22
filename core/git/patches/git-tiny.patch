@@ -1,6 +1,8 @@
---- Makefile
-+++ Makefile
-@@ -809,9 +809,7 @@
+diff --git a/Makefile b/Makefile
+index 9cd9826..26d42a0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -810,9 +810,7 @@ export PYTHON_PATH
  
  TEST_SHELL_PATH = $(SHELL_PATH)
  
@@ -11,7 +13,7 @@
  
  GENERATED_H += command-list.h
  
-@@ -1158,7 +1156,7 @@
+@@ -1162,7 +1160,7 @@ THIRD_PARTY_SOURCES += compat/regex/%
  THIRD_PARTY_SOURCES += sha1collisiondetection/%
  THIRD_PARTY_SOURCES += sha1dc/%
  
@@ -20,7 +22,7 @@
  EXTLIBS =
  
  GIT_USER_AGENT = git/$(GIT_VERSION)
-@@ -1199,7 +1197,7 @@
+@@ -1203,7 +1201,7 @@ include config.mak.dev
  endif
  
  ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS)
@@ -29,7 +31,7 @@
  
  comma := ,
  empty :=
-@@ -1875,7 +1873,7 @@
+@@ -1882,7 +1880,7 @@ ifneq ($(findstring s,$(MAKEFLAGS)),s)
  ifndef V
  	QUIET_CC       = @echo '   ' CC $@;
  	QUIET_AR       = @echo '   ' AR $@;
@@ -38,7 +40,7 @@
  	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
  	QUIET_GEN      = @echo '   ' GEN $@;
  	QUIET_LNCP     = @echo '   ' LN/CP $@;
-@@ -2118,7 +2116,7 @@
+@@ -2125,7 +2123,7 @@ git.sp git.s git.o: EXTRA_CPPFLAGS = \
  	'-DGIT_MAN_PATH="$(mandir_relative_SQ)"' \
  	'-DGIT_INFO_PATH="$(infodir_relative_SQ)"'
  
@@ -47,7 +49,7 @@
  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
  		$(filter %.o,$^) $(LIBS)
  
-@@ -2457,9 +2455,8 @@
+@@ -2464,9 +2462,8 @@ git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
  		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
  
@@ -59,7 +61,7 @@
  
  $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
  	$(QUIET_LNCP)$(RM) $@ && \
-@@ -2471,14 +2468,8 @@
+@@ -2478,14 +2475,8 @@ $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS
  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
  		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
  
@@ -76,7 +78,7 @@
  
  export DEFAULT_EDITOR DEFAULT_PAGER
  
-@@ -2754,9 +2745,9 @@
+@@ -2761,9 +2752,9 @@ perf: all
  
  .PHONY: test perf
  
@@ -88,7 +90,7 @@
  
  .PRECIOUS: $(TEST_OBJS)
  
-@@ -2876,6 +2867,7 @@
+@@ -2882,6 +2873,7 @@ install: all
  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
  	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
@@ -96,7 +98,7 @@
  	$(INSTALL) -m 644 $(SCRIPT_LIB) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
  	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
  ifdef MSVC
-@@ -3096,7 +3088,7 @@
+@@ -3102,7 +3094,7 @@ cocciclean:
  clean: profile-clean coverage-clean cocciclean
  	$(RM) *.res
  	$(RM) $(OBJECTS)
