@@ -4,7 +4,8 @@
     --prefix=/usr \
     --libexecdir=/usr/bin \
     --localstatedir=/var \
-    --disable-dbus
+    --disable-dbus \
+    --disable-monitor
 
 make
 make DESTDIR="$1" install
