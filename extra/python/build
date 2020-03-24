@@ -42,5 +42,5 @@ chmod u+w "$1/usr/lib/libpython"*
     rm -rf lib2to3 pydoc* idlelib turtle* config-* ensurepip
 
     cd "$1/usr/bin"
-    rm -rf 2to3* pydoc* idle*
+    rm -f 2to3* pydoc* idle*
 }
