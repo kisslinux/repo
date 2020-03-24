@@ -1,19 +1,25 @@
 #!/bin/sh -e
 
-patch -p1 < python3-always-pip.patch
-
-# Remove util-linux dependency.
+# Remove util-linux dependency among other things.
 cat >> Modules/Setup <<EOF
 *disabled*
-_uuid
+_uuid nis ossaudiodev
 EOF
+
+# Reported 20-27% performance improvements.
+# See: "PythonNoSemanticInterpositionSpeedup"
+export CFLAGS="$CFLAGS -fno-semantic-interposition"
+export LDFLAGS="$LDFLAGS -fno-semantic-interposition"
+
+patch -p1 < python3-always-pip.patch
 
 ./configure \
     --prefix=/usr \
     --enable-shared \
     --with-system-expat \
     --with-system-ffi \
-    --with-ensurepip=yes
+    --with-ensurepip=yes \
+    --without-doc-strings
 
 make
 make DESTDIR="$1" install
@@ -23,3 +29,18 @@ ln -s pip3    "$1/usr/bin/pip"
 
 # Make static library writable.
 chmod u+w "$1/usr/lib/libpython"*
+
+# Let's make some kind of effort to reduce the overall
+# size of Python by removing a bunch of rarely used and
+# otherwise useless components.
+#
+# This can't be done via ./configure as the build system
+# doesn't give you this much control over the process.
+{
+    cd "$1/usr/lib/python"*
+    rm -rf test ./*/test ./*/tests
+    rm -rf lib2to3 pydoc* idlelib turtle* config-* ensurepip
+
+    cd "$1/usr/bin"
+    rm -rf 2to3* pydoc* idle*
+}
