@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 if kiss l cmake; then
-    export DESTDIR=$1
+    export DESTDIR="$1"
 
     cmake -B build \
         -DCMAKE_INSTALL_PREFIX=/usr \
@@ -28,4 +28,4 @@ else
 fi
 
 rm -rf "$1/usr/doc"
-rm -rf "$1/usr/share/cmake"-?.?/Help
+rm -rf "$1/usr/share/cmake"*/Help
