@@ -3,7 +3,9 @@
 make CC="${CC:-cc} -static"
 
 install -Dm755 pigz   "$1/usr/bin/pigz"
+install -Dm755 unpigz "$1/usr/bin/unpigz"
 install -Dm644 pigz.1 "$1/usr/share/man/man1/pigz.1"
 
 ln -sf pigz   "$1/usr/bin/gzip"
+ln -sf unpigz "$1/usr/bin/gunzip"
 ln -sf pigz.1 "$1/usr/share/man/man1/gzip.1"
