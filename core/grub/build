@@ -39,7 +39,6 @@ build_grub() (
 build_grub --with-platform=pc
 build_grub --with-platform=efi --disable-efiemu
 
-# Install /etc/default/grub (used by grub-mkconfig).
 install -Dm0644 grub.default "$1/etc/default/grub"
 
 # Remove gdb debugging files.
