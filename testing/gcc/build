@@ -44,9 +44,9 @@ make
 make DESTDIR="$1" install
 
 # Save 35MB.
-find "$1" -name libgtkpeer.a  -delete
-find "$1" -name libgjsmalsa.a -delete
-find "$1" -name libgij.a      -delete
+find "$1" -name libgtkpeer.a  -exec rm -f {} +
+find "$1" -name libgjsmalsa.a -exec rm -f {} +
+find "$1" -name libgij.a      -exec rm -f {} +
 
 # Some legacy programs will expect cc
 ln -s gcc "$1/usr/bin/cc"

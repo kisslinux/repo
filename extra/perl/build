@@ -31,13 +31,13 @@ make
 make DESTDIR="$1" install
 
 # Remove all unneeded files.
-find "$1" -name \*.pod       -delete
-find "$1" -name .packlist    -delete
-find "$1" -name README\*     -delete
-find "$1" -name TODO\*       -delete
-find "$1" -name Change\*     -delete
-find "$1" -name \*.bs        -delete
-find "$1" -name \*.0 -type f -delete
+find "$1" -name \*.pod       -exec rm -f {} +
+find "$1" -name .packlist    -exec rm -f {} +
+find "$1" -name README\*     -exec rm -f {} +
+find "$1" -name TODO\*       -exec rm -f {} +
+find "$1" -name Change\*     -exec rm -f {} +
+find "$1" -name \*.bs        -exec rm -f {} +
+find "$1" -name \*.0 -type f -exec rm -f {} +
 
 # Fix permissions.
 find "$1/usr/lib" -type f -exec chmod 644 {} \;
