@@ -2,6 +2,10 @@
 
 export CFLAGS="$CFLAGS -UGDK_PIXBUF_DISABLE_DEPRECATED"
 
+# Don't build GTK examples/demos/testsuite.
+sed -i 's/modules demos tests/modules/' Makefile.am Makefile.in
+sed -i 's/docs m4macros/m4macros/'      Makefile.am Makefile.in
+
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
