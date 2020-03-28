@@ -8,7 +8,8 @@ sed -i '/<atk-bridge.h>/d;/atk_bridge_adaptor_init/d' \
     gtk/a11y/gtkaccessibility.c
 
 # Don't build GTK examples/demos/testsuite.
-sed -i 's/demos tests testsuite examples/tests/' Makefile.am Makefile.in
+sed -i 's/demos tests testsuite examples//' Makefile.am Makefile.in
+sed -i 's/docs m4macros/m4macros/'          Makefile.am Makefile.in
 
 ./configure \
     --prefix=/usr \
