@@ -6,6 +6,11 @@ cat >> Modules/Setup <<EOF
 _uuid nis ossaudiodev
 EOF
 
+# Reported 20-27% performance improvements.
+# See: "PythonNoSemanticInterpositionSpeedup"
+export CFLAGS="$CFLAGS -fno-semantic-interposition"
+export LDFLAGS="$LDFLAGS -fno-semantic-interposition"
+
 patch -p1 < python3-always-pip.patch
 
 ./configure \
