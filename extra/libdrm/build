@@ -1,12 +1,10 @@
 #!/bin/sh -e
 
-# Workaround for GCC 10 until upstream
-# fixes the '-fno-common' issues.
-export CFLAGS="$CFLAGS -fcommon"
+export DESTDIR="$1" 
 
-./configure \
+meson \
     --prefix=/usr \
-    --disable-valgrind
+    . build
 
-make
-make DESTDIR="$1" install
+ninja -C build
+ninja -C build install
