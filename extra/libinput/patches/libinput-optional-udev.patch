@@ -1,0 +1,2378 @@
+From 98e90eaec449a67e0c4216d0aac38ee9896a6a8b Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Fri, 3 Jan 2020 17:18:10 -0800
+Subject: [PATCH] Use forward-declarations of udev structures in headers
+
+This way, it is possible for the libinput API to be implemented without
+requiring udev.
+---
+ meson.build                   | 7 ++-----
+ src/evdev-mt-touchpad.c       | 1 +
+ src/evdev-tablet-pad-leds.c   | 1 +
+ src/evdev.c                   | 1 +
+ src/libinput.c                | 1 +
+ src/libinput.h                | 4 +++-
+ src/quirks.h                  | 4 ++--
+ src/udev-seat.c               | 1 +
+ src/udev-seat.h               | 1 -
+ test/litest.h                 | 1 +
+ tools/libinput-debug-gui.c    | 1 +
+ tools/libinput-debug-tablet.c | 1 +
+ tools/libinput-quirks.c       | 1 +
+ 13 files changed, 16 insertions(+), 9 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index af4c87e8..e65ac51e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -278,7 +278,7 @@ src_libinput_util = [
+ ]
+ libinput_util = static_library('libinput-util',
+ 			       src_libinput_util,
+-			       dependencies : [dep_udev, dep_libevdev, dep_libwacom],
++			       dependencies : [dep_libevdev, dep_libwacom],
+ 			       include_directories : includes_include)
+ dep_libinput_util = declare_dependency(link_with : libinput_util)
+ 
+@@ -296,7 +296,7 @@ src_libfilter = [
+ 		'src/filter-private.h'
+ ]
+ libfilter = static_library('filter', src_libfilter,
+-			   dependencies : [dep_udev, dep_libwacom],
++			   dependencies : [dep_libwacom],
+ 			   include_directories : includes_include)
+ dep_libfilter = declare_dependency(link_with : libfilter)
+ 
+@@ -726,14 +726,12 @@ test('symbols-leak-test',
+ # build-test only
+ executable('test-build-pedantic',
+ 	   'test/build-pedantic.c',
+-	   dependencies : [dep_udev],
+ 	   include_directories : [includes_src, includes_include],
+ 	   c_args : ['-std=c99', '-pedantic', '-Werror'],
+ 	   install : false)
+ # build-test only
+ executable('test-build-std-gnuc90',
+ 	   'test/build-pedantic.c',
+-	   dependencies : [dep_udev],
+ 	   include_directories : [includes_src, includes_include],
+ 	   c_args : ['-std=gnu89', '-Werror'],
+ 	   install : false)
+@@ -747,7 +745,6 @@ executable('test-build-linker',
+ if add_languages('cpp', required: false)
+ 	executable('test-build-cxx',
+ 		   'test/build-cxx.cc',
+-		   dependencies : [dep_udev],
+ 		   include_directories : [includes_src, includes_include],
+ 		   install : false)
+ endif
+diff --git a/src/evdev-mt-touchpad.c b/src/evdev-mt-touchpad.c
+index 4ffc4a39..29faf59e 100644
+--- a/src/evdev-mt-touchpad.c
++++ b/src/evdev-mt-touchpad.c
+@@ -27,6 +27,7 @@
+ #include <math.h>
+ #include <stdbool.h>
+ #include <limits.h>
++#include <libudev.h>
+ 
+ #if HAVE_LIBWACOM
+ #include <libwacom/libwacom.h>
+diff --git a/src/evdev-tablet-pad-leds.c b/src/evdev-tablet-pad-leds.c
+index ff21878f..70df1d06 100644
+--- a/src/evdev-tablet-pad-leds.c
++++ b/src/evdev-tablet-pad-leds.c
+@@ -23,6 +23,7 @@
+ 
+ #include "config.h"
+ 
++#include <libudev.h>
+ #include <limits.h>
+ #include <fcntl.h>
+ 
+diff --git a/src/evdev.c b/src/evdev.c
+index bf85aa24..ba889b6a 100644
+--- a/src/evdev.c
++++ b/src/evdev.c
+@@ -37,6 +37,7 @@
+ #include <mtdev-plumbing.h>
+ #include <assert.h>
+ #include <math.h>
++#include <libudev.h>
+ 
+ #include "libinput.h"
+ #include "evdev.h"
+diff --git a/src/libinput.c b/src/libinput.c
+index e764375b..b532f1e3 100644
+--- a/src/libinput.c
++++ b/src/libinput.c
+@@ -33,6 +33,7 @@
+ #include <sys/epoll.h>
+ #include <unistd.h>
+ #include <assert.h>
++#include <libudev.h>
+ 
+ #include "libinput.h"
+ #include "libinput-private.h"
+diff --git a/src/libinput.h b/src/libinput.h
+index 5a19f79d..f5ae835d 100644
+--- a/src/libinput.h
++++ b/src/libinput.h
+@@ -32,12 +32,14 @@ extern "C" {
+ #include <stdlib.h>
+ #include <stdint.h>
+ #include <stdarg.h>
+-#include <libudev.h>
+ 
+ #define LIBINPUT_ATTRIBUTE_PRINTF(_format, _args) \
+ 	__attribute__ ((format (printf, _format, _args)))
+ #define LIBINPUT_ATTRIBUTE_DEPRECATED __attribute__ ((deprecated))
+ 
++struct udev;
++struct udev_device;
++
+ /**
+  * @ingroup base
+  * @struct libinput
+diff --git a/src/quirks.h b/src/quirks.h
+index 88159b59..526177c0 100644
+--- a/src/quirks.h
++++ b/src/quirks.h
+@@ -28,10 +28,10 @@
+ #include <stdbool.h>
+ #include <stdint.h>
+ 
+-#include <libudev.h>
+-
+ #include "libinput.h"
+ 
++struct udev_device;
++
+ /**
+  * Handle to the quirks context.
+  */
+diff --git a/src/udev-seat.c b/src/udev-seat.c
+index ce96ece3..3af01606 100644
+--- a/src/udev-seat.c
++++ b/src/udev-seat.c
+@@ -24,6 +24,7 @@
+ 
+ #include "config.h"
+ 
++#include <libudev.h>
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
+diff --git a/src/udev-seat.h b/src/udev-seat.h
+index ee54b422..196561db 100644
+--- a/src/udev-seat.h
++++ b/src/udev-seat.h
+@@ -26,7 +26,6 @@
+ 
+ #include "config.h"
+ 
+-#include <libudev.h>
+ #include "libinput-private.h"
+ 
+ struct udev_seat {
+diff --git a/test/litest.h b/test/litest.h
+index ab66ff9e..9d6598be 100644
+--- a/test/litest.h
++++ b/test/litest.h
+@@ -33,6 +33,7 @@
+ #include <libevdev/libevdev.h>
+ #include <libevdev/libevdev-uinput.h>
+ #include <libinput.h>
++#include <libudev.h>
+ #include <math.h>
+ 
+ #include "check-double-macros.h"
+diff --git a/tools/libinput-debug-gui.c b/tools/libinput-debug-gui.c
+index d68f1ea1..ae9364e6 100644
+--- a/tools/libinput-debug-gui.c
++++ b/tools/libinput-debug-gui.c
+@@ -29,6 +29,7 @@
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <getopt.h>
++#include <libudev.h>
+ #include <math.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+diff --git a/tools/libinput-debug-tablet.c b/tools/libinput-debug-tablet.c
+index b2406d68..a5959fa7 100644
+--- a/tools/libinput-debug-tablet.c
++++ b/tools/libinput-debug-tablet.c
+@@ -28,6 +28,7 @@
+ #include <fcntl.h>
+ #include <inttypes.h>
+ #include <getopt.h>
++#include <libudev.h>
+ #include <poll.h>
+ #include <stdio.h>
+ #include <string.h>
+diff --git a/tools/libinput-quirks.c b/tools/libinput-quirks.c
+index 1a80f367..6aac4b1e 100644
+--- a/tools/libinput-quirks.c
++++ b/tools/libinput-quirks.c
+@@ -27,6 +27,7 @@
+ #include <stdlib.h>
+ #include <errno.h>
+ #include <getopt.h>
++#include <libudev.h>
+ #include <sys/stat.h>
+ 
+ #include "quirks.h"
+
+From a6f21673e13efc52fff100d315316ba14c6db848 Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Fri, 3 Jan 2020 21:51:55 -0800
+Subject: [PATCH] Make udev optional
+
+---
+ meson.build                 | 568 +++++++++++++++++++-----------------
+ meson_options.txt           |   8 +
+ src/evdev-mt-touchpad.c     |   9 +-
+ src/evdev-tablet-pad-leds.c |  15 +-
+ src/evdev.c                 | 117 +++++++-
+ src/evdev.h                 |   5 +-
+ src/libinput.c              |   5 +
+ src/path-seat.c             | 115 +++++---
+ src/quirks.c                |  46 +--
+ src/udev-seat.c             |  25 +-
+ 10 files changed, 564 insertions(+), 349 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index e65ac51e..75b393f4 100644
+--- a/meson.build
++++ b/meson.build
+@@ -122,7 +122,6 @@ endif
+ 
+ # Dependencies
+ pkgconfig = import('pkgconfig')
+-dep_udev = dependency('libudev')
+ dep_mtdev = dependency('mtdev', version : '>= 1.1.0')
+ dep_libevdev = dependency('libevdev')
+ dep_lm = cc.find_library('m', required : false)
+@@ -152,46 +151,54 @@ endif
+ 
+ ############ udev bits ############
+ 
+-executable('libinput-device-group',
+-	   'udev/libinput-device-group.c',
+-	   dependencies : [dep_udev, dep_libwacom],
+-	   include_directories : [includes_src, includes_include],
+-	   install : true,
+-	   install_dir : dir_udev_callouts)
+-executable('libinput-fuzz-extract',
+-	   'udev/libinput-fuzz-extract.c',
+-	   'src/util-strings.c',
+-	   'src/util-prop-parsers.c',
+-	   dependencies : [dep_udev, dep_libevdev, dep_lm],
+-	   include_directories : [includes_src, includes_include],
+-	   install : true,
+-	   install_dir : dir_udev_callouts)
+-executable('libinput-fuzz-to-zero',
+-	   'udev/libinput-fuzz-to-zero.c',
+-	   dependencies : [dep_udev, dep_libevdev],
+-	   include_directories : [includes_src, includes_include],
+-	   install : true,
+-	   install_dir : dir_udev_callouts)
+-
+-udev_rules_config = configuration_data()
+-udev_rules_config.set('UDEV_TEST_PATH', '')
+-configure_file(input : 'udev/80-libinput-device-groups.rules.in',
+-	       output : '80-libinput-device-groups.rules',
+-	       install_dir : dir_udev_rules,
+-	       configuration : udev_rules_config)
+-configure_file(input : 'udev/90-libinput-fuzz-override.rules.in',
+-	       output : '90-libinput-fuzz-override.rules',
+-	       install_dir : dir_udev_rules,
+-	       configuration : udev_rules_config)
+-
+-litest_udev_rules_config = configuration_data()
+-litest_udev_rules_config.set('UDEV_TEST_PATH', meson.current_build_dir() + '/')
+-litest_groups_rules_file = configure_file(input : 'udev/80-libinput-device-groups.rules.in',
+-	       output : '80-libinput-device-groups-litest.rules',
+-	       configuration : litest_udev_rules_config)
+-litest_fuzz_override_file = configure_file(input : 'udev/90-libinput-fuzz-override.rules.in',
+-					   output : '90-libinput-fuzz-override-litest.rules',
+-					   configuration : litest_udev_rules_config)
++have_udev = get_option('udev')
++config_h.set10('HAVE_UDEV', have_udev)
++if have_udev
++	dep_udev = dependency('libudev')
++
++	executable('libinput-device-group',
++		   'udev/libinput-device-group.c',
++		   dependencies : [dep_udev, dep_libwacom],
++		   include_directories : [includes_src, includes_include],
++		   install : true,
++		   install_dir : dir_udev_callouts)
++	executable('libinput-fuzz-extract',
++		   'udev/libinput-fuzz-extract.c',
++		   'src/util-strings.c',
++		   'src/util-prop-parsers.c',
++		   dependencies : [dep_udev, dep_libevdev, dep_lm],
++		   include_directories : [includes_src, includes_include],
++		   install : true,
++		   install_dir : dir_udev_callouts)
++	executable('libinput-fuzz-to-zero',
++		   'udev/libinput-fuzz-to-zero.c',
++		   dependencies : [dep_udev, dep_libevdev],
++		   include_directories : [includes_src, includes_include],
++		   install : true,
++		   install_dir : dir_udev_callouts)
++
++	udev_rules_config = configuration_data()
++	udev_rules_config.set('UDEV_TEST_PATH', '')
++	configure_file(input : 'udev/80-libinput-device-groups.rules.in',
++		       output : '80-libinput-device-groups.rules',
++		       install_dir : dir_udev_rules,
++		       configuration : udev_rules_config)
++	configure_file(input : 'udev/90-libinput-fuzz-override.rules.in',
++		       output : '90-libinput-fuzz-override.rules',
++		       install_dir : dir_udev_rules,
++		       configuration : udev_rules_config)
++
++	litest_udev_rules_config = configuration_data()
++	litest_udev_rules_config.set('UDEV_TEST_PATH', meson.current_build_dir() + '/')
++	litest_groups_rules_file = configure_file(input : 'udev/80-libinput-device-groups.rules.in',
++		       output : '80-libinput-device-groups-litest.rules',
++		       configuration : litest_udev_rules_config)
++	litest_fuzz_override_file = configure_file(input : 'udev/90-libinput-fuzz-override.rules.in',
++						   output : '90-libinput-fuzz-override-litest.rules',
++						   configuration : litest_udev_rules_config)
++else
++	dep_udev = declare_dependency()
++endif
+ 
+ ############ Check for leftover udev rules ########
+ 
+@@ -465,256 +472,267 @@ endif
+ subdir('completion/zsh')
+ 
+ ############ tools ############
+-libinput_tool_path = dir_libexec
+-config_h.set_quoted('LIBINPUT_TOOL_PATH', libinput_tool_path)
+-tools_shared_sources = [ 'tools/shared.c',
+-			 'tools/shared.h',
+-			 'src/builddir.h' ]
+-deps_tools_shared = [ dep_libinput, dep_libevdev ]
+-lib_tools_shared = static_library('tools_shared',
+-				  tools_shared_sources,
+-				  include_directories : [includes_src, includes_include],
+-				  dependencies : deps_tools_shared)
+-dep_tools_shared = declare_dependency(link_with : lib_tools_shared,
+-				      dependencies : deps_tools_shared)
+-
+-man_config = configuration_data()
+-man_config.set('LIBINPUT_VERSION', meson.project_version())
+-man_config.set('LIBINPUT_DATA_DIR', dir_data)
+-
+-deps_tools = [ dep_tools_shared, dep_libinput ]
+-libinput_debug_events_sources = [
+-	'tools/libinput-debug-events.c',
+-	libinput_version_h,
+-]
+-executable('libinput-debug-events',
+-	   libinput_debug_events_sources,
+-	   dependencies : deps_tools,
+-	   include_directories : [includes_src, includes_include],
+-	   install_dir : libinput_tool_path,
+-	   install : true
+-	   )
+-configure_file(input : 'tools/libinput-debug-events.man',
+-	       output : 'libinput-debug-events.1',
+-	       configuration : man_config,
+-	       install_dir : dir_man1,
+-	       )
+-
+-libinput_debug_tablet_sources = [ 'tools/libinput-debug-tablet.c' ]
+-executable('libinput-debug-tablet',
+-	   libinput_debug_tablet_sources,
+-	   dependencies : deps_tools,
+-	   include_directories : [includes_src, includes_include],
+-	   install_dir : libinput_tool_path,
+-	   install : true)
+-
+-configure_file(input : 'tools/libinput-debug-tablet.man',
+-	       output : 'libinput-debug-tablet.1',
+-	       configuration : man_config,
+-	       install_dir : dir_man1,
+-	       )
+-
+-libinput_quirks_sources = [ 'tools/libinput-quirks.c' ]
+-libinput_quirks = executable('libinput-quirks',
+-			     libinput_quirks_sources,
+-			     dependencies : [dep_libquirks, dep_tools_shared, dep_libinput],
+-			     include_directories : [includes_src, includes_include],
+-			     install_dir : libinput_tool_path,
+-			     install : true
+-			    )
+-test('validate-quirks',
+-     libinput_quirks,
+-     args: ['validate', '--data-dir=@0@'.format(dir_src_quirks)],
+-     suite : ['all']
+-     )
+ 
+-configure_file(input : 'tools/libinput-quirks.man',
+-	       output : 'libinput-quirks.1',
+-	       configuration : man_config,
+-	       install_dir : dir_man1,
+-	       )
+-# Same man page for the subtools to stay consistent with the other tools
+-configure_file(input : 'tools/libinput-quirks.man',
+-	       output : 'libinput-quirks-list.1',
+-	       configuration : man_config,
+-	       install_dir : dir_man1,
+-	       )
+-configure_file(input : 'tools/libinput-quirks.man',
+-	       output : 'libinput-quirks-validate.1',
+-	       configuration : man_config,
+-	       install_dir : dir_man1,
+-	       )
+-
+-libinput_list_devices_sources = [ 'tools/libinput-list-devices.c' ]
+-libinput_list_devices = executable('libinput-list-devices',
+-				   libinput_list_devices_sources,
+-				   dependencies : deps_tools,
+-				   include_directories : [includes_src, includes_include],
+-				   install_dir : libinput_tool_path,
+-				   install : true,
+-				  )
+-test('list-devices',
+-     libinput_list_devices,
+-     suite : ['all', 'root', 'hardware'])
+-
+-configure_file(input : 'tools/libinput-list-devices.man',
+-	       output : 'libinput-list-devices.1',
+-	       configuration : man_config,
+-	       install_dir : dir_man1,
+-	       )
+-
+-libinput_measure_sources = [ 'tools/libinput-measure.c' ]
+-executable('libinput-measure',
+-	   libinput_measure_sources,
+-	   dependencies : deps_tools,
+-	   include_directories : [includes_src, includes_include],
+-	   install_dir : libinput_tool_path,
+-	   install : true,
+-	   )
+-configure_file(input : 'tools/libinput-measure.man',
+-	       output : 'libinput-measure.1',
+-	       configuration : man_config,
+-	       install_dir : dir_man1,
+-	       )
+-
+-src_python_tools = files(
+-	      'tools/libinput-measure-fuzz.py',
+-	      'tools/libinput-measure-touchpad-tap.py',
+-	      'tools/libinput-measure-touchpad-pressure.py',
+-	      'tools/libinput-measure-touch-size.py',
+-)
++if get_option('tools')
++	if not have_udev
++		error('tools require -Dudev=true')
++	endif
+ 
+-config_noop = configuration_data()
+-# Set a dummy replacement to silence meson warnings:
+-# meson.build:487: WARNING: Got an empty configuration_data() object and
+-# 		   found no substitutions in the input file 'foo'. If you
+-# 		   want to copy a file to the build dir, use the 'copy:'
+-# 		   keyword argument added in 0.47.0
+-config_noop.set('dummy', 'dummy')
+-foreach t : src_python_tools
+-	configure_file(input: t,
+-		       output: '@BASENAME@',
+-		       configuration : config_noop,
+-		       install_dir : libinput_tool_path
+-		      )
+-endforeach
++	libinput_tool_path = dir_libexec
++	config_h.set_quoted('LIBINPUT_TOOL_PATH', libinput_tool_path)
++	tools_shared_sources = [ 'tools/shared.c',
++				 'tools/shared.h',
++				 'src/builddir.h' ]
++	deps_tools_shared = [ dep_libinput, dep_libevdev ]
++	lib_tools_shared = static_library('tools_shared',
++					  tools_shared_sources,
++					  include_directories : [includes_src, includes_include],
++					  dependencies : deps_tools_shared)
++	dep_tools_shared = declare_dependency(link_with : lib_tools_shared,
++					      dependencies : deps_tools_shared)
++
++	man_config = configuration_data()
++	man_config.set('LIBINPUT_VERSION', meson.project_version())
++	man_config.set('LIBINPUT_DATA_DIR', dir_data)
++
++	deps_tools = [ dep_tools_shared, dep_libinput ]
++	libinput_debug_events_sources = [
++		'tools/libinput-debug-events.c',
++		libinput_version_h,
++	]
++	executable('libinput-debug-events',
++		   libinput_debug_events_sources,
++		   dependencies : deps_tools,
++		   include_directories : [includes_src, includes_include],
++		   install_dir : libinput_tool_path,
++		   install : true
++		   )
++	configure_file(input : 'tools/libinput-debug-events.man',
++		       output : 'libinput-debug-events.1',
++		       configuration : man_config,
++		       install_dir : dir_man1,
++		       )
+ 
+-src_man = files(
+-	      'tools/libinput-measure-fuzz.man',
+-	      'tools/libinput-measure-touchpad-tap.man',
+-	      'tools/libinput-measure-touchpad-pressure.man',
+-	      'tools/libinput-measure-touch-size.man',
+-)
++	libinput_debug_tablet_sources = [ 'tools/libinput-debug-tablet.c' ]
++	executable('libinput-debug-tablet',
++		   libinput_debug_tablet_sources,
++		   dependencies : deps_tools,
++		   include_directories : [includes_src, includes_include],
++		   install_dir : libinput_tool_path,
++		   install : true)
+ 
+-foreach m : src_man
+-	configure_file(input : m,
+-		       output : '@BASENAME@.1',
++	configure_file(input : 'tools/libinput-debug-tablet.man',
++		       output : 'libinput-debug-tablet.1',
+ 		       configuration : man_config,
+-		       install_dir : dir_man1)
+-endforeach
++		       install_dir : dir_man1,
++		       )
+ 
+-libinput_record_sources = [ 'tools/libinput-record.c', git_version_h ]
+-executable('libinput-record',
+-	   libinput_record_sources,
+-	   dependencies : deps_tools + [dep_udev],
+-	   include_directories : [includes_src, includes_include],
+-	   install_dir : libinput_tool_path,
+-	   install : true,
+-	   )
+-configure_file(input : 'tools/libinput-record.man',
+-	       output : 'libinput-record.1',
+-	       configuration : man_config,
+-	       install_dir : dir_man1,
+-	       )
+-
+-install_data('tools/libinput-replay',
+-	     install_dir : libinput_tool_path)
+-configure_file(input : 'tools/libinput-replay.man',
+-	       output : 'libinput-replay.1',
+-	       configuration : man_config,
+-	       install_dir : dir_man1,
+-	       )
+-
+-if get_option('debug-gui')
+-	dep_gtk = dependency('gtk+-3.0', version : '>= 3.20')
+-	dep_cairo = dependency('cairo')
+-	dep_glib = dependency('glib-2.0')
+-
+-	debug_gui_sources = [ 'tools/libinput-debug-gui.c' ]
+-	deps_debug_gui = [
+-			dep_gtk,
+-			dep_cairo,
+-			dep_glib,
+-			] + deps_tools
+-	executable('libinput-debug-gui',
+-		   debug_gui_sources,
+-		   dependencies : deps_debug_gui,
++	libinput_quirks_sources = [ 'tools/libinput-quirks.c' ]
++	libinput_quirks = executable('libinput-quirks',
++				     libinput_quirks_sources,
++				     dependencies : [dep_libquirks, dep_tools_shared, dep_libinput],
++				     include_directories : [includes_src, includes_include],
++				     install_dir : libinput_tool_path,
++				     install : true
++				    )
++	test('validate-quirks',
++	     libinput_quirks,
++	     args: ['validate', '--data-dir=@0@'.format(dir_src_quirks)],
++	     suite : ['all']
++	     )
++
++	configure_file(input : 'tools/libinput-quirks.man',
++		       output : 'libinput-quirks.1',
++		       configuration : man_config,
++		       install_dir : dir_man1,
++		       )
++	# Same man page for the subtools to stay consistent with the other tools
++	configure_file(input : 'tools/libinput-quirks.man',
++		       output : 'libinput-quirks-list.1',
++		       configuration : man_config,
++		       install_dir : dir_man1,
++		       )
++	configure_file(input : 'tools/libinput-quirks.man',
++		       output : 'libinput-quirks-validate.1',
++		       configuration : man_config,
++		       install_dir : dir_man1,
++		       )
++
++	libinput_list_devices_sources = [ 'tools/libinput-list-devices.c' ]
++	libinput_list_devices = executable('libinput-list-devices',
++					   libinput_list_devices_sources,
++					   dependencies : deps_tools,
++					   include_directories : [includes_src, includes_include],
++					   install_dir : libinput_tool_path,
++					   install : true,
++					  )
++	test('list-devices',
++	     libinput_list_devices,
++	     suite : ['all', 'root', 'hardware'])
++
++	configure_file(input : 'tools/libinput-list-devices.man',
++		       output : 'libinput-list-devices.1',
++		       configuration : man_config,
++		       install_dir : dir_man1,
++		       )
++
++	libinput_measure_sources = [ 'tools/libinput-measure.c' ]
++	executable('libinput-measure',
++		   libinput_measure_sources,
++		   dependencies : deps_tools,
+ 		   include_directories : [includes_src, includes_include],
+ 		   install_dir : libinput_tool_path,
+-		   install : true
++		   install : true,
+ 		   )
+-	configure_file(input : 'tools/libinput-debug-gui.man',
+-		       output : 'libinput-debug-gui.1',
++	configure_file(input : 'tools/libinput-measure.man',
++		       output : 'libinput-measure.1',
++		       configuration : man_config,
++		       install_dir : dir_man1,
++		       )
++
++	src_python_tools = files(
++		      'tools/libinput-measure-fuzz.py',
++		      'tools/libinput-measure-touchpad-tap.py',
++		      'tools/libinput-measure-touchpad-pressure.py',
++		      'tools/libinput-measure-touch-size.py',
++	)
++
++	config_noop = configuration_data()
++	# Set a dummy replacement to silence meson warnings:
++	# meson.build:487: WARNING: Got an empty configuration_data() object and
++	# 		   found no substitutions in the input file 'foo'. If you
++	# 		   want to copy a file to the build dir, use the 'copy:'
++	# 		   keyword argument added in 0.47.0
++	config_noop.set('dummy', 'dummy')
++	foreach t : src_python_tools
++		configure_file(input: t,
++			       output: '@BASENAME@',
++			       configuration : config_noop,
++			       install_dir : libinput_tool_path
++			      )
++	endforeach
++
++	src_man = files(
++		      'tools/libinput-measure-fuzz.man',
++		      'tools/libinput-measure-touchpad-tap.man',
++		      'tools/libinput-measure-touchpad-pressure.man',
++		      'tools/libinput-measure-touch-size.man',
++	)
++
++	foreach m : src_man
++		configure_file(input : m,
++			       output : '@BASENAME@.1',
++			       configuration : man_config,
++			       install_dir : dir_man1)
++	endforeach
++
++	libinput_record_sources = [ 'tools/libinput-record.c', git_version_h ]
++	executable('libinput-record',
++		   libinput_record_sources,
++		   dependencies : deps_tools + [dep_udev],
++		   include_directories : [includes_src, includes_include],
++		   install_dir : libinput_tool_path,
++		   install : true,
++		   )
++	configure_file(input : 'tools/libinput-record.man',
++		       output : 'libinput-record.1',
+ 		       configuration : man_config,
+ 		       install_dir : dir_man1,
+ 		       )
+-endif
+ 
+-libinput_sources = [ 'tools/libinput-tool.c' ]
++	install_data('tools/libinput-replay',
++		     install_dir : libinput_tool_path)
++	configure_file(input : 'tools/libinput-replay.man',
++		       output : 'libinput-replay.1',
++		       configuration : man_config,
++		       install_dir : dir_man1,
++		       )
+ 
+-libinput_tool = executable('libinput',
+-			   libinput_sources,
+-			   dependencies : deps_tools,
++	if get_option('debug-gui')
++		if not have_udev
++			error('debug-gui requires -Dudev=true')
++		endif
++
++		dep_gtk = dependency('gtk+-3.0', version : '>= 3.20')
++		dep_cairo = dependency('cairo')
++		dep_glib = dependency('glib-2.0')
++
++		debug_gui_sources = [ 'tools/libinput-debug-gui.c' ]
++		deps_debug_gui = [
++				dep_gtk,
++				dep_cairo,
++				dep_glib,
++				] + deps_tools
++		executable('libinput-debug-gui',
++			   debug_gui_sources,
++			   dependencies : deps_debug_gui,
+ 			   include_directories : [includes_src, includes_include],
++			   install_dir : libinput_tool_path,
+ 			   install : true
+-			  )
+-configure_file(input : 'tools/libinput.man',
+-	       output : 'libinput.1',
+-	       configuration : man_config,
+-	       install_dir : dir_man1,
+-	       )
+-
+-ptraccel_debug_sources = [ 'tools/ptraccel-debug.c' ]
+-executable('ptraccel-debug',
+-	   ptraccel_debug_sources,
+-	   dependencies : [ dep_libfilter, dep_libinput ],
+-	   include_directories : [includes_src, includes_include],
+-	   install : false
+-	   )
++			   )
++		configure_file(input : 'tools/libinput-debug-gui.man',
++			       output : 'libinput-debug-gui.1',
++			       configuration : man_config,
++			       install_dir : dir_man1,
++			       )
++	endif
+ 
+-# Don't run the test during a release build because we rely on the magic
+-# subtool lookup
+-if get_option('buildtype') == 'debug' or get_option('buildtype') == 'debugoptimized'
+-	config_tool_option_test = configuration_data()
+-	config_tool_option_test.set('MESON_ENABLED_DEBUG_GUI', get_option('debug-gui'))
+-	tool_option_test = configure_file(input: 'tools/test-tool-option-parsing.py',
+-					  output: '@BASENAME@',
+-					  configuration : config_tool_option_test)
+-	test('tool-option-parsing',
+-	     tool_option_test,
+-	     args : ['--tool-path', libinput_tool.full_path()],
+-	     suite : ['all', 'root'],
+-	     timeout : 240)
+-endif
++	libinput_sources = [ 'tools/libinput-tool.c' ]
+ 
+-# the libinput tools check whether we execute from the builddir, this is
+-# the test to verify that lookup. We test twice, once as normal test
+-# run from the builddir, once after copying to /tmp
+-test_builddir_lookup = executable('test-builddir-lookup',
+-				  'test/test-builddir-lookup.c',
+-				  dependencies : [ dep_tools_shared],
+-				  include_directories : [includes_src, includes_include],
+-				  install : false)
+-test('tools-builddir-lookup',
+-     test_builddir_lookup,
+-     args : ['--builddir-is-set'],
+-     suite : ['all'])
+-test('tools-builddir-lookup-installed',
+-     find_program('test/helper-copy-and-exec-from-tmp.sh'),
+-     args : [test_builddir_lookup.full_path(), '--builddir-is-null'],
+-     env : ['LD_LIBRARY_PATH=@0@'.format(meson.current_build_dir())],
+-     suite : ['all'],
+-     workdir : '/tmp')
++	libinput_tool = executable('libinput',
++				   libinput_sources,
++				   dependencies : deps_tools,
++				   include_directories : [includes_src, includes_include],
++				   install : true
++				  )
++	configure_file(input : 'tools/libinput.man',
++		       output : 'libinput.1',
++		       configuration : man_config,
++		       install_dir : dir_man1,
++		       )
++
++	ptraccel_debug_sources = [ 'tools/ptraccel-debug.c' ]
++	executable('ptraccel-debug',
++		   ptraccel_debug_sources,
++		   dependencies : [ dep_libfilter, dep_libinput ],
++		   include_directories : [includes_src, includes_include],
++		   install : false
++		   )
++
++	# Don't run the test during a release build because we rely on the magic
++	# subtool lookup
++	if get_option('buildtype') == 'debug' or get_option('buildtype') == 'debugoptimized'
++		config_tool_option_test = configuration_data()
++		config_tool_option_test.set('MESON_ENABLED_DEBUG_GUI', get_option('debug-gui'))
++		tool_option_test = configure_file(input: 'tools/test-tool-option-parsing.py',
++						  output: '@BASENAME@',
++						  configuration : config_tool_option_test)
++		test('tool-option-parsing',
++		     tool_option_test,
++		     args : ['--tool-path', libinput_tool.full_path()],
++		     suite : ['all', 'root'],
++		     timeout : 240)
++	endif
++
++	# the libinput tools check whether we execute from the builddir, this is
++	# the test to verify that lookup. We test twice, once as normal test
++	# run from the builddir, once after copying to /tmp
++	test_builddir_lookup = executable('test-builddir-lookup',
++					  'test/test-builddir-lookup.c',
++					  dependencies : [ dep_tools_shared],
++					  include_directories : [includes_src, includes_include],
++					  install : false)
++	test('tools-builddir-lookup',
++	     test_builddir_lookup,
++	     args : ['--builddir-is-set'],
++	     suite : ['all'])
++	test('tools-builddir-lookup-installed',
++	     find_program('test/helper-copy-and-exec-from-tmp.sh'),
++	     args : [test_builddir_lookup.full_path(), '--builddir-is-null'],
++	     env : ['LD_LIBRARY_PATH=@0@'.format(meson.current_build_dir())],
++	     suite : ['all'],
++	     workdir : '/tmp')
++endif
+ 
+ ############ tests ############
+ 
+@@ -752,6 +770,10 @@ endif
+ # This is the test suite runner, we allow disabling that one because of
+ # dependencies
+ if get_option('tests')
++	if not have_udev
++		error('tests require -Dudev=true')
++	endif
++
+ 	dep_check = dependency('check', version : '>= 0.9.10')
+ 
+ 	gstack = find_program('gstack', required : false)
+diff --git a/meson_options.txt b/meson_options.txt
+index 7819449c..c1cf43a6 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -10,6 +10,10 @@ option('libwacom',
+        type: 'boolean',
+        value: true,
+        description: 'Use libwacom for tablet identification (default=true)')
++option('udev',
++       type: 'boolean',
++       value: true,
++       description: 'Use libudev for device detection (default=true)')
+ option('debug-gui',
+        type: 'boolean',
+        value: true,
+@@ -18,6 +22,10 @@ option('tests',
+        type: 'boolean',
+        value: true,
+        description: 'Build the tests [default=true]')
++option('tools',
++       type: 'boolean',
++       value: true,
++       description: 'Build the tools [default=true]')
+ option('install-tests',
+        type: 'boolean',
+        value: false,
+diff --git a/src/evdev-mt-touchpad.c b/src/evdev-mt-touchpad.c
+index 29faf59e..3f605c73 100644
+--- a/src/evdev-mt-touchpad.c
++++ b/src/evdev-mt-touchpad.c
+@@ -27,12 +27,15 @@
+ #include <math.h>
+ #include <stdbool.h>
+ #include <limits.h>
+-#include <libudev.h>
+ 
+ #if HAVE_LIBWACOM
+ #include <libwacom/libwacom.h>
+ #endif
+ 
++#if HAVE_UDEV
++#include <libudev.h>
++#endif
++
+ #include "quirks.h"
+ #include "evdev-mt-touchpad.h"
+ 
+@@ -2609,8 +2612,12 @@ evdev_tag_touchpad(struct evdev_device *device,
+ 	int bustype, vendor;
+ 	const char *prop;
+ 
++#if HAVE_UDEV
+ 	prop = udev_device_get_property_value(udev_device,
+ 					      "ID_INPUT_TOUCHPAD_INTEGRATION");
++#else
++	prop = NULL;
++#endif
+ 	if (prop) {
+ 		if (streq(prop, "internal")) {
+ 			evdev_tag_touchpad_internal(device);
+diff --git a/src/evdev-tablet-pad-leds.c b/src/evdev-tablet-pad-leds.c
+index 70df1d06..2cdda68c 100644
+--- a/src/evdev-tablet-pad-leds.c
++++ b/src/evdev-tablet-pad-leds.c
+@@ -23,7 +23,6 @@
+ 
+ #include "config.h"
+ 
+-#include <libudev.h>
+ #include <limits.h>
+ #include <fcntl.h>
+ 
+@@ -33,6 +32,10 @@
+ #include <libwacom/libwacom.h>
+ #endif
+ 
++#if HAVE_UDEV
++#include <libudev.h>
++#endif
++
+ struct pad_led_group {
+ 	struct libinput_tablet_pad_mode_group base;
+ 	struct list led_list;
+@@ -187,8 +190,12 @@ pad_group_new_basic(struct pad_dispatch *pad,
+ static inline bool
+ is_litest_device(struct evdev_device *device)
+ {
++#if HAVE_UDEV
+ 	return !!udev_device_get_property_value(device->udev_device,
+ 						"LIBINPUT_TEST_DEVICE");
++#else
++	return false;
++#endif
+ }
+ 
+ static inline struct pad_led_group *
+@@ -240,6 +247,7 @@ pad_led_get_sysfs_base_path(struct evdev_device *device,
+ 			    char *path_out,
+ 			    size_t path_out_sz)
+ {
++#if HAVE_UDEV
+ 	struct udev_device *parent, *udev_device;
+ 	const char *test_path;
+ 	int rc;
+@@ -268,6 +276,9 @@ pad_led_get_sysfs_base_path(struct evdev_device *device,
+ 		      udev_device_get_sysname(parent));
+ 
+ 	return rc != -1;
++#else
++	return false;
++#endif
+ }
+ 
+ #if HAVE_LIBWACOM
+@@ -499,7 +510,7 @@ pad_init_leds_from_libwacom(struct pad_dispatch *pad,
+ 		goto out;
+ 
+ 	wacom = libwacom_new_from_path(db,
+-				       udev_device_get_devnode(device->udev_device),
++				       device->devnode,
+ 				       WFALLBACK_NONE,
+ 				       NULL);
+ 	if (!wacom)
+diff --git a/src/evdev.c b/src/evdev.c
+index ba889b6a..34a9d67d 100644
+--- a/src/evdev.c
++++ b/src/evdev.c
+@@ -31,13 +31,16 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <sys/stat.h>
++#include <sys/types.h>
++#ifndef major
++#include <sys/sysmacros.h>
++#endif
+ #include "linux/input.h"
+ #include <unistd.h>
+ #include <fcntl.h>
+ #include <mtdev-plumbing.h>
+ #include <assert.h>
+ #include <math.h>
+-#include <libudev.h>
+ 
+ #include "libinput.h"
+ #include "evdev.h"
+@@ -50,6 +53,12 @@
+ #include <libwacom/libwacom.h>
+ #endif
+ 
++#if HAVE_UDEV
++#include <libudev.h>
++#endif
++
++#define INPUT_MAJOR 13
++
+ #define DEFAULT_WHEEL_CLICK_ANGLE 15
+ #define DEFAULT_BUTTON_SCROLL_TIMEOUT ms2us(200)
+ 
+@@ -73,6 +82,7 @@ struct evdev_udev_tag_match {
+ 	enum evdev_device_udev_tags tag;
+ };
+ 
++#if HAVE_UDEV
+ static const struct evdev_udev_tag_match evdev_udev_tag_matches[] = {
+ 	{"ID_INPUT",			EVDEV_UDEV_TAG_INPUT},
+ 	{"ID_INPUT_KEYBOARD",		EVDEV_UDEV_TAG_KEYBOARD},
+@@ -88,6 +98,7 @@ static const struct evdev_udev_tag_match evdev_udev_tag_matches[] = {
+ 	{"ID_INPUT_TRACKBALL",		EVDEV_UDEV_TAG_TRACKBALL},
+ 	{"ID_INPUT_SWITCH",		EVDEV_UDEV_TAG_SWITCH},
+ };
++#endif
+ 
+ static inline bool
+ parse_udev_flag(struct evdev_device *device,
+@@ -96,7 +107,11 @@ parse_udev_flag(struct evdev_device *device,
+ {
+ 	const char *val;
+ 
++#if HAVE_UDEV
+ 	val = udev_device_get_property_value(udev_device, property);
++#else
++	val = NULL;
++#endif
+ 	if (!val)
+ 		return false;
+ 
+@@ -1207,7 +1222,11 @@ evdev_read_wheel_click_prop(struct evdev_device *device,
+ 	int val;
+ 
+ 	*angle = DEFAULT_WHEEL_CLICK_ANGLE;
++#if HAVE_UDEV
+ 	prop = udev_device_get_property_value(device->udev_device, prop);
++#else
++	prop = NULL;
++#endif
+ 	if (!prop)
+ 		return false;
+ 
+@@ -1232,7 +1251,11 @@ evdev_read_wheel_click_count_prop(struct evdev_device *device,
+ {
+ 	int val;
+ 
++#if HAVE_UDEV
+ 	prop = udev_device_get_property_value(device->udev_device, prop);
++#else
++	prop = NULL;
++#endif
+ 	if (!prop)
+ 		return false;
+ 
+@@ -1356,8 +1379,12 @@ evdev_read_dpi_prop(struct evdev_device *device)
+ 	if (device->tags & EVDEV_TAG_TRACKPOINT)
+ 		return DEFAULT_MOUSE_DPI;
+ 
++#if HAVE_UDEV
+ 	mouse_dpi = udev_device_get_property_value(device->udev_device,
+ 						   "MOUSE_DPI");
++#else
++	mouse_dpi = NULL;
++#endif
+ 	if (mouse_dpi) {
+ 		dpi = parse_mouse_dpi_property(mouse_dpi);
+ 		if (!dpi) {
+@@ -1558,9 +1585,9 @@ evdev_device_get_udev_tags(struct evdev_device *device,
+ 			   struct udev_device *udev_device)
+ {
+ 	enum evdev_device_udev_tags tags = 0;
+-	int i;
+ 
+-	for (i = 0; i < 2 && udev_device; i++) {
++#if HAVE_UDEV
++	for (int i = 0; i < 2 && udev_device; i++) {
+ 		unsigned j;
+ 		for (j = 0; j < ARRAY_LENGTH(evdev_udev_tag_matches); j++) {
+ 			const struct evdev_udev_tag_match match = evdev_udev_tag_matches[j];
+@@ -1571,6 +1598,29 @@ evdev_device_get_udev_tags(struct evdev_device *device,
+ 		}
+ 		udev_device = udev_device_get_parent(udev_device);
+ 	}
++#else
++	struct libevdev *evdev = device->evdev;
++	struct stat st;
++	if (fstat(device->fd, &st) < 0)
++		return 0;
++	if (major(st.st_rdev) == INPUT_MAJOR)
++		tags |= EVDEV_UDEV_TAG_INPUT;
++	if (libevdev_has_event_code(evdev, EV_KEY, KEY_ENTER))
++		tags |= EVDEV_UDEV_TAG_KEYBOARD;
++	if (libevdev_has_event_code(evdev, EV_REL, REL_X) &&
++	    libevdev_has_event_code(evdev, EV_REL, REL_Y) &&
++	    libevdev_has_event_code(evdev, EV_KEY, BTN_MOUSE))
++		tags |= EVDEV_UDEV_TAG_MOUSE;
++	if (libevdev_has_event_code(evdev, EV_ABS, ABS_X) &&
++	    libevdev_has_event_code(evdev, EV_ABS, ABS_Y)) {
++		if (libevdev_has_event_code(evdev, EV_KEY, BTN_TOOL_FINGER) &&
++		    !libevdev_has_event_code(evdev, EV_KEY, BTN_TOOL_PEN)) {
++			tags |= EVDEV_UDEV_TAG_TOUCHPAD;
++		} else if (libevdev_has_event_code(evdev, EV_KEY, BTN_MOUSE)) {
++			tags |= EVDEV_UDEV_TAG_MOUSE;
++		}
++	}
++#endif
+ 
+ 	return tags;
+ }
+@@ -1969,6 +2019,7 @@ evdev_notify_added_device(struct evdev_device *device)
+ static bool
+ evdev_device_have_same_syspath(struct udev_device *udev_device, int fd)
+ {
++#if HAVE_UDEV
+ 	struct udev *udev = udev_device_get_udev(udev_device);
+ 	struct udev_device *udev_device_new = NULL;
+ 	struct stat st;
+@@ -1987,6 +2038,9 @@ evdev_device_have_same_syspath(struct udev_device *udev_device, int fd)
+ 	if (udev_device_new)
+ 		udev_device_unref(udev_device_new);
+ 	return rc;
++#else
++	return true;
++#endif
+ }
+ 
+ static bool
+@@ -1997,8 +2051,12 @@ evdev_set_device_group(struct evdev_device *device,
+ 	struct libinput_device_group *group = NULL;
+ 	const char *udev_group;
+ 
++#if HAVE_UDEV
+ 	udev_group = udev_device_get_property_value(udev_device,
+ 						    "LIBINPUT_DEVICE_GROUP");
++#else
++	udev_group = NULL;
++#endif
+ 	if (udev_group)
+ 		group = libinput_device_group_find_group(libinput, udev_group);
+ 
+@@ -2105,7 +2163,7 @@ libevdev_log_func(const struct libevdev *evdev,
+ 	struct libinput *libinput = data;
+ 	enum libinput_log_priority pri = LIBINPUT_LOG_PRIORITY_ERROR;
+ 	const char prefix[] = "libevdev: ";
+-	char fmt[strlen(format) + strlen(prefix) + 1];
++	char fmt[1024];
+ 
+ 	switch (priority) {
+ 	case LIBEVDEV_LOG_ERROR:
+@@ -2129,23 +2187,33 @@ udev_device_should_be_ignored(struct udev_device *udev_device)
+ {
+ 	const char *value;
+ 
++#if HAVE_UDEV
+ 	value = udev_device_get_property_value(udev_device,
+ 					       "LIBINPUT_IGNORE_DEVICE");
++#else
++	value = NULL;
++#endif
+ 
+ 	return value && !streq(value, "0");
+ }
+ 
+ struct evdev_device *
+ evdev_device_create(struct libinput_seat *seat,
+-		    struct udev_device *udev_device)
++		    struct udev_device *udev_device,
++		    const char *devnode, const char *sysname)
+ {
+ 	struct libinput *libinput = seat->libinput;
+ 	struct evdev_device *device = NULL;
+ 	int rc;
+ 	int fd;
+ 	int unhandled_device = 0;
+-	const char *devnode = udev_device_get_devnode(udev_device);
+-	const char *sysname = udev_device_get_sysname(udev_device);
++
++#if HAVE_UDEV
++	if (udev_device) {
++		devnode = udev_device_get_devnode(udev_device);
++		sysname = udev_device_get_sysname(udev_device);
++	}
++#endif
+ 
+ 	if (!devnode) {
+ 		log_info(libinput, "%s: no device node associated\n", sysname);
+@@ -2193,10 +2261,16 @@ evdev_device_create(struct libinput_seat *seat,
+ 	device->seat_caps = 0;
+ 	device->is_mt = 0;
+ 	device->mtdev = NULL;
++#if HAVE_UDEV
+ 	device->udev_device = udev_device_ref(udev_device);
++#else
++	device->udev_device = NULL;
++#endif
+ 	device->dispatch = NULL;
+ 	device->fd = fd;
++	device->devnode = devnode;
+ 	device->devname = libevdev_get_name(device->evdev);
++	device->sysname = sysname;
+ 	device->scroll.threshold = 5.0; /* Default may be overridden */
+ 	device->scroll.direction_lock_threshold = 5.0; /* Default may be overridden */
+ 	device->scroll.direction = 0;
+@@ -2255,7 +2329,11 @@ evdev_device_get_output(struct evdev_device *device)
+ const char *
+ evdev_device_get_sysname(struct evdev_device *device)
+ {
++#if HAVE_UDEV
+ 	return udev_device_get_sysname(device->udev_device);
++#else
++	return device->sysname;
++#endif
+ }
+ 
+ const char *
+@@ -2279,7 +2357,11 @@ evdev_device_get_id_vendor(struct evdev_device *device)
+ struct udev_device *
+ evdev_device_get_udev_device(struct evdev_device *device)
+ {
++#if HAVE_UDEV
+ 	return udev_device_ref(device->udev_device);
++#else
++	return NULL;
++#endif
+ }
+ 
+ void
+@@ -2360,8 +2442,12 @@ evdev_read_calibration_prop(struct evdev_device *device)
+ 	const char *prop;
+ 	float calibration[6];
+ 
++#if HAVE_UDEV
+ 	prop = udev_device_get_property_value(device->udev_device,
+ 					      "LIBINPUT_CALIBRATION_MATRIX");
++#else
++	prop = NULL;
++#endif
+ 
+ 	if (prop == NULL)
+ 		return;
+@@ -2396,7 +2482,11 @@ evdev_read_fuzz_prop(struct evdev_device *device, unsigned int code)
+ 	if (rc == -1)
+ 		return 0;
+ 
++#if HAVE_UDEV
+ 	prop = udev_device_get_property_value(device->udev_device, name);
++#else
++	prop = NULL;
++#endif
+ 	if (prop && (safe_atoi(prop, &fuzz) == false || fuzz < 0)) {
+ 		evdev_log_bug_libinput(device,
+ 				       "invalid LIBINPUT_FUZZ property value: %s\n",
+@@ -2726,7 +2816,6 @@ evdev_device_resume(struct evdev_device *device)
+ {
+ 	struct libinput *libinput = evdev_libinput_context(device);
+ 	int fd;
+-	const char *devnode;
+ 	struct input_event ev;
+ 	enum libevdev_read_status status;
+ 
+@@ -2736,11 +2825,7 @@ evdev_device_resume(struct evdev_device *device)
+ 	if (device->was_removed)
+ 		return -ENODEV;
+ 
+-	devnode = udev_device_get_devnode(device->udev_device);
+-	if (!devnode)
+-		return -ENODEV;
+-
+-	fd = open_restricted(libinput, devnode,
++	fd = open_restricted(libinput, device->devnode,
+ 			     O_RDWR | O_NONBLOCK | O_CLOEXEC);
+ 
+ 	if (fd < 0)
+@@ -2839,7 +2924,9 @@ evdev_device_destroy(struct evdev_device *device)
+ 	libinput_timer_destroy(&device->middlebutton.timer);
+ 	libinput_seat_unref(device->base.seat);
+ 	libevdev_free(device->evdev);
++#if HAVE_UDEV
+ 	udev_device_unref(device->udev_device);
++#endif
+ 	free(device);
+ }
+ 
+@@ -2852,17 +2939,15 @@ evdev_tablet_has_left_handed(struct evdev_device *device)
+ 	WacomDeviceDatabase *db = NULL;
+ 	WacomDevice *d = NULL;
+ 	WacomError *error;
+-	const char *devnode;
+ 
+ 	db = libinput_libwacom_ref(li);
+ 	if (!db)
+ 		goto out;
+ 
+ 	error = libwacom_error_new();
+-	devnode = udev_device_get_devnode(device->udev_device);
+ 
+ 	d = libwacom_new_from_path(db,
+-				   devnode,
++				   device->devnode,
+ 				   WFALLBACK_NONE,
+ 				   error);
+ 
+diff --git a/src/evdev.h b/src/evdev.h
+index e95f7e60..490d542e 100644
+--- a/src/evdev.h
++++ b/src/evdev.h
+@@ -167,7 +167,9 @@ struct evdev_device {
+ 	struct libevdev *evdev;
+ 	struct udev_device *udev_device;
+ 	char *output_name;
++	const char *devnode;
+ 	const char *devname;
++	const char *sysname;
+ 	bool was_removed;
+ 	int fd;
+ 	enum evdev_device_seat_capability seat_caps;
+@@ -375,7 +377,8 @@ evdev_verify_dispatch_type(struct evdev_dispatch *dispatch,
+ 
+ struct evdev_device *
+ evdev_device_create(struct libinput_seat *seat,
+-		    struct udev_device *device);
++		    struct udev_device *device,
++		    const char *devnode, const char *sysname);
+ 
+ static inline struct libinput *
+ evdev_libinput_context(const struct evdev_device *device)
+diff --git a/src/libinput.c b/src/libinput.c
+index b532f1e3..76c41d6f 100644
+--- a/src/libinput.c
++++ b/src/libinput.c
+@@ -33,7 +33,10 @@
+ #include <sys/epoll.h>
+ #include <unistd.h>
+ #include <assert.h>
++
++#if HAVE_UDEV
+ #include <libudev.h>
++#endif
+ 
+ #include "libinput.h"
+ #include "libinput-private.h"
+@@ -1974,9 +1977,11 @@ close_restricted(struct libinput *libinput, int fd)
+ bool
+ ignore_litest_test_suite_device(struct udev_device *device)
+ {
++#if HAVE_UDEV
+ 	if (!getenv("LIBINPUT_RUNNING_TEST_SUITE") &&
+ 	    udev_device_get_property_value(device, "LIBINPUT_TEST_DEVICE"))
+ 		return true;
++#endif
+ 
+ 	return false;
+ }
+diff --git a/src/path-seat.c b/src/path-seat.c
+index 99b089a4..22bf06c9 100644
+--- a/src/path-seat.c
++++ b/src/path-seat.c
+@@ -25,7 +25,9 @@
+ 
+ #include <string.h>
+ #include <sys/stat.h>
++#if HAVE_UDEV
+ #include <libudev.h>
++#endif
+ 
+ #include "evdev.h"
+ 
+@@ -38,6 +40,8 @@ struct path_input {
+ struct path_device {
+ 	struct list link;
+ 	struct udev_device *udev_device;
++	const char *devnode;
++	const char *sysname;
+ };
+ 
+ struct path_seat {
+@@ -121,33 +125,36 @@ path_seat_get_named(struct path_input *input,
+ 
+ static struct path_seat *
+ path_seat_get_for_device(struct path_input *input,
+-			 struct udev_device *udev_device,
++			 struct path_device *dev,
+ 			 const char *seat_logical_name_override)
+ {
+ 	struct path_seat *seat = NULL;
+ 	char *seat_name = NULL, *seat_logical_name = NULL;
+ 	const char *seat_prop;
+ 
+-	const char *devnode, *sysname;
+-
+-	devnode = udev_device_get_devnode(udev_device);
+-	sysname = udev_device_get_sysname(udev_device);
+-
+-	seat_prop = udev_device_get_property_value(udev_device, "ID_SEAT");
++#if HAVE_UDEV
++	seat_prop = udev_device_get_property_value(dev->udev_device, "ID_SEAT");
++#else
++	seat_prop = NULL;
++#endif
+ 	seat_name = safe_strdup(seat_prop ? seat_prop : default_seat);
+ 
+ 	if (seat_logical_name_override) {
+ 		seat_logical_name = safe_strdup(seat_logical_name_override);
+ 	} else {
+-		seat_prop = udev_device_get_property_value(udev_device, "WL_SEAT");
++#if HAVE_UDEV
++		seat_prop = udev_device_get_property_value(dev->udev_device, "WL_SEAT");
++#else
++		seat_prop = NULL;
++#endif
+ 		seat_logical_name = strdup(seat_prop ? seat_prop : default_seat_name);
+ 	}
+ 
+ 	if (!seat_logical_name) {
+ 		log_error(&input->base,
+ 			  "%s: failed to create seat name for device '%s'.\n",
+-			  sysname,
+-			  devnode);
++			  dev->sysname,
++			  dev->devnode);
+ 		goto out;
+ 	}
+ 
+@@ -158,8 +165,8 @@ path_seat_get_for_device(struct path_input *input,
+ 	if (!seat) {
+ 		log_info(&input->base,
+ 			 "%s: failed to create seat for device '%s'.\n",
+-			 sysname,
+-			 devnode);
++			 dev->sysname,
++			 dev->devnode);
+ 		goto out;
+ 	}
+ 
+@@ -173,41 +180,41 @@ path_seat_get_for_device(struct path_input *input,
+ 
+ static struct libinput_device *
+ path_device_enable(struct path_input *input,
+-		   struct udev_device *udev_device,
++		   struct path_device *dev,
+ 		   const char *seat_logical_name_override)
+ {
+ 	struct path_seat *seat;
+ 	struct evdev_device *device = NULL;
+ 	const char *output_name;
+-	const char *devnode, *sysname;
+-
+-	devnode = udev_device_get_devnode(udev_device);
+-	sysname = udev_device_get_sysname(udev_device);
+ 
+-	seat = path_seat_get_for_device(input, udev_device, seat_logical_name_override);
++	seat = path_seat_get_for_device(input, dev, seat_logical_name_override);
+ 	if (!seat)
+ 		goto out;
+ 
+-	device = evdev_device_create(&seat->base, udev_device);
++	device = evdev_device_create(&seat->base, dev->udev_device, dev->devnode, dev->sysname);
+ 	libinput_seat_unref(&seat->base);
+ 
+ 	if (device == EVDEV_UNHANDLED_DEVICE) {
+ 		device = NULL;
+ 		log_info(&input->base,
+ 			 "%-7s - not using input device '%s'.\n",
+-			 sysname,
+-			 devnode);
++			 dev->sysname,
++			 dev->devnode);
+ 		goto out;
+ 	} else if (device == NULL) {
+ 		log_info(&input->base,
+ 			 "%-7s - failed to create input device '%s'.\n",
+-			 sysname,
+-			 devnode);
++			 dev->sysname,
++			 dev->devnode);
+ 		goto out;
+ 	}
+ 
+ 	evdev_read_calibration_prop(device);
+-	output_name = udev_device_get_property_value(udev_device, "WL_OUTPUT");
++#if HAVE_UDEV
++	output_name = udev_device_get_property_value(dev->udev_device, "WL_OUTPUT");
++#else
++	output_name = NULL;
++#endif
+ 	device->output_name = safe_strdup(output_name);
+ 
+ out:
+@@ -221,7 +228,7 @@ path_input_enable(struct libinput *libinput)
+ 	struct path_device *dev;
+ 
+ 	list_for_each(dev, &input->path_list, link) {
+-		if (path_device_enable(input, dev->udev_device, NULL) == NULL) {
++		if (path_device_enable(input, dev, NULL) == NULL) {
+ 			path_input_disable(libinput);
+ 			return -1;
+ 		}
+@@ -234,7 +241,11 @@ static void
+ path_device_destroy(struct path_device *dev)
+ {
+ 	list_remove(&dev->link);
++#if HAVE_UDEV
+ 	udev_device_unref(dev->udev_device);
++#else
++	free((char *)dev->devnode);
++#endif
+ 	free(dev);
+ }
+ 
+@@ -244,16 +255,18 @@ path_input_destroy(struct libinput *input)
+ 	struct path_input *path_input = (struct path_input*)input;
+ 	struct path_device *dev, *tmp;
+ 
++#if HAVE_UDEV
+ 	udev_unref(path_input->udev);
++#endif
+ 
+ 	list_for_each_safe(dev, tmp, &path_input->path_list, link)
+ 		path_device_destroy(dev);
+-
+ }
+ 
+ static struct libinput_device *
+ path_create_device(struct libinput *libinput,
+ 		   struct udev_device *udev_device,
++		   const char *devnode,
+ 		   const char *seat_name)
+ {
+ 	struct path_input *input = (struct path_input*)libinput;
+@@ -261,11 +274,23 @@ path_create_device(struct libinput *libinput,
+ 	struct libinput_device *device;
+ 
+ 	dev = zalloc(sizeof *dev);
++#if HAVE_UDEV
+ 	dev->udev_device = udev_device_ref(udev_device);
++	dev->devnode = udev_device_get_devnode(udev_device);
++	dev->sysname = udev_device_get_sysname(udev_device);
++#else
++	dev->udev_device = NULL;
++	dev->devnode = safe_strdup(devnode);
++	dev->sysname = strrchr(devnode, '/');
++	if (dev->sysname)
++		++dev->sysname;
++	else
++		dev->sysname = "";
++#endif
+ 
+ 	list_insert(&input->path_list, &dev->link);
+ 
+-	device = path_device_enable(input, udev_device, seat_name);
++	device = path_device_enable(input, dev, seat_name);
+ 
+ 	if (!device)
+ 		path_device_destroy(dev);
+@@ -280,15 +305,24 @@ path_device_change_seat(struct libinput_device *device,
+ 	struct libinput *libinput = device->seat->libinput;
+ 	struct evdev_device *evdev = evdev_device(device);
+ 	struct udev_device *udev_device = NULL;
++	char *devnode = NULL;
+ 	int rc = -1;
+ 
++#if HAVE_UDEV
+ 	udev_device = evdev->udev_device;
+ 	udev_device_ref(udev_device);
++#else
++	devnode = strdup(evdev->devnode);
++	if (!devnode)
++		return -1;
++#endif
+ 	libinput_path_remove_device(device);
+ 
+-	if (path_create_device(libinput, udev_device, seat_name) != NULL)
++	if (path_create_device(libinput, udev_device, devnode, seat_name) != NULL)
+ 		rc = 0;
++#if HAVE_UDEV
+ 	udev_device_unref(udev_device);
++#endif
+ 	return rc;
+ }
+ 
+@@ -309,14 +343,20 @@ libinput_path_create_context(const struct libinput_interface *interface,
+ 	if (!interface)
+ 		return NULL;
+ 
++#if HAVE_UDEV
+ 	udev = udev_new();
+ 	if (!udev)
+ 		return NULL;
++#else
++	udev = NULL;
++#endif
+ 
+ 	input = zalloc(sizeof *input);
+ 	if (libinput_init(&input->base, interface,
+ 			  &interface_backend, user_data) != 0) {
++#if HAVE_UDEV
+ 		udev_unref(udev);
++#endif
+ 		free(input);
+ 		return NULL;
+ 	}
+@@ -327,6 +367,7 @@ libinput_path_create_context(const struct libinput_interface *interface,
+ 	return &input->base;
+ }
+ 
++#if HAVE_UDEV
+ static inline struct udev_device *
+ udev_device_from_devnode(struct libinput *libinput,
+ 			 struct udev *udev,
+@@ -356,13 +397,12 @@ udev_device_from_devnode(struct libinput *libinput,
+ 
+ 	return dev;
+ }
++#endif
+ 
+ LIBINPUT_EXPORT struct libinput_device *
+ libinput_path_add_device(struct libinput *libinput,
+ 			 const char *path)
+ {
+-	struct path_input *input = (struct path_input *)libinput;
+-	struct udev *udev = input->udev;
+ 	struct udev_device *udev_device;
+ 	struct libinput_device *device;
+ 
+@@ -378,7 +418,10 @@ libinput_path_add_device(struct libinput *libinput,
+ 		return NULL;
+ 	}
+ 
+-	udev_device = udev_device_from_devnode(libinput, udev, path);
++#if HAVE_UDEV
++	struct path_input *input = (struct path_input *)libinput;
++
++	udev_device = udev_device_from_devnode(libinput, input->udev, path);
+ 	if (!udev_device) {
+ 		log_bug_client(libinput, "Invalid path %s\n", path);
+ 		return NULL;
+@@ -388,6 +431,9 @@ libinput_path_add_device(struct libinput *libinput,
+ 		udev_device_unref(udev_device);
+ 		return NULL;
+ 	}
++#else
++	udev_device = NULL;
++#endif
+ 
+ 	/* We cannot do this during path_create_context because the log
+ 	 * handler isn't set up there but we really want to log to the right
+@@ -396,8 +442,10 @@ libinput_path_add_device(struct libinput *libinput,
+ 	 */
+ 	libinput_init_quirks(libinput);
+ 
+-	device = path_create_device(libinput, udev_device, NULL);
++	device = path_create_device(libinput, udev_device, path, NULL);
++#if HAVE_UDEV
+ 	udev_device_unref(udev_device);
++#endif
+ 	return device;
+ }
+ 
+@@ -416,7 +464,8 @@ libinput_path_remove_device(struct libinput_device *device)
+ 	}
+ 
+ 	list_for_each(dev, &input->path_list, link) {
+-		if (dev->udev_device == evdev->udev_device) {
++		if (dev->udev_device == evdev->udev_device &&
++		    dev->devnode == evdev->devnode) {
+ 			path_device_destroy(dev);
+ 			break;
+ 		}
+diff --git a/src/quirks.c b/src/quirks.c
+index 8c0bb96e..ea13f9a7 100644
+--- a/src/quirks.c
++++ b/src/quirks.c
+@@ -31,11 +31,14 @@
+ #undef NDEBUG /* You don't get to disable asserts here */
+ #include <assert.h>
+ #include <stdlib.h>
+-#include <libudev.h>
+ #include <dirent.h>
+ #include <fnmatch.h>
+ #include <libgen.h>
+ 
++#if HAVE_UDEV
++#include <libudev.h>
++#endif
++
+ #include "libinput-versionsort.h"
+ #include "libinput-util.h"
+ 
+@@ -348,34 +351,22 @@ property_cleanup(struct property *p)
+ static inline char *
+ init_dmi(void)
+ {
+-	struct udev *udev;
+-	struct udev_device *udev_device;
+-	const char *modalias = NULL;
++	char modalias[1024];
+ 	char *copy = NULL;
+-	const char *syspath = "/sys/devices/virtual/dmi/id";
++	const char *syspath = "/sys/devices/virtual/dmi/id/modalias";
++	FILE *fp;
+ 
+ 	if (getenv("LIBINPUT_RUNNING_TEST_SUITE"))
+ 		return safe_strdup("dmi:");
+ 
+-	udev = udev_new();
+-	if (!udev)
++	fp = fopen(syspath, "r");
++	if (!fp)
+ 		return NULL;
+ 
+-	udev_device = udev_device_new_from_syspath(udev, syspath);
+-	if (udev_device)
+-		modalias = udev_device_get_property_value(udev_device,
+-							  "MODALIAS");
+-
+-	/* Not sure whether this could ever really fail, if so we should
+-	 * open the sysfs file directly. But then udev wouldn't have failed,
+-	 * so... */
+-	if (!modalias)
+-		modalias = "dmi:*";
++	if (fgets(modalias, sizeof(modalias), fp))
++		copy = safe_strdup(modalias);
+ 
+-	copy = safe_strdup(modalias);
+-
+-	udev_device_unref(udev_device);
+-	udev_unref(udev);
++	fclose(fp);
+ 
+ 	return copy;
+ }
+@@ -1100,6 +1091,7 @@ quirks_context_unref(struct quirks_context *ctx)
+ 	return NULL;
+ }
+ 
++#if HAVE_UDEV
+ static struct quirks *
+ quirks_new(void)
+ {
+@@ -1112,6 +1104,7 @@ quirks_new(void)
+ 
+ 	return q;
+ }
++#endif
+ 
+ struct quirks *
+ quirks_unref(struct quirks *q)
+@@ -1142,13 +1135,16 @@ quirks_unref(struct quirks *q)
+ static const char *
+ udev_prop(struct udev_device *device, const char *prop)
+ {
+-	struct udev_device *d = device;
+ 	const char *value = NULL;
+ 
++#if HAVE_UDEV
++	struct udev_device *d = device;
++
+ 	do {
+ 		value = udev_device_get_property_value(d, prop);
+ 		d = udev_device_get_parent(d);
+ 	} while (value == NULL && d != NULL);
++#endif
+ 
+ 	return value;
+ }
+@@ -1262,6 +1258,7 @@ match_fill_dmi_dt(struct match *m, char *dmi, char *dt)
+ 	}
+ }
+ 
++#if HAVE_UDEV
+ static struct match *
+ match_new(struct udev_device *device,
+ 	  char *dmi, char *dt)
+@@ -1387,11 +1384,13 @@ quirk_match_section(struct quirks_context *ctx,
+ 
+ 	return true;
+ }
++#endif
+ 
+ struct quirks *
+ quirks_fetch_for_device(struct quirks_context *ctx,
+ 			struct udev_device *udev_device)
+ {
++#if HAVE_UDEV
+ 	struct quirks *q = NULL;
+ 	struct section *s;
+ 	struct match *m;
+@@ -1420,6 +1419,9 @@ quirks_fetch_for_device(struct quirks_context *ctx,
+ 	list_insert(&ctx->quirks, &q->link);
+ 
+ 	return q;
++#else
++	return NULL;
++#endif
+ }
+ 
+ 
+diff --git a/src/udev-seat.c b/src/udev-seat.c
+index 3af01606..df280d9a 100644
+--- a/src/udev-seat.c
++++ b/src/udev-seat.c
+@@ -24,6 +24,8 @@
+ 
+ #include "config.h"
+ 
++#if HAVE_UDEV
++
+ #include <libudev.h>
+ #include <stdlib.h>
+ #include <stdio.h>
+@@ -81,7 +83,7 @@ device_added(struct udev_device *udev_device,
+ 			return -1;
+ 	}
+ 
+-	device = evdev_device_create(&seat->base, udev_device);
++	device = evdev_device_create(&seat->base, udev_device, NULL, NULL);
+ 	libinput_seat_unref(&seat->base);
+ 
+ 	if (device == EVDEV_UNHANDLED_DEVICE) {
+@@ -412,3 +414,24 @@ libinput_udev_assign_seat(struct libinput *libinput,
+ 
+ 	return 0;
+ }
++
++#else
++
++#include "udev-seat.h"
++
++LIBINPUT_EXPORT struct libinput *
++libinput_udev_create_context(const struct libinput_interface *interface,
++			     void *user_data,
++			     struct udev *udev)
++{
++	return NULL;
++}
++
++LIBINPUT_EXPORT int
++libinput_udev_assign_seat(struct libinput *libinput,
++			  const char *seat_id)
++{
++	return -1;
++}
++
++#endif /* HAVE_UDEV */
+
+From 597b16f5134b8d095039efb3a27a4d0b643718c3 Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Fri, 3 Jan 2020 22:08:41 -0800
+Subject: [PATCH] Add netlink seat
+
+---
+ meson.build        |   2 +
+ src/libinput.h     |  42 +++++
+ src/netlink-seat.c | 373 +++++++++++++++++++++++++++++++++++++++++++++
+ src/netlink-seat.h |  42 +++++
+ 4 files changed, 459 insertions(+)
+ create mode 100644 src/netlink-seat.c
+ create mode 100644 src/netlink-seat.h
+
+diff --git a/meson.build b/meson.build
+index 75b393f4..7d66eba2 100644
+--- a/meson.build
++++ b/meson.build
+@@ -392,6 +392,8 @@ src_libinput = src_libfilter + [
+ 	'src/evdev-tablet-pad.c',
+ 	'src/evdev-tablet-pad.h',
+ 	'src/evdev-tablet-pad-leds.c',
++	'src/netlink-seat.c',
++	'src/netlink-seat.h',
+ 	'src/path-seat.c',
+ 	'src/udev-seat.c',
+ 	'src/udev-seat.h',
+diff --git a/src/libinput.h b/src/libinput.h
+index f5ae835d..b90cb4ab 100644
+--- a/src/libinput.h
++++ b/src/libinput.h
+@@ -3304,6 +3304,7 @@ libinput_event_switch_get_time_usec(struct libinput_event_switch *event);
+  *
+  * @see libinput_udev_create_context
+  * @see libinput_path_create_context
++ * @see libinput_netlink_create_context
+  */
+ struct libinput_interface {
+ 	/**
+@@ -3439,6 +3440,47 @@ libinput_path_add_device(struct libinput *libinput,
+ void
+ libinput_path_remove_device(struct libinput_device *device);
+ 
++/**
++ * @ingroup base
++ *
++ * Create a new libinput context from netlink. This context is inactive until
++ * assigned a seat ID with libinput_netlink_assign_seat().
++ *
++ * @param interface The callback interface
++ * @param user_data Caller-specific data passed to the various callback
++ * interfaces.
++ *
++ * @return An initialized, but inactive libinput context or NULL on error
++ */
++struct libinput *
++libinput_netlink_create_context(const struct libinput_interface *interface,
++				void *user_data);
++
++/**
++ * @ingroup base
++ *
++ * Assign a seat to this libinput context. New devices or the removal of
++ * existing devices will appear as events during libinput_dispatch().
++ *
++ * libinput_netlink_assign_seat() succeeds even if no input devices are currently
++ * available on this seat, or if devices are available but fail to open in
++ * @ref libinput_interface::open_restricted. Devices that do not have the
++ * minimum capabilities to be recognized as pointer, keyboard or touch
++ * device are ignored. Such devices and those that failed to open
++ * ignored until the next call to libinput_resume().
++ *
++ * This function may only be called once per context.
++ *
++ * @param libinput A libinput context initialized with
++ * libinput_udev_create_context()
++ * @param seat_id A seat identifier. This string must not be NULL.
++ *
++ * @return 0 on success or -1 on failure.
++ */
++int
++libinput_netlink_assign_seat(struct libinput *libinput,
++			     const char *seat_id);
++
+ /**
+  * @ingroup base
+  *
+diff --git a/src/netlink-seat.c b/src/netlink-seat.c
+new file mode 100644
+index 00000000..d22a2821
+--- /dev/null
++++ b/src/netlink-seat.c
+@@ -0,0 +1,373 @@
++/*
++ * Copyright © 2013 Intel Corporation
++ * Copyright © 2013-2015 Red Hat, Inc.
++ * Copyright © 2017 Michael Forney
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a
++ * copy of this software and associated documentation files (the "Software"),
++ * to deal in the Software without restriction, including without limitation
++ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
++ * and/or sell copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice (including the next
++ * paragraph) shall be included in all copies or substantial portions of the
++ * Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
++ * DEALINGS IN THE SOFTWARE.
++ */
++
++#include "config.h"
++
++#include <stdlib.h>
++#include <stdio.h>
++#include <string.h>
++#include <unistd.h>
++#include <fcntl.h>
++#include <dirent.h>
++
++#include <sys/socket.h>
++#include <linux/netlink.h>
++
++#include "evdev.h"
++#include "netlink-seat.h"
++
++#define INPUT_MAJOR 13
++
++static const char default_seat[] = "seat0";
++static const char default_seat_name[] = "default";
++
++static struct netlink_seat *
++netlink_seat_create(struct netlink_input *input,
++		    const char *device_seat,
++		    const char *seat_name);
++static struct netlink_seat *
++netlink_seat_get_named(struct netlink_input *input, const char *seat_name);
++
++static int
++device_added(struct netlink_input *input,
++	     const char *devnode)
++{
++	struct evdev_device *device;
++	const char *device_seat, *seat_name, *sysname;
++	struct netlink_seat *seat;
++
++	device_seat = default_seat;
++	seat_name = default_seat_name;
++	seat = netlink_seat_get_named(input, seat_name);
++
++	if (seat)
++		libinput_seat_ref(&seat->base);
++	else {
++		seat = netlink_seat_create(input, device_seat, seat_name);
++		if (!seat)
++			return -1;
++	}
++
++	sysname = strrchr(devnode, '/');
++	if (sysname)
++		++sysname;
++	else
++		sysname = "";
++
++	device = evdev_device_create(&seat->base, NULL, devnode, sysname);
++	libinput_seat_unref(&seat->base);
++
++	if (device == EVDEV_UNHANDLED_DEVICE) {
++		log_info(&input->base,
++			 "%-7s - not using input device '%s'\n",
++			 sysname,
++			 devnode);
++		return 0;
++	} else if (device == NULL) {
++		log_info(&input->base,
++			 "%-7s - failed to create input device '%s'\n",
++			 sysname,
++			 devnode);
++		return 0;
++	}
++
++	evdev_read_calibration_prop(device);
++
++	return 0;
++}
++
++static void
++device_removed(struct netlink_input *input, const char *devnode)
++{
++	struct evdev_device *device, *next;
++	struct netlink_seat *seat;
++
++	list_for_each(seat, &input->base.seat_list, base.link) {
++		list_for_each_safe(device, next,
++				   &seat->base.devices_list, base.link) {
++			if (streq(devnode, device->devnode)) {
++				evdev_device_remove(device);
++				break;
++			}
++		}
++	}
++}
++
++static int
++select_device(const struct dirent *entry)
++{
++	const char *p;
++
++	if (strncmp(entry->d_name, "event", 5) != 0)
++		return 0;
++	for (p = entry->d_name + 5; '0' <= *p && *p <= '9'; ++p)
++		;
++	return *p == '\0';
++}
++
++static int
++netlink_input_add_devices(struct netlink_input *input)
++{
++	struct dirent **devices;
++	char path[PATH_MAX];
++	int i, n, len;
++
++	n = scandir("/dev/input", &devices, &select_device, &alphasort);
++	if (n == -1)
++		return -1;
++	for (i = 0; i < n; ++i) {
++		len = snprintf(path, sizeof(path), "/dev/input/%s", devices[i]->d_name);
++		free(devices[i]);
++		if (len < 0 || (size_t)len >= sizeof(path)) {
++			free(devices);
++			return -1;
++		}
++		device_added(input, path);
++	}
++	free(devices);
++
++	return 0;
++}
++
++static void
++netlink_input_remove_devices(struct netlink_input *input)
++{
++	struct evdev_device *device, *next;
++	struct netlink_seat *seat, *tmp;
++
++	list_for_each_safe(seat, tmp, &input->base.seat_list, base.link) {
++		libinput_seat_ref(&seat->base);
++		list_for_each_safe(device, next,
++				   &seat->base.devices_list, base.link) {
++			evdev_device_remove(device);
++		}
++		libinput_seat_unref(&seat->base);
++	}
++}
++
++static void
++netlink_input_disable(struct libinput *libinput)
++{
++	struct netlink_input *input = (struct netlink_input*)libinput;
++
++	if (input->sock == -1)
++		return;
++
++	close(input->sock);
++	input->sock = -1;
++	libinput_remove_source(&input->base, input->source);
++	input->source = NULL;
++
++	netlink_input_remove_devices(input);
++}
++
++static void
++netlink_handler(void *data)
++{
++	struct netlink_input *input = data;
++	char buf[BUFSIZ], *key, *val;
++	ssize_t n;
++	size_t len;
++	char *action = NULL, *devname = NULL, *devnode, *sysname;
++
++	n = read(input->sock, buf, sizeof(buf));
++	if (n <= 0)
++		return;
++	for (key = buf; key < buf + n; key += len + 1) {
++		len = strlen(key);
++		val = strchr(key, '=');
++		if (!val)
++			continue;
++		*val++ = '\0';
++		if (strcmp(key, "ACTION") == 0) {
++			action = val;
++		} else if (strcmp(key, "SUBSYSTEM") == 0) {
++			if (strcmp(val, "input") != 0)
++				return;
++		} else if (strcmp(key, "DEVNAME") == 0) {
++			devname = val;
++		}
++	}
++	if (!action || !devname)
++		return;
++	sysname = strrchr(devname, '/');
++	if (sysname)
++		++sysname;
++	else
++		sysname = devname;
++	if (strncmp(sysname, "event", 5) != 0)
++		return;
++	devnode = devname - 5;
++	memcpy(devnode, "/dev/", 5);
++	if (strcmp(action, "add") == 0)
++		device_added(input, devnode);
++	else if (strcmp(action, "remove") == 0)
++		device_removed(input, devnode);
++}
++
++static int
++netlink_input_enable(struct libinput *libinput)
++{
++	int s;
++	struct sockaddr_nl addr = {
++		.nl_family = AF_NETLINK,
++		.nl_groups = 1,
++	};
++	struct netlink_input *input = (struct netlink_input*)libinput;
++
++	if (input->sock != -1)
++		return 0;
++	s = socket(AF_NETLINK, SOCK_DGRAM | SOCK_CLOEXEC, NETLINK_KOBJECT_UEVENT);
++	if (s == -1)
++		return -1;
++	if (bind(s, (void *)&addr, sizeof(addr)) < 0) {
++		close(s);
++		return -1;
++	}
++	input->source = libinput_add_fd(&input->base, s, netlink_handler, input);
++	if (!input->source) {
++		close(s);
++		return -1;
++	}
++	input->sock = s;
++	if (netlink_input_add_devices(input) < 0) {
++		netlink_input_disable(libinput);
++		return -1;
++	}
++
++	return 0;
++}
++
++static void
++netlink_input_destroy(struct libinput *input)
++{
++}
++
++static void
++netlink_seat_destroy(struct libinput_seat *seat)
++{
++	struct netlink_seat *nseat = (struct netlink_seat*)seat;
++	free(nseat);
++}
++
++static struct netlink_seat *
++netlink_seat_create(struct netlink_input *input,
++		    const char *device_seat,
++		    const char *seat_name)
++{
++	struct netlink_seat *seat;
++
++	seat = zalloc(sizeof(*seat));
++
++	libinput_seat_init(&seat->base, &input->base,
++			   device_seat, seat_name,
++			   netlink_seat_destroy);
++
++	return seat;
++}
++
++static struct netlink_seat *
++netlink_seat_get_named(struct netlink_input *input, const char *seat_name)
++{
++	struct netlink_seat *seat;
++
++	list_for_each(seat, &input->base.seat_list, base.link) {
++		if (streq(seat->base.logical_name, seat_name))
++			return seat;
++	}
++
++	return NULL;
++}
++
++static int
++netlink_device_change_seat(struct libinput_device *device,
++			   const char *seat_name)
++{
++	struct libinput *libinput = device->seat->libinput;
++	struct netlink_input *input = (struct netlink_input *)libinput;
++	struct evdev_device *evdev = evdev_device(device);
++	char *devnode;
++	int rc;
++
++	devnode = safe_strdup(evdev->devnode);
++	device_removed(input, devnode);
++	rc = device_added(input, devnode);
++	free(devnode);
++
++	return rc;
++}
++
++static const struct libinput_interface_backend interface_backend = {
++	.resume = netlink_input_enable,
++	.suspend = netlink_input_disable,
++	.destroy = netlink_input_destroy,
++	.device_change_seat = netlink_device_change_seat,
++};
++
++LIBINPUT_EXPORT struct libinput *
++libinput_netlink_create_context(const struct libinput_interface *interface,
++				void *user_data)
++{
++	struct netlink_input *input;
++
++	if (!interface)
++		return NULL;
++
++	input = zalloc(sizeof(*input));
++	input->sock = -1;
++
++	if (libinput_init(&input->base, interface,
++			  &interface_backend, user_data) != 0) {
++		libinput_unref(&input->base);
++		free(input);
++		return NULL;
++	}
++
++	return &input->base;
++}
++
++LIBINPUT_EXPORT int
++libinput_netlink_assign_seat(struct libinput *libinput,
++			     const char *seat_id)
++{
++	struct netlink_input *input = (struct netlink_input*)libinput;
++
++	if (libinput->interface_backend != &interface_backend) {
++		log_bug_client(libinput, "Mismatching backends.\n");
++		return -1;
++	}
++
++	/* We cannot do this during netlink_create_context because the log
++	 * handler isn't set up there but we really want to log to the right
++	 * place if the quirks run into parser errors. So we have to do it
++	 * here since we can expect the log handler to be set up by now.
++	 */
++	libinput_init_quirks(libinput);
++
++	if (netlink_input_enable(&input->base) < 0)
++		return -1;
++
++	return 0;
++}
+diff --git a/src/netlink-seat.h b/src/netlink-seat.h
+new file mode 100644
+index 00000000..cd8d3ef2
+--- /dev/null
++++ b/src/netlink-seat.h
+@@ -0,0 +1,42 @@
++/*
++ * Copyright © 2013 Intel Corporation
++ * Copyright © 2017 Michael Forney
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a
++ * copy of this software and associated documentation files (the "Software"),
++ * to deal in the Software without restriction, including without limitation
++ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
++ * and/or sell copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice (including the next
++ * paragraph) shall be included in all copies or substantial portions of the
++ * Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
++ * DEALINGS IN THE SOFTWARE.
++ */
++
++#ifndef _NETLINK_SEAT_H_
++#define _NETLINK_SEAT_H_
++
++#include "config.h"
++
++#include "libinput-private.h"
++
++struct netlink_seat {
++	struct libinput_seat base;
++};
++
++struct netlink_input {
++	struct libinput base;
++	struct libinput_source *source;
++	int sock;
++};
++
++#endif
+

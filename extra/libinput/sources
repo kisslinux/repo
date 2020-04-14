@@ -1,1 +1,2 @@
-https://github.com/dylanaraps/libinput/archive/ba64d392169ce35b11b0d1463e468c6bd7c656bd.tar.gz
+https://github.com/wayland-project/libinput/archive/1.15.5.tar.gz
+patches/libinput-optional-udev.patch

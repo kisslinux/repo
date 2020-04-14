@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < libinput-optional-udev.patch
+
 export DESTDIR="$1"
 
 # Meson build has no support for automatically using
