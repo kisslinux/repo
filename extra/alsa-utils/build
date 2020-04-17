@@ -3,6 +3,7 @@
 ./configure \
     --prefix=/usr \
     --sbindir=/usr/bin \
+    --with-udev-rules-dir=/usr/lib/udev/rules.d \
     --disable-alsaconf \
     --disable-bat \
     --disable-xmlto
