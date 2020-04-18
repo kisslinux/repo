@@ -6,8 +6,9 @@ sed -i 's/perl //;s/xml2lst\.pl/xml2lst/' rules/Makefile.in
 
 ./configure \
     --prefix=/usr \
-    --with-xkb-rules-symlink=xfree86,xorg \
+    --disable-nls \
     --enable-compat-rules \
+    --with-xkb-rules-symlink=xfree86,xorg \
     --without-xsltproc
 
 make

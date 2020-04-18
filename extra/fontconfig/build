@@ -7,7 +7,8 @@ patch -p1 < fontconfig-fix-1744377.patch
     --prefix=/usr \
     --localstatedir=/var \
     --sysconfdir=/etc \
-    --with-xmldir=/etc/fonts
+    --with-xmldir=/etc/fonts \
+    --disable-nls
 
 make
 make DESTDIR="$1" install
