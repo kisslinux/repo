@@ -8,7 +8,8 @@ sed -i 's/perl //;s/xml2lst\.pl/xml2lst/' rules/Makefile.in
     --prefix=/usr \
     --with-xkb-rules-symlink=xfree86,xorg \
     --enable-compat-rules \
-    --without-xsltproc
+    --without-xsltproc \
+    --disable-nls
 
 make
 make DESTDIR="$1" install
