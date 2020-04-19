@@ -6,7 +6,8 @@ export CFLAGS="$CFLAGS -fcommon"
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
-    --enable-noexecstack
+    --enable-noexecstack \
+    --disable-nls
 
 make
 make DESTDIR="$1" install
