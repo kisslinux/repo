@@ -56,4 +56,3 @@ ac_add_options --disable-updater
 ac_add_options --disable-dbus
 ac_add_options --disable-eme
 ac_add_options --disable-necko-wifi
-ac_add_options --disable-webrtc
