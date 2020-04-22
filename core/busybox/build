@@ -19,8 +19,8 @@ make CC="${CC:-cc}" HOSTCC="${CC:-cc}"
 make CONFIG_PREFIX="$1/usr" install
 
 # Aptly name the busybox binaries.
-mv "$1/usr/bin/busybox"        "$1/usr/bin/busybox-suid"
-mv "$1/usr/bin/busybox-nosuid" "$1/usr/bin/busybox"
+mv -f "$1/usr/bin/busybox"        "$1/usr/bin/busybox-suid"
+mv -f "$1/usr/bin/busybox-nosuid" "$1/usr/bin/busybox"
 
 # Install the non-suid symlinks.
 "$1/usr/bin/busybox" --list | while read -r bin; do

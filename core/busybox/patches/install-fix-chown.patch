@@ -1,0 +1,36 @@
+chown must precede chmod because on some systems,
+chown clears the set[ug]id bits for non-superusers,
+resulting in incorrect permissions.
+diff --git a/coreutils/install.c b/coreutils/install.c
+index 8270490..0256aeb 100644
+--- a/coreutils/install.c
++++ b/coreutils/install.c
+@@ -244,6 +244,14 @@ int install_main(int argc, char **argv)
+ 			}
+ 		}
+ 
++		/* Set the user and group id */
++		if ((opts & (OPT_OWNER|OPT_GROUP))
++		 && lchown(dest, uid, gid) == -1
++		) {
++			bb_perror_msg("can't change %s of %s", "ownership", dest);
++			ret = EXIT_FAILURE;
++		}
++
+ 		/* Set the file mode (always, not only with -m).
+ 		 * GNU coreutils 6.10 is not affected by umask. */
+ 		if (chmod(dest, mode) == -1) {
+@@ -254,13 +262,6 @@ int install_main(int argc, char **argv)
+ 		if (use_default_selinux_context)
+ 			setdefaultfilecon(dest);
+ #endif
+-		/* Set the user and group id */
+-		if ((opts & (OPT_OWNER|OPT_GROUP))
+-		 && lchown(dest, uid, gid) == -1
+-		) {
+-			bb_perror_msg("can't change %s of %s", "ownership", dest);
+-			ret = EXIT_FAILURE;
+-		}
+  next:
+ 		if (ENABLE_FEATURE_CLEAN_UP && isdir)
+ 			free(dest);
