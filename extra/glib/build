@@ -22,5 +22,26 @@ meson \
 ninja -C build
 ninja -C build install
 
+
+# json-glib is a separate package which we build alongside
+# glib (as if they were one and the same). The upstream for
+# json-glib is effectively dead (only translation work) so
+# this makes my life a little easier..
+{
+    cd json-glib
+
+    meson \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --mandir=/usr/share/man \
+        -Ddocs=false \
+        -Dintrospection=false \
+        . output
+
+    ninja -C output
+    ninja -C output install
+}
+
+
 # Purge gdbus.
 rm -rf "$1/usr/bin/gdbus"
