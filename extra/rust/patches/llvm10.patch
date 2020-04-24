@@ -1,0 +1,40 @@
+Note from Wyvertux: This patch applies to 1.43.0 AND if LLVM is LLVM 10.
+
+Applied to master branch by Nikita Popov.
+
+diff --git a/src/rustllvm/PassWrapper.cpp b/src/rustllvm/PassWrapper.cpp
+index 90d24d20737db..9e8614e3b6d34 100644
+--- a/src/rustllvm/PassWrapper.cpp
++++ b/src/rustllvm/PassWrapper.cpp
+@@ -67,7 +67,11 @@ extern "C" void LLVMInitializePasses() {
+ }
+ 
+ extern "C" void LLVMTimeTraceProfilerInitialize() {
+-#if LLVM_VERSION_GE(9, 0)
++#if LLVM_VERSION_GE(10, 0)
++  timeTraceProfilerInitialize(
++      /* TimeTraceGranularity */ 0,
++      /* ProcName */ "rustc");
++#elif LLVM_VERSION_GE(9, 0)
+   timeTraceProfilerInitialize();
+ #endif
+ }
+
+diff --git a/src/rustllvm/RustWrapper.cpp b/src/rustllvm/RustWrapper.cpp
+index 25cfee3373dc4..799adb418822d 100644
+--- a/src/rustllvm/RustWrapper.cpp
++++ b/src/rustllvm/RustWrapper.cpp
+@@ -1333,8 +1333,13 @@ extern "C" LLVMValueRef LLVMRustBuildMemSet(LLVMBuilderRef B,
+                                             LLVMValueRef Dst, unsigned DstAlign,
+                                             LLVMValueRef Val,
+                                             LLVMValueRef Size, bool IsVolatile) {
++#if LLVM_VERSION_GE(10, 0)
++  return wrap(unwrap(B)->CreateMemSet(
++      unwrap(Dst), unwrap(Val), unwrap(Size), MaybeAlign(DstAlign), IsVolatile));
++#else
+   return wrap(unwrap(B)->CreateMemSet(
+       unwrap(Dst), unwrap(Val), unwrap(Size), DstAlign, IsVolatile));
++#endif
+ }
+ 
+ extern "C" LLVMValueRef

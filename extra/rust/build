@@ -1,12 +1,14 @@
 #!/bin/sh -e
 
-patch -p1 < musl.patch
+for patch in *.patch; do 
+    patch -p1 < "$patch"
+done
 
 # This package mimics the download process of rust's 'x.py'
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
 {
-    mkdir -p "${cache_dir:=build/cache/2020-02-27}"
+    mkdir -p "${cache_dir:=build/cache/2020-03-12}"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
