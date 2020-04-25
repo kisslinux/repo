@@ -7,5 +7,6 @@ install -Dm755 unpigz "$1/usr/bin/unpigz"
 install -Dm644 pigz.1 "$1/usr/share/man/man1/pigz.1"
 
 ln -sf pigz   "$1/usr/bin/gzip"
+ln -sf pigz   "$1/usr/bin/zcat"
 ln -sf unpigz "$1/usr/bin/gunzip"
 ln -sf pigz.1 "$1/usr/share/man/man1/gzip.1"
