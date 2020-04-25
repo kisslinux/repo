@@ -13,6 +13,10 @@ export PATH=$PATH:$PWD
     --build=x86_64-pc-linux-musl \
     --host=x86_64-pc-linux-musl \
     --enable-targets=x86_64-pep \
+    --enable-gold \
+    --enable-lto \
+    --enable-ld=default \
+    --enable-plugins \
     --disable-multilib \
     --disable-werror \
     --disable-gdb \
