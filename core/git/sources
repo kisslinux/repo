@@ -1,2 +1,3 @@
 https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.26.2.tar.xz
+https://mirrors.edge.kernel.org/pub/software/scm/git/git-manpages-2.26.2.tar.xz man
 patches/git-tiny.patch
