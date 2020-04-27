@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --disable-gettext
+
+make
+make DIST_ROOT="$1" PKG_ROOT_SBIN_DIR=/usr/bin PKG_ROOT_LIB_DIR=/usr/lib install
