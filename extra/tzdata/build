@@ -3,7 +3,7 @@
 pkg_dir=$1
 
 make CC="${CC:-cc}"
-make DESTDIR="$1" install
+make DESTDIR="$1" ZICDIR=/usr/bin install
 
 set -- africa asia australasia europe northamerica southamerica
 
