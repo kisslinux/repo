@@ -11,4 +11,4 @@ sed -i '/chown/d' bsd.prog.mk
 make
 make DESTDIR="$1" install
 
-install -D doas.conf "$1/etc/doas.conf"
+install -Dm644 doas.conf "$1/etc/doas.conf"
