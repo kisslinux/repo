@@ -15,7 +15,7 @@ mkdir -p "$1/usr/lib/ccache/bin"
 
 host=$(cc -dumpmachine)
 
-for link in cc gcc g++ cpp c++ clang clang++ \
+for link in cc gcc g++ cpp c++ \
             "$host-cc" "$host-gcc" "$host-g++" "$host-cpp" "$host-c++"; do
     ln -sf /usr/bin/ccache "$1/usr/lib/ccache/bin/$link"
 done
