@@ -1,4 +1,4 @@
-https://github.com/eqrion/cbindgen/archive/v0.14.1.tar.gz
+https://github.com/eqrion/cbindgen/archive/v0.14.2.tar.gz
 
 # This is a pre-generated list of crate dependencies from the
 # "kiss-cargo-urlgen" utility. This allows us to pre-cache
@@ -11,6 +11,7 @@ https://static.crates.io/crates/c2-chacha/c2-chacha-0.2.3.crate vendor
 https://static.crates.io/crates/cfg-if/cfg-if-0.1.10.crate vendor
 https://static.crates.io/crates/clap/clap-2.33.0.crate vendor
 https://static.crates.io/crates/getrandom/getrandom-0.1.13.crate vendor
+https://static.crates.io/crates/heck/heck-0.3.1.crate vendor
 https://static.crates.io/crates/itoa/itoa-0.4.4.crate vendor
 https://static.crates.io/crates/libc/libc-0.2.66.crate vendor
 https://static.crates.io/crates/log/log-0.4.8.crate vendor
@@ -32,6 +33,7 @@ https://static.crates.io/crates/syn/syn-1.0.11.crate vendor
 https://static.crates.io/crates/tempfile/tempfile-3.1.0.crate vendor
 https://static.crates.io/crates/textwrap/textwrap-0.11.0.crate vendor
 https://static.crates.io/crates/toml/toml-0.5.5.crate vendor
+https://static.crates.io/crates/unicode-segmentation/unicode-segmentation-1.6.0.crate vendor
 https://static.crates.io/crates/unicode-width/unicode-width-0.1.7.crate vendor
 https://static.crates.io/crates/unicode-xid/unicode-xid-0.2.0.crate vendor
 https://static.crates.io/crates/vec_map/vec_map-0.8.1.crate vendor
