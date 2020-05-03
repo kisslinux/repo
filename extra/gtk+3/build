@@ -35,3 +35,8 @@ sed -i 's/docs m4macros/m4macros/'          Makefile.am Makefile.in
 
 make
 make DESTDIR="$1" install
+
+# We don't compile with librsvg which leads to this
+# utility solely causing compiler errors for some
+# packages. It has no use at all.
+rm -f "$1/usr/bin/gtk-encode-symbolic-svg"
