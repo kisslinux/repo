@@ -2,7 +2,7 @@
 
 cat <<EOF
 
-NOTE: To enable 'ccache' add this to your 
+NOTE: To enable 'ccache' add this to your
       '.shellrc' or '.profile'.
 
 -> export PATH=/usr/lib/ccache/bin:\$PATH

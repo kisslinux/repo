@@ -17,7 +17,7 @@ while read -r l || [ "$l" ]; do case $l in
     *'</variantList>'*) var=0;;
     *'</layoutList>'*)  break;;
 
-    *'<name>'*) 
+    *'<name>'*)
         l="${l#*>}"
         [ "$var" -eq 0 ] && ln=${l%<*} || n=${l%<*}
     ;;
@@ -39,7 +39,7 @@ while read -r l || [ "$l" ]; do case $l in
     *'</optionList>'*)  break;;
     *'<name>'*)         n=${l#*>} n=${n%<*} ;;
 
-    *'<description>'*)  
+    *'<description>'*)
         l=${l#*>}
 
         [ "$com" -ne 0 ] || printf '  %-20s %s\n' "$n" "${l%<*}"

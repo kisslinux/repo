@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
+sh >/dev/tty
 export DESTDIR="$1"
 
 cmake -B build \
