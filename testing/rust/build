@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-for patch in *.patch; do 
+for patch in *.patch; do
     patch -p1 < "$patch"
 done
 
@@ -59,7 +59,7 @@ llvm-config = "/usr/bin/llvm-config"
 crt-static  = false
 EOF
 
-export DESTDIR="$1" 
+export DESTDIR="$1"
 
 python3 ./x.py build -j "$(nproc)"
 python3 ./x.py install
