@@ -11,9 +11,10 @@ libdrm
 libelf
 libxcb
 libxshmfence
+linux-headers make
 llvm
-m4           make
-meson        make
-python       make
+m4            make
+meson         make
+python        make
 xorgproto
 zlib

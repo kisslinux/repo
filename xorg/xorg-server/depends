@@ -15,6 +15,7 @@ libressl
 libxcb
 libxkbfile
 libxshmfence
+linux-headers make
 mesa
 pixman
 xkeyboard-config

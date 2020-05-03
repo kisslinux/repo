@@ -3,5 +3,6 @@ libXcursor
 libXinerama
 libXrandr
 libXtst
+linux-headers make
 meson make
 xorg-server

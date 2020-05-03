@@ -2,4 +2,5 @@ bzip2
 curl
 expat
 libressl
+linux-headers make
 zlib
