@@ -5,7 +5,7 @@
 <a href="https://repology.org/repository/kiss_main"><b>[Repology]</b></a>
 <a href="https://k1ss.org"><b>[Website]</b></a>
 <a href="https://github.com/topics/kiss-repo"><b>[User Repositories]</b></a>
-<a href="https://k1ss.org/pages/package-system"><b>[Package System]</b></a>
+<a href="https://k1ss.org/package-system"><b>[Package System]</b></a>
 </p>
 
 <br>
@@ -15,7 +15,7 @@ Read: https://k1ss.org/guidestones.txt
 
 ## Repository signing
 
-See [link](https://k1ss.org/pages/install/#enable-repository-signing) for how to enable repository signing.
+See [link](https://k1ss.org/install) for how to enable repository signing.
 
 <details>
     <summary>Click to view (Dylan Araps') public key.</summary>
