@@ -1,0 +1,14 @@
+--- a/security/sandbox/chromium/sandbox/linux/seccomp-bpf/trap.cc
++++ b/security/sandbox/chromium/sandbox/linux/seccomp-bpf/trap.cc
+@@ -25,6 +25,11 @@
+ #include "sandbox/linux/system_headers/linux_seccomp.h"
+ #include "sandbox/linux/system_headers/linux_signal.h"
+ 
++// musl libc defines siginfo_t __si_fields instead of _sifields
++#if defined(OS_LINUX) && !defined(__GLIBC__)
++#define _sifields __si_fields
++#endif
++
+ namespace {
+ 
+ struct arch_sigsys {

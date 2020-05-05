@@ -1,0 +1,57 @@
+#!/bin/sh -e
+
+# Build autoconf 2.13 for Firefox's sole use.
+# See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
+(
+    cd autoconf2.13
+
+    ./configure \
+        --prefix="$PWD/../junk" \
+        --program-suffix=-2.13
+
+    make
+    make install
+)
+
+# Build yasm for Firefox's sole use.
+# Firefox is the only package which needs it
+# and upstream is kinda dead.
+(
+    cd yasm
+
+    ./configure \
+        --prefix="$PWD/../junk"
+
+    make
+    make install
+)
+
+export PATH=$PWD/junk/bin:$PATH
+export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
+export CC=${CC:-gcc}
+export CXX=${CXX:-g++}
+
+# Keep memory usage as low as possible.
+export LDFLAGS="$LDFLAGS -Wl,--as-needed -Wl,--no-keep-memory -Wl,--stats"
+export MOZ_LINK_FLAGS="$LDFLAGS"
+export MOZ_DEBUG_FLAGS=-g0
+export RUSTFLAGS=-Cdebuginfo=0
+
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
+
+printf 'mk_add_options MOZ_MAKE_FLAGS="%s"\n' \
+    "${MAKEFLAGS:--j1 -l1}" >> mozconfig
+
+MOZ_NOSPAM=1 ./mach build
+DESTDIR="$1" ./mach install
+
+rm -rf "$1/usr/include"
+rm -rf "$1/usr/lib/firefox-devel"
+rm -rf "$1/usr/share/idl"
+rm -rf "$1/usr/lib/firefox/gtk2"
+rm -f  "$1/usr/lib/firefox/browser/features/fxmonitor@mozilla.org.xpi"
+rm -f  "$1/usr/lib/firefox/browser/features/screenshots@mozilla.org.xpi"
+rm -f  "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi"
+rm -f  "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi"
