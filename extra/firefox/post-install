@@ -11,7 +11,4 @@ NOTE: Install the 'firefox-privacy' package to
 NOTE: This includes more telemetry removals,
       hardened settings, no phoning-home etc.
 
--> kiss b firefox-privacy
--> kiss i firefox-privacy
-
 EOF

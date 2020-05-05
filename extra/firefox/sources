@@ -1,6 +1,4 @@
 https://ftp.mozilla.org/pub/firefox/releases/76.0/source/firefox-76.0.source.tar.xz
 https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz autoconf2.13/
 https://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz yasm/
-files/mozconfig
-files/stab.h toolkit/crashreporter/google-breakpad/src/
 patches/no-dbus.patch
