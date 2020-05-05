@@ -26,10 +26,12 @@
     make install
 )
 
-export PATH=$PWD/junk/bin:$PATH
+export DESTDIR="$1"
+export PATH="$PWD/junk/bin:$PATH"
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
-export CC=${CC:-gcc}
-export CXX=${CXX:-g++}
+export CC="${CC:-gcc}"
+export CXX="${CXX:-g++}"
+export MOZ_NOSPAM=1
 
 # Keep memory usage as low as possible.
 export LDFLAGS="$LDFLAGS -Wl,--as-needed -Wl,--no-keep-memory -Wl,--stats"
@@ -37,15 +39,17 @@ export MOZ_LINK_FLAGS="$LDFLAGS"
 export MOZ_DEBUG_FLAGS=-g0
 export RUSTFLAGS=-Cdebuginfo=0
 
-for patch in *.patch; do
-    patch -p1 < "$patch"
-done
+# Hide all compiler warnings.
+export CFLAGS="$CFLAGS -w"
 
-printf 'mk_add_options MOZ_MAKE_FLAGS="%s"\n' \
-    "${MAKEFLAGS:--j1 -l1}" >> mozconfig
+# Down to one patch!!!! (Thank you to Michael Forney).
+patch -p1 < no-dbus.patch
 
-MOZ_NOSPAM=1 ./mach build
-DESTDIR="$1" ./mach install
+printf 'mk_add_options MOZ_MAKE_FLAGS="%s"\n' "${MAKEFLAGS:--j1 -l1}" \
+    >> mozconfig
+
+./mach build
+./mach install
 
 rm -rf "$1/usr/include"
 rm -rf "$1/usr/lib/firefox-devel"
