@@ -33,8 +33,8 @@ export PATH="$PWD/junk/bin:$PATH"
 mkdir -p build
 cd build
 
-export CC="${CC:-clang}"
-export CXX="${CXX:-clang++}"
+export CC="${CC:-gcc}"
+export CXX="${CXX:-g++}"
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 export MOZ_DEBUG_FLAGS=-g0
 export MOZ_NOSPAM=1
@@ -80,7 +80,7 @@ export RUSTFLAGS=-Cdebuginfo=0
     --disable-eme \
     --disable-necko-wifi
 
-make
+make V=0
 make DESTDIR="$1" install
 
 # Remove a lot of uneeded "stuff".
