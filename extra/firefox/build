@@ -80,7 +80,7 @@ export RUSTFLAGS=-Cdebuginfo=0
     --disable-eme \
     --disable-necko-wifi
 
-make V=0
+make
 make DESTDIR="$1" install
 
 # Remove a lot of uneeded "stuff".
