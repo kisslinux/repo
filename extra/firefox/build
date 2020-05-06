@@ -33,12 +33,15 @@ export PATH="$PWD/junk/bin:$PATH"
 mkdir -p build
 cd build
 
-export CC="${CC:-gcc}"
-export CXX="${CXX:-g++}"
+# Bypass 'ccache' as it's totally useless when building
+# Firefox and only slows things down.
+export CC="${CC:-/usr/bin/gcc}"
+export CXX="${CXX:-/usr/bin/g++}"
+
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
+export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
 export MOZ_DEBUG_FLAGS=-g0
 export MOZ_NOSPAM=1
-export RUSTFLAGS=-Cdebuginfo=0
 
 ../configure \
     --prefix=/usr \
