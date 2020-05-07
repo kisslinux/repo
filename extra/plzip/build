@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+# plzip is the only thing that will ever require
+# this library. Let's simple build it and statically
+# compile plzip.
+(cd lzlib; ./configure; make)
+
+./configure \
+    --prefix=/usr \
+    CXXFLAGS="$CXXFLAGS -static -L$PWD/lzlib -I$PWD/lzlib"
+
+make
+make DESTDIR="$1" install
+
+# Create the symlink for compatibility. We're using
+# a multi-threaded implementation of lzip.
+ln -s plzip "$1/usr/bin/lzip"
