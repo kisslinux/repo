@@ -58,6 +58,6 @@ install -Dm755 ../c99 "$1/usr/bin/c99"
 {
     mkdir -p "$1/usr/lib/bfd-plugins"
 
-    ln -s /usr/libexec/gcc/x86_64-pc-linux-musl/10.1.0/liblto_plugin.so \
+    ln -s /usr/lib/gcc/x86_64-pc-linux-musl/10.1.0/liblto_plugin.so \
           "$1/usr/lib/bfd-plugins/liblto_plugin.so"
 }
