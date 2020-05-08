@@ -6,6 +6,7 @@ export CFLAGS="$CFLAGS -fcommon"
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
+    --libexecdir=/usr/lib \
     --enable-noexecstack \
     --disable-nls
 
