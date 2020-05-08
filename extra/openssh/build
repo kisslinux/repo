@@ -5,6 +5,7 @@
     --datadir=/usr/share/openssh \
     --sysconfdir=/etc/ssh \
     --sbindir=/usr/bin \
+    --libexecdir=/usr/lib/openssh \
     --without-selinux \
     --with-privsep-user=nobody \
     --with-mantype=doc \
