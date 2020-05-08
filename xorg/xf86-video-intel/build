@@ -2,7 +2,6 @@
 
 export DESTDIR="$1"
 export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
-export CFLAGS="$CFLAGS -fcommon"
 
 meson \
     --prefix=/usr \
