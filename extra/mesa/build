@@ -25,7 +25,7 @@
 
 export PYTHONPATH
 export DESTDIR="$1"
-export CFLAGS="-DGLX_X86_READONLY_TEXT $CFLAGS -fcommon"
+export CFLAGS="$CFLAGS -DGLX_X86_READONLY_TEXT"
 
 # Fix issues with musl and firefox.
 # https://bugs.freedesktop.org/show_bug.cgi?id=35268
