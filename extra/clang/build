@@ -15,3 +15,14 @@ cmake -B build \
 
 cmake --build   build
 cmake --install build
+
+# Fix up libexec location. This can't be done during
+# the configure stage of the build as it is hardcoded.
+{
+    mv -f "$1/usr/libexec/ccc-analyzer" "$1/usr/lib/clang"
+    mv -f "$1/usr/libexec/c++-analyzer" "$1/usr/lib/clang"
+
+    rmdir "$1/usr/libexec"
+
+    sed -i 's|libexec|lib/clang|' "$1/usr/bin/scan-build"
+}
