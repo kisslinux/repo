@@ -2,6 +2,8 @@
 
 ./configure \
     --prefix=/usr \
+    --sbindir=/usr/bin \
+    --libexecdir=/usr/lib \
     --disable-pam-session \
     --disable-root-mailer \
     --disable-nls \
