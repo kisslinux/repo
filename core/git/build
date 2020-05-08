@@ -20,6 +20,7 @@ EOF
 
 ./configure \
     --prefix=/usr \
+    --libexecdir=/usr/lib \
     ac_cv_snprintf_returns_bogus=no \
     ac_cv_fread_reads_directories=yes
 
