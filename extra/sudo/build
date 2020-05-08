@@ -4,6 +4,7 @@
     --prefix=/usr \
     --disable-pam-session \
     --disable-root-mailer \
+    --disable-nls \
     --enable-pie \
     --without-pam \
     --without-sendmail \
