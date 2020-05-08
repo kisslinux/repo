@@ -12,6 +12,7 @@ meson \
     --prefix=/usr \
     --sysconfdir=/etc \
     --mandir=/usr/share/man \
+    --libexecdir=/usr/lib \
     -Ddebug-gui=false \
     -Ddocumentation=false \
     -Dtests=false \
