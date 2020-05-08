@@ -4,7 +4,8 @@
     --prefix=/usr \
     --sbindir=/usr/bin \
     --sysconfdir=/etc \
-    --rundir=/run
+    --rundir=/run \
+    --libexecdir=/usr/lib/dhcpcd
 
 make
 make DESTDIR="$1" install
