@@ -19,7 +19,8 @@ build_harfbuzz() (
     ./configure \
         --prefix=/usr \
         --with-glib=yes \
-        --with-icu=no
+        --with-icu=no \
+        --with-cairo=no
 
     make
     make DESTDIR="$1" install
