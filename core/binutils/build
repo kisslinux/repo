@@ -10,8 +10,7 @@ export PATH=$PATH:$PWD
 
 ./configure \
     --prefix=/usr \
-    --build=x86_64-pc-linux-musl \
-    --host=x86_64-pc-linux-musl \
+    --with-lib-path=/usr/lib:/usr/local/lib \
     --enable-targets=x86_64-pep \
     --enable-gold \
     --enable-lto \
@@ -26,5 +25,6 @@ export PATH=$PATH:$PWD
     --with-mmap \
     --with-system-zlib
 
-make
-make DESTDIR="$1" install
+make configure-host
+make tooldir=/usr
+make prefix="$1/usr" tooldir="$1/usr" install
