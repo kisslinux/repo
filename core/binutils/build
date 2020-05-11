@@ -28,3 +28,5 @@ export PATH=$PATH:$PWD
 make configure-host
 make tooldir=/usr
 make prefix="$1/usr" tooldir="$1/usr" install
+
+rm -rf "$1/usr/share/info"

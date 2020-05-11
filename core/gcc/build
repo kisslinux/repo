@@ -58,6 +58,7 @@ make DESTDIR="$1" install
 find "$1" -name libgtkpeer.a  -exec rm -f {} +
 find "$1" -name libgjsmalsa.a -exec rm -f {} +
 find "$1" -name libgij.a      -exec rm -f {} +
+rm -rf "$1/usr/share/info"
 
 # Some legacy programs will expect cc
 ln -s gcc "$1/usr/bin/cc"
