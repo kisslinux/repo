@@ -12,6 +12,16 @@ sed -i 's/lib64/lib/'       gcc/gcc/config/i386/linux64.h
 mkdir -p gcc-build
 cd gcc-build
 
+# Grab the system's GCC version.
+IFS=. read -r gcc_version _ 2>/dev/null \
+    < "$KISS_ROOT/var/db/kiss/installed/gcc/version"
+
+# Skip the bootstrap process if we are able.
+case $gcc_version in 10)
+    printf '%s\n' "Minor version difference, disabling bootstrap."
+    bootstrap=--disable-bootstrap
+esac
+
 export libat_cv_have_ifunc=no
 
 ../gcc/configure \
@@ -38,7 +48,8 @@ export libat_cv_have_ifunc=no
     --enable-languages=c,c++ \
     --without-included-gettext \
     --with-system-zlib \
-    --build=x86_64-pc-linux-musl
+    --build=x86_64-pc-linux-musl \
+    "${bootstrap:---enable-bootstrap}"
 
 make
 make DESTDIR="$1" install
