@@ -5,5 +5,3 @@ python setup.py install \
     --root="$1" \
     --optimize=1 \
     --skip-build
-
-rm -rf "$1/usr/share/polkit-1"
