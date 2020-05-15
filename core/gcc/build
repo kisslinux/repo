@@ -14,10 +14,10 @@ cd gcc-build
 
 # Grab the system's GCC version.
 IFS=. read -r gcc_version _ 2>/dev/null \
-    < "$KISS_ROOT/var/db/kiss/installed/gcc/version"
+    < "$KISS_ROOT/var/db/kiss/installed/gcc/version" || gcc_version=null
 
 # Skip the bootstrap process if we are able.
-case $gcc_version in 10)
+case $2 in "$gcc_version"*)
     printf '%s\n' "Minor version difference, disabling bootstrap."
     bootstrap=--disable-bootstrap
 esac
@@ -69,6 +69,6 @@ install -Dm755 ../c99 "$1/usr/bin/c99"
 {
     mkdir -p "$1/usr/lib/bfd-plugins"
 
-    ln -s /usr/lib/gcc/x86_64-pc-linux-musl/10.1.0/liblto_plugin.so \
+    ln -s "/usr/lib/gcc/x86_64-pc-linux-musl/$2/liblto_plugin.so" \
           "$1/usr/lib/bfd-plugins/liblto_plugin.so"
 }
