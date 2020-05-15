@@ -51,5 +51,3 @@ install -Dm0644 grub.default "$1/etc/default/grub"
     rm -f grub/*/gdb_grub
     rm -f grub/*/gmodule.pl
 )
-
-rm -rf "$1/usr/share/info"
