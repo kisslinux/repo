@@ -41,4 +41,3 @@ make DESTDIR="$1" install
 # utility solely causing compiler errors for some
 # packages. It has no use at all.
 rm -f  "$1/usr/bin/gtk-encode-symbolic-svg"
-rm -rf "$1/usr/share/gettext"
