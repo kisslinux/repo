@@ -49,7 +49,5 @@ ninja -C build install
     ninja -C output install
 }
 
-
-# Purge gdbus/unneeded files.
+# Purge gdbus.
 rm -rf "$1/usr/bin/gdbus"
-rm -rf "$1/usr/share/gettext"
