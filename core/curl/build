@@ -10,7 +10,6 @@
     --disable-manual \
     --disable-ldap \
     --disable-ares \
-    --without-libidn \
     --without-librtmp \
     --without-icu \
     --without-libpsl \
