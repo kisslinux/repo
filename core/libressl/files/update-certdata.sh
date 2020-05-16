@@ -1,6 +1,4 @@
 #!/bin/sh -e
-#
-# update-certdata.sh
 
 [ -w /etc/ssl ] || {
     printf '%s\n' "${0##*/}: root required to update cert." >&2
