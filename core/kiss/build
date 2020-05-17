@@ -9,7 +9,7 @@ cp contrib/* "$1/usr/bin/"
 
 # Install distribution documentation.
 for doc in community ports post-install faq guidestones install \
-           package-system style; do
+           package-system package-manager style; do
     install -Dm644 "docs/site/$doc.txt" \
                    "$1/usr/share/doc/kiss/$doc.txt"
 done
