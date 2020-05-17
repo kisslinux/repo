@@ -35,6 +35,10 @@ done
 # Set suid on busybox suid.
 chmod u+s "$1/usr/bin/busybox-suid"
 
+# The acpid command requires that this directory exist
+# and does not automatically create it..
+mkdir -p "$1/etc/acpid"
+
 # Install runit services.
 install -Dm755 acpid.run           "$1/etc/sv/acpid/run"
 install -Dm755 crond.run           "$1/etc/sv/crond/run"
