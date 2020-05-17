@@ -6,7 +6,7 @@
 }
 
 cd /etc/ssl && {
-    curl https://curl.haxx.se/ca/cacert.pem -o cacert.pem
+    curl -LO https://curl.haxx.se/ca/cacert.pem
     mv -f cacert.pem cert.pem
     printf '%s\n' "${0##*/}: updated cert.pem"
 }
