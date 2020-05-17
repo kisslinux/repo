@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 # plzip is the only thing that will ever require
-# this library. Let's simple build it and statically
+# this library. Let's simply build it and statically
 # compile plzip.
 (cd lzlib; ./configure; make)
 
