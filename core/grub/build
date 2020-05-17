@@ -8,7 +8,7 @@ export PYTHON=/bin/true
 # the Python tooling. The /bin/true above will create a
 # blank file, this prevents the blank file from overwriting
 # the existing one.
-sed -i 's/mv $@.new $@/:/g' grub/Makefile.in
+sed -i 's/mv $@.new $@/:/g' ./*/Makefile.in
 
 # Strip '-march' from 'CFLAGS' as per advice from upstream.
 # Fixes build fails on specific hardware.
@@ -19,7 +19,6 @@ CFLAGS=$(printf %s "$CFLAGS" | sed 's/-march=[^ ]*//g')
 pkg_dir=$1
 
 build_grub() (
-    cp -a grub "grub-${1##*=}"
     cd "grub-${1##*=}"
 
     ./configure \
