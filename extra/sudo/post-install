@@ -1,0 +1,19 @@
+#!/bin/sh
+
+cat <<EOF
+# Nice sudo options to make running the package manager a
+# little easier. These options go in /etc/sudoers.
+
+# Disable per-terminal sudo. The password won't need to
+# be re-entered between terminal windows.
+Defaults timestamp_type=global
+
+# Reduce password input frequency. How long sudo should
+# cache a valid password entry (In minutes, 5 is default).
+# (Debian's default is 15: https://wiki.debian.org/sudo)
+Defaults timestamp_timeout=10
+
+# Prevent the password prompt from timing out if left
+# alone with no input for too long.
+Defaults passwd_timeout=0
+EOF
