@@ -3,3 +3,4 @@ files/cdefs.h
 files/queue.h
 files/tree.h
 files/getconf.c
+files/getent.c
