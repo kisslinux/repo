@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #
-# Word splitting (for CPPFLAGS, CC, etc) is sadly required.
+# Word splitting (for CFLAGS, CC, etc) is sadly required.
 # shellcheck disable=2086
 #
 # This package used to provide the old 'libelf' library. This had a sane
@@ -15,7 +15,7 @@
 # elftoolchain requires BSD make to build. Rather than package BSD make,
 # let's just do the equivalent ourselves in shell. This is fairly simple
 # as all we're building is 'libelf' and not the entire toolchain.
-export CPPFLAGS="-fPIC -O2 $CPPFLAGS"
+export CFLAGS="-fPIC -O2 $CFLAGS"
 export LDFLAGS="-shared $LDFLAGS"
 
 # Patch unneeded in next release.
@@ -31,14 +31,14 @@ done
 
 # Create all objects (.o).
 for file in libelf/*.c; do
-    ${CC:-cc} -I./libelf -I./common $LDFLAGS $CPPFLAGS -c \
+    ${CC:-cc} -I./libelf -I./common $LDFLAGS $CFLAGS $CPPFLAGS -c \
         -o "${file%%.c}.o" "$file"
 done
 
 mkdir -p "$1/usr/lib"
 
 # Create shared library.
-${CC:-cc} $LDFLAGS $CPPFLAGS -I./libelf -I./common libelf/*.o \
+${CC:-cc} $LDFLAGS $CFLAGS $CPPFLAGS -I./libelf -I./common libelf/*.o \
     -o "$1/usr/lib/libelf.so.1"
 
 # Create static library.
