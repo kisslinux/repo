@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #
-# Word splitting (for CFLAGS, CC, etc) is sadly required.
+# Word splitting (for CPPFLAGS, CC, etc) is sadly required.
 # shellcheck disable=2086
 #
 # This package used to provide the old 'libelf' library. This had a sane
@@ -15,7 +15,8 @@
 # elftoolchain requires BSD make to build. Rather than package BSD make,
 # let's just do the equivalent ourselves in shell. This is fairly simple
 # as all we're building is 'libelf' and not the entire toolchain.
-export CFLAGS="-shared -fPIC -O2 $CFLAGS"
+export CPPFLAGS="-fPIC -O2 $CPPFLAGS"
+export LDFLAGS="-shared $LDFLAGS"
 
 # Patch unneeded in next release.
 patch -p1 < libelf-linux.patch
@@ -30,16 +31,18 @@ done
 
 # Create all objects (.o).
 for file in libelf/*.c; do
-    ${CC:-cc} -I./libelf -I./common $CFLAGS -c -o "${file%%.c}.o" "$file"
+    ${CC:-cc} -I./libelf -I./common $LDFLAGS $CPPFLAGS -c \
+        -o "${file%%.c}.o" "$file"
 done
 
 mkdir -p "$1/usr/lib"
 
 # Create shared library.
-${CC:-cc} $CFLAGS -I./libelf -I./common libelf/*.o -o "$1/usr/lib/libelf.so.1"
+${CC:-cc} $LDFLAGS $CPPFLAGS -I./libelf -I./common libelf/*.o \
+    -o "$1/usr/lib/libelf.so.1"
 
 # Create static library.
-${AR:-ar} rc "$1/usr/lib/libelf.a" libelf/*.o
+${AR:-ar} -rc "$1/usr/lib/libelf.a" libelf/*.o
 
 # Install remaining headers/files.
 ln -sf         libelf.so.1             "$1/usr/lib/libelf.so"
