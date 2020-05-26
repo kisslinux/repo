@@ -15,7 +15,7 @@
 # elftoolchain requires BSD make to build. Rather than package BSD make,
 # let's just do the equivalent ourselves in shell. This is fairly simple
 # as all we're building is 'libelf' and not the entire toolchain.
-export CFLAGS="-shared -fPIC -O2 $CFLAGS "
+export CFLAGS="-shared -fPIC -O2 $CFLAGS"
 
 # Patch unneeded in next release.
 patch -p1 < libelf-linux.patch
