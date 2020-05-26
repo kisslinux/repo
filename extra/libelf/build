@@ -30,13 +30,13 @@ done
 
 # Create all objects (.o).
 for file in libelf/*.c; do
-    ${CC:-cc} -I./common $CFLAGS -c -o "${file%%.c}.o" "$file"
+    ${CC:-cc} -I./libelf -I./common $CFLAGS -c -o "${file%%.c}.o" "$file"
 done
 
 mkdir -p "$1/usr/lib"
 
 # Create shared library.
-${CC:-cc} $CFLAGS -I./common libelf/*.o -o "$1/usr/lib/libelf.so.1"
+${CC:-cc} $CFLAGS -I./libelf -I./common libelf/*.o -o "$1/usr/lib/libelf.so.1"
 
 # Create static library.
 ${AR:-ar} rc "$1/usr/lib/libelf.a" libelf/*.o
