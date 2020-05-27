@@ -11,7 +11,7 @@ install -dm 0750 "$1/root"
 install -dm 1777 "$1/tmp"
 
 # Setup /usr hierarchy.
-for d in bin include lib lib32 share src; do
+for d in bin include lib share src; do
     install -dm 755 "$1/usr/$d"
 done
 
