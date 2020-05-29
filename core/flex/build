@@ -9,3 +9,5 @@
 
 make
 make DESTDIR="$1" install
+
+ln -s flex "$1/usr/bin/lex"
