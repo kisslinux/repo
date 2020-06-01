@@ -38,6 +38,7 @@ libxcb
 libxshmfence
 llvm          make
 mesa
+m4            make
 nasm          make
 nodejs        make
 pango
