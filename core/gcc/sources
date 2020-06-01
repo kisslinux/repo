@@ -1,5 +1,5 @@
 https://gcc.gnu.org/pub/gcc/releases/gcc-10.1.0/gcc-10.1.0.tar.xz gcc
-https://gmplib.org/download/gmp/gmp-6.1.2.tar.xz gcc/gmp
+https://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.xz gcc/gmp
 https://ftp.gnu.org/gnu/mpfr/mpfr-4.0.2.tar.xz gcc/mpfr
 https://ftp.gnu.org/gnu/mpc/mpc-1.1.0.tar.gz gcc/mpc
 files/c99
