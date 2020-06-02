@@ -1,16 +1,16 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index 00a87868e2..91b05107d9 100644
+index ae8c60bff4..88cfd6fdc1 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -103,25 +103,10 @@ dependencies = [
+@@ -99,25 +99,11 @@ dependencies = [
   "bitflags",
  ]
  
 -[[package]]
 -name = "audio_thread_priority"
--version = "0.22.0"
+-version = "0.22.1"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "407b1b70ad4072a4ff430679b331450166b56631091d6ba46a885cf427392055"
+-checksum = "f8fba1500e466a39dd3faa5aed20a50dfe0aa1b905264a453bbe9f49508994cc"
 -dependencies = [
 - "cfg-if",
 - "dbus",
@@ -19,24 +19,24 @@ index 00a87868e2..91b05107d9 100644
 - "mach",
 - "winapi 0.3.7",
 -]
--
+ 
  [[package]]
  name = "audioipc"
- version = "0.2.4"
+ version = "0.2.5"
  dependencies = [
 - "audio_thread_priority",
   "bincode",
   "bytes 0.4.9",
   "cc",
-@@ -148,7 +133,6 @@ dependencies = [
+@@ -144,7 +130,6 @@ dependencies = [
  name = "audioipc-client"
  version = "0.4.0"
  dependencies = [
 - "audio_thread_priority",
   "audioipc",
   "cubeb-backend",
-  "futures",
-@@ -161,7 +145,6 @@ dependencies = [
+  "futures 0.1.23",
+@@ -157,7 +142,6 @@ dependencies = [
  name = "audioipc-server"
  version = "0.2.3"
  dependencies = [
@@ -44,7 +44,7 @@ index 00a87868e2..91b05107d9 100644
   "audioipc",
   "cubeb-core",
   "error-chain",
-@@ -1659,7 +1642,6 @@ dependencies = [
+@@ -1784,7 +1768,6 @@ dependencies = [
  name = "gkrust-shared"
  version = "0.1.0"
  dependencies = [
@@ -53,10 +53,10 @@ index 00a87868e2..91b05107d9 100644
   "audioipc-server",
   "authenticator",
 diff --git a/dom/ipc/ContentChild.cpp b/dom/ipc/ContentChild.cpp
-index bb10ef9aa8..a8e659e0ed 100644
+index d6350d4ed5..4cd666774b 100644
 --- a/dom/ipc/ContentChild.cpp
 +++ b/dom/ipc/ContentChild.cpp
-@@ -109,9 +109,7 @@
+@@ -115,9 +115,7 @@
  #include "GMPServiceChild.h"
  #include "nsIStringBundle.h"
  #include "Geolocation.h"
@@ -66,19 +66,18 @@ index bb10ef9aa8..a8e659e0ed 100644
  #include "nsIURIMutator.h"
  #include "nsIInputStreamChannel.h"
  #include "nsFocusManager.h"
-@@ -1689,9 +1687,7 @@ mozilla::ipc::IPCResult ContentChild::RecvSetProcessSandbox(
+@@ -1666,9 +1664,7 @@ mozilla::ipc::IPCResult ContentChild::RecvSetProcessSandbox(
    } else {
      // Pre-start audio before sandboxing; see bug 1443612.
      if (StaticPrefs::media_cubeb_sandbox()) {
 -      if (atp_set_real_time_limit(0, 48000)) {
--        NS_WARNING("could not set real-time limit at process startup");
+         NS_WARNING("could not set real-time limit at process startup");
 -      }
-+      NS_WARNING("could not set real-time limit at process startup");
        InstallSoftRealTimeLimitHandler();
      } else {
        Unused << CubebUtils::GetCubebContext();
 diff --git a/dom/media/GraphRunner.cpp b/dom/media/GraphRunner.cpp
-index 7fbafef812..6548528ad3 100644
+index e929967f98..5e463aa8fa 100644
 --- a/dom/media/GraphRunner.cpp
 +++ b/dom/media/GraphRunner.cpp
 @@ -13,7 +13,6 @@
@@ -89,29 +88,27 @@ index 7fbafef812..6548528ad3 100644
  
  namespace mozilla {
  
-@@ -95,9 +94,6 @@ auto GraphRunner::OneIteration(GraphTime aStateEnd, GraphTime aIterationEnd,
+@@ -95,8 +94,6 @@ auto GraphRunner::OneIteration(GraphTime aStateEnd, GraphTime aIterationEnd,
  }
  
  NS_IMETHODIMP GraphRunner::Run() {
 -  atp_handle* handle =
 -      atp_promote_current_thread_to_real_time(0, mGraph->GraphRate());
--
+ 
    nsCOMPtr<nsIThreadInternal> threadInternal = do_QueryInterface(mThread);
    threadInternal->SetObserver(mGraph);
- 
-@@ -119,10 +115,6 @@ NS_IMETHODIMP GraphRunner::Run() {
+@@ -119,9 +116,6 @@ NS_IMETHODIMP GraphRunner::Run() {
      mMonitor.Notify();
    }
  
 -  if (handle) {
 -    atp_demote_current_thread_from_real_time(handle);
 -  }
--
+ 
    dom::WorkletThread::DeleteCycleCollectedJSContext();
  
-   return NS_OK;
 diff --git a/dom/media/UnderrunHandlerLinux.cpp b/dom/media/UnderrunHandlerLinux.cpp
-index af5c84538e..a0140b3fc9 100644
+index af5c84538e..9fecb5ebd2 100644
 --- a/dom/media/UnderrunHandlerLinux.cpp
 +++ b/dom/media/UnderrunHandlerLinux.cpp
 @@ -9,7 +9,6 @@
@@ -128,8 +125,8 @@ index af5c84538e..a0140b3fc9 100644
  void DemoteThreadFromRealTime() {
 -  atp_thread_info* info = atp_get_current_thread_info();
 -  if (!info) {
--    NS_WARNING("Could not get current thread info when demoting thread.");
--    return;
+     NS_WARNING("Could not get current thread info when demoting thread.");
+     return;
 -  }
 -  int rv = atp_demote_thread_from_real_time(info);
 -  if (rv) {
@@ -141,16 +138,14 @@ index af5c84538e..a0140b3fc9 100644
 -    NS_WARNING("Could not free atp_thread_info struct");
 -  }
 -  gRealtimeLimitReached = false;
-+  NS_WARNING("Could not get current thread info when demoting thread.");
-+  return;
  }
  
  }  // namespace mozilla
 diff --git a/dom/media/moz.build b/dom/media/moz.build
-index 3c02e55139..0b0d3b769b 100644
+index 5c9d0270bd..4ecdc697b6 100644
 --- a/dom/media/moz.build
 +++ b/dom/media/moz.build
-@@ -104,7 +104,6 @@ XPIDL_SOURCES += [
+@@ -102,7 +102,6 @@ XPIDL_SOURCES += [
  XPIDL_MODULE = 'dom_media'
  
  EXPORTS += [
@@ -159,11 +154,11 @@ index 3c02e55139..0b0d3b769b 100644
      'ADTSDemuxer.h',
      'AsyncLogger.h',
 diff --git a/media/audioipc/audioipc/Cargo.toml b/media/audioipc/audioipc/Cargo.toml
-index 20bc001093..59c6941adc 100644
+index 1a50c06cfd..eef2c70d0c 100644
 --- a/media/audioipc/audioipc/Cargo.toml
 +++ b/media/audioipc/audioipc/Cargo.toml
-@@ -19,7 +19,6 @@ serde = "1.*.*"
- serde_derive = "1.*.*"
+@@ -19,7 +19,6 @@ serde = "1"
+ serde_derive = "1"
  tokio = "0.1"
  tokio-io = "0.1"
 -audio_thread_priority = "0.22"
@@ -171,37 +166,36 @@ index 20bc001093..59c6941adc 100644
  [target.'cfg(unix)'.dependencies]
  iovec = "0.1"
 diff --git a/media/audioipc/audioipc/src/messages.rs b/media/audioipc/audioipc/src/messages.rs
-index 069cd592a8..ff797cf5cd 100644
+index 069cd592a8..f0fae5b4c1 100644
 --- a/media/audioipc/audioipc/src/messages.rs
 +++ b/media/audioipc/audioipc/src/messages.rs
-@@ -6,7 +6,6 @@
+@@ -5,8 +5,6 @@
+ 
  use crate::PlatformHandle;
  use crate::PlatformHandleType;
- #[cfg(target_os = "linux")]
+-#[cfg(target_os = "linux")]
 -use audio_thread_priority::RtPriorityThreadInfo;
  use cubeb::{self, ffi};
  use std::ffi::{CStr, CString};
  use std::os::raw::{c_char, c_int, c_uint};
-@@ -209,9 +208,6 @@ pub enum ServerMessage {
-     StreamSetVolume(usize, f32),
+@@ -210,8 +208,6 @@ pub enum ServerMessage {
      StreamGetCurrentDevice(usize),
      StreamRegisterDeviceChangeCallback(usize, bool),
--
+ 
 -    #[cfg(target_os = "linux")]
 -    PromoteThreadToRealTime([u8; std::mem::size_of::<RtPriorityThreadInfo>()]),
  }
  
  // Server -> Client messages.
-@@ -241,9 +237,6 @@ pub enum ClientMessage {
+@@ -241,8 +237,6 @@ pub enum ClientMessage {
      StreamCurrentDevice(Device),
      StreamRegisterDeviceChangeCallback,
  
 -    #[cfg(target_os = "linux")]
 -    ThreadPromoted,
--
+ 
      Error(c_int),
  }
- 
 diff --git a/media/audioipc/client/Cargo.toml b/media/audioipc/client/Cargo.toml
 index 82c874e013..eaf9a62cc7 100644
 --- a/media/audioipc/client/Cargo.toml
@@ -215,7 +209,7 @@ index 82c874e013..eaf9a62cc7 100644
  cubeb-backend = "0.6.0"
  futures = { version="0.1.18", default-features=false, features=["use_std"] }
 diff --git a/media/audioipc/client/src/context.rs b/media/audioipc/client/src/context.rs
-index 7441d0c0e0..96e3539831 100644
+index 6b13900c54..87323508b8 100644
 --- a/media/audioipc/client/src/context.rs
 +++ b/media/audioipc/client/src/context.rs
 @@ -6,10 +6,6 @@
@@ -229,7 +223,7 @@ index 7441d0c0e0..96e3539831 100644
  use audioipc::codec::LengthDelimitedCodec;
  use audioipc::frame::{framed, Framed};
  use audioipc::platformhandle_passing::{framed_with_platformhandles, FramedWithPlatformHandles};
-@@ -77,32 +73,6 @@ impl ClientContext {
+@@ -72,31 +68,6 @@ impl ClientContext {
      }
  }
  
@@ -258,11 +252,10 @@ index 7441d0c0e0..96e3539831 100644
 -        }
 -    }
 -}
--
+ 
  fn register_thread(callback: Option<extern "C" fn(*const ::std::os::raw::c_char)>) {
      if let Some(func) = callback {
-         let thr = thread::current();
-@@ -121,7 +91,6 @@ fn promote_and_register_thread(
+@@ -116,7 +87,6 @@ fn promote_and_register_thread(
      rpc: &rpc::ClientProxy<ServerMessage, ClientMessage>,
      callback: Option<extern "C" fn(*const ::std::os::raw::c_char)>,
  ) {
@@ -308,7 +301,7 @@ index 4ae9dc3ddc..ad1e1297d5 100644
              Ok(())
          },
 diff --git a/media/audioipc/server/src/server.rs b/media/audioipc/server/src/server.rs
-index 33b8ecdc9f..2f8ea52245 100644
+index 33b8ecdc9f..e08ffe239a 100644
 --- a/media/audioipc/server/src/server.rs
 +++ b/media/audioipc/server/src/server.rs
 @@ -3,8 +3,6 @@
@@ -320,11 +313,10 @@ index 33b8ecdc9f..2f8ea52245 100644
  use audioipc;
  use audioipc::codec::LengthDelimitedCodec;
  use audioipc::frame::{framed, Framed};
-@@ -611,20 +609,6 @@ impl CubebServer {
-                     enable,
+@@ -612,19 +610,6 @@ impl CubebServer {
                  )
                  .unwrap_or_else(error),
--
+ 
 -            #[cfg(target_os = "linux")]
 -            ServerMessage::PromoteThreadToRealTime(thread_info) => {
 -                let info = RtPriorityThreadInfo::deserialize(thread_info);
@@ -342,26 +334,26 @@ index 33b8ecdc9f..2f8ea52245 100644
  
          trace!("process_msg: req={:?}, resp={:?}", msg, resp);
 diff --git a/toolkit/library/rust/shared/Cargo.toml b/toolkit/library/rust/shared/Cargo.toml
-index 01040fad2d..16e2251fc7 100644
+index 59bb94f621..71c7fa66bf 100644
 --- a/toolkit/library/rust/shared/Cargo.toml
 +++ b/toolkit/library/rust/shared/Cargo.toml
-@@ -40,7 +40,6 @@ storage = { path = "../../../../storage/rust" }
+@@ -41,7 +41,6 @@ storage = { path = "../../../../storage/rust" }
  bookmark_sync = { path = "../../../components/places/bookmark_sync", optional = true }
  shift_or_euc_c = "0.1.0"
  chardetng_c = "0.1.1"
--audio_thread_priority = "0.22"
+-audio_thread_priority = "0.22.1"
  mdns_service = { path="../../../../media/mtransport/mdns_service", optional = true }
  neqo_glue = { path = "../../../../netwerk/socket/neqo_glue" }
  rlbox_lucet_sandbox = { version = "0.1.0", optional = true }
 diff --git a/toolkit/library/rust/shared/lib.rs b/toolkit/library/rust/shared/lib.rs
-index 10c96aa1e7..539dbf9c55 100644
+index 069fbdafb3..2919fdce1c 100644
 --- a/toolkit/library/rust/shared/lib.rs
 +++ b/toolkit/library/rust/shared/lib.rs
-@@ -50,7 +50,6 @@ extern crate xpcom;
+@@ -51,7 +51,6 @@ extern crate xpcom;
  #[cfg(feature = "new_xulstore")]
  extern crate xulstore;
  
 -extern crate audio_thread_priority;
  
- #[cfg(feature = "webrtc")]
- extern crate mdns_service;
+ #[cfg(feature = "new_webext_storage")]
+ extern crate webext_storage_bridge;

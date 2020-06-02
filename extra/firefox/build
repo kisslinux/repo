@@ -60,7 +60,7 @@ export MOZ_NOSPAM=1
     --with-system-zlib \
     --with-system-bz2 \
     --with-system-png \
-    --with-system-libvpx \
+    --without-system-libvpx \
     --with-system-pixman \
     --with-system-ffi \
     --disable-gconf \
