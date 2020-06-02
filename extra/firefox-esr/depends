@@ -37,8 +37,8 @@ libvpx
 libxcb
 libxshmfence
 llvm          make
-mesa
 m4            make
+mesa
 nasm          make
 nodejs        make
 pango
