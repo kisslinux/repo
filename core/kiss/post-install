@@ -1,8 +1,0 @@
-#!/bin/sh
-
-cat <<EOF
-
-NOTE: All distribution documentation is now
-      installed to /usr/share/doc/kiss.
-
-EOF
