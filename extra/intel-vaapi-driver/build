@@ -1,10 +1,13 @@
 #!/bin/sh -e
 
+export DESTDIR="$1"
+
 # Fix build fail with GCC 10.
 export CFLAGS="$CFLAGS -fcommon"
 
-./configure \
-    --prefix=/usr
+meson \
+    --prefix=/usr \
+    . output
 
-make
-make DESTDIR="$1" install
+ninja -C output
+ninja -C output install

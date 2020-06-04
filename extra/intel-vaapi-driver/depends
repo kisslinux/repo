@@ -2,3 +2,4 @@ libdrm
 libpciaccess
 libva
 linux-headers make
+meson         make
