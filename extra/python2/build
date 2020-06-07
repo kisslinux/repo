@@ -1,8 +1,10 @@
 #!/bin/sh -e
 
+patch -p1 < python2-always-pip.patch
+
 ./configure \
     --prefix=/usr \
-    --without-ensurepip
+    --with-ensurepip=yes
 
 make
 make DESTDIR="$1" install
@@ -22,5 +24,5 @@ chmod u+w "$1/usr/lib/libpython"*.a
     rm -rf lib2to3 pydoc* idlelib turtle* ensurepip lib-tk config
 
     cd "$1/usr/bin"
-    rm -f 2to3* pydoc* idle* python
+    rm -f 2to3* pydoc* idle* python pip
 }
