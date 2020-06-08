@@ -7,4 +7,10 @@ NOTE: To enable 'ccache' add this to your
 
 -> export PATH=/usr/lib/ccache/bin:\$PATH
 
+NOTE: Clang is not supported out-of-the-box.
+      The following symlinks need to be created.
+
+-> ln -s /usr/bin/ccache /usr/lib/ccache/bin/clang
+-> ln -s /usr/bin/ccache /usr/lib/ccache/bin/clang++
+
 EOF
