@@ -2,17 +2,20 @@
 
 install -D kiss         "$1/usr/bin/kiss"
 install -D kiss_path.sh "$1/etc/profile.d/kiss_path.sh"
-install -Dm 644 kiss.1  "$1/usr/share/man/man1/kiss.1"
 
 # Install kiss utilities.
 cp contrib/* "$1/usr/bin/"
 
 # Install distribution documentation.
-for doc in faq guidestones install package-system package-manager; do
-    install -Dm644 "docs/site/$doc.txt" \
-                   "$1/usr/share/doc/kiss/$doc.txt"
+for doc in docs/site/*.txt; do
+    install -Dm644 "$doc" "$1/usr/share/doc/kiss/${doc##*/}"
 done
 
-# Install the Wiki documentation.
+# Install the Wiki.
 cp -r wiki "$1/usr/share/doc/kiss/wiki"
-rm -f      "$1/usr/share/docs/kiss/wiki/README.txt"
+
+# Remove unnecessary pages.
+rm -f "$1/usr/share/doc/kiss/wiki/README.txt" \
+      "$1/usr/share/doc/kiss/news.txt" \
+      "$1/usr/share/doc/kiss/blog.txt" \
+      "$1/usr/share/doc/kiss/screenshots.txt"
