@@ -35,8 +35,8 @@ cd build
 
 # Bypass 'ccache' as it's totally useless when building
 # Firefox and only slows things down.
-export CC="${CC:-/usr/bin/gcc}"
-export CXX="${CXX:-/usr/bin/g++}"
+export CC="${CC:-/usr/bin/cc}"
+export CXX="${CXX:-/usr/bin/c++}"
 
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
