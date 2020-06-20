@@ -14,6 +14,7 @@ meson \
     --prefix=/usr \
     -Dlibmount=disabled \
     -Dinstalled_tests=false \
+    -Ddefault_library=both \
     -Dman=false \
     -Dfam=false \
     -Dinternal_pcre=true \
