@@ -9,6 +9,9 @@ export CFLAGS="-static $CFLAGS"
 ./configure \
     --prefix=/usr \
     --with-included-popt \
+    --disable-xxhash \
+    --disable-zstd \
+    --disable-lz4 \
     --without-included-zlib
 
 make
