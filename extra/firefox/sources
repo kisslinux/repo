@@ -1,4 +1,4 @@
-https://ftp.mozilla.org/pub/firefox/releases/77.0.1/source/firefox-77.0.1.source.tar.xz
+https://ftp.mozilla.org/pub/firefox/releases/78.0/source/firefox-78.0.source.tar.xz
 https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz autoconf2.13/
 https://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz yasm/
 patches/no-dbus.patch
