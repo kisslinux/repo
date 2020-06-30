@@ -1,11 +1,4 @@
-https://ftp.mozilla.org/pub/firefox/releases/68.10.0esr/source/firefox-68.10.0esr.source.tar.xz
+https://ftp.mozilla.org/pub/firefox/releases/78.0esr/source/firefox-78.0esr.source.tar.xz
 https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz autoconf2.13/
 https://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz yasm/
-files/stab.h toolkit/crashreporter/google-breakpad/src/
-patches/fix-fortify-system-wrappers.patch
-patches/fix-seccomp-bpf.patch
-patches/fix-toolkit.patch
-patches/fix-tools.patch
-patches/fix-webrtc-glibcisms.patch
-patches/fix-bug-1261392.patch
-patches/mallinfo.patch
+patches/no-dbus.patch
