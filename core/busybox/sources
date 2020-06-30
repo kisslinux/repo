@@ -4,6 +4,7 @@ patches/fsck-resolve-uuid.patch
 patches/modprobe-kernel-version.patch
 patches/print-unicode.patch
 patches/install-fix-chown.patch
+patches/lsusb-vendor-product.patch
 files/.config
 files/.config-suid
 files/acpid.run

@@ -1,0 +1,53 @@
+diff --git a/util-linux/lsusb.c b/util-linux/lsusb.c
+index e27aa7f31..b7b7abb99 100644
+--- a/util-linux/lsusb.c
++++ b/util-linux/lsusb.c
+@@ -15,7 +15,16 @@
+ //config:	system and devices connected to them.
+ //config:
+ //config:	This version uses sysfs (/sys/bus/usb/devices) only.
+-
++//config:
++//config:config FEATURE_LSUSB_STRINGS
++//config:	bool "Print vendor and product strings if they exist"
++//config:	default y
++//config:	depends on LSUSB
++//config:	help
++//config:	lsusb is a utility for displaying information about USB busses in the
++//config:	system and devices connected to them. This option prints out the
++//config:	vendor and product strings if they are available. This option
++//config:	replicates a simpler version of util-linux lsusb output.
+ //applet:IF_LSUSB(APPLET_NOEXEC(lsusb, lsusb, BB_DIR_USR_BIN, BB_SUID_DROP, lsusb))
+ 
+ //kbuild:lib-$(CONFIG_LSUSB) += lsusb.o
+@@ -37,6 +46,16 @@ static int FAST_FUNC fileAction(
+ 	int product_vid = 0, product_did = 0;
+ 	char *uevent_filename = concat_path_file(fileName, "/uevent");
+ 
++#if ENABLE_FEATURE_LSUSB_STRINGS
++	ssize_t vlen, plen;
++	// max length standard allows, any longer and someones being naughty
++	char vendor[256] = { 0 }, product[256] = { 0 };
++	vlen = open_read_close(concat_path_file(fileName, "/manufacturer"), vendor, sizeof(vendor));
++	vendor[vlen - 1] = '\0';
++	plen = open_read_close(concat_path_file(fileName, "/product"), product, sizeof(product));
++	product[plen - 1] = '\0';
++#endif
++
+ 	parser = config_open2(uevent_filename, fopen_for_read);
+ 	free(uevent_filename);
+ 
+@@ -64,7 +83,12 @@ static int FAST_FUNC fileAction(
+ 	config_close(parser);
+ 
+ 	if (busnum) {
+-		printf("Bus %s Device %s: ID %04x:%04x\n", busnum, devnum, product_vid, product_did);
++		printf("Bus %s Device %s: ID %04x:%04x", busnum, devnum, product_vid, product_did);
++#if ENABLE_FEATURE_LSUSB_STRINGS
++		if(vlen) printf(" %s", vendor);
++		if(plen) printf(" %s", product);
++#endif
++		printf("\n");
+ 		free(busnum);
+ 		free(devnum);
+ 	}
