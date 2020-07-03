@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < missing-include.patch
-
 ./configure \
     --prefix=/usr \
     --sbindir=/usr/bin \
