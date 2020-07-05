@@ -50,5 +50,4 @@ ninja -C build install
     ninja -C output install
 }
 
-# Purge gdbus.
-rm -rf "$1/usr/bin/gdbus"
+kiss l dbus >/dev/null || rm -rf "$1/usr/bin/gdbus"
