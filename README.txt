@@ -10,6 +10,7 @@ The official repositories for KISS Linux maintained by Dylan Araps.
 
 More information:
 
+    - https://k1ss.org
     - https://k1ss.org/package-system
     - https://repology.org/repository/kiss_main
 
