@@ -1,13 +1,13 @@
 diff --git a/Lib/ensurepip/__init__.py b/Lib/ensurepip/__init__.py
-index 526dfd0..d85dc33 100644
+index f3152a5..52f6312 100644
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py
-@@ -104,7 +104,7 @@ def _bootstrap(*, root=None, upgrade=False, user=False,
+@@ -116,7 +116,7 @@ def _bootstrap(*, root=None, upgrade=False, user=False,
              additional_paths.append(os.path.join(tmpdir, wheel_name))
  
          # Construct the arguments to be passed to the pip command
--        args = ["install", "--no-index", "--find-links", tmpdir]
-+        args = ["install", "-I", "--no-index", "--find-links", tmpdir]
+-        args = ["install", "--no-cache-dir", "--no-index", "--find-links", tmpdir]
++        args = ["install", "-I", "--no-cache-dir", "--no-index", "--find-links", tmpdir]
          if root:
              args += ["--root", root]
          if upgrade:
