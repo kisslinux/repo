@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+sed -i 's|/lib|/usr/lib|g' Makefile
+
+make LOADER_NAME=ld-linux-x86-64.so.2
+make DESTDIR="$1" install
+
