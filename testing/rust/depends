@@ -1,0 +1,7 @@
+cmake  make
+curl   make
+libressl
+llvm
+python make
+xz
+zlib
