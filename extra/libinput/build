@@ -6,7 +6,9 @@ export DESTDIR="$1"
 
 # Meson build has no support for automatically using
 # udev if available. This simply does the same.
-kiss l eudev >/dev/null 2>&1 || udev=false
+kiss l eudev >/dev/null 2>&1 ||
+kiss l libudev-zero >/dev/null 2>&1 ||
+    udev=false
 
 meson \
     --prefix=/usr \
