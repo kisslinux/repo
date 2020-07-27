@@ -14,18 +14,23 @@ build_freetype() (
 )
 
 build_harfbuzz() (
+    # Point Harfbuzz to the Freetype files.
+    export CFLAGS="$CFLAGS -I$1/usr/include/freetype2"
+    export CXXFLAGS="$CXXFLAGS -I$1/usr/include/freetype2"
+    export LDFLAGS="$LDFLAGS -L$1/usr/lib"
+
     cd harfbuzz
 
     export DESTDIR="$1"
-
     meson \
-        --default-library=both \
         --prefix=/usr \
-        -Dfreetype=enabled \
         -Dglib=enabled \
+        -Dfreetype=enabled \
+        -Ddefault_library=both \
         -Dicu=disabled \
         -Dbenchmark=disabled \
         -Dtests=disabled \
+        -Dpkg_config_path="$1/usr/lib/pkgconfig" \
         . output
 
     ninja -C output
@@ -33,11 +38,6 @@ build_harfbuzz() (
 )
 
 build_freetype "$1" no
-
-# Point Harfbuzz to the Freetype files.
-export FREETYPE_CFLAGS="-I$PWD/freetype/include"
-export FREETYPE_LIBS="-L$1/usr/lib -lfreetype"
-
 build_harfbuzz "$1"
 
 # Point Freetype to the Harfbuzz files.
