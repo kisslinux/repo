@@ -1,6 +1,0 @@
-https://static.rust-lang.org/dist/rustc-1.45.0-src.tar.xz
-https://static.rust-lang.org/dist/2020-06-04/rust-std-1.44.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-https://static.rust-lang.org/dist/2020-06-04/rustc-1.44.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-https://static.rust-lang.org/dist/2020-06-04/cargo-0.45.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-patches/musl.patch
-patches/libressl-3.1.X.patch
