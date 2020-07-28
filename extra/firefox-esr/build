@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
+sh >/dev/tty
 patch -p1 < no-dbus.patch
 
 # Build autoconf 2.13 for Firefox's sole use.

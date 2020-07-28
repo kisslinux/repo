@@ -1,8 +1,8 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index b1fca7cbca..888dd6d3fd 100644
+index 0b61796d7d..73b9fc36fa 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -111,25 +111,11 @@ dependencies = [
+@@ -109,25 +109,11 @@ dependencies = [
   "bitflags",
  ]
  
@@ -28,7 +28,7 @@ index b1fca7cbca..888dd6d3fd 100644
   "bincode",
   "bytes 0.4.9",
   "cc",
-@@ -156,7 +142,6 @@ dependencies = [
+@@ -154,7 +140,6 @@ dependencies = [
  name = "audioipc-client"
  version = "0.4.0"
  dependencies = [
@@ -36,7 +36,7 @@ index b1fca7cbca..888dd6d3fd 100644
   "audioipc",
   "cubeb-backend",
   "futures 0.1.29",
-@@ -169,7 +154,6 @@ dependencies = [
+@@ -167,7 +152,6 @@ dependencies = [
  name = "audioipc-server"
  version = "0.2.3"
  dependencies = [
@@ -44,19 +44,19 @@ index b1fca7cbca..888dd6d3fd 100644
   "audioipc",
   "cubeb-core",
   "error-chain",
-@@ -1890,7 +1874,6 @@ dependencies = [
- name = "gkrust-shared"
+@@ -1867,7 +1851,6 @@ name = "gkrust-shared"
  version = "0.1.0"
  dependencies = [
+  "app_services_logger",
 - "audio_thread_priority",
   "audioipc-client",
   "audioipc-server",
   "authenticator",
 diff --git a/dom/ipc/ContentChild.cpp b/dom/ipc/ContentChild.cpp
-index 2fe91affcd..ae835b2c34 100644
+index 6db75a0584..3cba9ed32d 100644
 --- a/dom/ipc/ContentChild.cpp
 +++ b/dom/ipc/ContentChild.cpp
-@@ -111,9 +111,7 @@
+@@ -115,9 +115,7 @@
  #include "GMPServiceChild.h"
  #include "nsIStringBundle.h"
  #include "Geolocation.h"
@@ -66,16 +66,16 @@ index 2fe91affcd..ae835b2c34 100644
  #include "nsIURIMutator.h"
  #include "nsIInputStreamChannel.h"
  #include "nsFocusManager.h"
-@@ -1624,9 +1622,7 @@ mozilla::ipc::IPCResult ContentChild::RecvSetProcessSandbox(
-   } else {
+@@ -1622,9 +1620,7 @@ mozilla::ipc::IPCResult ContentChild::RecvSetProcessSandbox(
+ 
+   if (StaticPrefs::media_cubeb_sandbox()) {
+     // This needs to happen regardless of whether sandboxing is enabled.
+-    if (atp_set_real_time_limit(0, 48000)) {
+       NS_WARNING("could not set real-time limit at process startup");
+-    }
+     InstallSoftRealTimeLimitHandler();
+   } else if (sandboxEnabled) {
      // Pre-start audio before sandboxing; see bug 1443612.
-     if (StaticPrefs::media_cubeb_sandbox()) {
--      if (atp_set_real_time_limit(0, 48000)) {
-         NS_WARNING("could not set real-time limit at process startup");
--      }
-       InstallSoftRealTimeLimitHandler();
-     } else {
-       Unused << CubebUtils::GetCubebContext();
 diff --git a/dom/media/GraphRunner.cpp b/dom/media/GraphRunner.cpp
 index 6ea8f2e9ca..51dba21d71 100644
 --- a/dom/media/GraphRunner.cpp
@@ -108,7 +108,7 @@ index 6ea8f2e9ca..51dba21d71 100644
    return NS_OK;
  }
 diff --git a/dom/media/UnderrunHandlerLinux.cpp b/dom/media/UnderrunHandlerLinux.cpp
-index af5c84538e..9fecb5ebd2 100644
+index 05646fbeb8..1de4f6f43a 100644
 --- a/dom/media/UnderrunHandlerLinux.cpp
 +++ b/dom/media/UnderrunHandlerLinux.cpp
 @@ -9,7 +9,6 @@
@@ -116,10 +116,10 @@ index af5c84538e..9fecb5ebd2 100644
  #include <mozilla/Sprintf.h>
  #include <mozilla/Atomics.h>
 -#include "audio_thread_priority.h"
+ #include "nsDebug.h"
  
  namespace mozilla {
- 
-@@ -57,21 +56,8 @@ void InstallSoftRealTimeLimitHandler() {
+@@ -58,21 +57,8 @@ void InstallSoftRealTimeLimitHandler() {
  }
  
  void DemoteThreadFromRealTime() {
@@ -142,7 +142,7 @@ index af5c84538e..9fecb5ebd2 100644
  
  }  // namespace mozilla
 diff --git a/dom/media/moz.build b/dom/media/moz.build
-index c8dc9fe2d1..ae43f16fa3 100644
+index ac847c3a02..6097dffc40 100644
 --- a/dom/media/moz.build
 +++ b/dom/media/moz.build
 @@ -100,7 +100,6 @@ XPIDL_SOURCES += [
@@ -334,7 +334,7 @@ index f07432f71f..b90e9d9be7 100644
  
          trace!("process_msg: req={:?}, resp={:?}", msg, resp);
 diff --git a/toolkit/library/rust/shared/Cargo.toml b/toolkit/library/rust/shared/Cargo.toml
-index 5fdb0eb2c0..d9bc0346cb 100644
+index 782a383b21..03557b3534 100644
 --- a/toolkit/library/rust/shared/Cargo.toml
 +++ b/toolkit/library/rust/shared/Cargo.toml
 @@ -41,7 +41,6 @@ storage = { path = "../../../../storage/rust" }
@@ -346,14 +346,15 @@ index 5fdb0eb2c0..d9bc0346cb 100644
  neqo_glue = { path = "../../../../netwerk/socket/neqo_glue" }
  rlbox_lucet_sandbox = { version = "0.1.0", optional = true }
 diff --git a/toolkit/library/rust/shared/lib.rs b/toolkit/library/rust/shared/lib.rs
-index 3285383a11..d228bc9bad 100644
+index eaaa6a6186..f9273e5e05 100644
 --- a/toolkit/library/rust/shared/lib.rs
 +++ b/toolkit/library/rust/shared/lib.rs
-@@ -51,7 +51,6 @@ extern crate xpcom;
+@@ -52,8 +52,6 @@ extern crate xpcom;
  #[cfg(feature = "new_xulstore")]
  extern crate xulstore;
  
 -extern crate audio_thread_priority;
- 
+-
  #[cfg(not(target_os = "android"))]
  extern crate webext_storage_bridge;
+ 
