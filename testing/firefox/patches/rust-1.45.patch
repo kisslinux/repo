@@ -1,12 +1,19 @@
+From cb5b4585486a52d06315a800f9e4ed96f2677898 Mon Sep 17 00:00:00 2001
+From: Mike Hommey <mh+mozilla@glandium.org>
+Date: Mon, 20 Jul 2020 16:05:36 +0000
+Subject: [PATCH] Bug 1640982 - Set CARGO_PROFILE_RELEASE_LTO=true when
+ enabling rust LTO. r=firefox-build-system-reviewers,rstewart
+
+Differential Revision: https://phabricator.services.mozilla.com/D84098
+---
+ config/makefiles/rust.mk | 4 ++++
+ 1 file changed, 4 insertions(+)
+
 diff --git a/config/makefiles/rust.mk b/config/makefiles/rust.mk
+index 82182ffdf30fe..4b4a679593377 100644
 --- a/config/makefiles/rust.mk
 +++ b/config/makefiles/rust.mk
-@@ -56,17 +56,21 @@ endif
- # These flags are passed via `cargo rustc` and only apply to the final rustc
- # invocation (i.e., only the top-level crate, not its dependencies).
- cargo_rustc_flags = $(CARGO_RUSTCFLAGS)
- ifndef DEVELOPER_OPTIONS
- ifndef MOZ_DEBUG_RUST
+@@ -61,7 +61,11 @@ ifndef MOZ_DEBUG_RUST
  # Enable link-time optimization for release builds, but not when linking
  # gkrust_gtest.
  ifeq (,$(findstring gkrust_gtest,$(RUST_LIBRARY_FILE)))
@@ -18,12 +25,3 @@ diff --git a/config/makefiles/rust.mk b/config/makefiles/rust.mk
  endif
  endif
  endif
-
- ifdef CARGO_INCREMENTAL
- export CARGO_INCREMENTAL
- endif
-
-
-
-
-
