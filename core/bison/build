@@ -2,7 +2,8 @@
 
 ./configure \
     --prefix=/usr \
-    --disable-nls
+    --disable-nls \
+    --without-libtextstyle-prefix
 
 make
 make DESTDIR="$1" install
