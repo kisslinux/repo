@@ -1,0 +1,11 @@
+#!/bin/sh
+
+find "$KISS_ROOT/usr/lib" \
+    ! -type d \
+    -name \*.la \
+    -exec rm -f -- {} +
+
+find "$KISS_ROOT/var/db/kiss/installed" \
+    ! -type d \
+    -name manifest \
+    -exec sed -i '/.*\.la$/d' {} +
