@@ -1,17 +1,11 @@
 #!/bin/sh
 
-cat <<EOF
+find "$KISS_ROOT/usr/lib" \
+    ! -type d \
+    -name \*.la \
+    -exec rm -f -- {} +
 
-NOTE: Updates will now show a warning from Git about
-      the merge strategy. Simply set the desired merge strategy
-      and the warning will disappear.
-
-Examples:
-
-git config pull.rebase false  # merge (the default strategy)
-git config pull.rebase true   # rebase
-git config pull.ff only       # fast-forward only
-
-TIP: --global can be used to set this user-wide.
-
-EOF
+find "$KISS_ROOT/var/db/kiss/installed" \
+    ! -type d \
+    -name manifest \
+    -exec sed -i '/.*\.la$/d' {} +
