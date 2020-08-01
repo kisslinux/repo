@@ -2,6 +2,9 @@
 
 patch -p1 < musl-decls.patch
 
+# Build sometimes forces -Werror.
+export CFLAGS="$CFLAGS -Wno-error"
+
 # Disable configure error for missing argp.
 sed -i 's/as_fn_error.*libargp/: "/g' configure
 
