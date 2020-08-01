@@ -1,51 +1,20 @@
 #!/bin/sh -e
-#
-# Word splitting (for CFLAGS, CC, etc) is sadly required.
-# shellcheck disable=2086
-#
-# This package used to provide the old 'libelf' library. This had a sane
-# build system and caused us no trouble. There are two issues with the
-# old library, 1. It's been unmaintained for years. 2. The Linux kernel
-# will (soon) no longer be compatible with it.
-#
-# elfutils is not an option (as an alternative) as it heavily depends on
-# glibc. To package it for a musl based system 8 or so patches are needed
-# as well as various libc "extensions" from glibc (fts, obstack, argp).
-#
-# elftoolchain requires BSD make to build. Rather than package BSD make,
-# let's just do the equivalent ourselves in shell. This is fairly simple
-# as all we're building is 'libelf' and not the entire toolchain.
-export CFLAGS="-fPIC -O2 $CFLAGS"
-export LDFLAGS="-shared $LDFLAGS"
 
-# Patch unneeded in next release.
-patch -p1 < libelf-linux.patch
+patch -p1 < musl-decls.patch
 
-# Generate needed header file.
-common/native-elf-format > common/native-elf-format.h
+# Disable configure error for missing argp.
+sed -i 's/as_fn_error.*libargp/: "/g' configure
 
-# Generate needed .c files using m4.
-for file in libelf/*.m4; do
-    ${M4:-m4} -DSRCDIR=libelf "$file" > "${file%%.m4}.c"
-done
+# Don't compile two unrelated C files which require argp.
+sed -i 's/color.*printversion../#/g' lib/Makefile.in
 
-# Create all objects (.o).
-for file in libelf/*.c; do
-    ${CC:-cc} -I./libelf -I./common $CFLAGS $CPPFLAGS -c \
-        -o "${file%%.c}.o" "$file"
-done
+./configure \
+    --prefix=/usr \
+    --disable-symbol-versioning \
+    --disable-debuginfod \
+    --disable-nls
 
-mkdir -p "$1/usr/lib"
-
-# Create shared library.
-${CC:-cc} $LDFLAGS $CFLAGS -I./libelf -I./common libelf/*.o \
-    -o "$1/usr/lib/libelf.so.1"
-
-# Create static library.
-${AR:-ar} -rc "$1/usr/lib/libelf.a" libelf/*.o
-
-# Install remaining headers/files.
-ln -sf         libelf.so.1             "$1/usr/lib/libelf.so"
-install -Dm644 libelf/libelf.h         "$1/usr/include/libelf.h"
-install -Dm644 libelf/gelf.h           "$1/usr/include/gelf.h"
-install -Dm644 common/elfdefinitions.h "$1/usr/include/elfdefinitions.h"
+# Skip the default make target and build only what we need.
+make -C lib
+make -C libelf
+make -C libelf DESTDIR="$1" install

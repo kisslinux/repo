@@ -1,2 +1,3 @@
-https://downloads.sourceforge.net/sourceforge/elftoolchain/elftoolchain-0.7.1.tgz
-patches/libelf-linux.patch
+https://sourceware.org/elfutils/ftp/0.180/elfutils-0.180.tar.bz2
+patches/musl-decls.patch
+files/error.h lib
