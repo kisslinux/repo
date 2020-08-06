@@ -1,12 +1,11 @@
 #!/bin/sh -e
 
-patch -p1 < libinput-optional-udev.patch
-
 export DESTDIR="$1"
 
-# Meson build has no support for automatically using
-# udev if available. This simply does the same.
-pkg-config --exists libudev || udev=false
+pkg-config --exists libudev || {
+    printf 'udev (or libudev-zero) is required\n'
+    exit 1
+}
 
 meson \
     --prefix=/usr \
@@ -18,7 +17,6 @@ meson \
     -Dtests=false \
     -Dlibwacom=false \
     -Dudev="${udev:=true}" \
-    -Dtools="$udev" \
     . output
 
 ninja -C output
