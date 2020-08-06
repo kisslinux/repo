@@ -16,5 +16,7 @@ sed -i 's|/ (8|// (8|' tools/gyp/pylib/gyp/generator/ninja.py
 ninja -C out/Release
 tools/install.py install "$1" /usr
 
-# Remove unneeded headers.
+# Remove unneeded files.
 rm -rf "$1/usr/include/node/openssl"
+rm -rf "$1/usr/lib/node_modules/npm/scripts"
+rm -f  "$1/usr/lib/node_modules/npm/configure"
