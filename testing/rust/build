@@ -65,3 +65,4 @@ python3 ./x.py build -j "$(nproc)"
 python3 ./x.py install
 
 rm -rf "$1/usr/lib/rustlib/src/"
+rm -f  "$1/usr/lib/rustlib/uninstall.sh"
