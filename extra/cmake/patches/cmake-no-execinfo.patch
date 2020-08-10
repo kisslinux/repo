@@ -1,0 +1,52 @@
+diff --git a/Source/kwsys/SystemInformation.cxx b/Source/kwsys/SystemInformation.cxx
+index ed1cdc0..d3afe21 100644
+--- a/Source/kwsys/SystemInformation.cxx
++++ b/Source/kwsys/SystemInformation.cxx
+@@ -150,18 +150,8 @@ typedef struct rlimit ResourceLimitType;
+ #  include <OS.h>
+ #endif
+ 
+-#if defined(KWSYS_SYSTEMINFORMATION_HAS_BACKTRACE)
+-#  include <execinfo.h>
+-#  if defined(KWSYS_SYSTEMINFORMATION_HAS_CPP_DEMANGLE)
+-#    include <cxxabi.h>
+-#  endif
+-#  if defined(KWSYS_SYSTEMINFORMATION_HAS_SYMBOL_LOOKUP)
+-#    include <dlfcn.h>
+-#  endif
+-#else
+ #  undef KWSYS_SYSTEMINFORMATION_HAS_CPP_DEMANGLE
+ #  undef KWSYS_SYSTEMINFORMATION_HAS_SYMBOL_LOOKUP
+-#endif
+ 
+ #include <cctype> // int isdigit(int c);
+ #include <cstdio>
+diff --git a/Source/kwsys/kwsysPlatformTestsCXX.cxx b/Source/kwsys/kwsysPlatformTestsCXX.cxx
+index 0bfa20e..0208417 100644
+--- a/Source/kwsys/kwsysPlatformTestsCXX.cxx
++++ b/Source/kwsys/kwsysPlatformTestsCXX.cxx
+@@ -102,24 +102,6 @@ int main()
+ }
+ #endif
+ 
+-#ifdef TEST_KWSYS_CXX_HAS_BACKTRACE
+-#  if defined(__PATHSCALE__) || defined(__PATHCC__) ||                        \
+-    (defined(__LSB_VERSION__) && (__LSB_VERSION__ < 41))
+-backtrace does not work with this compiler or os
+-#  endif
+-#  if (defined(__GNUC__) || defined(__PGI)) && !defined(_GNU_SOURCE)
+-#    define _GNU_SOURCE
+-#  endif
+-#  include <execinfo.h>
+-int main()
+-{
+-  void* stackSymbols[256];
+-  backtrace(stackSymbols, 256);
+-  backtrace_symbols(&stackSymbols[0], 1);
+-  return 0;
+-}
+-#endif
+-
+ #ifdef TEST_KWSYS_CXX_HAS_DLADDR
+ #  if (defined(__GNUC__) || defined(__PGI)) && !defined(_GNU_SOURCE)
+ #    define _GNU_SOURCE

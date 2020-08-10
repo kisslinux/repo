@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < cmake-no-execinfo.patch
+
 if kiss l cmake; then
     export DESTDIR="$1"
 

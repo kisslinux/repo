@@ -1,1 +1,2 @@
 https://github.com/Kitware/CMake/releases/download/v3.18.1/cmake-3.18.1.tar.gz
+patches/cmake-no-execinfo.patch
