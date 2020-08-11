@@ -1,10 +1,9 @@
 #!/bin/sh -e
 
-install -D kiss         "$1/usr/bin/kiss"
-install -D kiss_path.sh "$1/etc/profile.d/kiss_path.sh"
+mkdir -p "$1/usr/bin"
 
 # Install kiss utilities.
-cp contrib/* "$1/usr/bin/"
+cp -f kiss contrib/* "$1/usr/bin/"
 
 # Install distribution documentation.
 for doc in docs/site/*.txt; do
