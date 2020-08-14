@@ -14,3 +14,7 @@ cd wpa_supplicant
 
 make LIBDIR=/usr/lib BINDIR=/usr/bin DRV_LIBS="$CFLAGS" CC="${CC:-cc}"
 make LIBDIR=/usr/lib BINDIR=/usr/bin DESTDIR="$1" install
+
+install -Dm644 doc/docbook/*.8 "$1/usr/share/man/man8"
+install -Dm644 doc/docbook/*.5 "$1/usr/share/man/man5"
+
