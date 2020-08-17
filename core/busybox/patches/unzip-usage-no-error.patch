@@ -1,0 +1,20 @@
+diff --git a/archival/unzip.c b/archival/unzip.c
+index d94bbab..f424fb0 100644
+--- a/archival/unzip.c
++++ b/archival/unzip.c
+@@ -592,6 +592,7 @@ int unzip_main(int argc, char **argv)
+ 			break;
+ 
+ 		default:
++			xfunc_error_retval = 0;
+ 			bb_show_usage();
+ 		}
+ 	}
+@@ -615,6 +616,7 @@ int unzip_main(int argc, char **argv)
+ #endif
+ 
+ 	if (!src_fn) {
++		xfunc_error_retval = 0;
+ 		bb_show_usage();
+ 	}
+ 
