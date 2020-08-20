@@ -1,2 +1,3 @@
-bison make
-meson make
+bison   make
+meson   make
+pkgconf make

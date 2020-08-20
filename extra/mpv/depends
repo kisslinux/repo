@@ -6,4 +6,5 @@ libXScrnSaver
 libXinerama
 libXrandr
 mesa
-python            make
+pkgconf make
+python  make

@@ -1,3 +1,4 @@
 libX11  make
+pkgconf make
 python  make
 xkbcomp

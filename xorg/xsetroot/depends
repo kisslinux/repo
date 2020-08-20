@@ -2,4 +2,5 @@ libXmu
 libXrender
 libXfixes
 libXcursor
+pkgconf make
 xbitmaps

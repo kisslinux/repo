@@ -1,2 +1,3 @@
 libXmu
+pkgconf          make
 xorg-util-macros make

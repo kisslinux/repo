@@ -18,6 +18,7 @@ libxshmfence
 linux-headers make
 mesa
 pixman
+pkgconf make
 xkeyboard-config
 xtrans make
 zlib

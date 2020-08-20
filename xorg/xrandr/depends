@@ -1,2 +1,3 @@
 libXrandr
+pkgconf          make
 xorg-util-macros make

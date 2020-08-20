@@ -1,3 +1,4 @@
 libXi
+pkgconf          make
 xorg-util-macros make
 xorgproto        make

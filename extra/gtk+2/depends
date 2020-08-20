@@ -6,4 +6,5 @@ libXi
 libXinerama
 libepoxy
 pango
-python make
+pkgconf make
+python  make

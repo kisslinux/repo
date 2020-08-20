@@ -1,3 +1,4 @@
 libXext
 libXrender
-xorgproto  make
+pkgconf   make
+xorgproto make

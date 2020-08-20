@@ -10,4 +10,5 @@ libXinerama
 libXrandr
 libepoxy
 pango
-python make
+pkgconf make
+python  make

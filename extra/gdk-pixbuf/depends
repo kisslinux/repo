@@ -1,4 +1,5 @@
 glib
 libX11
 libpng
-meson  make
+meson   make
+pkgconf make

@@ -1,2 +1,3 @@
-xorgproto make
 libXfixes
+pkgconf   make
+xorgproto make

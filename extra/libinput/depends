@@ -1,4 +1,5 @@
 libevdev
 linux-headers make
 meson         make
+pkgconf       make
 mtdev

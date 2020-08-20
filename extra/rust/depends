@@ -2,6 +2,7 @@ cmake  make
 curl   make
 libressl
 llvm
-python make
+pkgconf make
+python  make
 xz
 zlib

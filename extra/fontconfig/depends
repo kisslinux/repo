@@ -1,3 +1,4 @@
 expat
 freetype-harfbuzz
-gperf    make
+gperf   make
+pkgconf make

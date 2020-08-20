@@ -4,5 +4,6 @@ libXinerama
 libXrandr
 libXtst
 linux-headers make
-meson make
+meson         make
+pkgconf       make
 xorg-server

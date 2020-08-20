@@ -6,4 +6,5 @@ libXext
 libXrender
 mesa
 pixman
+pkgconf make
 zlib

@@ -5,4 +5,5 @@ fribidi
 glib
 libXft
 libXrender
-meson      make
+meson   make
+pkgconf make

@@ -13,6 +13,7 @@ libpng
 libxcb
 libxshmfence
 mesa
-meson make
+meson   make
 pixman
+pkgconf make
 zlib
