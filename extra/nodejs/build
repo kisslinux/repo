@@ -5,7 +5,7 @@ sed -i 's|/ (8|// (8|' tools/gyp/pylib/gyp/generator/ninja.py
 
 ./configure \
     --shared-zlib \
-    --without-intl \
+    --with-intl=small-icu \
     --without-etw \
     --without-dtrace \
     --without-report \
