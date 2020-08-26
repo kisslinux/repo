@@ -12,4 +12,5 @@ files/acpid.run
 files/crond.run
 files/syslogd.run
 files/mdev.run
+files/ntpd.run
 files/mdev.conf
