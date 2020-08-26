@@ -46,7 +46,6 @@ perl          make
 pixman
 pkgconf       make
 python        make
-python2       make
 rust          make
 zip           make
 zlib
