@@ -1,0 +1,68 @@
+#!/bin/sh -e
+
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
+
+# This package mimics the download process of rust's 'x.py'
+# bootstrap library to allow for the removal of the internet
+# connection requirement per build.
+{
+    mkdir -p "${cache_dir:=build/cache/2020-08-03}"
+
+    for tarball in *.tar.xz\?no-extract; do
+        mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
+    done
+}
+
+# 'rust' checksums files in 'vendor/', but we patch a few.
+for vendor in libc openssl-sys; do
+    sed -i 's/\("files":{\)[^}]*/\1/' "vendor/$vendor/.cargo-checksum.json"
+done
+
+cat > config.toml <<EOF
+[llvm]
+link-shared = true
+
+[build]
+build  = "x86_64-unknown-linux-musl"
+host   = [ "x86_64-unknown-linux-musl" ]
+target = [ "x86_64-unknown-linux-musl" ]
+
+docs           = false
+compiler-docs  = false
+extended       = true
+submodules     = false
+python         = "python3"
+locked-deps    = true
+vendor         = true
+sanitizers     = false
+profiler       = false
+full-bootstrap = false
+
+[install]
+prefix = "/usr"
+
+[rust]
+channel          = "stable"
+rpath            = false
+codegen-units    = 1
+debuginfo-level  = 0
+debug            = false
+backtrace        = false
+jemalloc         = false
+debug-assertions = false
+codegen-tests    = false
+
+[target.x86_64-unknown-linux-musl]
+llvm-config = "/usr/bin/llvm-config"
+crt-static  = false
+EOF
+
+export DESTDIR="$1"
+
+python3 ./x.py build -j "$(nproc)"
+python3 ./x.py install
+
+rm -rf "$1/usr/lib/rustlib/src/"
+rm -f  "$1/usr/lib/rustlib/uninstall.sh"

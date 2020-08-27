@@ -1,0 +1,78 @@
+diff --git a/src/bootstrap/compile.rs b/src/bootstrap/compile.rs
+index 9b4926f28..8555d904b 100644
+--- a/src/bootstrap/compile.rs
++++ b/src/bootstrap/compile.rs
+@@ -176,7 +176,7 @@ fn copy_self_contained_objects(
+     // to using gcc from a glibc-targeting toolchain for linking.
+     // To do that we have to distribute musl startup objects as a part of Rust toolchain
+     // and link with them manually in the self-contained mode.
+-    if target.contains("musl") {
++    if target.contains("noop") {
+         let srcdir = builder.musl_libdir(target).unwrap();
+         for &obj in &["crt1.o", "Scrt1.o", "rcrt1.o", "crti.o", "crtn.o"] {
+             copy_and_stamp(
+diff --git a/src/bootstrap/sanity.rs b/src/bootstrap/sanity.rs
+index 3301d41cf..1c9e0083a 100644
+--- a/src/bootstrap/sanity.rs
++++ b/src/bootstrap/sanity.rs
+@@ -192,7 +192,7 @@ pub fn check(build: &mut Build) {
+         }
+ 
+         // Make sure musl-root is valid
+-        if target.contains("musl") {
++        if target.contains("noop") {
+             // If this is a native target (host is also musl) and no musl-root is given,
+             // fall back to the system toolchain in /usr before giving up
+             if build.musl_root(*target).is_none() && build.config.build == *target {
+diff --git a/src/librustc_target/spec/linux_musl_base.rs b/src/librustc_target/spec/linux_musl_base.rs
+index b90e91d29..ad098a47e 100644
+--- a/src/librustc_target/spec/linux_musl_base.rs
++++ b/src/librustc_target/spec/linux_musl_base.rs
+@@ -9,7 +9,7 @@ pub fn opts() -> TargetOptions {
+     base.crt_objects_fallback = Some(CrtObjectsFallback::Musl);
+ 
+     // These targets statically link libc by default
+-    base.crt_static_default = true;
++    base.crt_static_default = false;
+     // These targets allow the user to choose between static and dynamic linking.
+     base.crt_static_respected = true;
+ 
+diff --git a/src/libunwind/build.rs b/src/libunwind/build.rs
+index 31d235cf6..1ebec47ed 100644
+--- a/src/libunwind/build.rs
++++ b/src/libunwind/build.rs
+@@ -12,7 +12,7 @@ fn main() {
+     } else if target.contains("x86_64-fortanix-unknown-sgx") {
+         llvm_libunwind::compile();
+     } else if target.contains("linux") {
+-        if target.contains("musl") {
++        if target.contains("noop") {
+             // linking for musl is handled in lib.rs
+             llvm_libunwind::compile();
+         } else if !target.contains("android") {
+diff --git a/src/libunwind/lib.rs b/src/libunwind/lib.rs
+index cc025da1a..0506db514 100644
+--- a/src/libunwind/lib.rs
++++ b/src/libunwind/lib.rs
+@@ -18,7 +18,7 @@ cfg_if::cfg_if! {
+     }
+ }
+ 
+-#[cfg(target_env = "musl")]
++#[cfg(target_env = "noop")]
+ #[link(name = "unwind", kind = "static", cfg(target_feature = "crt-static"))]
+ #[link(name = "gcc_s", cfg(not(target_feature = "crt-static")))]
+ extern "C" {}
+diff --git a/vendor/libc/src/unix/mod.rs b/vendor/libc/src/unix/mod.rs
+index 55b892f7e..e03ce90e2 100644
+--- a/vendor/libc/src/unix/mod.rs
++++ b/vendor/libc/src/unix/mod.rs
+@@ -298,7 +298,7 @@ cfg_if! {
+     } else if #[cfg(feature = "std")] {
+         // cargo build, don't pull in anything extra as the libstd dep
+         // already pulls in all libs.
+-    } else if #[cfg(target_env = "musl")] {
++    } else if #[cfg(target_env = "noop")] {
+         #[cfg_attr(feature = "rustc-dep-of-std",
+                    link(name = "c", kind = "static",
+                         cfg(target_feature = "crt-static")))]
