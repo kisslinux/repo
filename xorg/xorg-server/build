@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 patch -p1 < rootless_modesetting.patch
+patch -p1 < fix-crash.patch
 
 ./configure \
     --prefix=/usr \
