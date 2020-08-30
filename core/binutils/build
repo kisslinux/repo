@@ -27,4 +27,4 @@ export PATH=$PATH:$PWD
 
 make configure-host
 make tooldir=/usr
-make prefix="$1/usr" tooldir="$1/usr" install
+make DESTDIR="$1" install
