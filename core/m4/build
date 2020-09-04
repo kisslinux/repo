@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < m4-use-hand-written-lexer.patch
-
 ./configure \
     --prefix=/usr
 
