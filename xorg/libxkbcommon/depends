@@ -1,3 +1,4 @@
 bison   make
+libxml2
 meson   make
 pkgconf make
