@@ -21,3 +21,6 @@ sed -i 's/color.*printversion../#/g' lib/Makefile.in
 make -C lib
 make -C libelf
 make -C libelf DESTDIR="$1" install
+
+mkdir -p "$1/usr/lib/pkgconfig"
+cp -f config/libelf.pc "$1/usr/lib/pkgconfig/libelf.pc"
