@@ -3,5 +3,6 @@ libXext
 libXfixes
 libdrm
 linux-headers make
-pkgconf       make
 mesa
+meson         make
+pkgconf       make
