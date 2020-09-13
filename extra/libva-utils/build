@@ -1,8 +1,12 @@
 #!/bin/sh -e
 
-./configure \
-    --prefix=/usr \
-    --disable-wayland
+export DESTDIR="$1"
 
-make
-make DESTDIR="$1" install
+meson \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --mandir=/usr/share/man \
+    . output
+
+ninja -C output
+ninja -C output install
