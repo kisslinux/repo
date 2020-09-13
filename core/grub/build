@@ -12,7 +12,8 @@ sed -i 's/mv $@.new $@/:/g' ./*/Makefile.in
 
 # Strip '-march' from 'CFLAGS' as per advice from upstream.
 # Fixes build fails on specific hardware.
-CFLAGS=$(printf %s "$CFLAGS" | sed 's/-march=[^ ]*//g')
+CFLAGS=$(printf %s "$CFLAGS"   | sed 's/-march=[^ ]*//g')
+CFLAGS=$(printf %s "$CXXFLAGS" | sed 's/-march=[^ ]*//g')
 
 # Grub is built in a function so the script argument
 # needs to be stored.
