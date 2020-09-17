@@ -6,6 +6,7 @@ meson \
     --prefix=/usr \
     -Denable-docs=false \
     -Denable-wayland=false \
+    -Denable-xkbregistry=false \
     . output
 
 ninja -C output
