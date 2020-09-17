@@ -13,6 +13,7 @@ cmake -B build \
     -DLLVM_BUILD_EXAMPLES=OFF \
     -DLLVM_BUILD_DOCS=OFF \
     -DLLVM_BUILD_TESTS=OFF \
+    -DLLVM_ENABLE_LIBXML2=OFF \
     -Wno-dev
 
 cmake --build   build
