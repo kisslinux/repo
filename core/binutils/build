@@ -12,7 +12,7 @@ export PATH=$PATH:$PWD
     --prefix=/usr \
     --with-lib-path=/usr/lib:/usr/local/lib \
     --enable-targets=x86_64-pep \
-    --enable-gold \
+    --disable-gold \
     --enable-lto \
     --enable-ld=default \
     --enable-plugins \
@@ -27,4 +27,6 @@ export PATH=$PATH:$PWD
 
 make configure-host
 make tooldir=/usr
-make DESTDIR="$1" install
+make DESTDIR="$1" tooldir=/usr install
+
+ln -sf ld.bfd "$1/usr/bin/ld"
