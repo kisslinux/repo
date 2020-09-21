@@ -11,11 +11,13 @@ sed -i 's/as_fn_error.*libargp/: "/g' configure
 # Don't compile two unrelated C files which require argp.
 sed -i 's/color.*printversion../#/g' lib/Makefile.in
 
+# Override C99 check for Clang.
 ./configure \
     --prefix=/usr \
     --disable-symbol-versioning \
     --disable-debuginfod \
-    --disable-nls
+    --disable-nls \
+    ac_cv_c99=yes
 
 # Skip the default make target and build only what we need.
 make -C lib
