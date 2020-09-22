@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < no-gtk2.patch
+
 # Remove libc header which conflicts with 7 or so Linux
 # kernel headers. See: https://github.com/kisslinux/repo/issues/207
 sed -i '/net\/if/d' \
