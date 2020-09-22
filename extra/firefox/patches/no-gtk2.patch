@@ -3,7 +3,6 @@ will be cleaned up over the next couple of weeks. Based on a
 patch posted to Bugzilla here:
 
 https://bugzilla.mozilla.org/show_bug.cgi?id=1663588
-NOTE: Tested with Wayland, Xorg untested.
 
 ---
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
