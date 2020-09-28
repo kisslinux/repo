@@ -1,8 +1,8 @@
 #!/bin/sh -e
 
 ./configure \
-    --prefix="$KISS_PREFIX" \
-    --libdir="$KISS_PREFIX/$KISS_LIBDIR" \
+    --prefix=/usr \
+    --libdir=/usr/lib \
     --shared
 
 make
