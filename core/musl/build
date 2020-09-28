@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < innetgr-stub.patch
+
 ./configure \
     --prefix=/usr \
     --syslibdir=/usr/lib

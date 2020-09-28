@@ -1,0 +1,25 @@
+--- a/include/netdb.h
++++ b/include/netdb.h
+@@ -125,6 +125,8 @@
+ #define NO_RECOVERY    3
+ #define NO_DATA        4
+ #define NO_ADDRESS     NO_DATA
++
++int innetgr(const char *, const char*, const char *, const char *);
+ #endif
+ 
+ #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+--- a/src/network/ent.c
++++ b/src/network/ent.c
+@@ -17,6 +17,11 @@
+ void endhostent(void)
+ {
+ }
++int innetgr(const char *netgroup, const char *host,
++        const char *user, const char *domain)
++{
++    return 0;
++}
+ 
+ weak_alias(sethostent, setnetent);
+ weak_alias(endhostent, endnetent);
