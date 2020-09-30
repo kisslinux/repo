@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-export CFLAGS="$CFLAGS -fPIC -static"
+export CFLAGS="$CFLAGS -fPIC"
 
 cat > config.mak <<EOF
 NO_GETTEXT=YesPlease
