@@ -1,8 +1,6 @@
 #!/bin/sh -e
 
-export CFLAGS="$CFLAGS -fPIC"
-
-patch -p1 < git-tiny.patch
+export CFLAGS="$CFLAGS -fPIC -static"
 
 cat > config.mak <<EOF
 NO_GETTEXT=YesPlease
