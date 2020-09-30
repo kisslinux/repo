@@ -11,6 +11,7 @@ sed -i 's|/ (8|// (8|' tools/gyp/pylib/gyp/generator/ninja.py
     --without-report \
     --without-node-snapshot \
     --without-node-code-cache \
+    --partly-static \
     --ninja
 
 ninja -C out/Release
