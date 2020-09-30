@@ -1,8 +1,5 @@
 #!/bin/sh -e
 
-# Static libs for curl.
-sed -i 's/--libs/--static-libs/g' Makefile
-
 export CFLAGS="$CFLAGS -static"
 
 cat > config.mak <<EOF
