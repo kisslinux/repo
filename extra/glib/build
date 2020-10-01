@@ -43,7 +43,7 @@ ninja -C build install
         --sysconfdir=/etc \
         --mandir=/usr/share/man \
         -Ddocs=false \
-        -Dintrospection=false \
+        -Dintrospection=disabled \
         . output
 
     ninja -C output
