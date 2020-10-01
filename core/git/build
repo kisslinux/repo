@@ -23,7 +23,7 @@ EOF
     ac_cv_snprintf_returns_bogus=no \
     ac_cv_fread_reads_directories=yes
 
-make LIBS='-lcurl -lssl -lcrypto libgit.a xdiff/lib.a -lz'
+make LIBS="$(curl-config --static-libs) libgit.a xdiff/lib.a -lz"
 make DESTDIR="$1" install
 
 cp -rf man "$1/usr/share/man"
