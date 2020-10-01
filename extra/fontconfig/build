@@ -8,6 +8,7 @@ patch -p1 < fontconfig-fix-1744377.patch
     --localstatedir=/var \
     --sysconfdir=/etc \
     --with-xmldir=/etc/fonts \
+    --enable-static \
     --disable-nls
 
 make
