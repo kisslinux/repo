@@ -39,6 +39,7 @@ meson \
     --localstatedir=/var \
     --buildtype=release \
     -Dplatforms=x11,drm \
+    -Dzstd=false \
     . output
 
 ninja -C output
