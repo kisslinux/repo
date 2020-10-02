@@ -50,4 +50,4 @@ ninja -C build install
     ninja -C output install
 }
 
-kiss l dbus >/dev/null || rm -rf "$1/usr/bin/gdbus"
+kiss l dbus >/dev/null 2>&1 || rm -rf "$1/usr/bin/gdbus"
