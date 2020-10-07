@@ -1,7 +1,8 @@
 #!/bin/sh -e
 
-# Fix a python 3 incompatibility.
+# Fix python 3.
 sed -i 's|/ (8|// (8|' tools/gyp/pylib/gyp/generator/ninja.py
+sed -i 's|(3, 8)|(3, 9), (3, 8)|g' configure
 
 ./configure \
     --shared-zlib \
