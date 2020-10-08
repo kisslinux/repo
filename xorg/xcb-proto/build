@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < python-3.9.patch
+
 ./configure \
     --prefix=/usr
 

@@ -1,0 +1,95 @@
+From 426ae35bee1fa0fdb8b5120b1dcd20cee6e34512 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bj=C3=B6rn=20Esser?= <besser82@fedoraproject.org>
+Date: Mon, 1 Jun 2020 12:24:16 +0200
+Subject: [PATCH 1/2] xcbgen: Use math.gcd() for Python >= 3.5.
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+fractions.gcd() has been deprecated since Python 3.5, and
+was finally dropped in Python 3.9.  It is recommended to
+use math.gcd() instead.
+
+Signed-off-by: Björn Esser <besser82@fedoraproject.org>
+---
+ xcbgen/align.py | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/xcbgen/align.py b/xcbgen/align.py
+index d4c12ee..5c4f517 100644
+--- a/xcbgen/align.py
++++ b/xcbgen/align.py
+@@ -2,7 +2,12 @@
+ This module contains helper classes for alignment arithmetic and checks
+ '''
+ 
+-from fractions import gcd
++from sys import version_info
++
++if version_info[:2] >= (3, 5):
++    from math import gcd
++else:
++    from fractions import gcd
+ 
+ class Alignment(object):
+ 
+-- 
+GitLab
+
+
+From 7d58eed95f796fc764741d7549ee2214bbbcc64c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bj=C3=B6rn=20Esser?= <besser82@fedoraproject.org>
+Date: Mon, 1 Jun 2020 12:29:01 +0200
+Subject: [PATCH 2/2] xcbgen: xml.etree.cElementTree has been dropped in Python
+ 3.9.
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+It can be replaced with xml.etree.ElementTree safely.
+
+Signed-off-by: Björn Esser <besser82@fedoraproject.org>
+---
+ xcbgen/matcher.py | 7 ++++++-
+ xcbgen/state.py   | 7 ++++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/xcbgen/matcher.py b/xcbgen/matcher.py
+index 97a8b43..a13ef28 100644
+--- a/xcbgen/matcher.py
++++ b/xcbgen/matcher.py
+@@ -7,7 +7,12 @@ we do not create a new type object, we just record the existing one under a new
+ '''
+ 
+ from os.path import join
+-from xml.etree.cElementTree import parse
++from sys import version_info
++
++if version_info[:2] >= (3, 9):
++    from xml.etree.ElementTree import parse
++else:
++    from xml.etree.cElementTree import parse
+ 
+ from xcbgen.xtypes import *
+ 
+diff --git a/xcbgen/state.py b/xcbgen/state.py
+index 0dbecdc..3b7eeb4 100644
+--- a/xcbgen/state.py
++++ b/xcbgen/state.py
+@@ -2,7 +2,12 @@
+ This module contains the namespace class and the singleton module class.
+ '''
+ from os.path import dirname, basename
+-from xml.etree.cElementTree import parse
++from sys import version_info
++
++if version_info[:2] >= (3, 9):
++    from xml.etree.ElementTree import parse
++else:
++    from xml.etree.cElementTree import parse
+ 
+ from xcbgen import matcher
+ from xcbgen.error import *
+-- 
+GitLab
+
