@@ -1,33 +1,33 @@
 #!/bin/sh -e
 
-for patch in *.patch; do
-    patch -p1 < "$patch"
-done
+patch -p1 < libressl.patch
 
 # This package mimics the download process of rust's 'x.py'
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
 {
-    mkdir -p "${cache_dir:=build/cache/2020-08-03}"
+    mkdir -p "${cache_dir:=build/cache/2020-08-27}"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
     done
 }
 
-# 'rust' checksums files in 'vendor/', but we patch a few.
-for vendor in libc openssl-sys; do
-    sed -i 's/\("files":{\)[^}]*/\1/' "vendor/$vendor/.cargo-checksum.json"
-done
+# We modified openssl-sys.
+sed -i 's/\("files":{\)[^}]*/\1/' \
+    vendor/openssl-sys/.cargo-checksum.json
+
+sed -i 's/crt_static_default = true/crt_static_default = false/' \
+    src/librustc_target/spec/linux_musl_base.rs
 
 cat > config.toml <<EOF
 [llvm]
 link-shared = true
 
 [build]
-build  = "x86_64-unknown-linux-musl"
-host   = [ "x86_64-unknown-linux-musl" ]
-target = [ "x86_64-unknown-linux-musl" ]
+build     = "x86_64-unknown-linux-musl"
+host      = [ "x86_64-unknown-linux-musl" ]
+target    = [ "x86_64-unknown-linux-musl" ]
 
 docs           = false
 compiler-docs  = false
@@ -44,15 +44,15 @@ full-bootstrap = false
 prefix = "/usr"
 
 [rust]
-channel          = "stable"
-rpath            = false
-codegen-units    = 1
-debuginfo-level  = 0
-debug            = false
-backtrace        = false
-jemalloc         = false
-debug-assertions = false
-codegen-tests    = false
+channel           = "stable"
+rpath             = false
+debuginfo-level   = 0
+debug             = false
+backtrace         = false
+jemalloc          = false
+debug-assertions  = false
+codegen-tests     = false
+codegen-units-std = 1
 
 [target.x86_64-unknown-linux-musl]
 llvm-config = "/usr/bin/llvm-config"
