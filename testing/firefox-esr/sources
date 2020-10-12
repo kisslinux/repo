@@ -1,0 +1,7 @@
+https://ftp.mozilla.org/pub/firefox/releases/78.3.0esr/source/firefox-78.3.0esr.source.tar.xz
+https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz autoconf2.13/
+https://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz yasm/
+patches/no-dbus.patch
+patches/0036-bmo-1643201-Cherry-pick-some-servo-changes-to-derive.patch
+patches/0037-bmo-1653339-Teach-style_derive-s-map_type_params-abo.patch
+patches/0038-bmo-1663715-Update-syn-and-proc-macro2-so-that-Firef.patch
