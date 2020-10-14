@@ -15,7 +15,8 @@ sed -i 's/color.*printversion../#/g' lib/Makefile.in
     --prefix=/usr \
     --disable-symbol-versioning \
     --disable-debuginfod \
-    --disable-nls
+    --disable-nls \
+    ac_cv_c99=yes # Override check for Clang.
 
 # Skip the default make target and build only what we need.
 make -C lib
