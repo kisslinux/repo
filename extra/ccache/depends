@@ -1,1 +1,2 @@
-zstd make
+cmake make
+zstd  make
