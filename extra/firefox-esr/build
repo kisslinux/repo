@@ -1,6 +1,54 @@
 #!/bin/sh -e
 
-patch -p1 < no-dbus.patch
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
+
+# Update some crates which cause build failure with the latest
+# Rust version (1.47.0). Fixes not backported to this ESR.
+# This avoids patching 100 or so files which is just unreasonable.
+# See: https://github.com/rust-lang/rust/issues/76482
+#      https://github.com/rust-lang/rust/issues/76480
+#      https://phabricator.services.mozilla.com/D89473
+#      https://hg.mozilla.org/mozilla-central/rev/281a323cde5f
+#      https://hg.mozilla.org/mozilla-central/rev/da77d5528a08
+#      https://bugzilla.mozilla.org/show_bug.cgi?id=1663715
+#      https://bugzilla.mozilla.org/show_bug.cgi?id=1670579
+(
+    cd third_party/rust
+
+    for crate in *.crate; do
+        crate_name=${crate%-*}
+        crate_ver=${crate##*-}
+        crate_ver=${crate_ver%%.crate}
+
+        # Remove the pre-existing crate's files.
+        rm -rf "$crate_name"
+
+        # Add the updated crate's files.
+        tar xf "$crate"
+
+        # Rename <crate_name>-<crate_ver> to <crate_name>
+        mv -f "${crate%%.crate}" "$crate_name"
+
+        # Generate checksums.
+        sha256=$(sha256sum "$crate")
+        sha256=${sha256%% *}
+
+        # Create .cargo-checksum.json to appease tooling.
+        printf '{"package":"%s","files":{}}\n' "$sha256" \
+            > "$crate_name/.cargo-checksum.json"
+
+        # Update root Cargo.lock to reflect changes.
+        sed -i "/name = \"$crate_name\"/ { 
+            N
+            s/version = \".*\"/version = \"$crate_ver\"/
+            N
+            N
+            s/checksum = \".*\"/checksum = \"$sha256\"/ 
+        }" ../../Cargo.lock
+    done
+)
 
 # Build autoconf 2.13 for Firefox's sole use.
 # See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
