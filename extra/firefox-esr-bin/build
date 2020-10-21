@@ -1,3 +1,0 @@
-#!/bin/sh -e
-
-cp -r usr "$1/usr"
