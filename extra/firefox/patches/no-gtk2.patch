@@ -1313,7 +1313,7 @@ index 3c4320a180..3195e5d025 100644
  	-lgio-2.0 \
  	-lpangoft2-1.0 \
 diff --git a/old-configure b/old-configure
-index 2ff4d57fbf..9ae775807a 100644
+index 4ad9fe30c9..908fdde6bf 100644
 --- a/old-configure
 +++ b/old-configure
 @@ -749,7 +749,6 @@ GLIB_VERSION=2.42
@@ -1324,7 +1324,7 @@ index 2ff4d57fbf..9ae775807a 100644
  GTK3_VERSION=3.14.0
  GDK_VERSION_MAX_ALLOWED=GDK_VERSION_3_14
  W32API_VERSION=3.14
-@@ -7858,79 +7857,6 @@ cat >> confdefs.h <<EOF
+@@ -7857,79 +7856,6 @@ cat >> confdefs.h <<EOF
  EOF
  
    fi
@@ -1358,19 +1358,19 @@ index 2ff4d57fbf..9ae775807a 100644
 -     PKG_CONFIG_MIN_VERSION=0.9.0
 -     if $PKG_CONFIG --atleast-pkgconfig-version $PKG_CONFIG_MIN_VERSION; then
 -        echo $ac_n "checking for gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES""... $ac_c" 1>&6
--echo "configure:7892: checking for gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES" >&5
+-echo "configure:7891: checking for gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES" >&5
 -
 -        if $PKG_CONFIG --exists "gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES" ; then
 -            echo "$ac_t""yes" 1>&6
 -            succeeded=yes
 -
 -            echo $ac_n "checking MOZ_GTK2_CFLAGS""... $ac_c" 1>&6
--echo "configure:7899: checking MOZ_GTK2_CFLAGS" >&5
+-echo "configure:7898: checking MOZ_GTK2_CFLAGS" >&5
 -            MOZ_GTK2_CFLAGS=`$PKG_CONFIG --cflags "gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES"`
 -            echo "$ac_t""$MOZ_GTK2_CFLAGS" 1>&6
 -
 -            echo $ac_n "checking MOZ_GTK2_LIBS""... $ac_c" 1>&6
--echo "configure:7904: checking MOZ_GTK2_LIBS" >&5
+-echo "configure:7903: checking MOZ_GTK2_LIBS" >&5
 -            ## Remove evil flags like -Wl,--export-dynamic
 -            MOZ_GTK2_LIBS="`$PKG_CONFIG --libs \"gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES\" |sed s/-Wl,--export-dynamic//g`"
 -            echo "$ac_t""$MOZ_GTK2_LIBS" 1>&6
@@ -1404,14 +1404,15 @@ index 2ff4d57fbf..9ae775807a 100644
  fi # COMPILE_ENVIRONMENT
  
  
-@@ -10650,7 +10576,6 @@ sed 's/$/,/' >> $CONFIG_STATUS <<EOF
+@@ -10624,8 +10550,6 @@ sed 's/$/,/' >> $CONFIG_STATUS <<EOF
      (''' MOZ_ANDROID_MAX_SDK_VERSION ''', r''' $MOZ_ANDROID_MAX_SDK_VERSION ''')
      (''' MOZ_GTK3_CFLAGS ''', list(split(r''' $MOZ_GTK3_CFLAGS ''')))
      (''' MOZ_GTK3_LIBS ''', list(split(r''' $MOZ_GTK3_LIBS ''')))
 -    (''' MOZ_GTK2_CFLAGS ''', list(split(r''' $MOZ_GTK2_CFLAGS ''')))
-     (''' MOZ_GTK2_LIBS ''', list(split(r''' $MOZ_GTK2_LIBS ''')))
+-    (''' MOZ_GTK2_LIBS ''', list(split(r''' $MOZ_GTK2_LIBS ''')))
      (''' MOZ_FS_LAYOUT ''', r''' $MOZ_FS_LAYOUT ''')
      (''' TK_CFLAGS ''', list(split(r''' $TK_CFLAGS ''')))
+     (''' TK_LIBS ''', list(split(r''' $TK_LIBS ''')))
 diff --git a/widget/gtk/mozgtk/gtk2/moz.build b/widget/gtk/mozgtk/gtk2/moz.build
 deleted file mode 100644
 index d07fd06dfd..0000000000
