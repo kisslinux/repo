@@ -23,7 +23,8 @@ export PATH=$PATH:$PWD
     --disable-readline \
     --disable-gprof \
     --with-mmap \
-    --with-system-zlib
+    --with-system-zlib \
+    --enable-deterministic-archives
 
 make configure-host
 make tooldir=/usr
