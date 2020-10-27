@@ -12,6 +12,7 @@ export PATH=$PATH:$PWD
     --prefix=/usr \
     --with-lib-path=/usr/lib:/usr/local/lib \
     --enable-targets=x86_64-pep \
+    --enable-deterministic-archives \
     --disable-gold \
     --enable-lto \
     --enable-ld=default \
