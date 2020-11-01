@@ -1,8 +1,13 @@
 #!/bin/sh -e
 
+# Uncomment if using valgrind or similar.
+# :>nostrip
+
 ./configure \
     --prefix=/usr \
-    --syslibdir=/usr/lib
+    --syslibdir=/usr/lib \
+# Uncomment if using valgrind or similar.
+#   --enable-debug
 
 make
 make DESTDIR="$1" install
