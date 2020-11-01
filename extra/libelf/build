@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < musl-decls.patch
-
 # Build sometimes forces -Werror.
 export CFLAGS="$CFLAGS -Wno-error"
 
