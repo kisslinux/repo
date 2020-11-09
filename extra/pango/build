@@ -9,7 +9,7 @@ meson \
     --prefix=/usr \
     -Dgir=false \
     -Dgtk_doc=false \
-    -Dintrospection=false \
+    -Dintrospection=disabled \
     -Dinstalled_tests=false \
     . build
 
