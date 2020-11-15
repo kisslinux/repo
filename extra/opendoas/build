@@ -3,6 +3,7 @@
 sed -i '/chown/d' GNUmakefile
 
 ./configure \
+    --prefix=/usr \
     --enable-static \
     --with-shadow \
     --with-timestamp \
