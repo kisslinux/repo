@@ -24,11 +24,11 @@ index d34d8a7f75..4e5648089b 100644
 @@ -119,7 +119,7 @@ TEST_DIRS += [
      'imptests',
  ]
- 
+
 -if CONFIG['MOZ_WIDGET_TOOLKIT'] in ('gtk', 'cocoa', 'windows'):
 +if CONFIG['MOZ_WIDGET_TOOLKIT'] in ('cocoa', 'windows'):
      TEST_DIRS += ['plugins/test']
- 
+
  SPHINX_TREES['/dom'] = 'docs'
 diff --git a/dom/plugins/base/npapi.h b/dom/plugins/base/npapi.h
 index d6b189baef..adc98f975c 100644
@@ -37,30 +37,30 @@ index d6b189baef..adc98f975c 100644
 @@ -41,9 +41,9 @@
  #  endif
  #endif
- 
+
 -#if defined(XP_UNIX)
-+#if defined(MOZ_X11) 
++#if defined(MOZ_X11)
  #  include <stdio.h>
 -#  if defined(MOZ_X11)
-+#  if 0 
++#  if 0
  #    include <X11/Xlib.h>
  #    include <X11/Xutil.h>
  #    include "X11UndefineNone.h"
 @@ -211,7 +211,7 @@ typedef struct _NPAsyncSurface {
  /* Exact meaning must be spec'd in event model. */
  #  define kNPEventStartIME 2
- 
+
 -#  if defined(XP_UNIX)
 +#  if 0
  /*
   * Unix specific structures and definitions
   */
 @@ -229,7 +229,7 @@ typedef struct {
- 
+
  typedef struct {
    int32_t type;
 -#    if defined(MOZ_X11)
-+#    if 0 
++#    if 0
    Display* display;
    Visual* visual;
    Colormap colormap;
@@ -69,7 +69,7 @@ index d6b189baef..adc98f975c 100644
    NPDrawingModelSyncWin = 5
  #  endif
 -#  if defined(MOZ_X11)
-+#  if 0 
++#  if 0
    ,
    NPDrawingModelSyncX = 6
  #  endif
@@ -78,7 +78,7 @@ index d6b189baef..adc98f975c 100644
   *   previous compilers.
   */
 -#  if (defined(XP_UNIX) && defined(__GNUC__) && (__GNUC__ >= 3))
-+#  if 0 
++#  if 0
  #    define _NP_ABI_MIXIN_FOR_GCC3 NP_ABI_GCC3_MASK
  #  else
  #    define _NP_ABI_MIXIN_FOR_GCC3 0
@@ -105,41 +105,41 @@ index d6b189baef..adc98f975c 100644
  #  elif defined(XP_WIN)
  typedef HRGN NPRegion;
 -#  elif defined(XP_UNIX) && defined(MOZ_X11)
-+#  elif 0 
++#  elif 0
  typedef Region NPRegion;
  #  elif defined(XP_SYMBIAN)
  typedef QRegion* NPRegion;
 @@ -828,7 +828,7 @@ extern "C" {
- 
+
  /* NPP_* functions are provided by the plugin and called by the navigator. */
- 
+
 -#  if defined(XP_UNIX)
-+#  if 0 
++#  if 0
  const char* NPP_GetMIMEDescription(void);
  #  endif
- 
+
 diff --git a/dom/plugins/base/nsNPAPIPlugin.cpp b/dom/plugins/base/nsNPAPIPlugin.cpp
 index 829db86079..9870c6a487 100644
 --- a/dom/plugins/base/nsNPAPIPlugin.cpp
 +++ b/dom/plugins/base/nsNPAPIPlugin.cpp
 @@ -55,7 +55,7 @@
  #endif
- 
+
  // needed for nppdf plugin
 -#if (MOZ_WIDGET_GTK)
-+#if 0 
++#if 0
  #  include <gdk/gdk.h>
  #  include <gdk/gdkx.h>
  #endif
 @@ -74,7 +74,7 @@ using mozilla::PluginLibrary;
  using mozilla::plugins::PluginModuleChromeParent;
  using mozilla::plugins::PluginModuleContentParent;
- 
+
 -#ifdef MOZ_X11
 +#if 0
  #  include "mozilla/X11Util.h"
  #endif
- 
+
 @@ -1224,9 +1224,9 @@ NPError _getvalue(NPP npp, NPNVariable variable, void* result) {
    // Cast NPNVariable enum to int to avoid warnings about including switch
    // cases for android_npapi.h's non-standard ANPInterface values.
@@ -148,44 +148,44 @@ index 829db86079..9870c6a487 100644
 +#if 0
      case NPNVxDisplay: {
 -#  if defined(MOZ_X11)
-+#  if 0 
++#  if 0
        if (npp) {
          nsNPAPIPluginInstance* inst = (nsNPAPIPluginInstance*)npp->ndata;
          bool windowless = false;
 @@ -1260,7 +1260,7 @@ NPError _getvalue(NPP npp, NPNVariable variable, void* result) {
        return NPERR_GENERIC_ERROR;
  #endif
- 
+
 -#if defined(XP_WIN) || defined(MOZ_WIDGET_GTK)
 +#if defined(XP_WIN)
      case NPNVnetscapeWindow: {
        if (!npp || !npp->ndata) return NPERR_INVALID_INSTANCE_ERROR;
- 
+
 @@ -1302,7 +1302,7 @@ NPError _getvalue(NPP npp, NPNVariable variable, void* result) {
      }
- 
+
      case NPNVToolkit: {
 -#ifdef MOZ_WIDGET_GTK
 +#if 0
        *((NPNToolkitType*)result) = NPNVGtk2;
  #endif
- 
+
 @@ -1312,7 +1312,7 @@ NPError _getvalue(NPP npp, NPNVariable variable, void* result) {
      }
- 
+
      case NPNVSupportsXEmbedBool: {
 -#ifdef MOZ_WIDGET_GTK
-+#if 0 
++#if 0
        *(NPBool*)result = true;
  #else
        *(NPBool*)result = false;
 @@ -1333,8 +1333,7 @@ NPError _getvalue(NPP npp, NPNVariable variable, void* result) {
      }
- 
+
      case NPNVSupportsWindowless: {
 -#if defined(XP_WIN) || defined(XP_MACOSX) || \
 -    (defined(MOZ_X11) && defined(MOZ_WIDGET_GTK))
-+#if defined(XP_WIN) || defined(XP_MACOSX) 
++#if defined(XP_WIN) || defined(XP_MACOSX)
        *(NPBool*)result = true;
  #else
        *(NPBool*)result = false;
@@ -196,9 +196,9 @@ index c011cd038d..1d5224a45d 100644
 @@ -316,7 +316,7 @@ nsresult nsNPAPIPluginInstance::SetWindow(NPWindow* window) {
    // NPAPI plugins don't want a SetWindow(nullptr).
    if (!window || RUNNING != mRunning) return NS_OK;
- 
+
 -#if MOZ_WIDGET_GTK
-+#if 0 
++#if 0
    // bug 108347, flash plugin on linux doesn't like window->width <= 0
    return NS_OK;
  #endif
@@ -207,11 +207,11 @@ index 1ca2569ae8..2977f96902 100644
 --- a/dom/plugins/base/nsNPAPIPluginInstance.h
 +++ b/dom/plugins/base/nsNPAPIPluginInstance.h
 @@ -38,7 +38,7 @@ class Element;
- 
+
  #if defined(OS_WIN)
  const NPDrawingModel kDefaultDrawingModel = NPDrawingModelSyncWin;
 -#elif defined(MOZ_X11)
-+#elif 0 
++#elif 0
  const NPDrawingModel kDefaultDrawingModel = NPDrawingModelSyncX;
  #elif defined(XP_MACOSX)
  #  ifndef NP_NO_QUICKDRAW
@@ -224,16 +224,16 @@ index 8edea3aa14..66dd9a1973 100644
  #  include "winbase.h"
  #endif
 -#if (MOZ_WIDGET_GTK)
-+#if 0 
++#if 0
  #  include <gdk/gdk.h>
  #  include <gdk/gdkx.h>
  #endif
 @@ -278,7 +278,7 @@ nsPluginHost::nsPluginHost()
    }
- 
+
    bool waylandBackend = false;
 -#if MOZ_WIDGET_GTK
-+#if 0 
++#if 0
    GdkDisplay* display = gdk_display_get_default();
    if (display) {
      waylandBackend = !GDK_IS_X11_DISPLAY(display);
@@ -244,7 +244,7 @@ index 23053888d4..0e6376e758 100644
 @@ -4,7 +4,7 @@
   * License, v. 2.0. If a copy of the MPL was not distributed with this
   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
- 
+
 -#ifdef MOZ_X11
 +#if 0
  #  include <cairo-xlib.h>
@@ -253,7 +253,7 @@ index 23053888d4..0e6376e758 100644
 @@ -75,7 +75,7 @@ static NS_DEFINE_CID(kAppShellCID, NS_APPSHELL_CID);
  #  include "ComplexTextInputPanel.h"
  #endif
- 
+
 -#ifdef MOZ_WIDGET_GTK
 +#if 0
  #  include <gdk/gdk.h>
@@ -261,17 +261,17 @@ index 23053888d4..0e6376e758 100644
  #endif
 @@ -621,7 +621,7 @@ NS_IMETHODIMP nsPluginInstanceOwner::GetNetscapeWindow(void* value) {
    }
- 
+
    return NS_OK;
 -#elif defined(MOZ_WIDGET_GTK) && defined(MOZ_X11)
-+#elif 0 
++#elif 0
    // X11 window managers want the toplevel window for WM_TRANSIENT_FOR.
    nsIWidget* win = mPluginFrame->GetNearestWidget();
    if (!win) return NS_ERROR_FAILURE;
 @@ -1743,7 +1743,7 @@ nsresult nsPluginInstanceOwner::HandleEvent(Event* aEvent) {
    return NS_OK;
  }
- 
+
 -#ifdef MOZ_X11
 +#if 0
  static unsigned int XInputEventState(const WidgetInputEvent& anEvent) {
@@ -280,7 +280,7 @@ index 23053888d4..0e6376e758 100644
 @@ -2224,7 +2224,7 @@ nsEventStatus nsPluginInstanceOwner::ProcessEvent(
    }
  #endif
- 
+
 -#ifdef MOZ_X11
 +#if 0
    // this code supports windowless plugins
@@ -300,21 +300,21 @@ index 23053888d4..0e6376e758 100644
        if (anEvent.mPluginEvent) {
          XKeyEvent& event = pluginEvent.xkey;
 -#  ifdef MOZ_WIDGET_GTK
-+#  if 0 
++#  if 0
          event.root = GDK_ROOT_WINDOW();
          event.time = anEvent.mTime;
          const GdkEventKey* gdkEvent =
 @@ -2517,7 +2517,7 @@ void nsPluginInstanceOwner::Paint(const RECT& aDirty, HDC aDC) {
  }
  #endif
- 
+
 -#if defined(MOZ_X11)
-+#if 0 
++#if 0
  void nsPluginInstanceOwner::Paint(gfxContext* aContext,
                                    const gfxRect& aFrameRect,
                                    const gfxRect& aDirtyRect) {
 @@ -2651,7 +2651,7 @@ nsresult nsPluginInstanceOwner::Renderer::DrawWithXlib(
- 
+
    NPSetWindowCallbackStruct* ws_info =
        static_cast<NPSetWindowCallbackStruct*>(mWindow->ws_info);
 -#  ifdef MOZ_X11
@@ -338,21 +338,21 @@ index fbb87b6113..e5e4b86159 100644
 @@ -31,7 +31,7 @@ class nsPluginDOMContextMenuListener;
  class nsPluginFrame;
  class nsDisplayListBuilder;
- 
+
 -#if defined(MOZ_X11)
-+#if 0 
++#if 0
  class gfxContext;
  #endif
- 
+
 @@ -48,7 +48,7 @@ class PuppetWidget;
- 
+
  using mozilla::widget::PuppetWidget;
- 
+
 -#ifdef MOZ_X11
 +#if 0
  #  include "gfxXlibNativeRenderer.h"
  #endif
- 
+
 @@ -112,7 +112,7 @@ class nsPluginInstanceOwner final : public nsIPluginInstanceOwner,
    void Paint(const gfxRect& aDirtyRect, CGContextRef cgContext);
    void RenderCoreAnimation(CGContextRef aCGContext, int aWidth, int aHeight);
@@ -365,7 +365,7 @@ index fbb87b6113..e5e4b86159 100644
 @@ -193,7 +193,7 @@ class nsPluginInstanceOwner final : public nsIPluginInstanceOwner,
      return "";
    }
- 
+
 -#ifdef MOZ_X11
 +#if 0
    void GetPluginDescription(nsACString& aDescription) {
@@ -390,9 +390,9 @@ index fbb87b6113..e5e4b86159 100644
    bool mFlash10Quirks;
  #endif
 @@ -371,7 +371,7 @@ class nsPluginInstanceOwner final : public nsIPluginInstanceOwner,
- 
+
    int mLastMouseDownButtonType;
- 
+
 -#ifdef MOZ_X11
 +#if 0
    class Renderer : public gfxXlibNativeRenderer {
@@ -405,7 +405,7 @@ index 6aea8d28fc..f4f2ac36b7 100644
 @@ -17,7 +17,7 @@ class nsPluginNativeWindowImpl : public nsPluginNativeWindow {
    nsPluginNativeWindowImpl();
    virtual ~nsPluginNativeWindowImpl();
- 
+
 -#ifdef MOZ_WIDGET_GTK
 +#if 0
    NPSetWindowCallbackStruct mWsInfo;
@@ -414,9 +414,9 @@ index 6aea8d28fc..f4f2ac36b7 100644
 @@ -32,14 +32,14 @@ nsPluginNativeWindowImpl::nsPluginNativeWindowImpl() : nsPluginNativeWindow() {
    memset(&clipRect, 0, sizeof(clipRect));
    type = NPWindowTypeWindow;
- 
+
 -#ifdef MOZ_WIDGET_GTK
-+#if 0 
++#if 0
    ws_info = &mWsInfo;
    mWsInfo.type = 0;
    mWsInfo.display = nullptr;
@@ -433,18 +433,18 @@ index 55494b4d8c..822d3b88e3 100644
 --- a/dom/plugins/ipc/NPEventUnix.h
 +++ b/dom/plugins/ipc/NPEventUnix.h
 @@ -9,7 +9,7 @@
- 
+
  #include "npapi.h"
- 
+
 -#ifdef MOZ_X11
 +#if 0
  #  include "mozilla/X11Util.h"
  #endif
- 
+
 @@ -59,7 +59,7 @@ struct ParamTraits<mozilla::plugins::NPRemoteEvent>  // synonym for XEvent
        return false;
      }
- 
+
 -#ifdef MOZ_X11
 +#if 0
      SetXDisplay(aResult->event);
@@ -453,7 +453,7 @@ index 55494b4d8c..822d3b88e3 100644
 @@ -70,7 +70,7 @@ struct ParamTraits<mozilla::plugins::NPRemoteEvent>  // synonym for XEvent
      aLog->append(L"(XEvent)");
    }
- 
+
 -#ifdef MOZ_X11
 +#if 0
   private:
@@ -475,10 +475,10 @@ index 9d6c04dced..b163c4c548 100644
 @@ -44,7 +44,7 @@ using namespace mozilla::layers;
  using namespace mozilla::gfx;
  using namespace mozilla::widget;
- 
+
 -#ifdef MOZ_WIDGET_GTK
 +#if 0
- 
+
  #  include <gtk/gtk.h>
  #  include <gdk/gdkx.h>
 @@ -188,10 +188,10 @@ PluginInstanceChild::PluginInstanceChild(const NPPluginFuncs* aPluginIface,
@@ -486,20 +486,20 @@ index 9d6c04dced..b163c4c548 100644
    mData.ndata = (void*)this;
    mData.pdata = nullptr;
 -#if defined(MOZ_X11) && defined(XP_UNIX) && !defined(XP_MACOSX)
-+#if 0 
++#if 0
    mWindow.ws_info = &mWsInfo;
    memset(&mWsInfo, 0, sizeof(mWsInfo));
 -#  ifdef MOZ_WIDGET_GTK
-+#  if 1 
++#  if 1
    mWsInfo.display = nullptr;
  #  else
    mWsInfo.display = DefaultXDisplay();
 @@ -356,7 +356,7 @@ NPError PluginInstanceChild::NPN_GetValue(NPNVariable aVar, void* aValue) {
    AutoStackHelper guard(this);
- 
+
    switch (aVar) {
 -#if defined(MOZ_X11)
-+#if 0 
++#if 0
      case NPNVToolkit:
        *((NPNToolkitType*)aValue) = NPNVGtk2;
        return NPERR_NO_ERROR;
@@ -508,23 +508,23 @@ index 9d6c04dced..b163c4c548 100644
          return NPERR_NO_ERROR;
        }
 -#elif defined(MOZ_X11)
-+#elif 0 
++#elif 0
        NPError result;
        CallNPN_GetValue_NPNVnetscapeWindow(static_cast<XID*>(aValue), &result);
        return result;
 @@ -842,7 +842,7 @@ mozilla::ipc::IPCResult PluginInstanceChild::AnswerNPP_HandleEvent(
    AssertPluginThread();
    AutoStackHelper guard(this);
- 
+
 -#if defined(MOZ_X11) && defined(DEBUG)
-+#if 0 
++#if 0
    if (GraphicsExpose == event.event.type)
      PLUGIN_LOG_DEBUG(
          ("  received drawable 0x%lx\n", event.event.xgraphicsexpose.drawable));
 @@ -899,7 +899,7 @@ mozilla::ipc::IPCResult PluginInstanceChild::AnswerNPP_HandleEvent(
    }
  #endif
- 
+
 -#ifdef MOZ_X11
 +#if 0
    if (GraphicsExpose == event.event.type) {
@@ -533,11 +533,11 @@ index 9d6c04dced..b163c4c548 100644
 @@ -1154,7 +1154,7 @@ mozilla::ipc::IPCResult PluginInstanceChild::AnswerNPP_SetWindow(
    AssertPluginThread();
    AutoStackHelper guard(this);
- 
+
 -#if defined(MOZ_X11) && defined(XP_UNIX) && !defined(XP_MACOSX)
-+#if 0 
++#if 0
    NS_ASSERTION(mWsInfo.display, "We should have a valid display!");
- 
+
    // The minimum info is sent over IPC to allow this
 @@ -1250,14 +1250,14 @@ mozilla::ipc::IPCResult PluginInstanceChild::AnswerNPP_SetWindow(
  #elif defined(MOZ_WIDGET_UIKIT)
@@ -546,10 +546,10 @@ index 9d6c04dced..b163c4c548 100644
 -#  error Implement me for your OS
 +//#  error Implement me for your OS
  #endif
- 
+
    return IPC_OK();
  }
- 
+
  bool PluginInstanceChild::Initialize() {
 -#ifdef MOZ_WIDGET_GTK
 +#if 0
@@ -559,7 +559,7 @@ index 9d6c04dced..b163c4c548 100644
 @@ -2870,7 +2870,7 @@ bool PluginInstanceChild::CreateOptSurface(void) {
                                ? SurfaceFormat::A8R8G8B8_UINT32
                                : SurfaceFormat::X8R8G8B8_UINT32;
- 
+
 -#ifdef MOZ_X11
 +#if 0
    Display* dpy = mWsInfo.display;
@@ -568,7 +568,7 @@ index 9d6c04dced..b163c4c548 100644
 @@ -2926,7 +2926,7 @@ bool PluginInstanceChild::MaybeCreatePlatformHelperSurface(void) {
      return false;
    }
- 
+
 -#ifdef MOZ_X11
 +#if 0
    bool supportNonDefaultVisual = false;
@@ -576,10 +576,10 @@ index 9d6c04dced..b163c4c548 100644
    Visual* defaultVisual = DefaultVisualOfScreen(screen);
 @@ -3078,12 +3078,12 @@ bool PluginInstanceChild::EnsureCurrentBuffer(void) {
  }
- 
+
  void PluginInstanceChild::UpdateWindowAttributes(bool aForceSetWindow) {
 -#if defined(MOZ_X11) || defined(XP_WIN)
-+#if 0 
++#if 0
    RefPtr<gfxASurface> curSurface =
        mHelperSurface ? mHelperSurface : mCurrentSurface;
  #endif  // Only used within MOZ_X11 or XP_WIN blocks. Unused variable otherwise
@@ -592,7 +592,7 @@ index 9d6c04dced..b163c4c548 100644
 @@ -3182,7 +3182,7 @@ void PluginInstanceChild::PaintRectToPlatformSurface(const nsIntRect& aRect,
    // We should not send an async surface if we're using direct rendering.
    MOZ_ASSERT(!IsUsingDirectDrawing());
- 
+
 -#ifdef MOZ_X11
 +#if 0
    {
@@ -617,23 +617,23 @@ index 9d6c04dced..b163c4c548 100644
      gfxXlibSurface* xsurf = static_cast<gfxXlibSurface*>(mCurrentSurface.get());
      currSurf = SurfaceDescriptorX11(xsurf);
 @@ -3621,7 +3621,7 @@ bool PluginInstanceChild::ReadbackDifferenceRect(const nsIntRect& rect) {
- 
+
      // We can read safely from XSurface,SharedDIBSurface and Unsafe
      // SharedMemory, because PluginHost is not able to modify that surface
 -#if defined(MOZ_X11)
-+#if 0 
++#if 0
    if (mBackSurface->GetType() != gfxSurfaceType::Xlib &&
        !gfxSharedImageSurface::IsSharedImage(mBackSurface))
      return false;
 @@ -3629,7 +3629,7 @@ bool PluginInstanceChild::ReadbackDifferenceRect(const nsIntRect& rect) {
    if (!SharedDIBSurface::IsSharedDIBSurface(mBackSurface)) return false;
  #endif
- 
+
 -#if defined(MOZ_X11) || defined(XP_WIN)
-+#if 0 
++#if 0
    if (mCurrentSurface->GetContentType() != mBackSurface->GetContentType())
      return false;
- 
+
 @@ -3747,7 +3747,7 @@ mozilla::ipc::IPCResult PluginInstanceChild::RecvUpdateBackground(
    if (!mBackground) {
      // XXX refactor me
@@ -650,9 +650,9 @@ index 479c060f91..a00c1229aa 100644
 @@ -363,7 +363,7 @@ class PluginInstanceChild : public PPluginInstanceChild {
    PluginScriptableObjectChild* mCachedWindowActor;
    PluginScriptableObjectChild* mCachedElementActor;
- 
+
 -#if defined(MOZ_X11) && defined(XP_UNIX) && !defined(XP_MACOSX)
-+#if 0 
++#if 0
    NPSetWindowCallbackStruct mWsInfo;
  #elif defined(OS_WIN)
    HWND mPluginWindowHWND;
@@ -701,7 +701,7 @@ index 802bba769a..a11b7497e3 100644
        allowed = SupportsPluginDirectDXGISurfaceDrawing();
        break;
 -#elif defined(MOZ_X11)
-+#elif 0 
++#elif 0
      case NPDrawingModelSyncX:
        allowed = true;
        break;
@@ -726,25 +726,25 @@ index 802bba769a..a11b7497e3 100644
 @@ -1224,7 +1224,7 @@ nsresult PluginInstanceParent::EndUpdateBackground(const nsIntRect& aRect) {
        ("[InstanceParent][%p] EndUpdateBackground for <x=%d,y=%d, w=%d,h=%d>",
         this, aRect.x, aRect.y, aRect.width, aRect.height));
- 
+
 -#ifdef MOZ_X11
 +#if 0
    // Have to XSync here to avoid the plugin trying to draw with this
    // surface racing with its creation in the X server.  We also want
    // to avoid the plugin drawing onto stale pixels, then handing us
 @@ -1270,7 +1270,7 @@ bool PluginInstanceParent::CreateBackground(const nsIntSize& aSize) {
- 
+
    // XXX refactor me
- 
+
 -#if defined(MOZ_X11)
-+#if 0 
++#if 0
    Screen* screen = DefaultScreenOfDisplay(DefaultXDisplay());
    Visual* visual = DefaultVisualOfScreen(screen);
    mBackground = gfxXlibSurface::Create(
 @@ -1310,7 +1310,7 @@ PluginInstanceParent::BackgroundDescriptor() {
- 
+
    // XXX refactor me
- 
+
 -#ifdef MOZ_X11
 +#if 0
    gfxXlibSurface* xsurf = static_cast<gfxXlibSurface*>(mBackground.get());
@@ -753,7 +753,7 @@ index 802bba769a..a11b7497e3 100644
 @@ -1427,7 +1427,7 @@ NPError PluginInstanceParent::NPP_SetWindow(const NPWindow* aWindow) {
    }
  #endif
- 
+
 -#if defined(MOZ_X11) && defined(XP_UNIX) && !defined(XP_MACOSX)
 +#if 0
    const NPSetWindowCallbackStruct* ws_info =
@@ -762,9 +762,9 @@ index 802bba769a..a11b7497e3 100644
 @@ -1621,7 +1621,7 @@ int16_t PluginInstanceParent::NPP_HandleEvent(void* event) {
    }
  #endif
- 
+
 -#if defined(MOZ_X11)
-+#if 0 
++#if 0
    switch (npevent->type) {
      case GraphicsExpose:
        PLUGIN_LOG_DEBUG(("  schlepping drawable 0x%lx across the pipe\n",
@@ -786,14 +786,14 @@ index e77d3721f5..0ddcc98330 100644
        height(0),
        type(NPWindowTypeDrawable)
 -#if defined(MOZ_X11) && defined(XP_UNIX) && !defined(XP_MACOSX)
-+#if 0 
++#if 0
        ,
        visualID(0),
        colormap(0)
 @@ -82,7 +82,7 @@ ipc::RacyInterruptPolicy MediateRace(const MessageChannel::MessageInfo& parent,
    }
  }
- 
+
 -#if defined(OS_LINUX) || defined(OS_SOLARIS)
 +#if defined(OS_SOLARIS)
  static string ReplaceAll(const string& haystack, const string& needle,
@@ -801,7 +801,7 @@ index e77d3721f5..0ddcc98330 100644
    string munged = haystack;
 @@ -98,7 +98,7 @@ static string ReplaceAll(const string& haystack, const string& needle,
  #endif
- 
+
  string MungePluginDsoPath(const string& path) {
 -#if defined(OS_LINUX) || defined(OS_SOLARIS)
 +#if defined(OS_SOLARIS)
@@ -810,7 +810,7 @@ index e77d3721f5..0ddcc98330 100644
  #else
 @@ -107,7 +107,7 @@ string MungePluginDsoPath(const string& path) {
  }
- 
+
  string UnmungePluginDsoPath(const string& munged) {
 -#if defined(OS_LINUX) || defined(OS_SOLARIS)
 +#if defined(OS_SOLARIS)
@@ -831,11 +831,11 @@ index 87747b115b..0d33a9a5af 100644
    Colormap colormap;
  #endif /* XP_UNIX */
 @@ -113,9 +113,9 @@ struct NPAudioDeviceStateChangedIPC {
- 
+
  #ifdef XP_WIN
  typedef HWND NativeWindowHandle;
 -#elif defined(MOZ_X11)
-+#elif 0 
++#elif 0
  typedef XID NativeWindowHandle;
 -#elif defined(XP_DARWIN) || defined(ANDROID)
 +#elif defined(XP_DARWIN) || defined(ANDROID) || defined(MOZ_X11)
@@ -847,16 +847,16 @@ index 87747b115b..0d33a9a5af 100644
      WriteParam(aMsg, aParam.clipRect);
      WriteParam(aMsg, aParam.type);
 -#if defined(MOZ_X11) && defined(XP_UNIX) && !defined(XP_MACOSX)
-+#if 0 
++#if 0
      aMsg->WriteULong(aParam.visualID);
      aMsg->WriteULong(aParam.colormap);
  #endif
 @@ -345,7 +345,7 @@ struct ParamTraits<mozilla::plugins::NPRemoteWindow> {
            ReadParam(aMsg, aIter, &clipRect) && ReadParam(aMsg, aIter, &type)))
        return false;
- 
+
 -#if defined(MOZ_X11) && defined(XP_UNIX) && !defined(XP_MACOSX)
-+#if 0 
++#if 0
      unsigned long visualID;
      unsigned long colormap;
      if (!(aMsg->ReadULong(aIter, &visualID) &&
@@ -865,7 +865,7 @@ index 87747b115b..0d33a9a5af 100644
      aResult->clipRect = clipRect;
      aResult->type = type;
 -#if defined(MOZ_X11) && defined(XP_UNIX) && !defined(XP_MACOSX)
-+#if 0 
++#if 0
      aResult->visualID = visualID;
      aResult->colormap = colormap;
  #endif
@@ -874,9 +874,9 @@ index 2e811ceaeb..a66eb54a4e 100644
 --- a/dom/plugins/ipc/PluginModuleChild.cpp
 +++ b/dom/plugins/ipc/PluginModuleChild.cpp
 @@ -12,7 +12,7 @@
- 
+
  #include "mozilla/ipc/MessageChannel.h"
- 
+
 -#ifdef MOZ_WIDGET_GTK
 +#if 0
  #  include <gtk/gtk.h>
@@ -885,7 +885,7 @@ index 2e811ceaeb..a66eb54a4e 100644
 @@ -25,7 +25,7 @@
  #include "nsPluginsDir.h"
  #include "nsXULAppAPI.h"
- 
+
 -#ifdef MOZ_X11
 +#if 0
  #  include "nsX11ErrorHandler.h"
@@ -896,7 +896,7 @@ index 2e811ceaeb..a66eb54a4e 100644
        ,
        mGetEntryPointsFunc(0)
 -#elif defined(MOZ_WIDGET_GTK)
-+#elif 0 
++#elif 0
        ,
        mNestedLoopTimerId(0)
  #endif
@@ -905,7 +905,7 @@ index 2e811ceaeb..a66eb54a4e 100644
    mAsyncRenderSupport = info.fSupportsAsyncRender;
  #endif
 -#if defined(MOZ_X11)
-+#if 0 
++#if 0
    constexpr auto flash10Head = "Shockwave Flash 10."_ns;
    if (StringBeginsWith(nsDependentCString(info.fDescription), flash10Head)) {
      AddQuirk(QUIRK_FLASH_EXPOSE_COORD_TRANSLATION);
@@ -914,25 +914,25 @@ index 2e811ceaeb..a66eb54a4e 100644
  #endif
    pluginFile.FreePluginInfo(info);
 -#if defined(MOZ_X11) || defined(XP_MACOSX)
-+#if 0 
++#if 0
    if (!mLibrary)
  #endif
    {
 @@ -330,7 +330,7 @@ bool PluginModuleChild::InitForChrome(const std::string& aPluginFilename,
    return true;
  }
- 
+
 -#if defined(MOZ_WIDGET_GTK)
-+#if 0 
- 
++#if 0
+
  typedef void (*GObjectDisposeFn)(GObject*);
  typedef gboolean (*GtkWidgetScrollEventFn)(GtkWidget*, GdkEventScroll*);
 @@ -550,7 +550,7 @@ bool PluginModuleChild::ShouldContinueFromReplyTimeout() {
  }
- 
+
  bool PluginModuleChild::InitGraphics() {
 -#if defined(MOZ_WIDGET_GTK)
-+#if 0 
++#if 0
    // Work around plugins that don't interact well with GDK
    // client-side windows.
    PR_SetEnv("GDK_NATIVE_WINDOWS=1");
@@ -947,7 +947,7 @@ index 2e811ceaeb..a66eb54a4e 100644
  #endif
 @@ -596,7 +596,7 @@ bool PluginModuleChild::InitGraphics() {
  }
- 
+
  void PluginModuleChild::DeinitGraphics() {
 -#if defined(MOZ_X11) && defined(NS_FREE_PERMANENT_DATA)
 +#if 0
@@ -968,14 +968,14 @@ index 2e811ceaeb..a66eb54a4e 100644
        *(NPBool*)aValue = true;
        return NPERR_NO_ERROR;
 -#if defined(MOZ_WIDGET_GTK)
-+#if 0 
++#if 0
      case NPNVxDisplay: {
        if (!aNPP) {
          return NPERR_INVALID_INSTANCE_ERROR;
 @@ -1556,8 +1556,8 @@ NPError PluginModuleChild::DoNP_Initialize(const PluginSettings& aSettings) {
    SetEventHooks();
  #endif
- 
+
 -#ifdef MOZ_X11
 -#  ifdef MOZ_WIDGET_GTK
 +#if 0
@@ -990,18 +990,18 @@ index 84df35e5d8..4caf4c54bd 100644
 @@ -206,7 +206,7 @@ class PluginModuleChild : public PPluginModuleChild {
    bool InitGraphics();
    void DeinitGraphics();
- 
+
 -#if defined(MOZ_WIDGET_GTK)
-+#if 0 
++#if 0
    static gboolean DetectNestedEventLoop(gpointer data);
    static gboolean ProcessBrowserEvents(gpointer data);
- 
+
 @@ -238,7 +238,7 @@ class PluginModuleChild : public PPluginModuleChild {
- 
+
    PluginSettings mCachedSettings;
- 
+
 -#if defined(MOZ_WIDGET_GTK)
-+#if 0 
++#if 0
    // If a plugin spins a nested glib event loop in response to a
    // synchronous IPC message from the browser, the loop might break
    // only after the browser responds to a request sent by the
@@ -1012,14 +1012,14 @@ index c495097caf..085545376f 100644
 @@ -50,7 +50,7 @@
  #  include "PluginUtilsWin.h"
  #endif
- 
+
 -#ifdef MOZ_WIDGET_GTK
-+#if 0 
++#if 0
  #  include <glib.h>
  #elif XP_MACOSX
  #  include "PluginInterposeOSX.h"
 @@ -1591,7 +1591,7 @@ mozilla::ipc::IPCResult PluginModuleChromeParent::
- 
+
  mozilla::ipc::IPCResult PluginModuleParent::RecvBackUpXResources(
      const FileDescriptor& aXSocketFd) {
 -#ifndef MOZ_X11
@@ -1030,39 +1030,39 @@ index c495097caf..085545376f 100644
 @@ -1777,7 +1777,7 @@ void PluginModuleChromeParent::CachedSettingChanged(const char* aPref,
    module->CachedSettingChanged();
  }
- 
+
 -#if defined(XP_UNIX) && !defined(XP_MACOSX)
-+#if 0 
++#if 0
  nsresult PluginModuleParent::NP_Initialize(NPNetscapeFuncs* bFuncs,
                                             NPPluginFuncs* pFuncs,
                                             NPError* error) {
 @@ -1832,6 +1832,22 @@ nsresult PluginModuleChromeParent::NP_Initialize(NPNetscapeFuncs* bFuncs,
- 
+
    return NS_OK;
  }
 +#endif
 +
 +#if defined(XP_UNIX) && !defined(XP_MACOSX)
 +nsresult PluginModuleParent::NP_Initialize(NPNetscapeFuncs* bFuncs,
-+                                           NPPluginFuncs* pFuncs,  
-+                                           NPError* error) {     
-+*error = NPERR_GENERIC_ERROR;                                
-+return NS_ERROR_FAILURE;      
-+}                          
-+                              
++                                           NPPluginFuncs* pFuncs,
++                                           NPError* error) {
++*error = NPERR_GENERIC_ERROR;
++return NS_ERROR_FAILURE;
++}
++
 +nsresult PluginModuleChromeParent::NP_Initialize(NPNetscapeFuncs* bFuncs,
-+                                                 NPPluginFuncs* pFuncs,  
-+                                                 NPError* error) {     
-+  *error = NPERR_GENERIC_ERROR;                                   
-+  return NS_ERROR_FAILURE;     
-+}  
- 
++                                                 NPPluginFuncs* pFuncs,
++                                                 NPError* error) {
++  *error = NPERR_GENERIC_ERROR;
++  return NS_ERROR_FAILURE;
++}
+
  #else
- 
+
 @@ -2035,7 +2051,7 @@ class nsCaseInsensitiveUTF8StringArrayComparator {
    }
  };
- 
+
 -#if defined(XP_WIN) || defined(MOZ_WIDGET_GTK)
 +#if defined(XP_WIN)
  static void ForceWindowless(nsTArray<nsCString>& names,
@@ -1073,16 +1073,16 @@ index c495097caf..085545376f 100644
        ForceWindowless(names, values);
      }
 -#elif defined(MOZ_WIDGET_GTK)
-+#elif 0 
++#elif 0
      // We no longer support windowed mode on Linux.
      ForceWindowless(names, values);
  #endif
 @@ -2232,7 +2248,7 @@ mozilla::ipc::IPCResult PluginModuleParent::AnswerProcessSomeEvents() {
    return IPC_OK();
  }
- 
+
 -#elif !defined(MOZ_WIDGET_GTK)
-+#elif 1 
++#elif 1
  mozilla::ipc::IPCResult PluginModuleParent::AnswerProcessSomeEvents() {
    MOZ_CRASH("unreached");
  }
@@ -1093,7 +1093,7 @@ index 9fd74904a2..b77279b7f5 100644
 @@ -288,7 +288,7 @@ class PluginModuleParent : public PPluginModuleParent,
    int32_t mSandboxLevel;
    bool mIsFlashPlugin;
- 
+
 -#ifdef MOZ_X11
 +#if 0
    // Dup of plugin's X socket, used to scope its resources to this
@@ -1104,23 +1104,23 @@ index 49f1e27670..e97c75d72a 100644
 --- a/dom/plugins/ipc/moz.build
 +++ b/dom/plugins/ipc/moz.build
 @@ -142,9 +142,6 @@ DEFINES['FORCE_PR_LOG'] = True
- 
+
  if CONFIG['MOZ_WIDGET_TOOLKIT'] != 'gtk':
      CXXFLAGS += CONFIG['TK_CFLAGS']
 -else:
 -    # Force build against gtk+2 for struct offsets and such.
 -    CXXFLAGS += CONFIG['MOZ_GTK2_CFLAGS']
- 
+
  CXXFLAGS += CONFIG['MOZ_CAIRO_CFLAGS']
- 
+
 diff --git a/dom/plugins/test/moz.build b/dom/plugins/test/moz.build
 index 032db35387..dde5c1c31b 100644
 --- a/dom/plugins/test/moz.build
 +++ b/dom/plugins/test/moz.build
 @@ -8,7 +8,7 @@ DIRS += ['testplugin']
- 
+
  XPCSHELL_TESTS_MANIFESTS += ['unit/xpcshell.ini']
- 
+
 -if CONFIG['MOZ_WIDGET_TOOLKIT'] in ('gtk', 'cocoa', 'windows'):
 +if CONFIG['MOZ_WIDGET_TOOLKIT'] in ('cocoa', 'windows'):
      MOCHITEST_MANIFESTS += ['mochitest/mochitest.ini']
@@ -1133,9 +1133,9 @@ index 2a9d20cdca..02b39a27cf 100644
 @@ -2692,7 +2692,7 @@ bool stallPlugin(NPObject* npobj, const NPVariant* args, uint32_t argCount,
    return true;
  }
- 
+
 -#if defined(MOZ_WIDGET_GTK)
-+#if 0 
++#if 0
  bool getClipboardText(NPObject* npobj, const NPVariant* args, uint32_t argCount,
                        NPVariant* result) {
    NPP npp = static_cast<TestNPObject*>(npobj)->npp;
@@ -1158,7 +1158,7 @@ index 2c466409ea..ad87356e15 100644
 @@ -46,14 +41,6 @@ if CONFIG['MOZ_WIDGET_TOOLKIT'] == 'windows':
  if CONFIG['MOZ_WIDGET_TOOLKIT'] == 'cocoa' and CONFIG['TARGET_CPU'] == 'x86_64':
      OS_LIBS += ['-framework Carbon']
- 
+
 -if CONFIG['MOZ_WIDGET_TOOLKIT'] == 'gtk':
 -    CXXFLAGS += CONFIG['MOZ_GTK2_CFLAGS']
 -    CFLAGS += CONFIG['MOZ_GTK2_CFLAGS']
@@ -1177,26 +1177,26 @@ index 3df2834ee1..3b6d0e42a0 100644
 @@ -3,11 +3,11 @@
   * License, v. 2.0. If a copy of the MPL was not distributed with this
   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
- 
+
 -#ifdef MOZ_WIDGET_GTK
-+#if 0 
++#if 0
  #  include <gdk/gdk.h>
  #  include <gdk/gdkx.h>
  #  define GET_NATIVE_WINDOW(aWidget) \
 -    GDK_WINDOW_XID((GdkWindow*)aWidget->GetNativeData(NS_NATIVE_WINDOW))
 +   GDK_WINDOW_XID((GdkWindow*)aWidget->GetNativeData(NS_NATIVE_WINDOW))
  #endif
- 
+
  #include <X11/Xlib.h>
 @@ -42,7 +42,7 @@
- 
+
  #include "gfxCrashReporterUtils.h"
- 
+
 -#ifdef MOZ_WIDGET_GTK
 +#if MOZ_WIDGET_GTK
  #  include "gfxPlatformGtk.h"
  #endif
- 
+
 diff --git a/gfx/gl/GLContextProviderWayland.cpp b/gfx/gl/GLContextProviderWayland.cpp
 index 4f7c15380c..25ee2d4354 100644
 --- a/gfx/gl/GLContextProviderWayland.cpp
@@ -1204,7 +1204,7 @@ index 4f7c15380c..25ee2d4354 100644
 @@ -3,7 +3,7 @@
   * License, v. 2.0. If a copy of the MPL was not distributed with this
   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
- 
+
 -#ifdef MOZ_WIDGET_GTK
 +#if 0
  #  include <gdk/gdk.h>
@@ -1222,7 +1222,7 @@ index 4f7c15380c..25ee2d4354 100644
          aCompositorWidget, aWebRender, aForceAccelerated);
 -  }
  }
- 
+
  /*static*/
  already_AddRefed<GLContext> GLContextProviderWayland::CreateHeadless(
      const GLContextCreateDesc& desc, nsACString* const out_failureId) {
@@ -1232,7 +1232,7 @@ index 4f7c15380c..25ee2d4354 100644
      return sGLContextProviderEGL.CreateHeadless(desc, out_failureId);
 -  }
  }
- 
+
  /*static*/
  GLContext* GLContextProviderWayland::GetGlobalContext() {
 -  if (GDK_IS_X11_DISPLAY(gdk_display_get_default())) {
@@ -1241,7 +1241,7 @@ index 4f7c15380c..25ee2d4354 100644
      return sGLContextProviderEGL.GetGlobalContext();
 -  }
  }
- 
+
  /*static*/
  void GLContextProviderWayland::Shutdown() {
 -  if (GDK_IS_X11_DISPLAY(gdk_display_get_default())) {
@@ -1250,7 +1250,7 @@ index 4f7c15380c..25ee2d4354 100644
      sGLContextProviderEGL.Shutdown();
 -  }
  }
- 
+
  }  // namespace mozilla::gl
 diff --git a/gfx/thebes/gfxGdkNativeRenderer.cpp b/gfx/thebes/gfxGdkNativeRenderer.cpp
 index 49f3afdb59..95760b16e4 100644
@@ -1259,7 +1259,7 @@ index 49f3afdb59..95760b16e4 100644
 @@ -7,7 +7,7 @@
  #include "gfxContext.h"
  #include "gfxPlatformGtk.h"
- 
+
 -#ifdef MOZ_X11
 +#if 0
  #  include <gdk/gdkx.h>
@@ -1272,7 +1272,7 @@ index e11a3ba5d1..1cfaf8c79e 100644
 @@ -6,9 +6,9 @@
  #ifndef GFXGDKNATIVERENDER_H_
  #define GFXGDKNATIVERENDER_H_
- 
+
 -#include <gdk/gdk.h>
 +//#include <gdk/gdk.h>
  #include "nsSize.h"
@@ -1280,43 +1280,12 @@ index e11a3ba5d1..1cfaf8c79e 100644
 +#if MOZ_X11
  #  include "gfxXlibNativeRenderer.h"
  #endif
- 
-diff --git a/media/webrtc/trunk/peerconnection_client.target.mk b/media/webrtc/trunk/peerconnection_client.target.mk
-index 3c4320a180..3195e5d025 100644
---- a/media/webrtc/trunk/peerconnection_client.target.mk
-+++ b/media/webrtc/trunk/peerconnection_client.target.mk
-@@ -59,8 +59,6 @@ CFLAGS_Debug := \
- 	-pipe \
- 	-fPIC \
- 	-pthread \
--	-I/usr/include/gtk-2.0 \
--	-I/usr/lib64/gtk-2.0/include \
- 	-I/usr/include/atk-1.0 \
- 	-I/usr/include/cairo \
- 	-I/usr/include/gdk-pixbuf-2.0 \
-@@ -149,8 +147,6 @@ CFLAGS_Release := \
- 	-pipe \
- 	-fPIC \
- 	-pthread \
--	-I/usr/include/gtk-2.0 \
--	-I/usr/lib64/gtk-2.0/include \
- 	-I/usr/include/atk-1.0 \
- 	-I/usr/include/cairo \
- 	-I/usr/include/gdk-pixbuf-2.0 \
-@@ -241,8 +237,6 @@ LDFLAGS_Release := \
- 
- LIBS := \
- 	 \
--	-lgtk-x11-2.0 \
--	-lgdk-x11-2.0 \
- 	-latk-1.0 \
- 	-lgio-2.0 \
- 	-lpangoft2-1.0 \
+
 diff --git a/old-configure b/old-configure
-index 4ad9fe30c9..908fdde6bf 100644
+index 62d6ff55d9..9125028319 100644
 --- a/old-configure
 +++ b/old-configure
-@@ -749,7 +749,6 @@ GLIB_VERSION=2.42
+@@ -746,7 +746,6 @@ GLIB_VERSION=2.42
  GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_42
  GLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_42
  CAIRO_VERSION=1.10
@@ -1324,7 +1293,7 @@ index 4ad9fe30c9..908fdde6bf 100644
  GTK3_VERSION=3.14.0
  GDK_VERSION_MAX_ALLOWED=GDK_VERSION_3_14
  W32API_VERSION=3.14
-@@ -7857,79 +7856,6 @@ cat >> confdefs.h <<EOF
+@@ -7929,79 +7928,6 @@ cat >> confdefs.h <<EOF
  EOF
  
    fi
@@ -1358,19 +1327,19 @@ index 4ad9fe30c9..908fdde6bf 100644
 -     PKG_CONFIG_MIN_VERSION=0.9.0
 -     if $PKG_CONFIG --atleast-pkgconfig-version $PKG_CONFIG_MIN_VERSION; then
 -        echo $ac_n "checking for gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES""... $ac_c" 1>&6
--echo "configure:7891: checking for gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES" >&5
+-echo "configure:7963: checking for gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES" >&5
 -
 -        if $PKG_CONFIG --exists "gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES" ; then
 -            echo "$ac_t""yes" 1>&6
 -            succeeded=yes
 -
 -            echo $ac_n "checking MOZ_GTK2_CFLAGS""... $ac_c" 1>&6
--echo "configure:7898: checking MOZ_GTK2_CFLAGS" >&5
+-echo "configure:7970: checking MOZ_GTK2_CFLAGS" >&5
 -            MOZ_GTK2_CFLAGS=`$PKG_CONFIG --cflags "gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES"`
 -            echo "$ac_t""$MOZ_GTK2_CFLAGS" 1>&6
 -
 -            echo $ac_n "checking MOZ_GTK2_LIBS""... $ac_c" 1>&6
--echo "configure:7903: checking MOZ_GTK2_LIBS" >&5
+-echo "configure:7975: checking MOZ_GTK2_LIBS" >&5
 -            ## Remove evil flags like -Wl,--export-dynamic
 -            MOZ_GTK2_LIBS="`$PKG_CONFIG --libs \"gtk+-2.0 >= $GTK2_VERSION gtk+-unix-print-2.0 glib-2.0 >= $GLIB_VERSION gobject-2.0 gio-unix-2.0 $GDK_PACKAGES\" |sed s/-Wl,--export-dynamic//g`"
 -            echo "$ac_t""$MOZ_GTK2_LIBS" 1>&6
@@ -1404,7 +1373,7 @@ index 4ad9fe30c9..908fdde6bf 100644
  fi # COMPILE_ENVIRONMENT
  
  
-@@ -10624,8 +10550,6 @@ sed 's/$/,/' >> $CONFIG_STATUS <<EOF
+@@ -10619,8 +10545,6 @@ sed 's/$/,/' >> $CONFIG_STATUS <<EOF
      (''' MOZ_ANDROID_MAX_SDK_VERSION ''', r''' $MOZ_ANDROID_MAX_SDK_VERSION ''')
      (''' MOZ_GTK3_CFLAGS ''', list(split(r''' $MOZ_GTK3_CFLAGS ''')))
      (''' MOZ_GTK3_LIBS ''', list(split(r''' $MOZ_GTK3_LIBS ''')))
@@ -1466,11 +1435,11 @@ index 4e9379565d..20b961371e 100644
 @@ -8,7 +8,6 @@ SOURCES += [
      '../mozgtk.c',
  ]
- 
+
 -DEFINES['GTK2_SYMBOLS'] = True
- 
+
  SharedLibrary('mozgtk')
- 
+
 diff --git a/widget/gtk/mozgtk/moz.build b/widget/gtk/mozgtk/moz.build
 index 528e2e9d0f..d32ee829e7 100644
 --- a/widget/gtk/mozgtk/moz.build
@@ -1478,7 +1447,7 @@ index 528e2e9d0f..d32ee829e7 100644
 @@ -4,4 +4,4 @@
  # License, v. 2.0. If a copy of the MPL was not distributed with this
  # file, You can obtain one at http://mozilla.org/MPL/2.0/.
- 
+
 -DIRS += ['stub', 'gtk2', 'gtk3']
 +DIRS += ['stub', 'gtk3']
 diff --git a/widget/gtk/mozgtk/mozgtk.c b/widget/gtk/mozgtk/mozgtk.c
@@ -1488,7 +1457,7 @@ index 8cc4da33f6..4ba73523fc 100644
 @@ -647,21 +647,6 @@ STUB(gtk_color_chooser_get_rgba)
  STUB(gtk_color_chooser_set_use_alpha)
  #endif
- 
+
 -#ifdef GTK2_SYMBOLS
 -STUB(gdk_drawable_get_screen)
 -STUB(gdk_rgb_get_colormap)
@@ -1514,11 +1483,11 @@ index 1a8e210018..3ed3d1be48 100644
 @@ -8,7 +8,7 @@ SOURCES += [
      '../mozgtk.c',
  ]
- 
+
 -for var in ('COMMON_SYMBOLS', 'GTK2_SYMBOLS', 'GTK3_SYMBOLS'):
 +for var in ('COMMON_SYMBOLS', 'GTK3_SYMBOLS'):
      DEFINES[var] = True
- 
+
  SharedLibrary('mozgtk_stub')
 diff --git a/widget/gtk/nsWindow.h b/widget/gtk/nsWindow.h
 index 29f40cb636..12aed01bb0 100644
@@ -1527,7 +1496,7 @@ index 29f40cb636..12aed01bb0 100644
 @@ -8,14 +8,14 @@
  #ifndef __nsWindow_h__
  #define __nsWindow_h__
- 
+
 -#include <gdk/gdk.h>
 +//#include <gdk/gdk.h>
  #include <gtk/gtk.h>

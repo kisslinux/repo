@@ -7,7 +7,7 @@ done
 # Remove libc header which conflicts with 7 or so Linux
 # kernel headers. See: https://github.com/kisslinux/repo/issues/207
 sed -i '/net\/if/d' \
-    media/mtransport/third_party/nICEr/src/stun/addrs-netlink.c
+    dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
 
 # Build autoconf 2.13 for Firefox's sole use.
 # See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
