@@ -4,6 +4,10 @@ for patch in *.patch; do
     patch -p1 < "$patch"
 done
 
+# Remove forced gcc/g++ usage so builds work on gcc-less systems.
+sed -i "s#= g[c+][c+]#= ${CC:-cc}#g" Makefile
+sed -i "s#\(\$(CROSS_COMPILE)\)gcc#\1${CC:-cc}#g" Makefile
+
 # Build and install regular busybox.
 # This excludes utilities which require 'suid' to function.
 make CC="${CC:-cc}" HOSTCC="${CC:-cc}"

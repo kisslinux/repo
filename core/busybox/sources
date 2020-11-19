@@ -6,6 +6,7 @@ patches/print-unicode.patch
 patches/install-fix-chown.patch
 patches/lsusb-vendor-product.patch
 patches/unzip-usage-no-error.patch
+patches/fix-UB+clang.patch
 files/.config
 files/.config-suid
 files/acpid.run
