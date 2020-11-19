@@ -8,6 +8,12 @@ done
 sed -i "s#= g[c+][c+]#= ${CC:-cc}#g" Makefile
 sed -i "s#\(\$(CROSS_COMPILE)\)gcc#\1${CC:-cc}#g" Makefile
 
+# Ensure that busybox's build system is aware that 'cc' may point
+# to clang rather than GCC. This is the case in non-GCC systems.
+case $("${CC:-cc}" --version) in (*clang*)
+    sed -i "s&\(\$(CC),\)clang&\1$CC&g" Makefile.flags
+esac
+
 # Build and install regular busybox.
 # This excludes utilities which require 'suid' to function.
 make CC="${CC:-cc}" HOSTCC="${CC:-cc}"
