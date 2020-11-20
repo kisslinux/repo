@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < fix-clang.patch
-
 export DESTDIR="$1"
 export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
 
