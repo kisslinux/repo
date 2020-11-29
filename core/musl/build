@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+# Fix CVE-2020-28929. This will be fixed upstream in version 1.2.2.
+patch -p1 < wcsnrtombs_cve_2020_28928.patch
+
 # Uncomment if using valgrind or similar.
 # :>nostrip
 
