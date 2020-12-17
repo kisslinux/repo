@@ -1,8 +1,0 @@
-cmake   make
-curl    make
-libressl
-llvm
-pkgconf make
-python  make
-xz
-zlib
