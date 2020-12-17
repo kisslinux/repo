@@ -36,6 +36,9 @@ sed -i '/net\/if/d' \
 )
 export PATH="$PWD/junk/bin:$PATH"
 
+mv configure.in configure
+chmod +x configure
+
 mkdir -p build
 cd build
 
