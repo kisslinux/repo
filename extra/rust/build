@@ -6,7 +6,7 @@ patch -p1 < libressl.patch
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
 {
-    mkdir -p "${cache_dir:=build/cache/2020-10-08}"
+    mkdir -p "${cache_dir:=build/cache/2020-11-19}"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
