@@ -32,13 +32,15 @@ export CFLAGS="$CFLAGS -DGLX_X86_READONLY_TEXT"
 # https://github.com/mesa3d/mesa/commit/9f37c9903b87f86a533bfaffa72f0ecb285b02b2
 sed -i "/pre_args += '-DUSE_ELF_TLS'/d" meson.build
 
+python3 bin/git_sha1_gen.py --output include/git_sha1.h
+
 meson \
     --prefix=/usr \
     --sysconfdir=/etc \
     --mandir=/usr/share/man \
     --localstatedir=/var \
     --buildtype=release \
-    -Dplatforms=x11,drm \
+    -Dplatforms=x11 \
     -Dzstd=disabled \
     . output
 
