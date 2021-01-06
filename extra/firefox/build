@@ -1,8 +1,6 @@
 #!/bin/sh -e
 
-for patch in *.patch; do
-    patch -p1 < "$patch"
-done
+patch -p1 < no-gtk2.patch
 
 # Remove libc header which conflicts with 7 or so Linux
 # kernel headers. See: https://github.com/kisslinux/repo/issues/207
@@ -36,12 +34,6 @@ sed -i '/net\/if/d' \
 )
 export PATH="$PWD/junk/bin:$PATH"
 
-mv configure.in configure
-chmod +x configure
-
-mkdir -p build
-cd build
-
 # Bypass 'ccache' as it's totally useless when building
 # Firefox and only slows things down.
 export CC="${CC:-/usr/bin/cc}"
@@ -49,10 +41,12 @@ export CXX="${CXX:-/usr/bin/c++}"
 
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
+
+export MACH_USE_SYSTEM_PYTHON=1
 export MOZ_DEBUG_FLAGS=-g0
 export MOZ_NOSPAM=1
 
-../configure \
+./mach configure \
     --prefix=/usr \
     --libdir=/usr/lib \
     --enable-official-branding \
@@ -89,8 +83,8 @@ export MOZ_NOSPAM=1
     --disable-eme \
     --disable-necko-wifi
 
-make
-make DESTDIR="$1" install
+./mach build
+DESTDIR="$1" ./mach install
 
 # Remove a lot of uneeded "stuff".
 rm -rf "$1/usr/include"
