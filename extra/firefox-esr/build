@@ -4,9 +4,6 @@ for patch in *.patch; do
     git apply "$patch"
 done
 
-# https://bugzilla.mozilla.org/show_bug.cgi?id=1684180
-sed -i 's/._0//g' dom/webgpu/ipc/WebGPUParent.cpp
-
 # Build autoconf 2.13 for Firefox's sole use.
 # See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
 (
