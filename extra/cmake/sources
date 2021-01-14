@@ -1,2 +1,2 @@
-https://cmake.org/files/v3.19/cmake-3.19.2.tar.gz
+https://cmake.org/files/v3.19/cmake-3.19.3.tar.gz
 patches/cmake-no-execinfo.patch
