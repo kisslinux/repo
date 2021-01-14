@@ -1,0 +1,14 @@
+atk
+fribidi
+gdk-pixbuf
+libXcomposite
+libXcursor
+libXdamage
+libXext
+libXi
+libXinerama
+libXrandr
+libepoxy
+pango
+pkgconf make
+python  make

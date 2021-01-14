@@ -1,0 +1,52 @@
+#!/bin/sh -e
+
+export DESTDIR="$1"
+
+# Create gtk-doc subproject directory so that meson doesn't try to clone it
+# even when we disable it. We also don't really need sass, but there is no
+# option to disable it.
+mkdir -p subprojects/gtk-doc \
+         subprojects/libsass \
+         subprojects/sassc
+
+meson \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    -Dx11-backend=true \
+    -Dwayland-backend=false \
+    -Dbroadway-backend=true \
+    -Dwin32-backend=false \
+    -Dmacos-backend=false \
+    -Dmedia-ffmpeg=auto \
+    -Dmedia-gstreamer=auto \
+    -Dprint-cups=disabled \
+    -Dprint-cloudprint=disabled \
+    -Dvulkan=auto \
+    -Dxinerama=enabled \
+    -Dcloudproviders=disabled \
+    -Dsysprof=disabled \
+    -Dtracker=disabled \
+    -Dcolord=disabled \
+    -Dsassc=disabled \
+    -Dgtk_doc=false \
+    -Dman-pages=false \
+    -Dintrospection=disabled \
+    -Ddemos=false \
+    -Dbuild-examples=false \
+    -Dbuild-tests=false \
+    -Dinstall-tests=false \
+    -Ddebug=false \
+    . output
+
+ninja -C output
+ninja -C output install
+
+# We don't compile with librsvg which leads to this
+# utility solely causing compiler errors for some
+# packages. It has no use at all.
+rm -f "$1/usr/bin/gtk4-encode-symbolic-svg"
+
+# We don't offer support for internationalization
+# so gettext related files can be removed.
+rm -rf "$1/usr/share/gettext"
