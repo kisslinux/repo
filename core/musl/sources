@@ -1,7 +1,6 @@
-https://www.musl-libc.org/releases/musl-1.2.1.tar.gz
+https://www.musl-libc.org/releases/musl-1.2.2.tar.gz
 files/cdefs.h
 files/queue.h
 files/tree.h
 files/getconf.c
 files/getent.c
-patches/wcsnrtombs_cve_2020_28928.patch
