@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+export CC="${CC:-cc}"
+export CXX="${CC:-c++}"
+
 patch -p1 < x264-no-bash.patch
 
 ./configure \
