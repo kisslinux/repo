@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+export CC="${CC:-cc}"
+export CXX="${CXX:-c++}"
+
 patch -p1 < fix-busybox-diff.patch
 
 # Remove the perl requirement from configure
@@ -13,6 +16,7 @@ sed -i 's/perl/:/g' configure
     --enable-vp9 \
     --enable-experimental \
     --enable-runtime-cpu-detect \
+    --target=x86_64-linux-gcc \
     --enable-shared \
     --enable-postproc \
     --enable-pic \
