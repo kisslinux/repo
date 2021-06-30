@@ -5,16 +5,17 @@
     --enable-ipv6 \
     --enable-unix-sockets \
     --enable-hidden-symbols \
-    --without-libidn \
-    --without-libidn2 \
     --disable-manual \
     --disable-ldap \
     --disable-ares \
+    --with-openssl \
+    --with-pic \
+    --with-ca-fallback \
     --without-librtmp \
     --without-icu \
     --without-libpsl \
-    --with-pic \
-    --with-ca-fallback
+    --without-libidn \
+    --without-libidn2
 
 make curl_LDFLAGS=-all-static
 make DESTDIR="$1" install
