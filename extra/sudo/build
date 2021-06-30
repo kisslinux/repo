@@ -7,6 +7,8 @@
     --disable-pam-session \
     --disable-root-mailer \
     --disable-nls \
+    --disable-openssl \
+    --disable-python \
     --enable-pie \
     --without-pam \
     --without-sendmail \
