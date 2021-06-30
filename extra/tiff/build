@@ -3,6 +3,8 @@
 ./configure \
     --prefix=/usr \
     --enable-cxx \
+    --disable-zstd \
+    --disable-webp \
     --without-x
 
 make
