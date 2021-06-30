@@ -1,3 +1,3 @@
-https://ftp.gnu.org/gnu/grub/grub-2.04.tar.xz grub-pc
-https://ftp.gnu.org/gnu/grub/grub-2.04.tar.xz grub-efi
+https://ftp.gnu.org/gnu/grub/grub-2.06.tar.xz grub-pc
+https://ftp.gnu.org/gnu/grub/grub-2.06.tar.xz grub-efi
 files/grub.default
