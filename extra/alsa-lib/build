@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < fix-dlo.patch
-
 ./configure \
     --without-debug \
     --prefix=/usr
