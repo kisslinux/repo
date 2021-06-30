@@ -23,31 +23,4 @@ meson \
 ninja -C build
 ninja -C build install
 
-# json-glib is a separate package which we build alongside
-# glib (as if they were one and the same). The upstream for
-# json-glib is effectively dead (only translation work) so
-# this makes my life a little easier..
-{
-    cd json-glib
-
-    # This mess of CFLAGS, etc is needed to point json-glib to
-    # the freshly built glib sources instead of the system's.
-    export PKG_CONFIG_PATH="$1/usr/lib/pkgconfig:$PKG_CONFIG_PATH"
-    export PATH="$1/usr/bin:$PATH"
-    export CFLAGS="$CFLAGS -I$1/usr/include/glib-2.0"
-    export CFLAGS="$CFLAGS -I$1/usr/lib/glib-2.0/include -pthread"
-    export LDFLAGS="$LDFLAGS -L$1/usr/lib/"
-
-    meson \
-        --prefix=/usr \
-        --sysconfdir=/etc \
-        --mandir=/usr/share/man \
-        -Ddocs=false \
-        -Dintrospection=disabled \
-        . output
-
-    ninja -C output
-    ninja -C output install
-}
-
-kiss l dbus >/dev/null 2>&1 || rm -rf "$1/usr/bin/gdbus"
+rm -rf "$1/usr/bin/gdbus"
