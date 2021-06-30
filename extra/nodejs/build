@@ -1,11 +1,8 @@
 #!/bin/sh -e
 
-# Fix python 3.
-sed -i 's|(3, 8)|(3, 9), (3, 8)|g' configure
-
 ./configure \
     --shared-zlib \
-    --with-intl=small-icu \
+    --with-intl=none \
     --without-etw \
     --without-dtrace \
     --without-report \
