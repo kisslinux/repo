@@ -38,7 +38,7 @@ meson \
     --mandir=/usr/share/man \
     --localstatedir=/var \
     --buildtype=release \
-    -Dplatforms=x11,drm \
+    -Dplatforms=x11 \
     -Dzstd=false \
     . output
 
