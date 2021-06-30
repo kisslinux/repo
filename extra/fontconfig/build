@@ -1,14 +1,11 @@
 #!/bin/sh -e
 
-patch -p1 < fontconfig-fix-1744377.patch
-
 ./configure \
     AUTOMAKE=/bin/true \
     --prefix=/usr \
     --localstatedir=/var \
     --sysconfdir=/etc \
     --with-xmldir=/etc/fonts \
-    --enable-static \
     --disable-nls
 
 make
