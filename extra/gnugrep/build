@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+export CFLAGS="$CFLAGS -Wno-error -static"
+
+./configure \
+    --prefix=/usr
+
+make
+make DESTDIR="$1" install
+
+install -Dm755 src/grep "$1/usr/bin/ggrep"
