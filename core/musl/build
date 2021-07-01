@@ -19,9 +19,8 @@ ln -s  /usr/lib/ld-musl-x86_64.so.1 "$1/usr/bin/ldd"
 ln -sf libc.so "$1/usr/lib/ld-musl-x86_64.so.1"
 
 # Install BSD compatibility headers.
-install -Dm 755 cdefs.h "$1/usr/include/sys/cdefs.h"
-install -Dm 755 queue.h "$1/usr/include/sys/queue.h"
-install -Dm 755 tree.h  "$1/usr/include/sys/tree.h"
+cp -f cdefs.h queue.h tree.h \
+    "$1/usr/include/sys"
 
 # Install getconf.
 cc getconf.c -o "$1/usr/bin/getconf"
