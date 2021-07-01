@@ -4,6 +4,7 @@ export DESTDIR="$1"
 
 meson \
     --prefix=/usr \
+    -Ddefault_library=both \
     -Denable-docs=false \
     -Denable-wayland=false \
     -Denable-xkbregistry=false \
