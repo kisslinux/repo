@@ -55,4 +55,5 @@ cargo build \
     --release \
     --frozen
 
-install -Dm755 target/release/cbindgen "$1/usr/bin/cbindgen"
+mkdir -p "$1/usr/bin"
+cp -f target/release/cbindgen "$1/usr/bin"
