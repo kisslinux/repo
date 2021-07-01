@@ -34,9 +34,10 @@ sed -i '/net\/if/d' \
 )
 export PATH="$PWD/junk/bin:$PATH"
 
-# Force clang for builds.
-export CC="${CC:-clang}"
-export CXX="${CXX:-clang++}"
+# Bypass 'ccache' as it's totally useless when building
+# Firefox and only slows things down.
+export CC="${CC:-/usr/bin/cc}"
+export CXX="${CXX:-/usr/bin/c++}"
 
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
