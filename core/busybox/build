@@ -50,15 +50,10 @@ chmod u+s "$1/usr/bin/busybox-suid"
 mkdir -p "$1/etc/acpid"
 
 # Install runit services.
-install -Dm755 acpid.run           "$1/etc/sv/acpid/run"
-install -Dm755 crond.run           "$1/etc/sv/crond/run"
-install -Dm755 syslogd.run         "$1/etc/sv/syslogd/run"
-install -Dm755 mdev.run            "$1/etc/sv/mdev/run"
-install -Dm755 ntpd.run            "$1/etc/sv/ntpd/run"
-ln -s /run/runit/supervise.acpid   "$1/etc/sv/acpid/supervise"
-ln -s /run/runit/supervise.crond   "$1/etc/sv/crond/supervise"
-ln -s /run/runit/supervise.syslogd "$1/etc/sv/syslogd/supervise"
-ln -s /run/runit/supervise.mdev    "$1/etc/sv/mdev/supervise"
-ln -s /run/runit/supervise.ntpd    "$1/etc/sv/ntpd/supervise"
+for s in acpid crond syslogd mdev ntpd; do
+    mkdir -p "$1/etc/sv/$s"
+    cp -f "$s.run" "$1/etc/sv/$s/run"
+    ln -sf "/run/runit/supervise.$s" "$1/etc/sv/$s/supervise"
+done
 
-install -Dm644 mdev.conf "$1/etc/mdev.conf"
+cp -f mdev.conf "$1/etc/mdev.conf"
