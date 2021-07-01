@@ -1,6 +1,8 @@
 #!/bin/sh -ef
 
-mkdir -p "$1/usr/bin"
+mkdir -p \
+    "$1/usr/bin" \
+    "$1/usr/share/doc/kiss/init"
 
 cp -R etc "$1"
 cp -R lib "$1/usr/lib"
@@ -9,5 +11,5 @@ cp -R lib "$1/usr/lib"
 # shellcheck disable=2086
 for bin in kpow kall; do
     "${CC:-cc}" -o "$1/usr/bin/$bin" "bin/$bin.c" $CFLAGS -static
-    install -Dm644 "bin/$bin.c" "$1/usr/share/doc/kiss/init/$bin.c"
+    cp -f "bin/$bin.c" "$1/usr/share/doc/kiss/init/$bin.c"
 done

@@ -39,7 +39,7 @@ export PATH="$PWD/junk/bin:$PATH"
 export CC="${CC:-/usr/bin/cc}"
 export CXX="${CXX:-/usr/bin/c++}"
 
-export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
+export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox,--enable-new-dtags"
 export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
 export MACH_USE_SYSTEM_PYTHON=1
 export MOZ_DEBUG_FLAGS=-g0
