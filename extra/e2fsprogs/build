@@ -14,9 +14,9 @@ export LDFLAGS="$LDFLAGS -static"
     --disable-fsck \
     --disable-elf-shlibs
 
-# MKDIR_P fixes an install issue on musl/busybox.
+# MKDIR_P needs to be set or installation fails.
 make
-make MKDIR_P="install -d" DESTDIR="$1" install
+make MKDIR_P="mkdir -p" DESTDIR="$1" install
 
 # Our e2fsprogs build uses the private libblkid
 # and libuuid libraries which ship with it.
