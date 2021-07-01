@@ -47,6 +47,7 @@ export libat_cv_have_ifunc=no
     --enable-tls \
     --enable-languages=c,c++ \
     --without-included-gettext \
+    --with-zstd=no \
     --with-system-zlib \
     --build=x86_64-pc-linux-musl \
     "${bootstrap:---enable-bootstrap}"
