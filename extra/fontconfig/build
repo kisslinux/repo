@@ -6,6 +6,7 @@
     --localstatedir=/var \
     --sysconfdir=/etc \
     --with-xmldir=/etc/fonts \
+    --enable-static \
     --disable-nls
 
 make
