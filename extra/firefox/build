@@ -88,11 +88,13 @@ EOF
 DESTDIR="$1" ./mach install
 
 # Remove a lot of uneeded "stuff".
-rm -rf "$1/usr/include"
-rm -rf "$1/usr/lib/firefox-devel"
-rm -rf "$1/usr/share/idl"
-rm -f  "$1/usr/lib/firefox/browser/features/fxmonitor@mozilla.org.xpi"
-rm -f  "$1/usr/lib/firefox/browser/features/screenshots@mozilla.org.xpi"
-rm -f  "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi"
-rm -f  "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi"
-rm -f  "$1/usr/lib/firefox/browser/features/doh-rollout@mozilla.org.xpi"
+rm -rf \
+    "$1/usr/include" \
+    "$1/usr/lib/firefox-devel" \
+    "$1/usr/share/idl" \
+    "$1/usr/lib/firefox/browser/features/fxmonitor@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/screenshots@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/doh-rollout@mozilla.org.xpi"
+
