@@ -7,7 +7,7 @@ meson \
     --sysconfdir=/etc \
     --mandir=/usr/share/man \
     -Dhas-dlvsym=false \
-    -Dx11=false \
+    -Dx11=true \
     . output
 
 ninja -C output

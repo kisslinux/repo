@@ -1,2 +1,3 @@
-mesa  make
-meson make
+libX11 make
+mesa   make
+meson  make
