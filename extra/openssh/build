@@ -19,9 +19,10 @@
 make
 make DESTDIR="$1" install
 
-install -m 755 contrib/ssh-copy-id   "$1/usr/bin/ssh-copy-id"
-install -m 644 contrib/ssh-copy-id.1 "$1/usr/share/man/man8/ssh-copy-id.1"
+cp -f contrib/ssh-copy-id   "$1/usr/bin"
+cp -f contrib/ssh-copy-id.1 "$1/usr/share/man/man1"
 
 # Install runit services.
-install -Dm 755 sshd.run "$1/etc/sv/sshd/run"
-ln -s /run/runit/supervise.sshd "$1/etc/sv/sshd/supervise"
+mkdir -p "$1/etc/sv/sshd"
+cp -f sshd.run "$1/etc/sv/sshd/run"
+ln -sf /run/runit/supervise.sshd "$1/etc/sv/sshd/supervise"
