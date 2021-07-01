@@ -1,7 +1,9 @@
 #!/bin/sh -e
 
-install -Dm644 vendor-*.js \
-    "$1/usr/lib/firefox/browser/defaults/preferences/vendor.js"
+mkdir -p \
+    "$1/usr/lib/firefox/browser/defaults/preferences" \
+    "$1/usr/lib/firefox/distribution"
 
-install -Dm644 policies-*.json \
-    "$1/usr/lib/firefox/distribution/policies.json"
+cp -f vendor-*.js     "$1/usr/lib/firefox/browser/defaults/preferences"
+cp -f policies-*.json "$1/usr/lib/firefox/distribution"
+
