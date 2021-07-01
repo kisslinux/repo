@@ -3,7 +3,8 @@
 make HOSTCC="${CC:-cc}" headers
 
 # The headers require rsync for installation, this command
-# simply does the equivalent using find.
+# simply does the equivalent using find, mkdir and cp.
 find usr/include -name \*.h -type f | while read -r file; do
-    install -Dm644 "$file" "$1/$file"
+    mkdir -p "$1/${file%/*}"
+    cp -f "$file" "$1/$file"
 done
