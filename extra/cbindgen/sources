@@ -1,4 +1,4 @@
-https://github.com/eqrion/cbindgen/archive/v0.15.0.tar.gz
+https://github.com/eqrion/cbindgen/archive/v0.19.0.tar.gz
 
 # This is a pre-generated list of crate dependencies from the
 # "kiss-cargo-urlgen" utility. This allows us to pre-cache
@@ -8,19 +8,22 @@ https://static.crates.io/crates/ansi_term/ansi_term-0.11.0.crate vendor
 https://static.crates.io/crates/atty/atty-0.2.14.crate vendor
 https://static.crates.io/crates/autocfg/autocfg-1.0.1.crate vendor
 https://static.crates.io/crates/bitflags/bitflags-1.2.1.crate vendor
-https://static.crates.io/crates/c2-chacha/c2-chacha-0.2.3.crate vendor
 https://static.crates.io/crates/cfg-if/cfg-if-0.1.10.crate vendor
 https://static.crates.io/crates/clap/clap-2.33.3.crate vendor
+https://static.crates.io/crates/cloudabi/cloudabi-0.0.3.crate vendor
 https://static.crates.io/crates/getrandom/getrandom-0.1.15.crate vendor
 https://static.crates.io/crates/hashbrown/hashbrown-0.9.1.crate vendor
 https://static.crates.io/crates/heck/heck-0.3.1.crate vendor
 https://static.crates.io/crates/hermit-abi/hermit-abi-0.1.16.crate vendor
-https://static.crates.io/crates/itoa/itoa-0.4.6.crate vendor
 https://static.crates.io/crates/indexmap/indexmap-1.6.0.crate vendor
+https://static.crates.io/crates/itoa/itoa-0.4.6.crate vendor
+https://static.crates.io/crates/lazy_static/lazy_static-1.4.0.crate vendor
 https://static.crates.io/crates/libc/libc-0.2.77.crate vendor
+https://static.crates.io/crates/lock_api/lock_api-0.3.4.crate vendor
 https://static.crates.io/crates/log/log-0.4.11.crate vendor
+https://static.crates.io/crates/parking_lot/parking_lot-0.10.2.crate vendor
+https://static.crates.io/crates/parking_lot_core/parking_lot_core-0.7.2.crate vendor
 https://static.crates.io/crates/ppv-lite86/ppv-lite86-0.2.9.crate vendor
-https://static.crates.io/crates/proc-macro2/proc-macro2-1.0.7.crate vendor
 https://static.crates.io/crates/proc-macro2/proc-macro2-1.0.21.crate vendor
 https://static.crates.io/crates/quote/quote-1.0.7.crate vendor
 https://static.crates.io/crates/rand/rand-0.7.3.crate vendor
@@ -30,9 +33,13 @@ https://static.crates.io/crates/rand_hc/rand_hc-0.2.0.crate vendor
 https://static.crates.io/crates/redox_syscall/redox_syscall-0.1.57.crate vendor
 https://static.crates.io/crates/remove_dir_all/remove_dir_all-0.5.3.crate vendor
 https://static.crates.io/crates/ryu/ryu-1.0.5.crate vendor
+https://static.crates.io/crates/scopeguard/scopeguard-1.1.0.crate vendor
 https://static.crates.io/crates/serde/serde-1.0.116.crate vendor
 https://static.crates.io/crates/serde_derive/serde_derive-1.0.116.crate vendor
 https://static.crates.io/crates/serde_json/serde_json-1.0.57.crate vendor
+https://static.crates.io/crates/serial_test/serial_test-0.5.0.crate vendor
+https://static.crates.io/crates/serial_test_derive/serial_test_derive-0.5.0.crate vendor
+https://static.crates.io/crates/smallvec/smallvec-1.4.2.crate vendor
 https://static.crates.io/crates/strsim/strsim-0.8.0.crate vendor
 https://static.crates.io/crates/syn/syn-1.0.41.crate vendor
 https://static.crates.io/crates/tempfile/tempfile-3.1.0.crate vendor
@@ -42,7 +49,7 @@ https://static.crates.io/crates/unicode-segmentation/unicode-segmentation-1.6.0.
 https://static.crates.io/crates/unicode-width/unicode-width-0.1.8.crate vendor
 https://static.crates.io/crates/unicode-xid/unicode-xid-0.2.1.crate vendor
 https://static.crates.io/crates/vec_map/vec_map-0.8.2.crate vendor
-https://static.crates.io/crates/wasi/wasi-0.9.0+wasi-snapshot-preview1.crate vendor
+https://static.crates.io/crates/wasi-0.9.0+wasi-snapshot/wasi-0.9.0+wasi-snapshot-preview1.crate vendor
 https://static.crates.io/crates/winapi/winapi-0.3.9.crate vendor
 https://static.crates.io/crates/winapi-i686-pc-windows-gnu/winapi-i686-pc-windows-gnu-0.4.0.crate vendor
 https://static.crates.io/crates/winapi-x86_64-pc-windows-gnu/winapi-x86_64-pc-windows-gnu-0.4.0.crate vendor
