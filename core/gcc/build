@@ -59,11 +59,8 @@ find "$1" -name libgtkpeer.a  -exec rm -f {} +
 find "$1" -name libgjsmalsa.a -exec rm -f {} +
 find "$1" -name libgij.a      -exec rm -f {} +
 
-# Some legacy programs will expect cc
 ln -s gcc "$1/usr/bin/cc"
-
-# POSIX compliance.
-install -Dm755 ../c99 "$1/usr/bin/c99"
+cp ../c99 "$1/usr/bin"
 
 # Symlink for LTO.
 {
