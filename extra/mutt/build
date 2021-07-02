@@ -1,0 +1,40 @@
+#!/bin/sh -e
+
+out=$PWD/out
+mkdir -p out
+
+(
+    cd cyrus-sasl
+
+    export LDFLAGS="$LDFLAGS -lssl -lcrypto"
+
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --disable-shared \
+        --sbindir=/usr/bin
+
+    make
+    make DESTDIR="$out" install
+)
+
+# Remove perl dependency.
+sed 's/ doc contrib/ contrib/g' Makefile.in > _
+mv -f _ Makefile.in
+
+./configure \
+    ac_cv_search_sasl_encode64=-lsasl2 \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --disable-doc \
+    --disable-full-doc \
+    --enable-pop \
+    --enable-imap \
+    --enable-smtp \
+    --with-ssl \
+    --with-sasl="$out/usr"
+
+make
+make DESTDIR="$1" install
+
+rm -f "$1/etc/mime.types"
