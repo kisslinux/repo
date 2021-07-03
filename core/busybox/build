@@ -5,13 +5,15 @@ for patch in patch/*.patch; do
 done
 
 # Remove forced gcc/g++ usage so builds work on gcc-less systems.
-sed -i "s#= g[c+][c+]#= ${CC:=cc}#g" Makefile
-sed -i "s#\(\$(CROSS_COMPILE)\)gcc#\1${CC}#g" Makefile
+sed -e "s#= g[c+][c+]#= ${CC:=cc}#g" \
+    -e "s#\(\$(CROSS_COMPILE)\)gcc#\1${CC}#g" Makefile > _
+mv -f _ Makefile
 
 # Ensure that busybox's build system is aware that 'cc' may point
 # to clang rather than GCC. This is the case in non-GCC systems.
 case $("$CC" --version) in (*clang*)
-    sed -i "s&\(\$(CC),\)clang&\1${CC}&g" Makefile.flags
+    sed "s&\(\$(CC),\)clang&\1${CC}&g" Makefile.flags > _
+    mv -f _ Makefile.flags
 esac
 
 # Build and install regular busybox.
