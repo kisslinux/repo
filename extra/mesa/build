@@ -30,7 +30,8 @@ export CFLAGS="$CFLAGS -DGLX_X86_READONLY_TEXT"
 # Fix issues with musl and firefox.
 # https://bugs.freedesktop.org/show_bug.cgi?id=35268
 # https://github.com/mesa3d/mesa/commit/9f37c9903b87f86a533bfaffa72f0ecb285b02b2
-sed -i "/pre_args += '-DUSE_ELF_TLS'/d" meson.build
+sed "/pre_args += '-DUSE_ELF_TLS'/d" meson.build > _
+mv -f _ meson.build
 
 meson \
     --prefix=/usr \
