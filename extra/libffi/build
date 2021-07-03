@@ -2,6 +2,7 @@
 
 ./configure \
     --prefix=/usr \
+    --disable-exec-static-tramp \
     --with-pic
 
 make
@@ -11,7 +12,13 @@ make DESTDIR="$1" install
 # for rebuilds of all packages linking to
 # libffi.
 #
-# ABI incompatibility only affects AArch64.
+# ABI incompatibility (6 -> 7) only affects AArch64.
 # See: https://github.com/libffi/libffi/commit/c02c341
 #      https://github.com/libffi/libffi/issues/528
-ln -s libffi.so.7 "$1/usr/lib/libffi.so.6"
+#
+# ABI incompatibility (7 -> 8) only effects
+# --enable-exec-static-tramp (which is default).
+# See: https://sourceware.org/pipermail/libffi-discuss/2021/002644.html
+#      https://github.com/libffi/libffi/pull/647
+ln -sf libffi.so.7 "$1/usr/lib/libffi.so.6"
+ln -sf libffi.so.8 "$1/usr/lib/libffi.so.7"
