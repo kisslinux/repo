@@ -2,13 +2,19 @@
 
 export DESTDIR="$1"
 
-# Remove 'libelf' and 'util-linux' dependencies.
-sed -i 's/HAVE_LIBELF/HAVE_KISS/'      gio/meson.build
-sed -i 's/libmount_dep.found()/false/' meson.build
+# Remove 'libelf' dependency.
+sed 's/HAVE_LIBELF/HAVE_KISS/' gio/meson.build > _
+mv -f _ gio/meson.build
+
+# Remove 'util-linux' dependency.
+sed 's/libmount_dep.found()/false/' meson.build > _
+mv -f _ meson.build
 
 # Don't build tests/fuzzing stuff.
-find . -type f -name meson.build -exec \
-    sed -i "/subdir('tests')/d;/subdir('fuzzing')/d" {} +
+find . -type f -name meson.build | while read -r f; do
+    sed "/subdir('tests')/d;/subdir('fuzzing')/d" "$f" > _
+    mv -f _ "$f"
+done
 
 meson \
     --prefix=/usr \
