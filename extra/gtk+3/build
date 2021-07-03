@@ -1,15 +1,18 @@
 #!/bin/sh -e
 
-# Remove 'atk-bridge' dependency which removes the 'dbus' dependency.
-sed -i 's/ATK_PACKAGES="atk atk-bridge-2.0"/ATK_PACKAGES="atk"/' \
-    configure
+# Remove configure check for atk-bridge.
+sed 's/\(ATK_PACKAGES="atk\) atk-bridge-2.0"/\1"/' configure > _
+mv -f _ configure
+chmod +x configure
 
-sed -i '/<atk-bridge.h>/d;/atk_bridge_adaptor_init/d' \
-    gtk/a11y/gtkaccessibility.c
+# Remove atk-bridge code.
+sed '/<atk-bridge.h>/d;/atk_bridge_adaptor_init/d' \
+    gtk/a11y/gtkaccessibility.c > _
+mv -f _ gtk/a11y/gtkaccessibility.c
 
 # Don't build GTK examples/demos/testsuite.
-sed -i 's/demos tests testsuite examples//' Makefile.am Makefile.in
-sed -i 's/docs m4macros/m4macros/'          Makefile.am Makefile.in
+sed 's/demos tests testsuite examples//;s/docs \(m4macros\)/\1/' Makefile.in > _
+mv -f _ Makefile.in
 
 ./configure \
     --prefix=/usr \
