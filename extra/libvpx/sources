@@ -1,5 +1,4 @@
 https://github.com/webmproject/libvpx/archive/v1.10.0.tar.gz
-patches/fix-busybox-diff.patch
 files/vp9_rtcd.h
 files/vp8_rtcd.h
 files/vpx_scale_rtcd.h
