@@ -1,4 +1,13 @@
 #!/bin/sh -e
 
-make
-make DESTDIR="$1" PREFIX=/usr install
+sed -i 's/^FLAGS.*=/FLAGS = -static /' programs/Makefile
+
+make \
+    HAVE_LZMA=0 \
+    HAVE_ZLIB=0 \
+    HAVE_LZ4=0
+
+make \
+    DESTDIR="$1" \
+    PREFIX=/usr \
+    install
