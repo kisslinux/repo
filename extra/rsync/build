@@ -2,7 +2,8 @@
 
 # Swap to awk script instead of perl script
 # for building rsync. See files/mkproto.awk.
-sed -i 's/perl/awk -f/;s/mkproto.pl/mkproto.awk/' Makefile.in
+sed 's/perl/awk -f/;s/mkproto.pl/mkproto.awk/' Makefile.in > _
+mv -f _ Makefile.in
 
 export CFLAGS="-static $CFLAGS"
 
