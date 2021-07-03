@@ -1,4 +1,5 @@
 libevdev
+libudev-zero
 linux-headers make
 meson         make
 mtdev

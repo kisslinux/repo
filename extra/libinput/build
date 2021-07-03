@@ -2,11 +2,6 @@
 
 export DESTDIR="$1"
 
-pkg-config --exists libudev || {
-    printf 'udev (or libudev-zero) is required\n'
-    exit 1
-}
-
 meson \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -16,7 +11,6 @@ meson \
     -Ddocumentation=false \
     -Dtests=false \
     -Dlibwacom=false \
-    -Dudev="${udev:=true}" \
     . output
 
 ninja -C output
