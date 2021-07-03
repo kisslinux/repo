@@ -4,8 +4,9 @@ patch -p1 < no-gtk2.patch
 
 # Remove libc header which conflicts with 7 or so Linux
 # kernel headers. See: https://github.com/kisslinux/repo/issues/207
-sed -i '/net\/if/d' \
-    dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
+_f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
+sed '/net\/if/d' "$_f" > _
+mv -f _ "$_f"
 
 # Build autoconf 2.13 for Firefox's sole use.
 # See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
