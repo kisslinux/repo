@@ -2,9 +2,14 @@
 
 patch -p1 < mandoc-no-warn.patch
 
-sed -i '/int dummy/d'         compat_err.c
-sed -i 's,"more -s","less",g' main.c
-sed -i "s/CC=.*/CC='$CC'/"    configure
+# Change default pager.
+sed 's,"more -s","less",g' main.c > _
+mv -f _ main.c
+
+# Use CC rather than broken default.
+sed "s/CC=.*/CC=${CC:-cc}/" configure > _
+mv -f _ configure
+chmod +x configure
 
 cat > configure.local <<EOF
 PREFIX=/usr
@@ -12,7 +17,7 @@ MANDIR=/usr/share/man
 LIBDIR=/usr/lib
 SBINDIR=/usr/bin
 CC="${CC:-cc}"
-CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -fcommon"
 LN="ln -sf"
 EOF
 
