@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
-sed -i 's|/lib|/usr/lib|g' Makefile
+sed 's|/lib|/usr/lib|g' Makefile > _
+mv -f _ Makefile
 
 make LINKER_PATH=/usr/lib/ld-musl-x86_64.so.1
 make DESTDIR="$1" install
