@@ -4,10 +4,13 @@
 export CFLAGS="$CFLAGS -Wno-error"
 
 # Disable configure error for missing argp/fts/obstack.
-sed -i 's/as_fn_error.*\(argp\|fts\|_obstack\)/: "/g' configure
+sed 's/as_fn_error.*\(argp\|fts\|_obstack\)/: "/g' configure > _
+mv -f _ configure
+chmod +x configure
 
 # Don't compile two unrelated C files which require argp.
-sed -i 's/color.*printversion../#/g' lib/Makefile.in
+sed 's/color.*printversion../#/g' lib/Makefile.in > _
+mv -f _ lib/Makefile.in
 
 ./configure \
     --prefix=/usr \
