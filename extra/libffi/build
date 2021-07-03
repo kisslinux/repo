@@ -16,7 +16,7 @@ make DESTDIR="$1" install
 # See: https://github.com/libffi/libffi/commit/c02c341
 #      https://github.com/libffi/libffi/issues/528
 #
-# ABI incompatibility (7 -> 8) only effects
+# ABI incompatibility (7 -> 8) only affects
 # --enable-exec-static-tramp (which is default).
 # See: https://sourceware.org/pipermail/libffi-discuss/2021/002644.html
 #      https://github.com/libffi/libffi/pull/647
