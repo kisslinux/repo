@@ -14,14 +14,22 @@ patch -p1 < libressl.patch
 }
 
 # Set shared linking as the default.
-sed -i 's/crt_static_default = true/crt_static_default = false/' \
+for f in \
     compiler/rustc_target/src/spec/linux_musl_base.rs \
     vendor/rustc-ap-rustc_target/src/spec/linux_musl_base.rs
+do
+    sed 's/\(crt_static_default = \)true/\1false/' "$f" > _
+    mv -f _ "$f"
+done
 
 # Ignore checksums of files modified above.
-sed -i 's/\("files":{\)[^}]*/\1/' \
+for f in \
     vendor/openssl-sys/.cargo-checksum.json \
     vendor/rustc-ap-rustc_target/.cargo-checksum.json
+do
+    sed 's/\("files":{\)[^}]*/\1/' "$f" > _
+    mv -f _ "$f"
+done
 
 cat > config.toml <<EOF
 [llvm]
