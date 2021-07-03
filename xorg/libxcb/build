@@ -1,6 +1,8 @@
 #!/bin/sh -e
 
-sed -i 's/pthread-stubs //' configure
+sed 's/pthread-stubs //' configure > _
+mv -f _ configure
+chmod +x configure
 
 ./configure \
     --prefix=/usr
