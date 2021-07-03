@@ -2,7 +2,8 @@
 
 # Swap to shell script instead of perl script
 # for conversion of rules files. See files/xml2lst.
-sed -i 's/perl //;s/xml2lst\.pl/xml2lst/' rules/Makefile.in
+sed 's/perl //;s/xml2lst\.pl/xml2lst/' rules/Makefile.in > _
+mv -f _ rules/Makefile.in
 
 ./configure \
     --prefix=/usr \
