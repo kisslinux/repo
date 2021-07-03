@@ -2,7 +2,8 @@
 
 export DESTDIR="$1"
 
-sed -i "/subdir('tests')/d" meson.build
+sed "/subdir('tests')/d" meson.build > _
+mv -f _ meson.build
 
 meson \
     --prefix=/usr \
