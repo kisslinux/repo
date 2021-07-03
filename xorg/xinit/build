@@ -1,5 +1,10 @@
 #!/bin/sh -e
 
+# Make xauth optional at runtime.
+cmd='command -v xauth >/dev/null \&\&'
+sed "s#\(enable_xauth\)=1#$cmd&||\1=0#" startx.cpp > _
+mv -f _ startx.cpp
+
 ./configure \
     --prefix=/usr \
     --with-xinitdir=/etc/X11/xinit
@@ -7,6 +12,3 @@
 make
 make DESTDIR="$1" install
 
-# Make xauth optional.
-sed -i 's#enable_xauth=1#command -v xauth >/dev/null \&\&&||enable_xauth=0#' \
-    "$1/usr/bin/startx"
