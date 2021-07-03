@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
-sed -i 's/^FLAGS.*=/FLAGS = -static /' programs/Makefile
+sed 's/^FLAGS.*=/FLAGS = -static /' programs/Makefile > _
+mv -f _ programs/Makefile
 
 make \
     HAVE_LZMA=0 \
