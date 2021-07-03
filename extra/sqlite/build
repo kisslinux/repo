@@ -2,7 +2,9 @@
 
 export CPPFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA=1"
 
-sed -i 's/ -ltinfo//g' configure
+sed 's/ -ltinfo//g' configure > _
+mv -f _ configure
+chmod +x configure
 
 ./configure \
     --prefix=/usr \
