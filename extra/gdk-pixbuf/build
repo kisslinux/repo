@@ -11,7 +11,9 @@ meson \
     --mandir=/usr/share/man \
     -Dgir=false \
     -Djasper=false \
+    -Djpeg=true \
     -Dpng=true \
+    -Dtiff=true \
     -Ddocs=false \
     -Dman=false \
     -Dgio_sniffing=false \
