@@ -1,6 +1,7 @@
 alsa-lib
 lame
 libass
+libdrm
 libogg
 libressl
 libvorbis
