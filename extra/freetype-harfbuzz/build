@@ -18,10 +18,10 @@ build_harfbuzz() (
     export CFLAGS="$CFLAGS -I$1/usr/include/freetype2"
     export CXXFLAGS="$CXXFLAGS -I$1/usr/include/freetype2"
     export LDFLAGS="$LDFLAGS -L$1/usr/lib"
+    export DESTDIR="$1"
 
     cd harfbuzz
 
-    export DESTDIR="$1"
     meson \
         --prefix=/usr \
         -Dpkg_config_path="$1/usr/lib/pkgconfig" \
