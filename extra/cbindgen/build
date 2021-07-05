@@ -51,9 +51,7 @@ EOF
 # Use the '--frozen' flag to tell cargo to skip the network
 # and use whatever dependencies are in the Cargo.[toml|lock]
 # files.
-cargo build \
-    --release \
-    --frozen
+cargo build --release --frozen
 
 mkdir -p "$1/usr/bin"
 cp -f target/release/cbindgen "$1/usr/bin"
