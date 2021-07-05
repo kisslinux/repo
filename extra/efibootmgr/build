@@ -6,5 +6,5 @@ mkdir -p \
     "$1/usr/bin" \
     "$1/usr/share/man/man8"
 
-cp -f src/efibootmgr   "$1/usr/bin"
-cp -f src/efibootmgr.8 "$1/usr/share/man/man8"
+cp -f src/efibootmgr      "$1/usr/bin"
+cp -f src/efibootmgr.8.in "$1/usr/share/man/man8/efibootmgr.8"
