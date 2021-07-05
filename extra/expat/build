@@ -11,4 +11,6 @@ make
 make DESTDIR="$1" install
 
 # Remove documentation (Changelogs, etc).
+# False positive.
+# shellcheck disable=SC2115
 rm -rf "$1/usr/share"
