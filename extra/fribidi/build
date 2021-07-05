@@ -5,4 +5,11 @@
     --enable-static
 
 make
-make DESTDIR="$1" install
+
+make DESTDIR="$1" \
+    install-pkgconfigDATA \
+    install-exec
+
+make DESTDIR="$1" -C lib \
+    install-pkgincludeHEADERS \
+    install-nodist_pkgincludeHEADERS
