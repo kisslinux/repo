@@ -1,8 +1,15 @@
 #!/bin/sh -e
 
+# Disable HTML documentation.
+sed 's/html man/man/' doc/Makefile.in > _
+mv -f _ doc/Makefile.in
+
 ./configure \
+    ac_cv_lib_ncurses_initscr=no \
+    ac_cv_lib_curses_initscr=no \
     --prefix=/usr \
-    --enable-shared
+    --enable-shared \
+    --disable-gtktest
 
 make
 make DESTDIR="$1" install
