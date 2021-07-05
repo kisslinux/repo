@@ -1,7 +1,14 @@
 #!/bin/sh -e
 
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --without-xmlwf \
+    --without-examples \
+    --without-tests \
+    --without-docbook
 
 make
 make DESTDIR="$1" install
+
+# Remove documentation (Changelogs, etc).
+rm -rf "$1/usr/share"
