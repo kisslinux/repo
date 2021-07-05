@@ -7,8 +7,8 @@ sed -e "s/\(BUILD_SPHINX_TRUE=\)/\1'#'/" \
 mv -f _ configure
 chmod +x configure
 
-# Disable building tests.
-sed 's/test perf//g' Makefile.in > _
+# Disable building tests and documentation.
+sed 's/test perf//g;s/src doc/src/g' Makefile.in > _
 mv -f _ Makefile.in
 
 ./configure \
