@@ -1,12 +1,12 @@
 #!/bin/sh -e
 
 ./configure \
-    AUTOMAKE=/bin/true \
     --prefix=/usr \
     --localstatedir=/var \
     --sysconfdir=/etc \
     --with-xmldir=/etc/fonts \
     --enable-static \
+    --disable-docs \
     --disable-nls
 
 make
