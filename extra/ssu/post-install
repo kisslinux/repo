@@ -1,0 +1,4 @@
+#!/bin/sh
+
+chown root:wheel /usr/bin/ssu
+chmod 4754       /usr/bin/ssu
