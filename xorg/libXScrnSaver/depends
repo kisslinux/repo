@@ -1,4 +1,4 @@
-libX11    make
-libXext   make
+libX11
+libXext
 pkgconf   make
 xorgproto make
