@@ -2,6 +2,7 @@
 
 ./configure \
     --prefix=/usr \
+    --disable-doc \
     --disable-nls
 
 make
