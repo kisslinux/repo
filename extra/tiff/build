@@ -8,4 +8,18 @@
     --without-x
 
 make
-make DESTDIR="$1" install
+
+make -C libtiff DESTDIR="$1" \
+    install-libLTLIBRARIES \
+    install-libtiffincludeHEADERS \
+    install-nodist_libtiffincludeHEADERS
+
+make -C tools DESTDIR="$1" \
+    install-binPROGRAMS
+
+make -C man DESTDIR="$1" \
+    install-man1
+
+make DESTDIR="$1" \
+    install-pkgconfigDATA
+
