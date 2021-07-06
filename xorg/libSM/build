@@ -1,13 +1,1 @@
-#!/bin/sh -e
-
-./configure \
-    --prefix=/usr \
-    --without-libuuid
-
-make
-make DESTDIR="$1" install
-
-# Remove XML documentation.
-# False positive.
-# shellcheck disable=2115
-rm -rf "$1/usr/share"
+../libXmeta/build
