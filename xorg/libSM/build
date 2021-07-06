@@ -6,3 +6,6 @@
 
 make
 make DESTDIR="$1" install
+
+# Remove XML documentation.
+rm -rf "$1/usr/share"
