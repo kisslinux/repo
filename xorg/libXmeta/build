@@ -8,6 +8,12 @@
 make
 make DESTDIR="$1" install
 
+# Some X11 packages install to /usr/share.
+! [ -d "$1/usr/share/pkgconfig" ] || {
+    mkdir -p "$1/usr/lib"
+    mv -f "$1/usr/share/pkgconfig" "$1/usr/lib"
+}
+
 # Remove library documentation.
 # False positive.
 # shellcheck disable=2115
