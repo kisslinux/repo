@@ -9,3 +9,6 @@ make
 make DESTDIR="$1" install
 
 ln -s flex "$1/usr/bin/lex"
+
+# Remove READMEs and such.
+rm -rf "$1/usr/share/doc"
