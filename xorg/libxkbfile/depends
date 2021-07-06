@@ -1,3 +1,3 @@
-libX11    make
+libX11
 pkgconf   make
 xorgproto make
