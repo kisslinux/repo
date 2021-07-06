@@ -10,6 +10,8 @@ CFLAGS_FOR_BUILD=-fPIC \
 make
 make DESTDIR="$1" install
 
-# This will be removed once 'xorgproto' 2019.2
-# is released.
+# Conflicts with xorgproto.
 rm -f "$1/usr/include/X11/extensions/XKBgeom.h"
+
+# Remove library documentation.
+rm -rf "$1/usr/share/man/man3"
