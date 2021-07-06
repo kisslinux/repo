@@ -6,4 +6,6 @@ patch -p0 < libtheora-1.1.1-libpng16.patch
     --prefix=/usr
 
 make
-make DESTDIR="$1" install
+make -C lib     DESTDIR="$1" install
+make -C include DESTDIR="$1" install
+make            DESTDIR="$1" install-pkgconfigDATA
