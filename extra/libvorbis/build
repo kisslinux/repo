@@ -4,4 +4,13 @@
     --prefix=/usr
 
 make
-make DESTDIR="$1" install
+
+# Install library and headers.
+make -C lib     DESTDIR="$1" install
+make -C include DESTDIR="$1" install
+
+# Install m4 and pkg-config data.
+make DESTDIR="$1" \
+    install-m4dataDATA \
+    install-pkgconfigDATA
+
