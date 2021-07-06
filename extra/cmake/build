@@ -29,5 +29,7 @@ else
     make DESTDIR="$1" install
 fi
 
-rm -rf "$1/usr/doc"
-rm -rf "$1/usr/share/cmake"*/Help
+rm -rf \
+    "$1/usr/doc" \
+    "$1/usr/share/cmake"*/Help \
+    "$1/usr/share/bash-completion"
