@@ -5,7 +5,7 @@ CFLAGS_FOR_BUILD=-fPIC \
     --prefix=/usr \
     --without-xmlto \
     --disable-specs \
-    --enable-static
+    --disable-static
 
 make
 make DESTDIR="$1" install
