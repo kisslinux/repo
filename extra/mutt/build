@@ -35,6 +35,6 @@ mv -f _ Makefile.in
     --with-sasl="$out/usr"
 
 make
-make DESTDIR="$1" install
+make DESTDIR="$1" install-exec
 
 rm -f "$1/etc/mime.types"
