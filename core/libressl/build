@@ -8,3 +8,6 @@ make
 make DESTDIR="$1" install
 
 cp -f update-certdata.sh "$1/etc/ssl"
+
+# Remove library documentation.
+rm -rf "$1/usr/share/man/man3"
