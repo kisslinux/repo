@@ -15,6 +15,9 @@ ninja -C out/Release
 tools/install.py install "$1" /usr
 
 # Remove unneeded files.
-rm -rf "$1/usr/include/node/openssl"
-rm -rf "$1/usr/lib/node_modules/npm/scripts"
-rm -f  "$1/usr/lib/node_modules/npm/configure"
+rm -rf \
+    "$1/usr/include/node/openssl" \
+    "$1/usr/share/doc" \
+    "$1/usr/share/systemtap" \
+    "$1/usr/lib/node_modules/npm/scripts" \
+    "$1/usr/lib/node_modules/npm/configure"
