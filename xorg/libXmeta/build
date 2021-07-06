@@ -1,8 +1,11 @@
 #!/bin/sh -e
 
+CFLAGS_FOR_BUILD=-fPIC \
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
+    --without-xmlto \
+    --disable-specs \
     --disable-static
 
 make
@@ -14,7 +17,18 @@ make DESTDIR="$1" install
     mv -f "$1/usr/share/pkgconfig" "$1/usr/lib"
 }
 
+# We need to keep this around.
+! [ -d "$1/usr/share/aclocal" ] || {
+    mkdir -p "$1/usr/share2"
+    mv -f "$1/usr/share/aclocal" "$1/usr/share2"
+}
+
 # Remove library documentation.
 # False positive.
 # shellcheck disable=2115
 rm -rf "$1/usr/share"
+
+# Restore kept directories.
+! [ -d "$1/usr/share2" ] || {
+    mv -f "$1/usr/share2" "$1/usr/share"
+}
