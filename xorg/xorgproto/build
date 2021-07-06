@@ -1,8 +1,1 @@
-#!/bin/sh -e
-
-./configure \
-    --prefix=/usr \
-    --enable-legacy
-
-make
-make DESTDIR="$1" install
+../libXmeta/build
