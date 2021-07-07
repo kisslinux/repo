@@ -1,0 +1,233 @@
+diff --git a/meson.build b/meson.build
+index f542574..d57df3a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -191,7 +191,6 @@ endif
+ pango_deps = []
+ 
+ glib_req_version = '>= 2.62'
+-fribidi_req_version = '>= 0.19.7'
+ libthai_req_version = '>= 0.1.9'
+ harfbuzz_req_version = '>= 2.0.0'
+ fontconfig_req_version = '>= 2.11.91'
+@@ -211,11 +210,6 @@ gio_dep = dependency('gio-2.0', version: glib_req_version,
+                          fallback: ['glib', 'libgio_dep'])
+ pango_deps += [glib_dep, gobject_dep, gio_dep]
+ 
+-fribidi_dep = dependency('fribidi', version: fribidi_req_version,
+-                         fallback: ['fribidi', 'libfribidi_dep'],
+-                         default_options: ['docs=false'])
+-pango_deps += fribidi_dep
+-
+ thai_dep = dependency('libthai', version: libthai_req_version, required: get_option('libthai'))
+ if thai_dep.found()
+   pango_conf.set('HAVE_LIBTHAI', 1)
+diff --git a/pango/pango-bidi-type.c b/pango/pango-bidi-type.c
+index a5a13a9..29ddeb8 100644
+--- a/pango/pango-bidi-type.c
++++ b/pango/pango-bidi-type.c
+@@ -23,16 +23,18 @@
+ 
+ #include <string.h>
+ 
+-#include <fribidi.h>
+-
+ #undef PANGO_DISABLE_DEPRECATED
+ 
+ #include "pango-bidi-type.h"
+ #include "pango-utils.h"
+ 
+-#if FRIBIDI_MAJOR_VERSION >= 1
+-#define USE_FRIBIDI_EX_API
+-#endif
++typedef uint32_t FriBidiChar;
++typedef uint32_t FriBidiCharType;
++typedef int FriBidiStrIndex;
++typedef int FriBidiParType;
++typedef signed char FriBidiLevel;
++
++#define FRIBIDI_PAR_LTR (0x00000010L | 0x00000100L)
+ 
+ /**
+  * pango_bidi_type_for_unichar:
+@@ -52,40 +54,7 @@
+ PangoBidiType
+ pango_bidi_type_for_unichar (gunichar ch)
+ {
+-  FriBidiCharType fribidi_ch_type;
+-
+-  G_STATIC_ASSERT (sizeof (FriBidiChar) == sizeof (gunichar));
+-
+-  fribidi_ch_type = fribidi_get_bidi_type (ch);
+-
+-  switch (fribidi_ch_type)
+-    {
+-    case FRIBIDI_TYPE_LTR:  return PANGO_BIDI_TYPE_L;
+-    case FRIBIDI_TYPE_LRE:  return PANGO_BIDI_TYPE_LRE;
+-    case FRIBIDI_TYPE_LRO:  return PANGO_BIDI_TYPE_LRO;
+-    case FRIBIDI_TYPE_RTL:  return PANGO_BIDI_TYPE_R;
+-    case FRIBIDI_TYPE_AL:   return PANGO_BIDI_TYPE_AL;
+-    case FRIBIDI_TYPE_RLE:  return PANGO_BIDI_TYPE_RLE;
+-    case FRIBIDI_TYPE_RLO:  return PANGO_BIDI_TYPE_RLO;
+-    case FRIBIDI_TYPE_PDF:  return PANGO_BIDI_TYPE_PDF;
+-    case FRIBIDI_TYPE_EN:   return PANGO_BIDI_TYPE_EN;
+-    case FRIBIDI_TYPE_ES:   return PANGO_BIDI_TYPE_ES;
+-    case FRIBIDI_TYPE_ET:   return PANGO_BIDI_TYPE_ET;
+-    case FRIBIDI_TYPE_AN:   return PANGO_BIDI_TYPE_AN;
+-    case FRIBIDI_TYPE_CS:   return PANGO_BIDI_TYPE_CS;
+-    case FRIBIDI_TYPE_NSM:  return PANGO_BIDI_TYPE_NSM;
+-    case FRIBIDI_TYPE_BN:   return PANGO_BIDI_TYPE_BN;
+-    case FRIBIDI_TYPE_BS:   return PANGO_BIDI_TYPE_B;
+-    case FRIBIDI_TYPE_SS:   return PANGO_BIDI_TYPE_S;
+-    case FRIBIDI_TYPE_WS:   return PANGO_BIDI_TYPE_WS;
+-    case FRIBIDI_TYPE_ON:   return PANGO_BIDI_TYPE_ON;
+-    case FRIBIDI_TYPE_LRI:  return PANGO_BIDI_TYPE_LRI;
+-    case FRIBIDI_TYPE_RLI:  return PANGO_BIDI_TYPE_RLI;
+-    case FRIBIDI_TYPE_FSI:  return PANGO_BIDI_TYPE_FSI;
+-    case FRIBIDI_TYPE_PDI:  return PANGO_BIDI_TYPE_PDI;
+-    default:
+-      return PANGO_BIDI_TYPE_ON;
+-    }
++    return PANGO_BIDI_TYPE_L;
+ }
+ 
+ /* Some bidi-related functions */
+@@ -120,38 +89,16 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
+   glong n_chars, i;
+   guint8 *embedding_levels_list;
+   const gchar *p;
+-  FriBidiParType fribidi_base_dir;
+   FriBidiCharType *bidi_types;
+ #ifdef USE_FRIBIDI_EX_API
+   FriBidiBracketType *bracket_types;
+ #endif
+   FriBidiLevel max_level;
+   FriBidiCharType ored_types = 0;
+-  FriBidiCharType anded_strongs = FRIBIDI_TYPE_RLE;
+ 
+   G_STATIC_ASSERT (sizeof (FriBidiLevel) == sizeof (guint8));
+   G_STATIC_ASSERT (sizeof (FriBidiChar) == sizeof (gunichar));
+ 
+-  switch (*pbase_dir)
+-    {
+-    case PANGO_DIRECTION_LTR:
+-    case PANGO_DIRECTION_TTB_RTL:
+-      fribidi_base_dir = FRIBIDI_PAR_LTR;
+-      break;
+-    case PANGO_DIRECTION_RTL:
+-    case PANGO_DIRECTION_TTB_LTR:
+-      fribidi_base_dir = FRIBIDI_PAR_RTL;
+-      break;
+-    case PANGO_DIRECTION_WEAK_RTL:
+-      fribidi_base_dir = FRIBIDI_PAR_WRTL;
+-      break;
+-    case PANGO_DIRECTION_WEAK_LTR:
+-    case PANGO_DIRECTION_NEUTRAL:
+-    default:
+-      fribidi_base_dir = FRIBIDI_PAR_WLTR;
+-      break;
+-    }
+-
+   if (length < 0)
+     length = strlen (text);
+ 
+@@ -165,16 +112,13 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
+ 
+   for (i = 0, p = text; p < text + length; p = g_utf8_next_char(p), i++)
+     {
+-      gunichar ch = g_utf8_get_char (p);
+-      FriBidiCharType char_type = fribidi_get_bidi_type (ch);
++      FriBidiCharType char_type = FRIBIDI_PAR_LTR;
+ 
+       if (i == n_chars)
+         break;
+ 
+       bidi_types[i] = char_type;
+       ored_types |= char_type;
+-      if (FRIBIDI_IS_STRONG (char_type))
+-        anded_strongs &= char_type;
+ #ifdef USE_FRIBIDI_EX_API
+       if (G_UNLIKELY(bidi_types[i] == FRIBIDI_TYPE_ON))
+         bracket_types[i] = fribidi_get_bracket (ch);
+@@ -200,39 +144,8 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
+      * o base_dir doesn't have an RTL taste.
+      * o there are letters, and base_dir is weak.
+      */
+-    if (!FRIBIDI_IS_ISOLATE (ored_types) &&
+-	!FRIBIDI_IS_RTL (ored_types) &&
+-	!FRIBIDI_IS_ARABIC (ored_types) &&
+-	(!FRIBIDI_IS_RTL (fribidi_base_dir) ||
+-	  (FRIBIDI_IS_WEAK (fribidi_base_dir) &&
+-	   FRIBIDI_IS_LETTER (ored_types))
+-	))
+-      {
+-        /* all LTR */
+-	fribidi_base_dir = FRIBIDI_PAR_LTR;
+ 	memset (embedding_levels_list, 0, n_chars);
+ 	goto resolved;
+-      }
+-    /* The case that all resolved levels will be RTL is much more complex.
+-     * No isolates, no numbers, all strongs are RTL, and one of
+-     * the following:
+-     *
+-     * o base_dir has an RTL taste (may be weak).
+-     * o there are letters, and base_dir is weak.
+-     */
+-    else if (!FRIBIDI_IS_ISOLATE (ored_types) &&
+-	     !FRIBIDI_IS_NUMBER (ored_types) &&
+-	     FRIBIDI_IS_RTL (anded_strongs) &&
+-	     (FRIBIDI_IS_RTL (fribidi_base_dir) ||
+-	       (FRIBIDI_IS_WEAK (fribidi_base_dir) &&
+-		FRIBIDI_IS_LETTER (ored_types))
+-	     ))
+-      {
+-        /* all RTL */
+-	fribidi_base_dir = FRIBIDI_PAR_RTL;
+-	memset (embedding_levels_list, 1, n_chars);
+-	goto resolved;
+-      }
+ 
+ 
+ #ifdef USE_FRIBIDI_EX_API
+@@ -240,12 +153,10 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
+ 						   &fribidi_base_dir,
+ 						   (FriBidiLevel*)embedding_levels_list);
+ #else
+-  max_level = fribidi_get_par_embedding_levels (bidi_types, n_chars,
+-						&fribidi_base_dir,
+-						(FriBidiLevel*)embedding_levels_list);
++  max_level = 0;
+ #endif
+ 
+-  if (G_UNLIKELY(max_level == 0))
++  if (max_level == 0)
+     {
+       /* fribidi_get_par_embedding_levels() failed. */
+       memset (embedding_levels_list, 0, length);
+@@ -258,7 +169,7 @@ resolved:
+   g_free (bracket_types);
+ #endif
+ 
+-  *pbase_dir = (fribidi_base_dir == FRIBIDI_PAR_LTR) ?  PANGO_DIRECTION_LTR : PANGO_DIRECTION_RTL;
++  *pbase_dir = PANGO_DIRECTION_LTR;
+ 
+   return embedding_levels_list;
+ }
+@@ -282,17 +193,6 @@ resolved:
+ PangoDirection
+ pango_unichar_direction (gunichar ch)
+ {
+-  FriBidiCharType fribidi_ch_type;
+-
+-  G_STATIC_ASSERT (sizeof (FriBidiChar) == sizeof (gunichar));
+-
+-  fribidi_ch_type = fribidi_get_bidi_type (ch);
+-
+-  if (!FRIBIDI_IS_STRONG (fribidi_ch_type))
+-    return PANGO_DIRECTION_NEUTRAL;
+-  else if (FRIBIDI_IS_RTL (fribidi_ch_type))
+-    return PANGO_DIRECTION_RTL;
+-  else
+     return PANGO_DIRECTION_LTR;
+ }
+ 

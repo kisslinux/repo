@@ -1,1 +1,2 @@
 https://github.com/GNOME/pango/archive/1.48.7.tar.gz
+patches/no-fribidi.patch
