@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+./Configure \
+    --prefix=/usr \
+    --openssldir=/etc/ssl \
+    --libdir=lib \
+    shared linux-x86_64
+
+make depend
+make
+make DESTDIR="$1" install_sw install_ssldirs
+
+cp -f update-certdata.sh "$1/etc/ssl"
