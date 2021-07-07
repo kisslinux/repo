@@ -1,0 +1,60 @@
+diff --git a/gdk/gdk.c b/gdk/gdk.c
+index f0869a6..2f3c039 100644
+--- a/gdk/gdk.c
++++ b/gdk/gdk.c
+@@ -44,7 +44,6 @@
+ #include <string.h>
+ #include <stdlib.h>
+ 
+-#include <fribidi.h>
+ 
+ 
+ /**
+@@ -1118,17 +1117,6 @@ gdk_disable_multidevice (void)
+ PangoDirection
+ gdk_unichar_direction (gunichar ch)
+ {
+-  FriBidiCharType fribidi_ch_type;
+-
+-  G_STATIC_ASSERT (sizeof (FriBidiChar) == sizeof (gunichar));
+-
+-  fribidi_ch_type = fribidi_get_bidi_type (ch);
+-
+-  if (!FRIBIDI_IS_STRONG (fribidi_ch_type))
+-    return PANGO_DIRECTION_NEUTRAL;
+-  else if (FRIBIDI_IS_RTL (fribidi_ch_type))
+-    return PANGO_DIRECTION_RTL;
+-  else
+     return PANGO_DIRECTION_LTR;
+ }
+ 
+diff --git a/gtk/gtkpango.c b/gtk/gtkpango.c
+index aaac4cc..a76ad57 100644
+--- a/gtk/gtkpango.c
++++ b/gtk/gtkpango.c
+@@ -25,7 +25,6 @@
+ #include "config.h"
+ #include "gtkpango.h"
+ #include <pango/pangocairo.h>
+-#include <fribidi.h>
+ #include "gtkintl.h"
+ 
+ #define GTK_TYPE_FILL_LAYOUT_RENDERER            (_gtk_fill_layout_renderer_get_type())
+@@ -1326,17 +1325,6 @@ _gtk_pango_attr_list_merge (PangoAttrList *into,
+ PangoDirection
+ _gtk_pango_unichar_direction (gunichar ch)
+ {
+-  FriBidiCharType fribidi_ch_type;
+-
+-  G_STATIC_ASSERT (sizeof (FriBidiChar) == sizeof (gunichar));
+-
+-  fribidi_ch_type = fribidi_get_bidi_type (ch);
+-
+-  if (!FRIBIDI_IS_STRONG (fribidi_ch_type))
+-    return PANGO_DIRECTION_NEUTRAL;
+-  else if (FRIBIDI_IS_RTL (fribidi_ch_type))
+-    return PANGO_DIRECTION_RTL;
+-  else
+     return PANGO_DIRECTION_LTR;
+ }
+ 

@@ -1,7 +1,11 @@
 #!/bin/sh -e
 
-# Remove configure check for atk-bridge.
-sed 's/\(ATK_PACKAGES="atk\) atk-bridge-2.0"/\1"/' configure > _
+patch -p1 < no-fribidi.patch
+
+# Remove configure check for atk-bridge and fribidi.
+sed -e 's/\(ATK_PACKAGES="atk\) atk-bridge-2.0"/\1"/' \
+    -e 's/fribidi >= 0\.19\.7//g' \
+    configure > _
 mv -f _ configure
 chmod +x configure
 
