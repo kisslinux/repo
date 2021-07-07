@@ -1,0 +1,12 @@
+flex make
+libdrm
+libinput
+libseat
+libudev-zero
+libxkbcommon
+linux-headers make
+mesa
+meson make
+pixman
+wayland
+wayland-protocols make
