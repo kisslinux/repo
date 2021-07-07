@@ -2,6 +2,10 @@
 
 patch -p1 < no-gtk2.patch
 
+# Remove fribidi dependency.
+sed '/fribidi/d' config/system-headers.mozbuild > _
+mv -f _ config/system-headers.mozbuild
+
 # Remove libc header which conflicts with 7 or so Linux
 # kernel headers. See: https://github.com/kisslinux/repo/issues/207
 _f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c

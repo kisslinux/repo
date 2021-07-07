@@ -8,7 +8,6 @@ expat
 ffmpeg
 fontconfig
 freetype-harfbuzz
-fribidi
 gdk-pixbuf
 glib
 gtk+3
