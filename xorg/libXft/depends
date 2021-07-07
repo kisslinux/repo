@@ -1,5 +1,0 @@
-fontconfig        make
-freetype-harfbuzz make
-libXrender        make
-pkgconf           make
-xorgproto         make

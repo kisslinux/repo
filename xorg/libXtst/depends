@@ -1,6 +1,0 @@
-libX11
-libXau
-libXext
-libXi
-libxcb
-pkgconf make
