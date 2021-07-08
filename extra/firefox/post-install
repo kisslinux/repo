@@ -14,4 +14,10 @@ NOTE: You must set this environment variable.
 
       export MOZ_ENABLE_WAYLAND=1
 
+NOTE: For VAAPI to work with amdgpu you must have 
+      CHECKPOINT_RESTORE enabled in your kernel.
+      See: https://lwn.net/Articles/845448/
+
+      CONFIG_CHECKPOINT_RESTORE=y
+
 EOF
