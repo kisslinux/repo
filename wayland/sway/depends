@@ -1,6 +1,7 @@
 cairo
 flex make
 json-c
+libseat
 libxkbcommon
 linux-headers make
 meson make
