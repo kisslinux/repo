@@ -7,6 +7,11 @@
     --disable-debug \
     --disable-libxml2 \
     --disable-static \
+    --disable-libxcb \
+    --disable-libxcb-shm \
+    --disable-libxcb-xfixes \
+    --disable-libxcb-shape \
+    --disable-xlib \
     --enable-gpl \
     --enable-libass \
     --enable-libdrm \
