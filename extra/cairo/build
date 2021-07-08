@@ -17,10 +17,10 @@ mv -f _ Makefile.in
     --enable-tee \
     --enable-gl \
     --enable-egl \
-    --enable-xlib-xcb \
-    --enable-xcb \
-    --enable-xlib-xrender \
-    --enable-xlib \
+    --disable-xlib-xcb \
+    --disable-xcb \
+    --disable-xlib-xrender \
+    --disable-xlib \
     --disable-trace \
     --disable-valgrind \
     --disable-gtk-doc-html
