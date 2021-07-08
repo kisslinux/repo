@@ -76,7 +76,6 @@ ac_add_options --disable-dbus
 ac_add_options --disable-gold
 ac_add_options --disable-tests
 ac_add_options --disable-vtune
-ac_add_options --disable-webrtc
 ac_add_options --disable-updater
 ac_add_options --disable-jemalloc
 ac_add_options --disable-elf-hack
@@ -90,6 +89,13 @@ ac_add_options --disable-debug
 ac_add_options --disable-debug-symbols
 ac_add_options --disable-parental-controls
 ac_add_options --disable-system-extension-dirs
+EOF
+
+# Currently required for X11-less builds. 
+# See: https://bugzilla.mozilla.org/show_bug.cgi?id=1661450
+#      https://bugzilla.mozilla.org/show_bug.cgi?id=1654112 
+cat >> .mozconfig <<EOF R
+ac_add_options --disable-webrtc
 EOF
 
 ./mach build
