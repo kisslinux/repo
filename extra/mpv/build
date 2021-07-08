@@ -6,7 +6,9 @@ python waf configure \
     --prefix=/usr \
     --mandir=/usr/share/man \
     --confdir=/etc/mpv \
-    --enable-alsa
+    --enable-alsa \
+    --enable-wayland \
+    --disable-x11
 
 python waf build
 python waf install --destdir="$1"
