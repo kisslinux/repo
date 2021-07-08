@@ -1,5 +1,21 @@
 #!/bin/sh -e
 
+export CFLAGS="$CFLAGS -fPIC"
+
+(
+    cd mtdev
+
+    ./configure \
+        --prefix=/usr \
+        --disable-shared \
+        --disable-gcov
+
+    make
+    make DESTDIR="$OLDPWD" install
+)
+
+export PKG_CONFIG_PATH="$PWD/usr/lib/pkgconfig"
+export CFLAGS="$CFLAGS -I$PWD/usr/include -L$PWD/usr/lib"
 export DESTDIR="$1"
 
 meson \
