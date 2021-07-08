@@ -1,0 +1,29 @@
+#!/bin/sh -e
+
+# Remove conflict between static libseat and wlroots.
+sed 's/\(const long NSEC\)/static \1/' \
+    subprojects/seatd/common/log.c > _
+mv -f _ subprojects/seatd/common/log.c
+
+export DESTDIR="$1"
+
+meson \
+    --prefix=/usr \
+    -Dexamples=false \
+    -Dxwayland=disabled \
+    -Dx11-backend=disabled \
+    -Dxcb-errors=disabled \
+    -Dxcb-icccm=disabled \
+    -Dwlroots:examples=false \
+    -Dwlroots:xcb-errors=disabled \
+    -Dwlroots:x11-backend=disabled \
+    -Dwlroots:default_library=static \
+    -Dseatd:libseat-juiltin=enabled \
+    -Dseatd:default_library=static \
+    --force-fallback-for=wlroots,seatd \
+    . build
+
+ninja -C build
+meson install -C build --skip-subprojects
+
+rm -rf "${1:?}/usr/share"
