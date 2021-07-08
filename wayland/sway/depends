@@ -1,6 +1,7 @@
 cairo
 flex make
 json-c
+libevdev
 libseat
 libxkbcommon
 linux-headers make
