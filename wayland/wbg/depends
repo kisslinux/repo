@@ -1,0 +1,6 @@
+libjpeg-turbo
+libpng
+meson make
+pixman
+wayland
+wayland-protocols make
