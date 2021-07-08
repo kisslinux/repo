@@ -4,6 +4,6 @@ cat <<EOF
 
 NOTE: sway requires the seatd daemon be running to function. 
       If no seat management is desired, install the sway-no-seat 
-      package instead of this one (and remove libseat).
+      or sway-tiny packages instead of this one (and remove libseat).
 
 EOF
