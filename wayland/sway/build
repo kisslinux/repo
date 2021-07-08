@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+export DESTDIR="$1"
+
+meson \
+    --prefix=/usr \
+    -Dexamples=false \
+    -Dxwayland=disabled \
+    -Dx11-backend=disabled \
+    -Dxcb-errors=disabled \
+    -Dxcb-icccm=disabled \
+    . build
+
+ninja -C build
+ninja -C build install
+
+rm -rf "${1:?}/usr/share"
