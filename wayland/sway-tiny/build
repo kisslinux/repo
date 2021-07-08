@@ -1,0 +1,34 @@
+#!/bin/sh -e
+
+# Remove conflict between static libseat and wlroots.
+sed 's/\(const long NSEC\)/static \1/' \
+    subprojects/seatd/common/log.c > _
+mv -f _ subprojects/seatd/common/log.c
+
+export DESTDIR="$1"
+export CFLAGS="$CFLAGS -Wno-unused-function -Wno-error"
+
+meson \
+    --prefix=/usr \
+    -Dexamples=false \
+    -Dxwayland=disabled \
+    -Dx11-backend=disabled \
+    -Dxcb-errors=disabled \
+    -Dxcb-icccm=disabled \
+    -Dwlroots:examples=false \
+    -Dwlroots:xcb-errors=disabled \
+    -Dwlroots:x11-backend=disabled \
+    -Dwlroots:default_library=static \
+    -Dseatd:libseat-juiltin=enabled \
+    -Dseatd:default_library=static \
+    --force-fallback-for=wlroots,seatd \
+    . build
+
+ninja -C build
+
+mkdir -p \
+    "$1/usr/bin" \
+    "$1/etc/sway"
+
+cp -f build/sway/sway "$1/usr/bin"
+cp -f config.in "$1/etc/sway/config"

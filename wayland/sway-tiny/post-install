@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+chown root:input /bin/sway
+chmod g+s /bin/sway
