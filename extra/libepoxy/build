@@ -8,6 +8,8 @@ meson \
     --mandir=/usr/share/man \
     -Dhas-dlvsym=false \
     -Degl=yes \
+    -Dtests=false \
+    -Dglx=no \
     -Dx11=false \
     . output
 
