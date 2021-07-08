@@ -76,6 +76,7 @@ ac_add_options --disable-dbus
 ac_add_options --disable-gold
 ac_add_options --disable-tests
 ac_add_options --disable-vtune
+ac_add_options --disable-webrtc
 ac_add_options --disable-updater
 ac_add_options --disable-jemalloc
 ac_add_options --disable-elf-hack
