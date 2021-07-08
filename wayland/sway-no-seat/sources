@@ -1,3 +1,4 @@
 https://github.com/swaywm/sway/archive/4832fc937fae5a5e2af8828a7092c9026bd300e0.tar.gz
 https://github.com/swaywm/wlroots/archive/a48e569d3860e91428c74e876a5d886314767c7b.tar.gz subprojects/wlroots
 https://github.com/DCVIII/seatd/archive/23ee555f432f9971a15522fc0b3f980d78ffa6cc.tar.gz subprojects/seatd
+patches/sway-static.patch

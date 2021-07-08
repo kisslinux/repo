@@ -1,0 +1,145 @@
+From b81ff615a01ac9dbbede66a5853dfe3fda2932be Mon Sep 17 00:00:00 2001
+From: Dylan Araps <dylan.araps@gmail.com>
+Date: Thu, 17 Jun 2021 12:05:39 +0000
+Subject: [PATCH] rename
+
+---
+ include/sway/input/seat.h | 2 +-
+ sway/config.c             | 2 +-
+ sway/input/seat.c         | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/sway/input/seat.h b/include/sway/input/seat.h
+index 4118df6655..f2c2d6c4b0 100644
+--- a/include/sway/input/seat.h
++++ b/include/sway/input/seat.h
+@@ -133,7 +133,7 @@ struct sway_keyboard_shortcuts_inhibitor {
+ 
+ struct sway_seat *seat_create(const char *seat_name);
+ 
+-void seat_destroy(struct sway_seat *seat);
++void sway_seat_destroy(struct sway_seat *seat);
+ 
+ void seat_add_device(struct sway_seat *seat,
+ 		struct sway_input_device *device);
+diff --git a/sway/config.c b/sway/config.c
+index 3b506254c7..36c783dcef 100644
+--- a/sway/config.c
++++ b/sway/config.c
+@@ -184,7 +184,7 @@ static void destroy_removed_seats(struct sway_config *old_config,
+ 				seat_name_cmp, seat_config->name) < 0) {
+ 			seat = input_manager_get_seat(seat_config->name, false);
+ 			if (seat) {
+-				seat_destroy(seat);
++				sway_seat_destroy(seat);
+ 			}
+ 		}
+ 	}
+diff --git a/sway/input/seat.c b/sway/input/seat.c
+index 2d714acd4c..10d3512d33 100644
+--- a/sway/input/seat.c
++++ b/sway/input/seat.c
+@@ -54,7 +54,7 @@ static void seat_node_destroy(struct sway_seat_node *seat_node) {
+ 	free(seat_node);
+ }
+ 
+-void seat_destroy(struct sway_seat *seat) {
++void sway_seat_destroy(struct sway_seat *seat) {
+ 	if (seat == config->handler_context.seat) {
+ 		config->handler_context.seat = input_manager_get_default_seat();
+ 	}
+From bb9e3415b519d392a7bfa95e9571e77959653e72 Mon Sep 17 00:00:00 2001
+From: Dylan Araps <dylan.araps@gmail.com>
+Date: Thu, 17 Jun 2021 12:08:16 +0000
+Subject: [PATCH] rename
+
+---
+ include/sway/server.h | 2 +-
+ sway/main.c           | 2 +-
+ sway/server.c         | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/sway/server.h b/include/sway/server.h
+index 3a5670d928..94dd23c7d4 100644
+--- a/include/sway/server.h
++++ b/include/sway/server.h
+@@ -127,7 +127,7 @@ extern struct sway_debug debug;
+ 
+ /* Prepares an unprivileged server_init by performing all privileged operations in advance */
+ bool server_privileged_prepare(struct sway_server *server);
+-bool server_init(struct sway_server *server);
++bool sway_server_init(struct sway_server *server);
+ void server_fini(struct sway_server *server);
+ bool server_start(struct sway_server *server);
+ void server_run(struct sway_server *server);
+diff --git a/sway/main.c b/sway/main.c
+index ca37b79e92..570ac49089 100644
+--- a/sway/main.c
++++ b/sway/main.c
+@@ -361,7 +361,7 @@ int main(int argc, char **argv) {
+ 
+ 	root = root_create();
+ 
+-	if (!server_init(&server)) {
++	if (!sway_server_init(&server)) {
+ 		return 1;
+ 	}
+ 
+diff --git a/sway/server.c b/sway/server.c
+index 2e5ab10453..1de9124fdd 100644
+--- a/sway/server.c
++++ b/sway/server.c
+@@ -57,7 +57,7 @@ bool server_privileged_prepare(struct sway_server *server) {
+ 	return true;
+ }
+ 
+-bool server_init(struct sway_server *server) {
++bool sway_server_init(struct sway_server *server) {
+ 	sway_log(SWAY_DEBUG, "Initializing Wayland server");
+ 
+ 	struct wlr_renderer *renderer = wlr_backend_get_renderer(server->backend);
+---
+ include/sway/input/seat.h  | 2 +-
+ sway/input/input-manager.c | 2 +-
+ sway/input/seat.c          | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/sway/input/seat.h b/include/sway/input/seat.h
+index f2c2d6c4b0..599b1e6f32 100644
+--- a/include/sway/input/seat.h
++++ b/include/sway/input/seat.h
+@@ -131,7 +131,7 @@ struct sway_keyboard_shortcuts_inhibitor {
+ 	struct wl_list link; // sway_seat::keyboard_shortcuts_inhibitors
+ };
+ 
+-struct sway_seat *seat_create(const char *seat_name);
++struct sway_seat *sway_seat_create(const char *seat_name);
+ 
+ void sway_seat_destroy(struct sway_seat *seat);
+ 
+diff --git a/sway/input/input-manager.c b/sway/input/input-manager.c
+index f04a8ce09a..504a9f7ed7 100644
+--- a/sway/input/input-manager.c
++++ b/sway/input/input-manager.c
+@@ -47,7 +47,7 @@ struct sway_seat *input_manager_get_seat(const char *seat_name, bool create) {
+ 		}
+ 	}
+ 
+-	return create ? seat_create(seat_name) : NULL;
++	return create ? sway_seat_create(seat_name) : NULL;
+ }
+ 
+ struct sway_seat *input_manager_sway_seat_from_wlr_seat(struct wlr_seat *wlr_seat) {
+diff --git a/sway/input/seat.c b/sway/input/seat.c
+index 10d3512d33..899ae14217 100644
+--- a/sway/input/seat.c
++++ b/sway/input/seat.c
+@@ -543,7 +543,7 @@ static void collect_focus_container_iter(struct sway_container *container,
+ 	collect_focus_iter(&container->node, data);
+ }
+ 
+-struct sway_seat *seat_create(const char *seat_name) {
++struct sway_seat *sway_seat_create(const char *seat_name) {
+ 	struct sway_seat *seat = calloc(1, sizeof(struct sway_seat));
+ 	if (!seat) {
+ 		return NULL;

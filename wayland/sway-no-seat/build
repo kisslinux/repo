@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < sway-static.patch
+
 # Remove conflict between static libseat and wlroots.
 sed 's/\(const long NSEC\)/static \1/' \
     subprojects/seatd/common/log.c > _
@@ -18,7 +20,7 @@ meson \
     -Dwlroots:xcb-errors=disabled \
     -Dwlroots:x11-backend=disabled \
     -Dwlroots:default_library=static \
-    -Dseatd:libseat-builtin=enabled \
+    -Dseatd:builtin=enabled \
     -Dseatd:default_library=static \
     --force-fallback-for=wlroots,seatd \
     . build
