@@ -19,7 +19,7 @@ meson \
     -Dwlroots:xcb-errors=disabled \
     -Dwlroots:x11-backend=disabled \
     -Dwlroots:default_library=static \
-    -Dseatd:libseat-builtin=enabled \
+    -Dseatd:builtin=enabled \
     -Dseatd:default_library=static \
     --force-fallback-for=wlroots,seatd \
     . build
