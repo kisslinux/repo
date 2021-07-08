@@ -22,13 +22,8 @@ mv -f _ Makefile.in
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
-    --enable-xkb \
-    --enable-xinerama \
-    --enable-xrandr \
-    --enable-xfixes \
-    --enable-xcomposite \
-    --enable-xdamage \
-    --enable-x11-backend \
+    --enable-wayland-backend \
+    --disable-x11-backend \
     --disable-schemas-compile \
     --disable-cups \
     --disable-papi \

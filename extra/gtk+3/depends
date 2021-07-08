@@ -1,13 +1,12 @@
 atk
+cairo
+fontconfig
+freetype-harfbuzz
 gdk-pixbuf
-libXcomposite
-libXcursor
-libXdamage
-libXext
-libXi
-libXinerama
-libXrandr
+glib
 libepoxy
+libxkbcommon
 pango
 pkgconf make
 python  make
+wayland
