@@ -1,4 +1,4 @@
 #!/bin/sh -e
 
-chown root:input /bin/sway
-chmod g+s /bin/sway
+chown root:input "$KISS_ROOT/usr/bin/sway"
+chmod g+s        "$KISS_ROOT"/usr/bin/sway
