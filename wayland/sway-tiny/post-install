@@ -1,4 +1,1 @@
-#!/bin/sh -e
-
-chown root:input "$KISS_ROOT/usr/bin/sway"
-chmod g+s        "$KISS_ROOT"/usr/bin/sway
+../sway-no-seat/post-install
