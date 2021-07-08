@@ -6,9 +6,12 @@ NOTE: Install the 'hicolor-icon-theme' package if
       no other icon themes are installed.
 
 NOTE: Install the 'firefox-privacy' package to
-      enable extra privacy restrictions.
+      enable extra privacy restrictions. This 
+      includes more telemetry removals, hardened 
+      settings, no phoning-home etc.
 
-NOTE: This includes more telemetry removals,
-      hardened settings, no phoning-home etc.
+NOTE: You must set this environment variable.
+
+      export MOZ_ENABLE_WAYLAND=1
 
 EOF
