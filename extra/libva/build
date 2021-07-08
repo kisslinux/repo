@@ -8,6 +8,7 @@ meson \
     --mandir=/usr/share/man \
     -Dwith_wayland=yes \
     -Dwith_x11=no \
+    -Dwith_glx=no \
     -Ddocs=false \
     -Dintrospection=false \
     . output
