@@ -1,5 +1,6 @@
 flex make
 libevdev
+libinput
 libxkbcommon
 linux-headers make
 meson make
