@@ -49,6 +49,7 @@ export libat_cv_have_ifunc=no
     --enable-shared \
     --enable-threads \
     --enable-tls \
+    --enable-initfini-array \
     --enable-languages=c,c++ \
     --without-included-gettext \
     --with-zstd=no \
