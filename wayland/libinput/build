@@ -1,9 +1,11 @@
 #!/bin/sh -e
 
+patch -p1 < evdev-wrap.patch
+
 export CFLAGS="$CFLAGS -fPIC"
 
-(
-    cd mtdev
+for pkg in mtdev evdev; do (
+    cd "$pkg"
 
     ./configure \
         --prefix=/usr \
@@ -12,10 +14,11 @@ export CFLAGS="$CFLAGS -fPIC"
 
     make
     make DESTDIR="$OLDPWD" install
-)
+) done
 
 export PKG_CONFIG_PATH="$PWD/usr/lib/pkgconfig"
 export CFLAGS="$CFLAGS -I$PWD/usr/include -L$PWD/usr/lib"
+export CFLAGS="$CFLAGS -I$PWD/usr/include/libevdev-1.0"
 export DESTDIR="$1"
 
 meson \
@@ -23,6 +26,7 @@ meson \
     --sysconfdir=/etc \
     --mandir=/usr/share/man \
     --libexecdir=/usr/lib \
+    -Ddefault_library=both \
     -Ddebug-gui=false \
     -Ddocumentation=false \
     -Dtests=false \

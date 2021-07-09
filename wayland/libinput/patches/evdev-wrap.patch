@@ -1,0 +1,114 @@
+diff --git a/src/evdev.c b/src/evdev.c
+index 0f892b8..12fdaf2 100644
+--- a/src/evdev.c
++++ b/src/evdev.c
+@@ -133,6 +133,17 @@ evdev_update_key_down_count(struct evdev_device *device,
+ 	return key_count;
+ }
+ 
++int 
++evdev_event_code_from_name(unsigned int type, const char *name) 
++{
++    return libevdev_event_code_from_name(type, name);
++}
++
++const char *
++evdev_event_code_get_name (unsigned int type, unsigned int code) {
++    return libevdev_event_code_get_name(type, code);
++}
++
+ enum libinput_switch_state
+ evdev_device_switch_get_state(struct evdev_device *device,
+ 			      enum libinput_switch sw)
+diff --git a/src/evdev.h b/src/evdev.h
+index 0a4798f..352c22b 100644
+--- a/src/evdev.h
++++ b/src/evdev.h
+@@ -401,6 +401,12 @@ evdev_device_has_model_quirk(struct evdev_device *device,
+ 	return result;
+ }
+ 
++int 
++evdev_event_code_from_name(unsigned int type, const char *name);
++
++const char *
++evdev_event_code_get_name (unsigned int type, unsigned int code);
++
+ void
+ evdev_transform_absolute(struct evdev_device *device,
+ 			 struct device_coords *point);
+diff --git a/src/libinput.c b/src/libinput.c
+index b4164e2..b2ff1f3 100644
+--- a/src/libinput.c
++++ b/src/libinput.c
+@@ -310,6 +310,17 @@ log_msg_ratelimit(struct libinput *libinput,
+ 			us2ms(ratelimit->interval));
+ }
+ 
++LIBINPUT_EXPORT int 
++libinput_event_code_from_name(unsigned int type, const char *name) 
++{
++    return evdev_event_code_from_name(type, name);
++}
++
++LIBINPUT_EXPORT const char *
++libinput_event_code_get_name (unsigned int type, unsigned int code) {
++    return evdev_event_code_get_name(type, code);
++}
++
+ LIBINPUT_EXPORT void
+ libinput_log_set_priority(struct libinput *libinput,
+ 			  enum libinput_log_priority priority)
+diff --git a/src/libinput.h b/src/libinput.h
+index a15d627..edb8849 100644
+--- a/src/libinput.h
++++ b/src/libinput.h
+@@ -416,6 +416,35 @@ enum libinput_tablet_tool_tip_state {
+  */
+ struct libinput_tablet_pad_mode_group;
+ 
++
++/**
++ * @ingroup base
++ *
++ * A wrapper around libevdev_event_code_from_name for use in sway.
++ * For use in KISS Linux.
++ *
++ * @param type The event type (EV_* constant) where to look for the name.
++ * @param name A non-NULL string describing an input-event code, zero-terminated.
++ *
++ * @return The given code constant for the passed name or -1 if not found. 
++ */
++int 
++libinput_event_code_from_name(unsigned int type, const char *name);
++
++/**
++ * @ingroup base
++ *
++ * A wrapper around libevdev_event_code_get_name for use in sway.
++ * For use in KISS Linux.
++ *
++ * @param type The event type for the code to query (EV_SYN, EV_REL, etc.)
++ * @param code The event code to return the name for (e.g. ABS_X)
++ *
++ * @return The name of the given event code or NULL for an invalid type or code.
++ */
++const char *
++libinput_event_code_get_name(unsigned int type, unsigned int code);
++
+ /**
+  * @ingroup tablet_pad_modes
+  *
+diff --git a/src/libinput.sym b/src/libinput.sym
+index b45838e..ce88063 100644
+--- a/src/libinput.sym
++++ b/src/libinput.sym
+@@ -61,6 +61,8 @@ global:
+ 	libinput_device_set_user_data;
+ 	libinput_device_unref;
+ 	libinput_dispatch;
++	libinput_event_code_from_name;
++	libinput_event_code_get_name;
+ 	libinput_event_destroy;
+ 	libinput_event_device_notify_get_base_event;
+ 	libinput_event_get_context;
