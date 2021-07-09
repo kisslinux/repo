@@ -3,8 +3,9 @@
 cat <<EOF
 
 NOTE: Install the 'hicolor-icon-theme' package if
-      no other icon themes are installed.
-
+      no other icon themes are installed. You may
+      also need adwaita-icon-theme.
+      
 NOTE: Install the 'firefox-privacy' package to
       enable extra privacy restrictions. This 
       includes more telemetry removals, hardened 
