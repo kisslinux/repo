@@ -1,0 +1,117 @@
+diff --git a/meson.build b/meson.build
+index 747cab5..ed0ac77 100644
+--- a/meson.build
++++ b/meson.build
+@@ -49,7 +49,6 @@ pangocairo = dependency('pangocairo')
+ gdk_pixbuf = dependency('gdk-pixbuf-2.0', required: get_option('gdk-pixbuf'))
+ pixman = dependency('pixman-1')
+ glesv2 = dependency('glesv2')
+-libevdev = dependency('libevdev')
+ libinput = dependency('libinput', version: '>=1.6.0')
+ xcb = dependency('xcb', required: get_option('xwayland'))
+ drm_full = dependency('libdrm') # only needed for drm_fourcc.h
+diff --git a/sway/commands/bar/bind.c b/sway/commands/bar/bind.c
+index b4b5bc4..2770312 100644
+--- a/sway/commands/bar/bind.c
++++ b/sway/commands/bar/bind.c
+@@ -1,4 +1,4 @@
+-#include <libevdev/libevdev.h>
++#include <linux/input-event-codes.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <strings.h>
+diff --git a/sway/commands/bind.c b/sway/commands/bind.c
+index 4c67b3c..e9c0eab 100644
+--- a/sway/commands/bind.c
++++ b/sway/commands/bind.c
+@@ -1,5 +1,4 @@
+ #define _POSIX_C_SOURCE 200809L
+-#include <libevdev/libevdev.h>
+ #include <linux/input-event-codes.h>
+ #include <string.h>
+ #include <strings.h>
+diff --git a/sway/commands/input/scroll_button.c b/sway/commands/input/scroll_button.c
+index 6b33141..039f533 100644
+--- a/sway/commands/input/scroll_button.c
++++ b/sway/commands/input/scroll_button.c
+@@ -1,4 +1,4 @@
+-#include <libevdev/libevdev.h>
++#include <linux/input-event-codes.h>
+ #include "sway/config.h"
+ #include "sway/commands.h"
+ #include "sway/input/cursor.h"
+diff --git a/sway/input/cursor.c b/sway/input/cursor.c
+index c89d516..e1bbabd 100644
+--- a/sway/input/cursor.c
++++ b/sway/input/cursor.c
+@@ -1,7 +1,7 @@
+ #define _POSIX_C_SOURCE 200809L
+ #include <assert.h>
+ #include <math.h>
+-#include <libevdev/libevdev.h>
++#include <libinput.h>
+ #include <linux/input-event-codes.h>
+ #include <errno.h>
+ #include <time.h>
+@@ -1203,7 +1203,7 @@ uint32_t get_mouse_bindsym(const char *name, char **error) {
+ 		return buttons[number - 1];
+ 	} else if (strncmp(name, "BTN_", strlen("BTN_")) == 0) {
+ 		// Get event code from name
+-		int code = libevdev_event_code_from_name(EV_KEY, name);
++		int code = libinput_event_code_from_name(EV_KEY, name);
+ 		if (code == -1) {
+ 			size_t len = snprintf(NULL, 0, "Unknown event %s", name) + 1;
+ 			*error = malloc(len);
+@@ -1229,7 +1229,7 @@ uint32_t get_mouse_bindcode(const char *name, char **error) {
+ 		*error = strdup("Button event code out of range.");
+ 		return 0;
+ 	}
+-	const char *event = libevdev_event_code_get_name(EV_KEY, code);
++	const char *event = libinput_event_code_get_name(EV_KEY, code);
+ 	if (!event || strncmp(event, "BTN_", strlen("BTN_")) != 0) {
+ 		size_t len = snprintf(NULL, 0, "Event code %d (%s) is not a button",
+ 				code, event ? event : "(null)") + 1;
+@@ -1252,7 +1252,7 @@ uint32_t get_mouse_button(const char *name, char **error) {
+ }
+ 
+ const char *get_mouse_button_name(uint32_t button) {
+-	const char *name = libevdev_event_code_get_name(EV_KEY, button);
++	const char *name = libinput_event_code_get_name(EV_KEY, button);
+ 	if (!name) {
+ 		if (button == SWAY_SCROLL_UP) {
+ 			name = "SWAY_SCROLL_UP";
+diff --git a/sway/input/seatop_default.c b/sway/input/seatop_default.c
+index f9eb8c8..681ca26 100644
+--- a/sway/input/seatop_default.c
++++ b/sway/input/seatop_default.c
+@@ -1,6 +1,6 @@
+ #define _POSIX_C_SOURCE 200809L
+ #include <float.h>
+-#include <libevdev/libevdev.h>
++#include <linux/input-event-codes.h>
+ #include <wlr/types/wlr_cursor.h>
+ #include <wlr/types/wlr_tablet_v2.h>
+ #include <wlr/types/wlr_xcursor_manager.h>
+diff --git a/sway/ipc-json.c b/sway/ipc-json.c
+index 2c4c52a..1c09ba4 100644
+--- a/sway/ipc-json.c
++++ b/sway/ipc-json.c
+@@ -1,5 +1,5 @@
+ #include <json.h>
+-#include <libevdev/libevdev.h>
++#include <linux/input-event-codes.h>
+ #include <stdio.h>
+ #include <ctype.h>
+ #include "config.h"
+diff --git a/sway/meson.build b/sway/meson.build
+index b52fada..97e4b84 100644
+--- a/sway/meson.build
++++ b/sway/meson.build
+@@ -206,7 +206,6 @@ sway_deps = [
+ 	cairo,
+ 	drm,
+ 	jsonc,
+-	libevdev,
+ 	libinput,
+ 	libudev,
+ 	math,
