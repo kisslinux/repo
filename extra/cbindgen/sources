@@ -48,7 +48,7 @@ https://static.crates.io/crates/unicode-segmentation/unicode-segmentation-1.6.0.
 https://static.crates.io/crates/unicode-width/unicode-width-0.1.8.crate vendor
 https://static.crates.io/crates/unicode-xid/unicode-xid-0.2.1.crate vendor
 https://static.crates.io/crates/vec_map/vec_map-0.8.2.crate vendor
-https://static.crates.io/crates/wasi-0.9.0+wasi-snapshot/wasi-0.9.0+wasi-snapshot-preview1.crate vendor
+https://crates.io/api/v1/crates/wasi/0.9.0+wasi-snapshot-preview1/download vendor
 https://static.crates.io/crates/winapi/winapi-0.3.9.crate vendor
 https://static.crates.io/crates/winapi-i686-pc-windows-gnu/winapi-i686-pc-windows-gnu-0.4.0.crate vendor
 https://static.crates.io/crates/winapi-x86_64-pc-windows-gnu/winapi-x86_64-pc-windows-gnu-0.4.0.crate vendor
