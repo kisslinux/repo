@@ -47,7 +47,7 @@ meson \
     -Dplatforms=wayland \
     -Dglx=disabled \
     -Dzstd=false \
-    -Dglvnd="${glvnd_enabled:-false}"
+    -Dglvnd="${glvnd_enabled:-false}" \
     . output
 
 ninja -C output
