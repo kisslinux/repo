@@ -7,7 +7,7 @@ patch -p1 < schemas.patch
 # for gsettings to work correctly. Install the bare
 # minimum needed (currently one schema).
 #
-# This fixes cursor icon issues and console spam when 
+# This fixes cursor icon issues and console spam when
 # running Firefox.
 (
     cd schemas
