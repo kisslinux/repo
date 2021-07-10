@@ -20,6 +20,10 @@ export CARGO_HOME=$PWD
 (
     cd vendor
 
+    # Download link for this crate 404s. Mirror link saves
+    # the file as 'download' so it must be renamed.
+    mv -f download wasi-0.9.0+wasi-snapshot-preview1.crate
+
     for crate in *.crate; do
         tar xf "$crate"
 
