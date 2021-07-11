@@ -26,4 +26,4 @@ EOF
 make LIBS="$(curl-config --static-libs) libgit.a xdiff/lib.a -lz"
 make DESTDIR="$1" install
 
-cp -rf man "$1/usr/share/man"
+cp -Rf man "$1/usr/share/man"
