@@ -20,6 +20,3 @@
 
 make curl_LDFLAGS=-all-static
 make DESTDIR="$1" install
-
-# Remove library documentation.
-rm -rf "$1/usr/share/man/man3"
