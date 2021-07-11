@@ -2,7 +2,7 @@
 
 cat <<EOF
 
-Run 'kiss help wiki/software/firefox' for setup
+Run 'kiss help firefox' for setup
 information and general troubleshooting.
 
 Also available here:
