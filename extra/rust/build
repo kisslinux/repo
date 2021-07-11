@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < libressl.patch
-
 # This package mimics the download process of rust's 'x.py'
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
@@ -23,13 +21,9 @@ do
 done
 
 # Ignore checksums of files modified above.
-for f in \
-    vendor/openssl-sys/.cargo-checksum.json \
-    vendor/rustc-ap-rustc_target/.cargo-checksum.json
-do
-    sed 's/\("files":{\)[^}]*/\1/' "$f" > _
-    mv -f _ "$f"
-done
+sed 's/\("files":{\)[^}]*/\1/' \
+    vendor/rustc-ap-rustc_target/.cargo-checksum.json > _
+mv -f _ vendor/rustc-ap-rustc_target/.cargo-checksum.json
 
 cat > config.toml <<EOF
 [llvm]

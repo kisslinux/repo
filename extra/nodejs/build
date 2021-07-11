@@ -2,6 +2,7 @@
 
 ./configure \
     --shared-zlib \
+    --shared-openssl \
     --with-intl=none \
     --without-etw \
     --without-dtrace \

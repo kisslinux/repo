@@ -1,6 +1,6 @@
 cmake   make
 curl    make
-libressl
+openssl
 llvm
 pkgconf make
 python  make
