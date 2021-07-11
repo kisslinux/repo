@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+cd "$1"
+
+tar xf "$OLDPWD/xkeyboard-config-"*.apk
+tar xf "$OLDPWD/libx11-"*.apk
+
+rm -rf usr/lib .PKGINFO .*.pub

@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+cat <<EOF
+
+NOTE: sway requires the seatd daemon be running to function.
+      If no seat management is desired, install the sway-no-seat
+      or sway-tiny packages instead of this one (and remove libseat).
+
+NOTE: You must set XDG_RUNTIME_DIR in your shellrc
+      or .profile for things to work. This directory
+      must exist and must be writable by your user.
+
+      export XDG_RUNTIME_DIR=/run/user/\$(id -u)
+
+EOF

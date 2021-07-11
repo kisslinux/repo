@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 patch -p1 < no-gtk2.patch
+patch -p1 < no-x11.patch
 
 # Remove fribidi dependency.
 sed '/fribidi/d' config/system-headers.mozbuild > _
@@ -51,6 +52,7 @@ export MOZ_DEBUG_FLAGS=-g0
 export MOZ_NOSPAM=1
 
 cat > .mozconfig << EOF
+ac_add_options --enable-default-toolkit=cairo-gtk3-wayland
 ac_add_options --prefix=/usr
 ac_add_options --libdir=/usr/lib
 ac_add_options --enable-alsa
@@ -87,6 +89,13 @@ ac_add_options --disable-debug
 ac_add_options --disable-debug-symbols
 ac_add_options --disable-parental-controls
 ac_add_options --disable-system-extension-dirs
+EOF
+
+# Currently required for X11-less builds.
+# See: https://bugzilla.mozilla.org/show_bug.cgi?id=1661450
+#      https://bugzilla.mozilla.org/show_bug.cgi?id=1654112
+cat >> .mozconfig <<EOF
+ac_add_options --disable-webrtc
 EOF
 
 ./mach build

@@ -2,13 +2,11 @@
 
 cat <<EOF
 
-NOTE: Install the 'hicolor-icon-theme' package if
-      no other icon themes are installed.
+Run 'kiss help firefox' for setup
+information and general troubleshooting.
 
-NOTE: Install the 'firefox-privacy' package to
-      enable extra privacy restrictions.
+Also available here:
 
-NOTE: This includes more telemetry removals,
-      hardened settings, no phoning-home etc.
+https://kisslinux.xyz/wiki/software/firefox
 
 EOF

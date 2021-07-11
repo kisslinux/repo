@@ -1,6 +1,27 @@
 #!/bin/sh -e
 
 patch -p1 < no-fribidi.patch
+patch -p1 < schemas.patch
+
+# GTK+3 on Wayland requires gsettings-desktop-schemas
+# for gsettings to work correctly. Install the bare
+# minimum needed (currently one schema).
+#
+# This fixes cursor icon issues and console spam when
+# running Firefox.
+(
+    cd schemas
+
+    meson \
+        --prefix=/usr \
+        -Dintrospection=false \
+        . output
+
+    export DESTDIR="$1"
+
+    ninja -C output
+    ninja -C output install
+)
 
 # Remove configure check for atk-bridge and fribidi.
 sed -e 's/\(ATK_PACKAGES="atk\) atk-bridge-2.0"/\1"/' \
@@ -22,13 +43,8 @@ mv -f _ Makefile.in
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
-    --enable-xkb \
-    --enable-xinerama \
-    --enable-xrandr \
-    --enable-xfixes \
-    --enable-xcomposite \
-    --enable-xdamage \
-    --enable-x11-backend \
+    --enable-wayland-backend \
+    --disable-x11-backend \
     --disable-schemas-compile \
     --disable-cups \
     --disable-papi \

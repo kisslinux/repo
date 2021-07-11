@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+cat <<EOF
+
+NOTE: Mesa + amdgpu requires CHECKPOINT_RESTORE be enabled
+      in your kernel or things will subtly break.
+      See: https://lwn.net/Articles/845448/
+
+      CONFIG_CHECKPOINT_RESTORE=y
+
+EOF

@@ -1,5 +1,4 @@
 glib
-libX11
 libjpeg-turbo
 libpng
 meson   make

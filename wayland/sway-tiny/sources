@@ -1,0 +1,4 @@
+https://github.com/DCVIII/sway/archive/cd493f533b3a6f85761ac92eefeea3252b059c65.tar.gz
+https://github.com/swaywm/wlroots/archive/a48e569d3860e91428c74e876a5d886314767c7b.tar.gz subprojects/wlroots
+https://github.com/DCVIII/seatd/archive/23ee555f432f9971a15522fc0b3f980d78ffa6cc.tar.gz subprojects/seatd
+patches/no-evdev.patch

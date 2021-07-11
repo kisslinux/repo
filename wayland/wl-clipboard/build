@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+sed "/subdir('completions')/d" meson.build > _
+mv -f _ meson.build
+
+export DESTDIR="$1"
+
+meson \
+    --prefix=/usr \
+    --buildtype=release \
+    . output
+
+ninja -C output
+ninja -C output install

@@ -1,4 +1,0 @@
-libxcb
-m4       make
-pkgconf  make
-xcb-util make

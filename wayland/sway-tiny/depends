@@ -1,0 +1,9 @@
+flex make
+libinput
+libxkbcommon
+linux-headers make
+meson make
+pixman
+pkgconf make
+wayland
+wayland-protocols make

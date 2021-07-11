@@ -1,0 +1,41 @@
+#!/bin/sh -e
+
+patch -p1 < no-evdev.patch
+
+# Remove conflict between static libseat and wlroots.
+sed 's/\(const long NSEC\)/static \1/' \
+    subprojects/seatd/common/log.c > _
+mv -f _ subprojects/seatd/common/log.c
+
+# Default background color.
+sed 's/0.25f, 0.25f, 0.25f/0.929, 0.870, 0.678/' \
+    sway/desktop/render.c > _
+mv -f _ sway/desktop/render.c
+
+export DESTDIR="$1"
+export CFLAGS="$CFLAGS -Wno-unused-function -Wno-error"
+
+meson \
+    --prefix=/usr \
+    -Dexamples=false \
+    -Dxwayland=disabled \
+    -Dx11-backend=disabled \
+    -Dxcb-errors=disabled \
+    -Dxcb-icccm=disabled \
+    -Dwlroots:examples=false \
+    -Dwlroots:xcb-errors=disabled \
+    -Dwlroots:x11-backend=disabled \
+    -Dwlroots:default_library=static \
+    -Dseatd:builtin=enabled \
+    -Dseatd:default_library=static \
+    --force-fallback-for=wlroots,seatd \
+    . build
+
+ninja -C build
+
+mkdir -p \
+    "$1/usr/bin" \
+    "$1/etc/sway"
+
+cp -f build/sway/sway "$1/usr/bin"
+cp -f config.in "$1/etc/sway/config"

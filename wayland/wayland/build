@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --disable-documentation \
+    --disable-dtd-validation \
+    --enable-static
+
+make
+make DESTDIR="$1" install

@@ -1,9 +1,0 @@
-libXScrnSaver
-libXcursor
-libXinerama
-libXrandr
-libXtst
-linux-headers make
-meson         make
-pkgconf       make
-xorg-server

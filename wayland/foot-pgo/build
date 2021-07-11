@@ -1,0 +1,77 @@
+#!/bin/sh -e
+
+[ "$WAYLAND_DISPLAY" ] || {
+    printf 'error: foot-pgo requires a running wayland session\n' >&2
+    exit 1
+}
+
+export DESTDIR="$1"
+
+# Avoid scdoc dependency.
+sed "/subdir('doc')/d" meson.build > _
+mv -f _ meson.build
+
+# PGO with < -O3 is slow > GCC 10.1.X.
+export CFLAGS="$CFLAGS -O3"
+
+# Clang requires this for PGO.
+case $("${CC:-cc}" --version) in *clang*)
+    export CFLAGS="$CFLAGS -Wno-ignored-optimization-argument"
+esac
+
+mkdir -p bld/release
+cd bld/release
+
+meson \
+    --prefix=/usr \
+    --buildtype=release \
+    --force-fallback-for=fcft,tllist \
+    -Db_lto=true \
+    ../..
+
+# Generate PGO data.
+{
+    meson configure \
+        -Db_pgo=generate \
+
+    ninja
+    ninja test
+
+    # Required (gives some profiling data).
+    ./footclient --version
+
+    set -- \
+        "$OLDPWD/scripts/generate-alt-random-writes.py" \
+        --scroll \
+        --scroll-region \
+        --colors-regular \
+        --colors-bright \
+        --colors-256 \
+        --colors-rgb \
+        --attr-bold \
+        --attr-italic \
+        --attr-underline \
+        --sixel \
+        .pgotmp
+
+    ./foot \
+        --config=/dev/null \
+        --term=xterm \
+        sh -c "$* && cat .pgotmp"
+}
+
+# Clang requires this for PGO.
+case $("${CC:-cc}" --version) in *clang*)
+    llvm-profdata merge default_*profraw --output=default.profdata
+esac
+
+meson configure -Db_pgo=use
+
+ninja
+ninja install
+
+rm -rf \
+    "$DESTDIR/usr/share/doc" \
+    "$DESTDIR/usr/share/zsh" \
+    "$DESTDIR/usr/share/fish" \
+    "$DESTDIR/usr/share/bash-completion"

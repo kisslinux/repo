@@ -2,8 +2,6 @@ fontconfig
 glib
 libffi
 libpng
-libXext
-libXrender
 mesa
 pixman
 pkgconf make
