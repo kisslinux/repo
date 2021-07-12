@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+# Build with CC for clang compatibility.
+# If CC is unset, GCC is forced.
+export CC="${CC:-cc}"
+
 ./Configure \
     --prefix=/usr \
     --openssldir=/etc/ssl \
@@ -9,7 +13,7 @@
     linux-x86_64
 
 make depend
-make
+make V=1
 
 make DESTDIR="$1" \
     install_sw \
