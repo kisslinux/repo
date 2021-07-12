@@ -16,6 +16,11 @@ for pkg in mtdev evdev; do (
     make DESTDIR="$OLDPWD" install
 ) done
 
+# Build fails with clang due to -Werror (forced on) and
+# -Wunused-command-line-argument which is triggered by.
+# the below CFLAGS.
+export CFLAGS="-Wno-unused-command-line-argument $CFLAGS"
+
 export PKG_CONFIG_PATH="$PWD/usr/lib/pkgconfig"
 export CFLAGS="$CFLAGS -I$PWD/usr/include -L$PWD/usr/lib"
 export CFLAGS="$CFLAGS -I$PWD/usr/include/libevdev-1.0"
