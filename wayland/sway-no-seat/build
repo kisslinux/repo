@@ -3,6 +3,10 @@
 patch -p1 < sway-static.patch
 patch -p1 < no-evdev.patch
 
+# Build fails in subprojects/seatd with clang
+# due to -Werror -> -Wsign-compare.
+export CFLAGS="-Wno-error $CFLAGS"
+
 # Remove conflict between static libseat and wlroots.
 sed 's/\(const long NSEC\)/static \1/' \
     subprojects/seatd/common/log.c > _
