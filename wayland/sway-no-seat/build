@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+export CFLAGS="$CFLAGS -Wno-error"
+
 patch -p1 < sway-static.patch
 patch -p1 < no-evdev.patch
 
