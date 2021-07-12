@@ -4,6 +4,11 @@ patch -p1 < evdev-wrap.patch
 
 export CFLAGS="$CFLAGS -fPIC"
 
+# Clang reports error because of -Werror, using the CFLAGS below since
+# in some cases, it's unused. Force -Wno-error in this case.
+sed 's/Werror-Wno-error/' meson.build > _
+mv -f _ meson.build
+
 for pkg in mtdev evdev; do (
     cd "$pkg"
 
