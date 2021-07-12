@@ -16,6 +16,7 @@ mv -f _ lib/Makefile.in
     --prefix=/usr \
     --disable-symbol-versioning \
     --disable-debuginfod \
+    --disable-libdebuginfod \
     --disable-nls \
     ac_cv_c99=yes # Override check for Clang.
 
@@ -23,6 +24,7 @@ mv -f _ lib/Makefile.in
 make -C lib
 make -C libelf
 make -C libelf DESTDIR="$1" install
+make -C doc    DESTDIR="$1" install-man3
 
 mkdir -p "$1/usr/lib/pkgconfig"
 cp -f config/libelf.pc "$1/usr/lib/pkgconfig/libelf.pc"
