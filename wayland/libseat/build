@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 export DESTDIR="$1"
+export CFLAGS="$CFLAGS -Wno-error"
 
 meson \
     --prefix=/usr \
