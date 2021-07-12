@@ -1,0 +1,65 @@
+diff --git a/coreutils/test.c b/coreutils/test.c
+index 7c65743..ac0ac4e 100644
+--- a/coreutils/test.c
++++ b/coreutils/test.c
+@@ -435,7 +435,7 @@ struct test_statics {
+ };
+ 
+ /* See test_ptr_hack.c */
+-extern struct test_statics *const test_ptr_to_statics;
++extern struct test_statics *test_ptr_to_statics;
+ 
+ #define S (*test_ptr_to_statics)
+ #define args            (S.args         )
+diff --git a/include/libbb.h b/include/libbb.h
+index cae5465..adbf4b8 100644
+--- a/include/libbb.h
++++ b/include/libbb.h
+@@ -342,7 +342,7 @@ struct BUG_off_t_size_is_misdetected {
+ #if defined(errno)
+ /* If errno is a define, assume it's "define errno (*__errno_location())"
+  * and we will cache it's result in this variable */
+-extern int *const bb_errno;
++extern int *bb_errno;
+ #undef errno
+ #define errno (*bb_errno)
+ #define bb_cached_errno_ptr 1
+@@ -2228,7 +2228,7 @@ struct globals;
+ /* '*const' ptr makes gcc optimize code much better.
+  * Magic prevents ptr_to_globals from going into rodata.
+  * If you want to assign a value, use SET_PTR_TO_GLOBALS(x) */
+-extern struct globals *const ptr_to_globals;
++extern struct globals *ptr_to_globals;
+ 
+ #if defined(__clang_major__) && __clang_major__ >= 9
+ /* Clang/llvm drops assignment to "constant" storage. Silently.
+diff --git a/libbb/lineedit.c b/libbb/lineedit.c
+index 75de88e..78ad893 100644
+--- a/libbb/lineedit.c
++++ b/libbb/lineedit.c
+@@ -192,7 +192,7 @@ struct lineedit_statics {
+ };
+ 
+ /* See lineedit_ptr_hack.c */
+-extern struct lineedit_statics *const lineedit_ptr_to_statics;
++extern struct lineedit_statics * lineedit_ptr_to_statics;
+ 
+ #define S (*lineedit_ptr_to_statics)
+ #define state            (S.state           )
+diff --git a/shell/ash.c b/shell/ash.c
+index f16d7fb..0eff957 100644
+--- a/shell/ash.c
++++ b/shell/ash.c
+@@ -300,10 +300,9 @@ typedef long arith_t;
+  * set "-DBB_GLOBAL_CONST=''" in CONFIG_EXTRA_CFLAGS to disable
+  * this optimization.
+  */
+-#ifndef BB_GLOBAL_CONST
+-# define BB_GLOBAL_CONST const
+-#endif
+ 
++#undef BB_GLOBAL_CONST
++#define BB_GLOBAL_CONST
+ 
+ /* ============ Hash table sizes. Configurable. */
+ 
