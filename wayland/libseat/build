@@ -2,6 +2,10 @@
 
 export DESTDIR="$1"
 
+# Build fails in with clang due to
+# -Werror -> -Wsign-compare.
+export CFLAGS="-Wno-error $CFLAGS"
+
 meson \
     --prefix=/usr \
     -Ddefault_library=both \
