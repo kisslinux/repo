@@ -38,4 +38,8 @@ meson \
 ninja -C build
 meson install -C build --skip-subprojects
 
-rm -rf "${1:?}/usr/share"
+rm -rf \
+    "$1/usr/share/fish" \
+    "$1/usr/share/bash-completion" \
+    "$1/usr/share/backgrounds" \
+    "$1/usr/share/zsh"
