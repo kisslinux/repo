@@ -5,19 +5,10 @@
 
 mkdir -p "$1/usr/share/man"
 
-# The sources are set out as follows.
-#
-# 1. user commands (intro, plus a few other pages)
-# 2. system calls
-# 3. libc calls
-# 4. devices (e.g., hd, sd)
-# 5. file formats and configuration files (e.g., wtmp, /etc/passwd)
-# 6. games (intro only)
-# 7. overviews, conventions, macro packages, etc.
-# 8. system administration (intro, plus a few other pages)
-#
-# Manual pages which relate to glibc or are otherwise provided by
-# other packages (tzdata, etc) are excluded.
+for i in 0p 1p 3p; do
+    cp -Rf "posix/man$i" "$1/usr/share/man/man${i%%p}"
+done
+
 for i in 2 4 5 7; do
     cp -Rf "man$i" "$1/usr/share/man"
 done
