@@ -9,9 +9,13 @@ sed -e "s#= g[c+][c+]#= ${CC:=cc}#g" \
     -e "s#\(\$(CROSS_COMPILE)\)gcc#\1${CC}#g" Makefile > _
 mv -f _ Makefile
 
-# Ensure that busybox's build system is aware that 'cc' may point
-# to clang rather than GCC. This is the case in non-GCC systems.
-case $("$CC" --version) in (*clang*)
+case $("$CC" --version) in *clang*)
+    # Disable UB based optimizations which are optimized out by
+    # clang and become null pointer dereferences(?).
+    patch -p1 < patch-clang/fix-UB.patch
+
+    # Ensure that busybox's build system is aware that 'cc' may point
+    # to clang rather than GCC. This is the case in non-GCC systems.
     sed "s&\(\$(CC),\)clang&\1${CC}&g" Makefile.flags > _
     mv -f _ Makefile.flags
 esac
