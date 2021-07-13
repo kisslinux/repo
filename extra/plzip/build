@@ -5,6 +5,10 @@
 # compile plzip.
 (cd lzlib; ./configure; make)
 
+case "$(${CC:-cc} -print-file-name=libc++.a)" in
+    /usr/bin*) CXXFLAGS="$CXXFLAGS -lunwind -lc++abi"
+esac
+
 ./configure \
     --prefix=/usr \
     CXXFLAGS="$CXXFLAGS -static -L$PWD/lzlib -I$PWD/lzlib"
