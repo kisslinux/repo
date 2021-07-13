@@ -5,7 +5,9 @@ chmod g+s        "$KISS_ROOT/usr/bin/sway"
 
 cat <<EOF
 
-NOTE: You must be in the 'video' group.
+NOTE: You must be in the 'video', 'audio', and 'tty' 
+      groups. There is no 'input' group requirement 
+      as this sway binary is setgid input.
 
 NOTE: You must set XDG_RUNTIME_DIR in your shellrc
       or .profile for things to work. This directory
