@@ -4,6 +4,7 @@ json-c
 libinput
 libxkbcommon
 linux-headers make
+mesa
 meson make
 pango
 pcre
