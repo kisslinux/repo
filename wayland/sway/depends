@@ -5,6 +5,7 @@ libinput
 libseat
 libxkbcommon
 linux-headers make
+mesa
 meson make
 pango
 pcre
