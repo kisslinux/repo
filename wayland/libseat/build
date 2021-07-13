@@ -13,3 +13,8 @@ meson \
 
 ninja -C build
 ninja -C build install
+
+# Install runit service.
+mkdir -p "$1/etc/sv/seatd"
+cp -f seatd.run "$1/etc/sv/seatd/run"
+ln -sf /run/runit/supervise.seatd "$1/etc/sv/seatd/supervise"
