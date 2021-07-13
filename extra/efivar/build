@@ -9,6 +9,7 @@ mv -f _ src/include/defaults.mk
 # Avoid repeating ourselves.
 mk() {
     make \
+        -j1 \
         libdir=/usr/lib/ \
         bindir=/usr/bin/ \
         mandir=/usr/share/man/ \
