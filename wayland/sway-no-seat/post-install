@@ -13,4 +13,11 @@ NOTE: You must set XDG_RUNTIME_DIR in your shellrc
 
       export XDG_RUNTIME_DIR=/run/user/\$(id -u)
 
+NOTE: You must be the first to call DRMSetMaster.
+
+      If you cannot fulfil this requirement, you must
+      use the 'sway' package and run the 'seatd' daemon.
+
+      Another option is to setuid root the sway binary.
+
 EOF
