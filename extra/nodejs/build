@@ -1,6 +1,13 @@
 #!/bin/sh -e
 
-./configure \
+[ -r /usr/lib/libatomic.so ] || (
+    sed "s/\\'libraries\\'\\: \\[\\'-latomic\\'\\],/#/g" node.gyp > _
+    mv -f _ node.gyp
+)
+
+CC="${CC:-cc}" CXX="${CXX:-c++}" \
+    ./configure \
+    --prefix=/usr \
     --shared-zlib \
     --shared-openssl \
     --with-intl=none \
@@ -9,7 +16,6 @@
     --without-report \
     --without-node-snapshot \
     --without-node-code-cache \
-    --partly-static \
     --ninja
 
 ninja -C out/Release
