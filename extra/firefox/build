@@ -50,6 +50,11 @@ export MACH_USE_SYSTEM_PYTHON=1
 export MOZ_DEBUG_FLAGS=-g0
 export MOZ_NOSPAM=1
 
+# If using libc++, CXXSTDLIB will need to be set manually.
+case "$(${CC:-cc} -print-file-name=libc++.so)" in /usr/bin*)
+    export CXXSTDLIB=c++
+esac
+
 cat > .mozconfig << EOF
 ac_add_options --enable-default-toolkit=cairo-gtk3-wayland
 ac_add_options --prefix=/usr
