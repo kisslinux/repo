@@ -5,8 +5,6 @@
     exit 1
 }
 
-export DESTDIR="$1"
-
 # Avoid scdoc dependency.
 sed "/subdir('doc')/d" meson.build > _
 mv -f _ meson.build
