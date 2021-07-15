@@ -24,6 +24,6 @@ EOF
     ac_cv_fread_reads_directories=yes
 
 make LIBS="$(curl-config --static-libs) libgit.a xdiff/lib.a -lz"
-make DESTDIR="$1" install
+make install
 
 cp -Rf man "$1/usr/share/man"
