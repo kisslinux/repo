@@ -1,4 +1,4 @@
-https://busybox.net/downloads/busybox-1.33.1.tar.bz2
+https://busybox.net/downloads/busybox-VERSION.tar.bz2
 patches/adduser-no-setgid.patch patch
 patches/fsck-resolve-uuid.patch patch
 patches/modprobe-kernel-version.patch patch

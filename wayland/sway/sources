@@ -1,2 +1,2 @@
-https://github.com/swaywm/sway/releases/download/1.6.1/sway-1.6.1.tar.gz
+https://github.com/swaywm/sway/releases/download/VERSION/sway-VERSION.tar.gz
 patches/no-evdev.patch
