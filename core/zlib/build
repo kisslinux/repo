@@ -8,4 +8,4 @@ export CFLAGS="$CFLAGS -fPIC"
     --shared
 
 make
-make DESTDIR="$1" install
+make install
