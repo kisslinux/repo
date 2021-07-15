@@ -19,4 +19,4 @@
     --without-zstd
 
 make curl_LDFLAGS=-all-static
-make DESTDIR="$1" install
+make install
