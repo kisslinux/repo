@@ -4,8 +4,6 @@
 sed "/subdir('doc')/d" meson.build > _
 mv -f _ meson.build
 
-export DESTDIR="$1"
-
 meson \
     --prefix=/usr \
     --buildtype=release \
