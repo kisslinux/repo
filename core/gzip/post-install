@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+cat <<EOF
+
 NOTE: The gzip package will be removed 22/07/2021
       and replaced with pigz. Run the following
       to transition before the deadline.
@@ -9,3 +11,4 @@ NOTE: The gzip package will be removed 22/07/2021
       kiss a | grep ^pigz | kiss a -
       kiss r gzip
 
+EOF
