@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+mkdir -p "$1/usr/share/fonts/TTF/croscore"
+
+cp -f ./*.ttf "$1/usr/share/fonts/TTF/croscore"
