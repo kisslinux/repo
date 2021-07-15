@@ -3,3 +3,5 @@
 mkdir -p "$1/usr/share/fonts/TTF/croscore"
 
 cp -f ./*.ttf "$1/usr/share/fonts/TTF/croscore"
+
+chmod 644 "$1/usr/share/fonts/TTF/croscore/"*.ttf
