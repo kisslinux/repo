@@ -43,7 +43,7 @@ cp -f grub.default "$1/etc/default/grub"
 
 # Remove gdb debugging files.
 (
-    cd "$pkg_dir/usr/lib"
+    cd "$1/usr/lib"
 
     rm -f grub/*/*.module
     rm -f grub/*/*.image
