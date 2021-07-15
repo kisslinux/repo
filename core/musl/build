@@ -10,7 +10,7 @@
 #   --enable-debug
 
 make
-make DESTDIR="$1" install
+make install
 
 mkdir -p "$1/usr/bin"
 ln -s  /usr/lib/ld-musl-x86_64.so.1 "$1/usr/bin/ldd"
