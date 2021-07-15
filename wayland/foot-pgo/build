@@ -59,7 +59,7 @@ meson \
 }
 
 # Clang requires this for PGO.
-case $("${CC:-cc}" --version) in *clang*)
+case $("$CC" --version) in *clang*)
     llvm-profdata merge default_*profraw --output=default.profdata
 esac
 
