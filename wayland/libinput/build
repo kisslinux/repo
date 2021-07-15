@@ -24,7 +24,6 @@ export CFLAGS="-Wno-unused-command-line-argument $CFLAGS"
 export PKG_CONFIG_PATH="$PWD/usr/lib/pkgconfig"
 export CFLAGS="$CFLAGS -I$PWD/usr/include -L$PWD/usr/lib"
 export CFLAGS="$CFLAGS -I$PWD/usr/include/libevdev-1.0"
-export DESTDIR="$1"
 
 meson \
     --prefix=/usr \
