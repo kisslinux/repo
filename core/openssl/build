@@ -1,9 +1,5 @@
 #!/bin/sh -e
 
-# Build with CC for clang compatibility.
-# If CC is unset, GCC is forced.
-export CC="${CC:-cc}"
-
 ./Configure \
     --prefix=/usr \
     --openssldir=/etc/ssl \
@@ -13,12 +9,8 @@ export CC="${CC:-cc}"
     linux-x86_64
 
 make depend
-make V=1
-
-make DESTDIR="$1" \
-    install_sw \
-    install_ssldirs \
-    install_man_docs
+make
+make DESTDIR="$1" install_sw install_ssldirs install_man_docs
 
 cp -f update-certdata.sh "$1/etc/ssl"
 
@@ -31,5 +23,5 @@ cp -f update-certdata.sh "$1/etc/ssl"
         --with-openssl="$1/usr"
 
     make
-    make DESTDIR="$1" install
+    make install
 )
