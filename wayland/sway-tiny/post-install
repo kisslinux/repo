@@ -27,10 +27,10 @@ NOTE: sway-tiny does not spawn a subshell for exec
       path to the program you would like to execute.
 
       # Will not work.
-      bindsym $mod+t exec foot
+      bindsym \$mod+t exec foot
 
       # Works.
-      bindsym $mod+t exec /bin/foot
+      bindsym \$mod+t exec /bin/foot
 
 NOTE: This is a fork of sway for KISS Linux. Send all
       bugs/issues to kisslinux/repo and NOT upstream.
