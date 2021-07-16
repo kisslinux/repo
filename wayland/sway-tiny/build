@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-sh >/dev/tty
-
 patch -p1 < no-evdev.patch
 
 # Remove conflict between static libseat and wlroots.
