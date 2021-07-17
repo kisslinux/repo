@@ -11,4 +11,4 @@ mv -f _ Makefile.in
     --enable-compat-symlinks
 
 make
-make DESTDIR="$1" install
+make install
