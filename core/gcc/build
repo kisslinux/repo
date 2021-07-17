@@ -58,7 +58,7 @@ export libat_cv_have_ifunc=no
     "${bootstrap:---enable-bootstrap}"
 
 make
-make DESTDIR="$1" install
+make install
 
 # Save 35MB.
 find "$1" -name libgtkpeer.a  -exec rm -f {} +
