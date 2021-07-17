@@ -8,7 +8,7 @@
     --libexecdir=/usr/lib/dhcpcd
 
 make
-make DESTDIR="$1" install
+make install
 
 # Install runit service.
 mkdir -p "$1/etc/sv/dhcpcd"
