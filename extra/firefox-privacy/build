@@ -4,6 +4,6 @@ mkdir -p \
     "$1/usr/lib/firefox/browser/defaults/preferences" \
     "$1/usr/lib/firefox/distribution"
 
-cp -f vendor-*.js     "$1/usr/lib/firefox/browser/defaults/preferences"
-cp -f policies-*.json "$1/usr/lib/firefox/distribution"
+cp -f vendor.js     "$1/usr/lib/firefox/browser/defaults/preferences"
+cp -f policies.json "$1/usr/lib/firefox/distribution"
 

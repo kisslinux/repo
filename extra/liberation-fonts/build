@@ -1,4 +1,0 @@
-#!/bin/sh -e
-
-mkdir -p   "$1/usr/share/fonts/TTF"
-cp ./*.ttf "$1/usr/share/fonts/TTF"

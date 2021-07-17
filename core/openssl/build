@@ -10,7 +10,11 @@
 
 make depend
 make
-make DESTDIR="$1" install_sw install_ssldirs install_man_docs
+
+make DESTDIR="$1" \
+    install_sw \
+    install_ssldirs \
+    install_man_docs
 
 cp -f update-certdata.sh "$1/etc/ssl"
 

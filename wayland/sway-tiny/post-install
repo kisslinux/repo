@@ -5,8 +5,8 @@ chmod g+s        "$KISS_ROOT/usr/bin/sway"
 
 cat <<EOF
 
-NOTE: You must be in the 'video', 'audio', and 'tty' 
-      groups. There is no 'input' group requirement 
+NOTE: You must be in the 'video', 'audio', and 'tty'
+      groups. There is no 'input' group requirement
       as this sway binary is setgid input.
 
 NOTE: You must set XDG_RUNTIME_DIR in your shellrc
@@ -21,6 +21,16 @@ NOTE: You must be the first to call DRMSetMaster.
       use the 'sway' package and run the 'seatd' daemon.
 
       Another option is to setuid root the sway binary.
+
+NOTE: sway-tiny does not spawn a subshell for exec
+      commands, it executes them directly. Use the full
+      path to the program you would like to execute.
+
+      # Will not work.
+      bindsym \$mod+t exec foot
+
+      # Works.
+      bindsym \$mod+t exec /bin/foot
 
 NOTE: This is a fork of sway for KISS Linux. Send all
       bugs/issues to kisslinux/repo and NOT upstream.

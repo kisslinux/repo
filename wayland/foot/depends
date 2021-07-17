@@ -1,5 +1,6 @@
 fontconfig
 libxkbcommon
+meson   make
 ncurses make
 pkgconf make
 python  make
