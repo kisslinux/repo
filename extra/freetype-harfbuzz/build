@@ -10,7 +10,7 @@ build_freetype() (
         --with-harfbuzz="$2"
 
     make
-    make DESTDIR="$1" install
+    make install
 )
 
 build_harfbuzz() (
@@ -18,7 +18,6 @@ build_harfbuzz() (
     export CFLAGS="$CFLAGS -I$1/usr/include/freetype2"
     export CXXFLAGS="$CXXFLAGS -I$1/usr/include/freetype2"
     export LDFLAGS="$LDFLAGS -L$1/usr/lib"
-    export DESTDIR="$1"
 
     cd harfbuzz
 
