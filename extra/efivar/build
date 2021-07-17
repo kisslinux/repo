@@ -17,5 +17,5 @@ mk() {
         "$@"
 }
 
-mk CC="${CC:-cc}"
-mk DESTDIR="$1" install
+mk COMPILER=$CC
+mk install
