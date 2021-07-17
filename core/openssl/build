@@ -13,7 +13,7 @@ export CC="${CC:-cc}"
     linux-x86_64
 
 make depend
-make V=1
+make
 
 make DESTDIR="$1" \
     install_sw \
