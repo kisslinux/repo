@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 make PREFIX=/usr
-make PREFIX=/usr DESTDIR="$1" install
+make PREFIX=/usr install
 
 ln -sf samu   "$1/usr/bin/ninja"
 ln -sf samu.1 "$1/usr/share/man/man1/ninja.1"
