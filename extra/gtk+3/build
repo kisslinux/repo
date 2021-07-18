@@ -17,8 +17,6 @@ patch -p1 < schemas.patch
         -Dintrospection=false \
         . output
 
-    export DESTDIR="$1"
-
     ninja -C output
     ninja -C output install
 )
@@ -57,7 +55,7 @@ mv -f _ Makefile.in
     --enable-gtk-doc-html=no
 
 make
-make DESTDIR="$1" install
+make install
 
 # We don't compile with librsvg which leads to this
 # utility solely causing compiler errors for some
