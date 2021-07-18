@@ -15,4 +15,4 @@ chmod +x configure
     --enable-fontconfig
 
 make
-make DESTDIR="$1" install
+make install
