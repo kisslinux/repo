@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-export DESTDIR="$1"
-
 sed "/subdir('tests')/d" meson.build > _
 mv -f _ meson.build
 
