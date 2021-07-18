@@ -5,4 +5,4 @@
     --disable-mpers
 
 make
-make DESTDIR="$1" install
+make install
