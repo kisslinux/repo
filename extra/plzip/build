@@ -6,7 +6,7 @@
 (cd lzlib; ./configure; make)
 
 # Fix build in libc++ environment.
-case $("${CC:-cc}" -print-file-name=libc++.a) in */*)
+case $("$CC" -print-file-name=libc++.a) in */*)
     CXXFLAGS="$CXXFLAGS -lunwind -lc++abi"
 esac
 
