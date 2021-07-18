@@ -17,5 +17,5 @@ mk() {
         "$@"
 }
 
-mk COMPILER=$CC
+mk COMPILER="$CC"
 mk install
