@@ -4,12 +4,7 @@
     --prefix=/usr
 
 make -C src
+make -C include install
+make -C src     install
 
-# Install library and headers.
-make -C include DESTDIR="$1" install
-make -C src     DESTDIR="$1" install
-
-# Install m4 and pkg-config data.
-make DESTDIR="$1" \
-    install-m4dataDATA \
-    install-pkgconfigDATA
+make install-m4dataDATA install-pkgconfigDATA
