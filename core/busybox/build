@@ -22,7 +22,7 @@ esac
 
 # Build and install regular busybox.
 # This excludes utilities which require 'suid' to function.
-make V=1 HOSTCC="$CC"
+make HOSTCC="$CC"
 make CONFIG_PREFIX="$1/usr" install
 
 # Rename the binary temporarily.
