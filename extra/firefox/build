@@ -103,7 +103,7 @@ ac_add_options --disable-webrtc
 EOF
 
 ./mach build
-DESTDIR="$1" ./mach install
+./mach install
 
 # Remove a lot of uneeded "stuff".
 rm -rf \
