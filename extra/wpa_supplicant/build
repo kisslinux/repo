@@ -12,7 +12,7 @@ export CFLAGS="$CFLAGS -static -D_GNU_SOURCE -DLIBNL1_COMPAT"
 
 cd wpa_supplicant
 
-make V=1 LIBDIR=/usr/lib BINDIR=/usr/bin DRV_LIBS="$CFLAGS"
+make LIBDIR=/usr/lib BINDIR=/usr/bin DRV_LIBS="$CFLAGS"
 make LIBDIR=/usr/lib BINDIR=/usr/bin install
 
 mkdir -p \
