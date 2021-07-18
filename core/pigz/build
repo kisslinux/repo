@@ -1,4 +1,7 @@
 #!/bin/sh -ef
+#
+# Intentional, globbing disabled.
+# shellcheck disable=2086
 
 set -- pigz.o yarn.o try.o
 
