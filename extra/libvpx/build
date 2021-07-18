@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-export CC=${CC:-cc} CXX=${CXX:-c++}
-
 # Remove the perl requirement from configure.
 # Also fix issue with non-GNU diff.
 sed 's/perl/:/g;s/diff --version/command -v diff/' configure > _
@@ -28,4 +26,4 @@ chmod +x configure
     --as=nasm
 
 make
-make DESTDIR="$1" install
+make install
