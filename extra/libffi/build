@@ -6,7 +6,7 @@
     --with-pic
 
 make
-make DESTDIR="$1" install
+make install
 
 # Maintain compatibility and avoid the need
 # for rebuilds of all packages linking to
