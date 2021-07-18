@@ -8,7 +8,7 @@ sed 's,"more -s","less",g' main.c > _
 mv -f _ main.c
 
 # Use CC rather than broken default.
-sed "s/CC=.*/CC=${CC:-cc}/" configure > _
+sed "s/CC=.*/CC=$CC/" configure > _
 mv -f _ configure
 chmod +x configure
 
@@ -17,7 +17,6 @@ PREFIX=/usr
 MANDIR=/usr/share/man
 LIBDIR=/usr/lib
 SBINDIR=/usr/bin
-CC="${CC:-cc}"
 CFLAGS="$CFLAGS -fcommon"
 LN="ln -sf"
 EOF
@@ -25,4 +24,4 @@ EOF
 ./configure
 
 make
-make -j1 DESTDIR="$1" base-install
+make -j1 base-install
