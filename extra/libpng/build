@@ -6,4 +6,4 @@ patch -p1 < libpng-1.6.37-apng.patch
     --prefix=/usr
 
 make
-make DESTDIR="$1" install
+make install
