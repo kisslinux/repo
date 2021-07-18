@@ -11,7 +11,7 @@ mv -f _ GNUmakefile
     --without-pam
 
 make
-make DESTDIR="$1" install
+make install
 
 mkdir -p "$1/etc"
 cp -f doas.conf "$1/etc"
