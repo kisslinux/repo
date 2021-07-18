@@ -15,7 +15,7 @@ esac
     CXXFLAGS="$CXXFLAGS -static -L$PWD/lzlib -I$PWD/lzlib"
 
 make
-make DESTDIR="$1" install
+make install
 
 # Create the symlink for compatibility. We're using
 # a multi-threaded implementation of lzip.
