@@ -16,7 +16,7 @@ index b4b5bc45..27703128 100644
 +++ b/sway/commands/bar/bind.c
 @@ -1,4 +1,4 @@
 -#include <libevdev/libevdev.h>
-+#include <linux/input-event-codes.h>
++#include <linux/input.h>
  #include <stdlib.h>
  #include <string.h>
  #include <strings.h>
@@ -36,7 +36,7 @@ index 6b331419..039f5335 100644
 +++ b/sway/commands/input/scroll_button.c
 @@ -1,4 +1,4 @@
 -#include <libevdev/libevdev.h>
-+#include <linux/input-event-codes.h>
++#include <linux/input.h>
  #include "sway/config.h"
  #include "sway/commands.h"
  #include "sway/input/cursor.h"
@@ -73,7 +73,7 @@ index 95edf7be..99df15f9 100644
  				code, event ? event : "(null)") + 1;
 @@ -1251,7 +1251,7 @@ uint32_t get_mouse_button(const char *name, char **error) {
  }
- 
+
  const char *get_mouse_button_name(uint32_t button) {
 -	const char *name = libevdev_event_code_get_name(EV_KEY, button);
 +	const char *name = libinput_event_code_get_name(EV_KEY, button);
@@ -88,7 +88,7 @@ index f9eb8c8a..681ca263 100644
  #define _POSIX_C_SOURCE 200809L
  #include <float.h>
 -#include <libevdev/libevdev.h>
-+#include <linux/input-event-codes.h>
++#include <linux/input.h>
  #include <wlr/types/wlr_cursor.h>
  #include <wlr/types/wlr_tablet_v2.h>
  #include <wlr/types/wlr_xcursor_manager.h>
@@ -101,7 +101,7 @@ index 2c0cf3e2..839e6ae0 100644
  #include <json.h>
  #endif
 -#include <libevdev/libevdev.h>
-+#include <linux/input-event-codes.h>
++#include <linux/input.h>
  #include <stdio.h>
  #include <wlr/backend/libinput.h>
  #include <wlr/types/wlr_output.h>
@@ -110,7 +110,7 @@ index 4b1894ad..b1529156 100644
 --- a/sway/meson.build
 +++ b/sway/meson.build
 @@ -205,7 +205,6 @@ sway_sources = files(
- 
+
  sway_deps = [
  	drm,
 -	libevdev,
