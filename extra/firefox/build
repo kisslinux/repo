@@ -40,7 +40,7 @@ mv -f _ "$_f"
 export PATH="$PWD/junk/bin:$PATH"
 
 # If using libc++, CXXSTDLIB needs to be set manually.
-case $("${CC:-cc}" -print-file-name=libc++.so) in */*)
+case $("$CC" -print-file-name=libc++.so) in */*)
     export CXXSTDLIB=c++
 esac
 
