@@ -3,8 +3,6 @@
 patch -p1 < cmake-no-execinfo.patch
 
 if kiss l cmake; then
-    export DESTDIR="$1"
-
     cmake -B build \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_BUILD_TYPE=Release \
@@ -26,7 +24,7 @@ else
         --system-bzip2
 
     make
-    make DESTDIR="$1" install
+    make install
 fi
 
 rm -rf \
