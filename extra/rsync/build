@@ -16,4 +16,4 @@ export CFLAGS="-static $CFLAGS"
     --without-included-zlib
 
 make
-make DESTDIR="$1" install
+make install

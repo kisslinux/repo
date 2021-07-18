@@ -5,4 +5,4 @@
     --disable-gtk
 
 make
-make DESTDIR="$1" install
+make install

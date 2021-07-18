@@ -5,7 +5,7 @@
     --sysconfdir=/etc
 
 make
-make DESTDIR="$1" install
+make install
 
 ln -s pkgconf "$1/usr/bin/pkg-config"
 

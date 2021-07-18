@@ -6,7 +6,7 @@
 (cd lzlib; ./configure; make)
 
 # Fix build in libc++ environment.
-case $("${CC:-cc}" -print-file-name=libc++.a) in */*)
+case $("$CC" -print-file-name=libc++.a) in */*)
     CXXFLAGS="$CXXFLAGS -lunwind -lc++abi"
 esac
 
@@ -15,7 +15,7 @@ esac
     CXXFLAGS="$CXXFLAGS -static -L$PWD/lzlib -I$PWD/lzlib"
 
 make
-make DESTDIR="$1" install
+make install
 
 # Create the symlink for compatibility. We're using
 # a multi-threaded implementation of lzip.

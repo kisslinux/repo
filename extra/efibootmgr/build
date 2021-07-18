@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-make CC="${CC:-cc}" EFIDIR=/boot/EFI efibootmgr
+make EFIDIR=/boot/EFI efibootmgr
 
 mkdir -p \
     "$1/usr/bin" \

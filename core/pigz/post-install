@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+cat <<EOF
+
+The commands zcat, unpigz and gunzip were merely symbolic
+links to the pigz binary. They have been removed. To gain
+them back, create the symlinks (or use an alias or shell
+function).
+
+EOF

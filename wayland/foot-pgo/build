@@ -5,18 +5,20 @@
     exit 1
 }
 
-export DESTDIR="$1"
-
 # Avoid scdoc dependency.
 sed "/subdir('doc')/d" meson.build > _
 mv -f _ meson.build
 
-# PGO with < -O3 is slow > GCC 10.1.X.
-export CFLAGS="$CFLAGS -O3"
+case $("$CC" --version) in
+    *clang*)
+        # Clang requires this for PGO.
+        export CFLAGS="$CFLAGS -Wno-ignored-optimization-argument"
+    ;;
 
-# Clang requires this for PGO.
-case $("${CC:-cc}" --version) in *clang*)
-    export CFLAGS="$CFLAGS -Wno-ignored-optimization-argument"
+    *gcc*)
+        # PGO with < -O3 is slow > GCC 10.1.X.
+        export CFLAGS="$CFLAGS -O3"
+    ;;
 esac
 
 mkdir -p bld/release
@@ -61,7 +63,7 @@ meson \
 }
 
 # Clang requires this for PGO.
-case $("${CC:-cc}" --version) in *clang*)
+case $("$CC" --version) in *clang*)
     llvm-profdata merge default_*profraw --output=default.profdata
 esac
 

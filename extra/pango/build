@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-export DESTDIR="$1"
-
 patch -p1 < no-fribidi.patch
 
 # First substitution disables weird case where build may try to git clone

@@ -40,14 +40,9 @@ mv -f _ "$_f"
 export PATH="$PWD/junk/bin:$PATH"
 
 # If using libc++, CXXSTDLIB needs to be set manually.
-case $("${CC:-cc}" -print-file-name=libc++.so) in */*)
+case $("$CC" -print-file-name=libc++.so) in */*)
     export CXXSTDLIB=c++
 esac
-
-# Bypass 'ccache' as it's totally useless when building
-# Firefox and only slows things down.
-export CC="${CC:-/usr/bin/cc}"
-export CXX="${CXX:-/usr/bin/c++}"
 
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox,--enable-new-dtags"
 export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
@@ -103,7 +98,7 @@ ac_add_options --disable-webrtc
 EOF
 
 ./mach build
-DESTDIR="$1" ./mach install
+./mach install
 
 # Remove a lot of uneeded "stuff".
 rm -rf \

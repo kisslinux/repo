@@ -23,7 +23,7 @@ patch -p1 < python3-always-pip.patch
     --without-doc-strings
 
 make
-make DESTDIR="$1" install
+make install
 
 ln -s python3 "$1/usr/bin/python"
 ln -s pip3    "$1/usr/bin/pip"

@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-export DESTDIR="$1"
-
 # Remove 'libelf' dependency.
 sed 's/HAVE_LIBELF/HAVE_KISS/' gio/meson.build > _
 mv -f _ gio/meson.build

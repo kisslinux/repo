@@ -16,10 +16,7 @@ export LDFLAGS="$LDFLAGS -static"
 
 make
 
-dest=$1
-
 set -- \
-    DESTDIR="$dest" \
     MKDIR_P="mkdir -p" \
     BLKID_MAN="" \
     BLKID_PROG="" \

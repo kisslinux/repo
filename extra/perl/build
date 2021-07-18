@@ -20,10 +20,10 @@ export CFLAGS="$CFLAGS -DNO_POSIX_2008_LOCALE -D_GNU_SOURCE"
     -Dlddlflags="-shared $LDFLAGS" \
     -Dldflags="$LDFLAGS" \
     -Doptimize="-Wall $CFLAGS" \
-    -Dcc="${CC:-cc}" \
-    -Dar="${AR:-ar}" \
-    -Dnm="${NM:-nm}" \
-    -Dranlib="${RANLIB:-ranlib}" \
+    -Dcc="$CC" \
+    -Dar="$AR" \
+    -Dnm="$NM" \
+    -Dranlib="$RANLIB" \
     -Dman1dir=/usr/share/man/man1 \
     -Dman3dir=/usr/share/man/man3 \
     -Dinstallman1dir=/usr/share/man/man1 \
@@ -34,7 +34,7 @@ export CFLAGS="$CFLAGS -DNO_POSIX_2008_LOCALE -D_GNU_SOURCE"
     -Dd_static_inline
 
 make
-make DESTDIR="$1" install
+make install
 
 # Remove all unneeded files.
 find "$1" -name \*.pod       -exec rm -f {} +

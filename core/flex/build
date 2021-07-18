@@ -6,7 +6,7 @@
     ac_cv_func_realloc_0_nonnull=yes
 
 make
-make DESTDIR="$1" install
+make install
 
 ln -s flex "$1/usr/bin/lex"
 

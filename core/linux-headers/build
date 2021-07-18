@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-make HOSTCC="${CC:-cc}" headers
+make HOSTCC="$CC" headers
 
 # The headers require rsync for installation, this command
 # simply does the equivalent using find, mkdir and cp.

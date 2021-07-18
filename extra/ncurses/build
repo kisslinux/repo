@@ -14,7 +14,7 @@
     --without-cxx-binding
 
 make
-make DESTDIR="$1" install
+make install
 
 # Force ncurses to link against wide-character ncurses library.
 for lib in ncurses form panel menu; do

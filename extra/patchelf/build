@@ -4,6 +4,6 @@
     --prefix=/usr
 
 make
-make DESTDIR="$1" install
+make install
 
 rm -rf "$1/usr/share/doc"

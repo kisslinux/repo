@@ -1,8 +1,8 @@
 #!/bin/sh -e
 
 ./configure \
-    --cc="${CC:-cc}" \
-    --cxx="${CXX:-c++}" \
+    --cc="$CC" \
+    --cxx="$CXX" \
     --prefix=/usr \
     --disable-debug \
     --disable-libxml2 \
@@ -30,6 +30,6 @@
     --x86asmexe=nasm \
 
 make
-make DESTDIR="$1" install
+make install
 
 rm -rf "$1/usr/share/ffmpeg/examples"

@@ -18,10 +18,6 @@ done
 CFLAGS=$(printf %s "$CFLAGS"   | sed 's/-march=[^ ]*//g')
 CFLAGS=$(printf %s "$CXXFLAGS" | sed 's/-march=[^ ]*//g')
 
-# Grub is built in a function so the script argument
-# needs to be stored.
-pkg_dir=$1
-
 build_grub() (
     cd "grub-${1##*=}"
 
@@ -36,7 +32,7 @@ build_grub() (
         "$@"
 
     make
-    make DESTDIR="$pkg_dir" install
+    make install
 )
 
 build_grub --with-platform=pc
@@ -47,7 +43,7 @@ cp -f grub.default "$1/etc/default/grub"
 
 # Remove gdb debugging files.
 (
-    cd "$pkg_dir/usr/lib"
+    cd "$1/usr/lib"
 
     rm -f grub/*/*.module
     rm -f grub/*/*.image

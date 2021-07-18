@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-export DESTDIR="$1"
-
 # Build fails in with clang due to
 # -Werror -> -Wsign-compare.
 export CFLAGS="-Wno-error $CFLAGS"

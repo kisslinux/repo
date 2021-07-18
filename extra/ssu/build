@@ -2,7 +2,6 @@
 
 make
 make \
-    DESTDIR="$1" \
     PREFIX=/usr \
     BINOWN="$(id -u)" \
     BINGRP="$(id -g)" \

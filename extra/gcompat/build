@@ -11,7 +11,7 @@ mv -f _ Makefile
 export PKG_CONFIG=/bin/true
 
 make LINKER_PATH=/usr/lib/ld-musl-x86_64.so.1
-make DESTDIR="$1" install
+make install
 
 ln -s ld-linux.so.2 "$1/usr/lib/ld-linux-x86-64.so.2"
 

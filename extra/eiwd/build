@@ -7,7 +7,7 @@
     --disable-dbus
 
 make
-make DESTDIR="$1" install
+make install
 
 # Install runit service.
 install -Dm755 eiwd.run         "$1/etc/sv/eiwd/run"

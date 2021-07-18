@@ -5,8 +5,8 @@ for patch in patch/*.patch; do
 done
 
 # Remove forced gcc/g++ usage so builds work on gcc-less systems.
-sed -e "s#= g[c+][c+]#= ${CC:=cc}#g" \
-    -e "s#\(\$(CROSS_COMPILE)\)gcc#\1${CC}#g" Makefile > _
+sed -e "s#= g[c+][c+]#= $CC#g" \
+    -e "s#\(\$(CROSS_COMPILE)\)gcc#\1$CC#g" Makefile > _
 mv -f _ Makefile
 
 case $("$CC" --version) in *clang*)
@@ -16,13 +16,13 @@ case $("$CC" --version) in *clang*)
 
     # Ensure that busybox's build system is aware that 'cc' may point
     # to clang rather than GCC. This is the case in non-GCC systems.
-    sed "s&\(\$(CC),\)clang&\1${CC}&g" Makefile.flags > _
+    sed "s&\(\$(CC),\)clang&\1$CC&g" Makefile.flags > _
     mv -f _ Makefile.flags
 esac
 
 # Build and install regular busybox.
 # This excludes utilities which require 'suid' to function.
-make CC="$CC" HOSTCC="$CC"
+make HOSTCC="$CC"
 make CONFIG_PREFIX="$1/usr" install
 
 # Rename the binary temporarily.
@@ -31,7 +31,7 @@ mv "$1/usr/bin/busybox" "$1/usr/bin/busybox-nosuid"
 # Build and install suid busybox.
 # This _only_ includes utlities which require 'suid' to function.
 cp -f .config-suid .config
-make CC="$CC" HOSTCC="$CC"
+make HOSTCC="$CC"
 make CONFIG_PREFIX="$1/usr" install
 
 # Aptly name the busybox binaries.
