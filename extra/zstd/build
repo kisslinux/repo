@@ -9,6 +9,5 @@ make \
     HAVE_LZ4=0
 
 make \
-    DESTDIR="$1" \
     PREFIX=/usr \
     install
