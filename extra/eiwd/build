@@ -9,6 +9,8 @@
 make
 make install
 
+cp -f iwd_passphrase "$1/usr/bin"
+
 # Install runit service.
 mkdir -p "$1/etc/sv/eiwd"
 cp -f  eiwd.run                  "$1/etc/sv/eiwd/run"
