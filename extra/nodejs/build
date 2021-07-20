@@ -10,6 +10,9 @@
 
 # Attempt to increase file descriptor limit
 # as build may exhaust default (1024).
+#
+# -n is non-POSIX hence we "attempt".
+# shellcheck disable=2039
 ulimit -n 4096 2>/dev/null || :
 
 ./configure \
