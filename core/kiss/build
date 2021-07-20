@@ -4,21 +4,16 @@ mkdir -p \
     "$1/usr/bin" \
     "$1/usr/share/doc/kiss"
 
-# Install kiss utilities.
 cp -f kiss contrib/* "$1/usr/bin/"
 
-# Install distribution documentation.
-for doc in docs/site/*.txt; do
-    case $doc in
-        README.txt | news.txt | blog.txt | screenshots.txt)
-            # Skip.
-        ;;
+for doc in docs/site/*.txt; do case ${doc%%.txt} in
+    README|news|blog|screenshots)
+        # Skip.
+    ;;
 
-        *)
-            cp -f "$doc" "$1/usr/share/doc/kiss/${doc##*/}"
-        ;;
-    esac
-done
+    *)
+        cp -f "$doc" "$1/usr/share/doc/kiss/${doc##*/}"
+    ;;
+esac done
 
-# Install the Wiki.
 cp -r wiki "$1/usr/share/doc/kiss/wiki"
