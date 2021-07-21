@@ -1,3 +1,23 @@
+diff --git a/tools/cltostr.sh b/tools/cltostr.sh
+index 23b6cc7..3feaafe 100755
+--- a/tools/cltostr.sh
++++ b/tools/cltostr.sh
+@@ -18,7 +18,7 @@ dump() {
+ }
+
+ # Print MD5 hash w/o newline character to not embed the character in the array.
+-hash() {
++_hash() {
+     # md5sum is not standard, so try different platform-specific alternatives.
+     { md5sum "$1" || md5 -q "$1" || digest -a md5 "$1"; } 2>/dev/null |
+         cut -b -32 | tr -d '\n\r'
+@@ -29,5 +29,5 @@ trap 'rm -f "$1.temp"' EXIT
+ sanitize | tee "$1.temp" |
+     dump 'x264_opencl_source' > "$1"
+
+-hash "$1.temp" |
++_hash "$1.temp" |
+     dump 'x264_opencl_source_hash' >> "$1"
 diff --git a/configure b/configure-posix
 index 3cf63e0..1e1fce5 100755
 --- a/configure-posix

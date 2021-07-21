@@ -1,2 +1,2 @@
 https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-VERSION-stable.tar.bz2
-patches/x264-no-bash.patch
+patches/portability.patch

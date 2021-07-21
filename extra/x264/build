@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-patch -p1 < x264-no-bash.patch
+patch -p1 < portability.patch
 
 ./configure \
     --prefix=/usr \
