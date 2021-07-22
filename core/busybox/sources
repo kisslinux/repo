@@ -1,4 +1,4 @@
-https://busybox.net/downloads/busybox-VERSION.tar.bz2
+https://git.busybox.net/busybox/snapshot/busybox-MAJOR_MINOR_PATCH.tar.gz
 patches/adduser-no-setgid.patch patch
 patches/fsck-resolve-uuid.patch patch
 patches/modprobe-kernel-version.patch patch
