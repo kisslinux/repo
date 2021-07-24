@@ -45,6 +45,8 @@ meson \
     --buildtype=release \
     -Dplatforms=wayland \
     -Dglx=disabled \
+    -Degl=enabled \
+    -Dvalgrind=false \
     -Dzstd=false \
     -Dglvnd="${glvnd_enabled:-false}" \
     . output
