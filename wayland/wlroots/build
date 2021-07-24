@@ -6,6 +6,7 @@ meson \
     -Dexamples=false \
     -Dxcb-errors=disabled \
     -Dx11-backend=disabled \
+    -Drenderers=gles2 \
     . build
 
 ninja -C build
