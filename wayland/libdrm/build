@@ -2,6 +2,7 @@
 
 meson \
     --prefix=/usr \
+    -Dvalgrind=false \
     . build
 
 ninja -C build
