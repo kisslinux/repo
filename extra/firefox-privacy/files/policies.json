@@ -1,21 +1,55 @@
 {
     "policies": {
+        "AppAutoUpdate": false,
+        "AppUpdateURL": "http://localhost",
+        "CaptivePortal": false,
         "DisableAppUpdate": true,
-        "DisableFirefoxStudies": true,
-        "DisablePocket": true,
-        "DisableTelemetry": true,
-        "DontCheckDefaultBrowser": true,
         "DisableFeedbackCommands": true,
         "DisableFirefoxAccounts": true,
         "DisableFirefoxScreenshots": true,
         "DisableFirefoxStudies": true,
         "DisableMasterPasswordCreation": true,
+        "DisablePocket": true,
         "DisableSetDesktopBackground": true,
         "DisableSystemAddonUpdate": true,
+        "DisableTelemetry": true,
         "DontCheckDefaultBrowser": true,
         "ExtensionUpdate": false,
         "NetworkPrediction": false,
         "OverridePostUpdatePage": "",
-        "CaptivePortal": false
+
+        "DNSOverHTTPS": {
+            "Enabled": false
+        },
+
+        "EnableTrackingProtection" : {
+            "Value": false
+        },
+
+        "EncryptedMediaExtensions": {
+            "Enabled": false
+        },
+
+        "Permissions": {
+            "Camera": {
+                "BlockNewRequests": true
+            },
+
+            "Microphone": {
+                "BlockNewRequests": true
+            },
+
+            "Location": {
+                "BlockNewRequests": true
+            },
+
+            "Notifications": {
+                "BlockNewRequests": true
+            },
+
+            "Autoplay": {
+                "Default": "block-audio-video"
+            }
+        }
     }
 }
