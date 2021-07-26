@@ -6,7 +6,7 @@ mkdir -p \
 
 cp -f kiss contrib/* "$1/usr/bin/"
 
-for doc in docs/site/*.txt; do case ${doc%%.txt} in
+for doc in docs/site/*.txt doc/*.txt; do case ${doc%%.txt} in
     README|news|blog|screenshots)
         # Skip.
     ;;
