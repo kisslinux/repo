@@ -1,8 +1,6 @@
 #!/bin/sh -e
 
-# Don't build tests.
-sed "/subdir('tests')/d" meson.build > _
-mv -f _ meson.build
+: > tests/meson.build
 
 meson \
     --prefix=/usr \
