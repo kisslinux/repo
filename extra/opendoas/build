@@ -1,8 +1,7 @@
 #!/bin/sh -e
 
-sed '/chown/d' GNUmakefile > _
-mv -f _ GNUmakefile
-
+BINOWN="$(id -u)" \
+BINGRP="$(id -g)" \
 ./configure \
     --prefix=/usr \
     --enable-static \
