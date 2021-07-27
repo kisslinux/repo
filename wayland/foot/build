@@ -5,6 +5,7 @@ meson \
     --buildtype=release \
     --force-fallback-for=fcft,tllist \
     -Ddocs=disabled \
+    -Dime=false \
     . output
 
 ninja -C output
