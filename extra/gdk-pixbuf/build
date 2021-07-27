@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
-sed "/subdir('tests')/d" meson.build > _
-mv -f _ meson.build
+: > tests/meson.build
 
 meson \
     --prefix=/usr \
