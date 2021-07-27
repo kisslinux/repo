@@ -4,7 +4,6 @@ meson \
     --prefix=/usr \
     --buildtype=release \
     --force-fallback-for=fcft,tllist \
-    -Ddocs=disabled \
     -Dime=false \
     . output
 
@@ -12,6 +11,7 @@ ninja -C output
 ninja -C output install
 
 rm -rf \
+    "$1/usr/share/doc" \
     "$1/usr/share/zsh" \
     "$1/usr/share/fish" \
     "$1/usr/share/bash-completion"
