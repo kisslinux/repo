@@ -25,6 +25,7 @@ meson \
     --buildtype=release \
     --force-fallback-for=fcft,tllist \
     -Ddocs=disabled \
+    -Dime=false \
     -Db_lto=true \
     ../..
 
