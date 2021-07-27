@@ -1,21 +1,4 @@
 #!/bin/sh -e
 
-# LTO is used when CFLAGS are unset causing a compilation
-# error with GCC 10. LTO can be set by the user though
-# '-flto-partition=none' is also needed.
-sed 's/ -flto//' src/include/defaults.mk > _
-mv -f _ src/include/defaults.mk
-
-# Avoid repeating ourselves.
-mk() {
-    make \
-        -j1 \
-        libdir=/usr/lib/ \
-        bindir=/usr/bin/ \
-        mandir=/usr/share/man/ \
-        includedir=/usr/include/ \
-        "$@"
-}
-
-mk COMPILER="$CC"
-mk install
+make COMPILER="$CC"
+make libdir=/usr/lib/ install
