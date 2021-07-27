@@ -24,7 +24,6 @@ meson \
     --prefix=/usr \
     --buildtype=release \
     --force-fallback-for=fcft,tllist \
-    -Ddocs=disabled \
     -Dime=false \
     -Db_lto=true \
     ../..
@@ -71,6 +70,7 @@ ninja
 ninja install
 
 rm -rf \
+    "$DESTDIR/usr/share/doc" \
     "$DESTDIR/usr/share/zsh" \
     "$DESTDIR/usr/share/fish" \
     "$DESTDIR/usr/share/bash-completion"
