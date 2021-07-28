@@ -7,6 +7,7 @@ sed 's/0.25f, 0.25f, 0.25f/0.929, 0.870, 0.678/' \
     sway/desktop/render.c > _
 mv -f _ sway/desktop/render.c
 
+# Build fails in with clang due to -Werror.
 export CFLAGS="$CFLAGS -Wno-unused-function -Wno-error"
 
 meson \
