@@ -8,7 +8,7 @@ mv -f _ configure
 chmod +x configure
 
 # Disable building tests and documentation.
-sed 's/test perf//g;s/src doc/src/g' Makefile.in > _
+sed 's/boilerplate test perf//g;s/src doc/src/g' Makefile.in > _
 mv -f _ Makefile.in
 
 ./configure \
