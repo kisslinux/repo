@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
-sed "/subdir('completions')/d" meson.build > _
-mv -f _ meson.build
+: > completions/meson.build
 
 meson \
     --prefix=/usr \
