@@ -5,13 +5,12 @@ sed -e "s/\(BUILD_SPHINX_TRUE=\)/\1'#'/" \
     -e "s/\(BUILD_SPHINX_FALSE=\)'#'/\1=/" \
     configure > _
 mv -f _ configure
-chmod +x configure
 
 # Disable building tests and documentation.
 sed 's/boilerplate test perf//g;s/src doc/src/g' Makefile.in > _
 mv -f _ Makefile.in
 
-./configure \
+sh ./configure \
     --prefix=/usr \
     --disable-static \
     --enable-tee \
