@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < firefox-fix.patch
-
 # Make sure gmp is built with generic options.
 cp gcc/gmp/configfsf.guess gcc/gmp/config.guess
 cp gcc/gmp/configfsf.sub   gcc/gmp/config.sub
