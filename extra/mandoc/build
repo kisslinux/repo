@@ -24,3 +24,5 @@ sh ./configure
 
 make
 make -j1 base-install
+
+chmod 755 "$1/usr/bin/"*
