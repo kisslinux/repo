@@ -26,7 +26,6 @@ sed -e 's/\(ATK_PACKAGES="atk\) atk-bridge-2.0"/\1"/' \
     -e 's/fribidi >= 0\.19\.7//g' \
     configure > _
 mv -f _ configure
-chmod +x configure
 
 # Remove atk-bridge code.
 sed '/<atk-bridge.h>/d;/atk_bridge_adaptor_init/d' \
@@ -37,7 +36,7 @@ mv -f _ gtk/a11y/gtkaccessibility.c
 sed 's/demos tests testsuite examples//;s/docs \(m4macros\)/\1/' Makefile.in > _
 mv -f _ Makefile.in
 
-./configure \
+sh ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
