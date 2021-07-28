@@ -10,7 +10,6 @@ mv -f _ main.c
 # Use CC rather than broken default.
 sed "s/CC=.*/CC=$CC/" configure > _
 mv -f _ configure
-chmod +x configure
 
 cat > configure.local <<EOF
 PREFIX=/usr
@@ -21,7 +20,7 @@ CFLAGS="$CFLAGS -fcommon"
 LN="ln -sf"
 EOF
 
-./configure
+sh ./configure
 
 make
 make -j1 base-install
