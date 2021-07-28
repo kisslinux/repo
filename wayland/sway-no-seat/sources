@@ -1,5 +1,5 @@
 https://github.com/swaywm/sway/archive/VERSION.tar.gz
-https://github.com/swaywm/wlroots/archive/a48e569d3860e91428c74e876a5d886314767c7b.tar.gz subprojects/wlroots
+https://github.com/swaywm/wlroots/archive/e5063ef3a3b12d4384595cb0554cf1f84d5be6f8.tar.gz subprojects/wlroots
 https://github.com/DCVIII/seatd/archive/23ee555f432f9971a15522fc0b3f980d78ffa6cc.tar.gz subprojects/seatd
 patches/sway-static.patch
 patches/no-evdev.patch
