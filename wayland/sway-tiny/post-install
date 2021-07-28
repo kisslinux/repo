@@ -22,6 +22,8 @@ NOTE: You must be the first to call DRMSetMaster.
 
       Another option is to setuid root the sway binary.
 
+      See: https://github.com/torvalds/linux/commit/45bc3d26c95a8fc63a7d8668ca9e57ef0883351c
+
 NOTE: sway-tiny does not spawn a subshell for exec
       commands, it executes them directly. Use the full
       path to the program you would like to execute.
