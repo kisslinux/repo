@@ -4,9 +4,8 @@
 # Also fix issue with non-GNU diff.
 sed 's/perl/:/g;s/diff --version/command -v diff/' configure > _
 mv -f _ configure
-chmod +x configure
 
-./configure \
+sh ./configure \
     --prefix=/usr \
     --target=x86_64-linux-gcc \
     --enable-vp8 \
