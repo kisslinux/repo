@@ -21,3 +21,8 @@ mkdir -p \
 
 cp -f doc/docbook/*.5 "$1/usr/share/man/man5"
 cp -f doc/docbook/*.8 "$1/usr/share/man/man8"
+
+# Install runit service.
+mkdir -p "$1/etc/sv/wpa_supplicant"
+cp -f wpa_supplicant.run "$1/etc/sv/wpa_supplicant/run"
+ln -sf /run/runit/supervise.wpa_supplicant "$1/etc/sv/wpa_supplicant/supervise"

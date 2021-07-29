@@ -1,8 +1,0 @@
-#!/bin/sh
-
-cat <<EOF
-
-NOTE: You can now remove 'libnl' as wpa_supplicant
-      no longer needs it (static libnl-tiny).
-
-EOF
