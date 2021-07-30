@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < fix-fd-issue.patch
+
 cat > makeinfo <<EOF
 #!/bin/sh
 printf 'makeinfo (GNU texinfo) 5.2\n'

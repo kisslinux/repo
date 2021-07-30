@@ -1,0 +1,39 @@
+From 1c611b40e6bfc8029bff7696814330b5bc0ee5c0 Mon Sep 17 00:00:00 2001
+From: "H.J. Lu" <hjl.tools@gmail.com>
+Date: Mon, 26 Jul 2021 05:59:55 -0700
+Subject: [PATCH] bfd: Close the file descriptor if there is no archive fd
+
+Close the file descriptor if there is no archive plugin file descriptor
+to avoid running out of file descriptors on thin archives with many
+archive members.
+
+bfd/
+
+	PR ld/28138
+	* plugin.c (bfd_plugin_close_file_descriptor): Close the file
+	descriptor there is no archive plugin file descriptor.
+
+(cherry picked from commit 5a98fb7513b559e20dfebdbaa2a471afda3b4742)
+(cherry picked from commit 7dc37e1e1209c80e0bab784df6b6bac335e836f2)
+---
+ bfd/plugin.c                       |  8 +++++++
+
+diff --git a/bfd/plugin.c b/bfd/plugin.c
+index 6cfa2b66470..3bab8febe88 100644
+--- a/bfd/plugin.c
++++ b/bfd/plugin.c
+@@ -291,6 +291,14 @@ bfd_plugin_close_file_descriptor (bfd *abfd, int fd)
+ 	     && !bfd_is_thin_archive (abfd->my_archive))
+ 	abfd = abfd->my_archive;
+
++      /* Close the file descriptor if there is no archive plugin file
++	 descriptor.  */
++      if (abfd->archive_plugin_fd == -1)
++	{
++	  close (fd);
++	  return;
++	}
++
+       abfd->archive_plugin_fd_open_count--;
+       /* Dup the archive plugin file descriptor for later use, which
+ 	 will be closed by _bfd_archive_close_and_cleanup.  */
