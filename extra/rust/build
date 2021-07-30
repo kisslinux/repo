@@ -4,7 +4,7 @@
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
 {
-    mkdir -p "${cache_dir:=build/cache/2021-05-06}"
+    mkdir -p "${cache_dir:=build/cache/2021-06-17}"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
