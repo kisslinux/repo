@@ -1,0 +1,1502 @@
+diff --git a/gfx/angle/checkout/include/EGL/eglplatform.h b/gfx/angle/checkout/include/EGL/eglplatform.h
+index d1cae17724..505c334098 100644
+--- a/gfx/angle/checkout/include/EGL/eglplatform.h
++++ b/gfx/angle/checkout/include/EGL/eglplatform.h
+@@ -122,7 +122,8 @@ typedef intptr_t EGLNativeDisplayType;
+ typedef intptr_t EGLNativePixmapType;
+ typedef intptr_t EGLNativeWindowType;
+
+-#elif defined(__unix__) || defined(USE_X11)
++#elif defined(__unix__)
++#if defined(USE_X11)
+
+ /* X11 (tentative)  */
+ #include <X11/Xlib.h>
+@@ -131,6 +132,11 @@ typedef intptr_t EGLNativeWindowType;
+ typedef Display *EGLNativeDisplayType;
+ typedef Pixmap   EGLNativePixmapType;
+ typedef Window   EGLNativeWindowType;
++#else
++typedef void              *EGLNativeDisplayType;
++typedef khronos_uintptr_t  EGLNativePixmapType;
++typedef khronos_uintptr_t  EGLNativeWindowType;
++#endif
+
+ #elif defined(__APPLE__)
+
+diff --git a/gfx/gl/GLContextProvider.h b/gfx/gl/GLContextProvider.h
+index 12d1a497b9..bec4cd17f0 100644
+--- a/gfx/gl/GLContextProvider.h
++++ b/gfx/gl/GLContextProvider.h
+@@ -55,17 +55,17 @@ namespace gl {
+ #  define GL_CONTEXT_PROVIDER_NAME GLContextProviderX11
+ #  include "GLContextProviderImpl.h"
+ #  undef GL_CONTEXT_PROVIDER_NAME
+-#  if defined(MOZ_WAYLAND)
+-#    define GL_CONTEXT_PROVIDER_NAME GLContextProviderWayland
+-#    include "GLContextProviderImpl.h"
+-#    undef GL_CONTEXT_PROVIDER_NAME
+-#    define GL_CONTEXT_PROVIDER_DEFAULT GLContextProviderWayland
+-#  endif
+ #  ifndef GL_CONTEXT_PROVIDER_DEFAULT
+ #    define GL_CONTEXT_PROVIDER_DEFAULT GLContextProviderX11
+ #  endif
+ #endif
+
++#if defined(MOZ_WAYLAND)
++#  define GL_CONTEXT_PROVIDER_NAME GLContextProviderWayland
++#  include "GLContextProviderImpl.h"
++#  undef GL_CONTEXT_PROVIDER_NAME
++#  define GL_CONTEXT_PROVIDER_DEFAULT GLContextProviderWayland
++#endif
+ #ifndef GL_CONTEXT_PROVIDER_DEFAULT
+ #  define GL_CONTEXT_PROVIDER_DEFAULT GLContextProviderEGL
+ #endif
+diff --git a/gfx/gl/GLContextProviderWayland.cpp b/gfx/gl/GLContextProviderWayland.cpp
+index 3f1f926cd9..6b61708be9 100644
+--- a/gfx/gl/GLContextProviderWayland.cpp
++++ b/gfx/gl/GLContextProviderWayland.cpp
+@@ -14,7 +14,9 @@ namespace mozilla::gl {
+ using namespace mozilla::gfx;
+ using namespace mozilla::widget;
+
++#ifdef MOZ_X11
+ static class GLContextProviderX11 sGLContextProviderX11;
++#endif
+ static class GLContextProviderEGL sGLContextProviderEGL;
+
+ // Note that if there is no GTK display, `GdkIsX11Display` and
+@@ -33,9 +35,11 @@ already_AddRefed<GLContext> GLContextProviderWayland::CreateForCompositorWidget(
+   if (GdkIsWaylandDisplay()) {
+     return sGLContextProviderEGL.CreateForCompositorWidget(
+         aCompositorWidget, aHardwareWebRender, aForceAccelerated);
++#ifdef MOZ_X11
+   } else {
+     return sGLContextProviderX11.CreateForCompositorWidget(
+         aCompositorWidget, aHardwareWebRender, aForceAccelerated);
++#endif
+   }
+ }
+
+@@ -44,8 +48,10 @@ already_AddRefed<GLContext> GLContextProviderWayland::CreateHeadless(
+     const GLContextCreateDesc& desc, nsACString* const out_failureId) {
+   if (GdkIsWaylandDisplay()) {
+     return sGLContextProviderEGL.CreateHeadless(desc, out_failureId);
++#ifdef MOZ_X11
+   } else {
+     return sGLContextProviderX11.CreateHeadless(desc, out_failureId);
++#endif
+   }
+ }
+
+@@ -53,8 +59,10 @@ already_AddRefed<GLContext> GLContextProviderWayland::CreateHeadless(
+ GLContext* GLContextProviderWayland::GetGlobalContext() {
+   if (GdkIsWaylandDisplay()) {
+     return sGLContextProviderEGL.GetGlobalContext();
++#ifdef MOZ_X11
+   } else {
+     return sGLContextProviderX11.GetGlobalContext();
++#endif
+   }
+ }
+
+@@ -62,8 +70,10 @@ GLContext* GLContextProviderWayland::GetGlobalContext() {
+ void GLContextProviderWayland::Shutdown() {
+   if (GdkIsWaylandDisplay()) {
+     sGLContextProviderEGL.Shutdown();
++#ifdef MOZ_X11
+   } else {
+     sGLContextProviderX11.Shutdown();
++#endif
+   }
+ }
+
+diff --git a/gfx/gl/moz.build b/gfx/gl/moz.build
+index 62ad33c786..481fc6d432 100644
+--- a/gfx/gl/moz.build
++++ b/gfx/gl/moz.build
+@@ -13,7 +13,7 @@ elif CONFIG["MOZ_WIDGET_TOOLKIT"] == "cocoa":
+ elif CONFIG["MOZ_WIDGET_TOOLKIT"] == "uikit":
+     gl_provider = "EAGL"
+ elif CONFIG["MOZ_WIDGET_TOOLKIT"] == "gtk":
+-    if CONFIG["MOZ_EGL_XRENDER_COMPOSITE"]:
++    if CONFIG["MOZ_EGL_XRENDER_COMPOSITE"] or CONFIG["MOZ_WAYLAND"]:
+         gl_provider = "EGL"
+     else:
+         gl_provider = "GLX"
+diff --git a/gfx/layers/AnimationHelper.h b/gfx/layers/AnimationHelper.h
+index f5a57b9c4d..72091c3a4f 100644
+--- a/gfx/layers/AnimationHelper.h
++++ b/gfx/layers/AnimationHelper.h
+@@ -7,6 +7,7 @@
+ #ifndef mozilla_layers_AnimationHelper_h
+ #define mozilla_layers_AnimationHelper_h
+
++#include "X11UndefineNone.h"
+ #include "mozilla/dom/Nullable.h"
+ #include "mozilla/ComputedTimingFunction.h"  // for ComputedTimingFunction
+ #include "mozilla/layers/AnimationStorageData.h"
+@@ -15,7 +16,6 @@
+ #include "mozilla/TimeStamp.h"                 // for TimeStamp
+ #include "mozilla/TimingParams.h"
+ #include "mozilla/Types.h"  // for SideBits
+-#include "X11UndefineNone.h"
+ #include <unordered_map>
+
+ namespace mozilla {
+diff --git a/gfx/layers/ipc/CompositorBridgeParent.cpp b/gfx/layers/ipc/CompositorBridgeParent.cpp
+index 2ecd55b16a..82b56300c6 100644
+--- a/gfx/layers/ipc/CompositorBridgeParent.cpp
++++ b/gfx/layers/ipc/CompositorBridgeParent.cpp
+@@ -72,7 +72,7 @@
+ #include "mozilla/ProfilerLabels.h"
+ #include "mozilla/ProfilerMarkers.h"
+ #include "mozilla/Telemetry.h"
+-#ifdef MOZ_WIDGET_GTK
++#if defined(MOZ_WIDGET_GTK) && defined(MOZ_X11)
+ #  include "basic/X11BasicCompositor.h"  // for X11BasicCompositor
+ #endif
+ #include "nsCOMPtr.h"         // for already_AddRefed
+@@ -1402,7 +1402,7 @@ RefPtr<Compositor> CompositorBridgeParent::NewCompositor(
+           new CompositorOGL(this, mWidget, mEGLSurfaceSize.width,
+                             mEGLSurfaceSize.height, mUseExternalSurfaceSize);
+     } else if (aBackendHints[i] == LayersBackend::LAYERS_BASIC) {
+-#ifdef MOZ_WIDGET_GTK
++#if defined(MOZ_WIDGET_GTK) && defined(MOZ_X11)
+       if (gfxVars::UseXRender()) {
+         compositor = new X11BasicCompositor(this, mWidget);
+       } else
+diff --git a/gfx/thebes/gfxPlatformGtk.cpp b/gfx/thebes/gfxPlatformGtk.cpp
+index 12e01681c7..860e876550 100644
+--- a/gfx/thebes/gfxPlatformGtk.cpp
++++ b/gfx/thebes/gfxPlatformGtk.cpp
+@@ -62,6 +62,9 @@
+ #  include "mozilla/widget/nsWaylandDisplay.h"
+ #  include "mozilla/widget/DMABufLibWrapper.h"
+ #  include "mozilla/StaticPrefs_widget.h"
++#  ifdef MOZ_WIDGET_GTK
++#  include "mozilla/WidgetUtilsGtk.h"
++#  endif
+ #endif
+
+ #define GDK_PIXMAP_SIZE_MAX 32767
+@@ -97,7 +100,11 @@ gfxPlatformGtk::gfxPlatformGtk() {
+   }
+
+   mMaxGenericSubstitutions = UNINITIALIZED_VALUE;
++#ifdef MOZ_X11
+   mIsX11Display = gfxPlatform::IsHeadless() ? false : GdkIsX11Display();
++#else
++  mIsX11Display = 0;
++#endif
+   if (XRE_IsParentProcess()) {
+ #ifdef MOZ_X11
+     if (mIsX11Display && mozilla::Preferences::GetBool("gfx.xrender.enabled")) {
+diff --git a/gfx/thebes/moz.build b/gfx/thebes/moz.build
+index baa7005a8f..387dd29276 100644
+--- a/gfx/thebes/moz.build
++++ b/gfx/thebes/moz.build
+@@ -118,7 +118,6 @@ elif CONFIG["MOZ_WIDGET_TOOLKIT"] == "gtk":
+     ]
+     EXPORTS.mozilla.gfx += [
+         "PrintTargetPDF.h",
+-        "PrintTargetPS.h",
+     ]
+     SOURCES += [
+         "gfxFcPlatformFontList.cpp",
+@@ -127,13 +126,13 @@ elif CONFIG["MOZ_WIDGET_TOOLKIT"] == "gtk":
+         "gfxGdkNativeRenderer.cpp",
+         "gfxPlatformGtk.cpp",
+         "PrintTargetPDF.cpp",
+-        "PrintTargetPS.cpp",
+     ]
+
+     if CONFIG["MOZ_X11"]:
+         EXPORTS += [
+             "gfxXlibNativeRenderer.h",
+             "gfxXlibSurface.h",
++            "PrintTargetPS.h",
+         ]
+         EXPORTS.mozilla.gfx += [
+             "XlibDisplay.h",
+@@ -142,6 +141,7 @@ elif CONFIG["MOZ_WIDGET_TOOLKIT"] == "gtk":
+             "gfxXlibNativeRenderer.cpp",
+             "gfxXlibSurface.cpp",
+             "XlibDisplay.cpp",
++            "PrintTargetPS.cpp",
+         ]
+
+ elif CONFIG["MOZ_WIDGET_TOOLKIT"] == "windows":
+diff --git a/gfx/webrender_bindings/RenderCompositorOGLSWGL.cpp b/gfx/webrender_bindings/RenderCompositorOGLSWGL.cpp
+index ec9b904967..dee437d8ae 100644
+--- a/gfx/webrender_bindings/RenderCompositorOGLSWGL.cpp
++++ b/gfx/webrender_bindings/RenderCompositorOGLSWGL.cpp
+@@ -27,7 +27,9 @@
+ #ifdef MOZ_WIDGET_GTK
+ #  include "mozilla/widget/GtkCompositorWidget.h"
+ #  include <gdk/gdk.h>
+-#  include <gdk/gdkx.h>
++#  ifdef MOZ_X11
++#    include <gdk/gdkx.h>
++#  endif
+ #endif
+
+ namespace mozilla {
+diff --git a/old-configure b/old-configure
+index 22c103bdac..74a90f5ee1 100644
+--- a/old-configure
++++ b/old-configure
+@@ -9743,13 +9743,13 @@ TEE_SURFACE_FEATURE="#define CAIRO_HAS_TEE_SURFACE 1"
+ if test "$MOZ_X11"; then
+     XLIB_SURFACE_FEATURE="#define CAIRO_HAS_XLIB_SURFACE 1"
+     XLIB_XRENDER_SURFACE_FEATURE="#define CAIRO_HAS_XLIB_XRENDER_SURFACE 1"
+-    PS_SURFACE_FEATURE="#define CAIRO_HAS_PS_SURFACE 1"
+ fi
+ if test "$_HAVE_FREETYPE2"; then
+     FT_FONT_FEATURE="#define CAIRO_HAS_FT_FONT 1"
+     MOZ_ENABLE_CAIRO_FT=1
+     CAIRO_FT_CFLAGS="$FT2_CFLAGS"
+ fi
++PS_SURFACE_FEATURE="#define CAIRO_HAS_PS_SURFACE 1"
+
+ case "$MOZ_WIDGET_TOOLKIT" in
+   cocoa | uikit)
+diff --git a/old-configure.in b/old-configure.in
+index de2642f71d..d0ab9b1988 100644
+--- a/old-configure.in
++++ b/old-configure.in
+@@ -2327,13 +2327,13 @@ TEE_SURFACE_FEATURE="#define CAIRO_HAS_TEE_SURFACE 1"
+ if test "$MOZ_X11"; then
+     XLIB_SURFACE_FEATURE="#define CAIRO_HAS_XLIB_SURFACE 1"
+     XLIB_XRENDER_SURFACE_FEATURE="#define CAIRO_HAS_XLIB_XRENDER_SURFACE 1"
+-    PS_SURFACE_FEATURE="#define CAIRO_HAS_PS_SURFACE 1"
+ fi
+ if test "$_HAVE_FREETYPE2"; then
+     FT_FONT_FEATURE="#define CAIRO_HAS_FT_FONT 1"
+     MOZ_ENABLE_CAIRO_FT=1
+     CAIRO_FT_CFLAGS="$FT2_CFLAGS"
+ fi
++PS_SURFACE_FEATURE="#define CAIRO_HAS_PS_SURFACE 1"
+
+ case "$MOZ_WIDGET_TOOLKIT" in
+   cocoa | uikit)
+diff --git a/toolkit/components/remote/moz.build b/toolkit/components/remote/moz.build
+index 235580d6b7..b407dce197 100644
+--- a/toolkit/components/remote/moz.build
++++ b/toolkit/components/remote/moz.build
+@@ -13,12 +13,15 @@ SOURCES += [
+
+ if CONFIG["MOZ_WIDGET_TOOLKIT"] == "gtk":
+     SOURCES += [
+-        "nsGTKRemoteServer.cpp",
+         "nsUnixRemoteServer.cpp",
+-        "nsXRemoteClient.cpp",
+-        "nsXRemoteServer.cpp",
+         "RemoteUtils.cpp",
+     ]
++    if CONFIG["MOZ_X11"]:
++        SOURCES += [
++            "nsGTKRemoteServer.cpp",
++            "nsXRemoteClient.cpp",
++            "nsXRemoteServer.cpp",
++        ]
+     if CONFIG["MOZ_ENABLE_DBUS"]:
+         SOURCES += [
+             "nsDBusRemoteClient.cpp",
+diff --git a/toolkit/components/remote/nsRemoteService.cpp b/toolkit/components/remote/nsRemoteService.cpp
+index 289fa506f4..c2fd3a1183 100644
+--- a/toolkit/components/remote/nsRemoteService.cpp
++++ b/toolkit/components/remote/nsRemoteService.cpp
+@@ -12,12 +12,18 @@
+
+ #ifdef MOZ_WIDGET_GTK
+ #  include "mozilla/WidgetUtilsGtk.h"
+-#  include "nsGTKRemoteServer.h"
+-#  include "nsXRemoteClient.h"
++#  ifdef MOZ_X11
++#    include "nsGTKRemoteServer.h"
++#    include "nsXRemoteClient.h"
++#  endif
+ #  ifdef MOZ_ENABLE_DBUS
+ #    include "nsDBusRemoteServer.h"
+ #    include "nsDBusRemoteClient.h"
+ #  endif
++#  ifdef MOZ_WAYLAND
++#    include <gdk/gdkwayland.h>
++#    include "nsRemoteClient.h"
++#  endif
+ #elif defined(XP_WIN)
+ #  include "nsWinRemoteServer.h"
+ #  include "nsWinRemoteClient.h"
+@@ -111,9 +117,11 @@ RemoteResult nsRemoteService::StartClient(const char* aDesktopStartupID) {
+     client = MakeUnique<nsDBusRemoteClient>();
+   }
+ #  endif
++#if defined(MOZ_X11)
+   if (!client && useX11Remote) {
+     client = MakeUnique<nsXRemoteClient>();
+   }
++#endif
+ #elif defined(XP_WIN)
+   client = MakeUnique<nsWinRemoteClient>();
+ #elif defined(XP_DARWIN)
+@@ -160,9 +168,11 @@ void nsRemoteService::StartupServer() {
+     mRemoteServer = MakeUnique<nsDBusRemoteServer>();
+   }
+ #  endif
++#  if defined(MOZ_X11)
+   if (!mRemoteServer && useX11Remote) {
+     mRemoteServer = MakeUnique<nsGTKRemoteServer>();
+   }
++#  endif
+ #elif defined(XP_WIN)
+   mRemoteServer = MakeUnique<nsWinRemoteServer>();
+ #elif defined(XP_DARWIN)
+diff --git a/toolkit/moz.configure b/toolkit/moz.configure
+index ac7ab6c2ef..b1bd632d81 100644
+--- a/toolkit/moz.configure
++++ b/toolkit/moz.configure
+@@ -314,9 +314,6 @@ def toolkit_gtk(toolkit):
+     return toolkit == "gtk"
+
+
+-set_config("MOZ_X11", True, when=toolkit_gtk)
+-set_define("MOZ_X11", True, when=toolkit_gtk)
+-add_old_configure_assignment("MOZ_X11", True, when=toolkit_gtk)
+
+ # Wayland support
+ # ==============================================================
+diff --git a/toolkit/xre/nsAppRunner.cpp b/toolkit/xre/nsAppRunner.cpp
+index 3ec33c9b45..0ef2182368 100644
+--- a/toolkit/xre/nsAppRunner.cpp
++++ b/toolkit/xre/nsAppRunner.cpp
+@@ -319,6 +319,7 @@ nsString gProcessStartupShortcut;
+ #  endif
+ #  ifdef MOZ_X11
+ #    include <gdk/gdkx.h>
++#    undef None
+ #  endif /* MOZ_X11 */
+ #  include <fontconfig/fontconfig.h>
+ #endif
+@@ -343,7 +344,6 @@ void XRE_LibFuzzerSetDriver(LibFuzzerDriver aDriver) {
+ #endif  // FUZZING
+
+ // Undo X11/X.h's definition of None
+-#undef None
+
+ namespace mozilla {
+ int (*RunGTest)(int*, char**) = 0;
+diff --git a/toolkit/xre/nsGDKErrorHandler.cpp b/toolkit/xre/nsGDKErrorHandler.cpp
+index 421abdf12f..673a4f851b 100644
+--- a/toolkit/xre/nsGDKErrorHandler.cpp
++++ b/toolkit/xre/nsGDKErrorHandler.cpp
+@@ -6,14 +6,21 @@
+ #include "nsGDKErrorHandler.h"
+
+ #include <gtk/gtk.h>
++#ifdef MOZ_X11
+ #include <gdk/gdkx.h>
++#endif
++#ifdef MOZ_WAYLAND
++#include <gdk/gdkwayland.h>
++#endif
+ #include <errno.h>
+ #include <stdlib.h>
+ #include <string.h>
+
+ #include "nsDebug.h"
+ #include "nsString.h"
++#ifdef MOZ_X11
+ #include "nsX11ErrorHandler.h"
++#endif
+
+ #include "prenv.h"
+
+@@ -26,6 +33,7 @@
+  */
+ static void GdkErrorHandler(const gchar* log_domain, GLogLevelFlags log_level,
+                             const gchar* message, gpointer user_data) {
++#ifdef MOZ_X11
+   if (strstr(message, "X Window System error")) {
+     XErrorEvent event;
+     nsDependentCString buffer(message);
+@@ -92,10 +100,10 @@ static void GdkErrorHandler(const gchar* log_domain, GLogLevelFlags log_level,
+     event.resourceid = 0;
+
+     X11Error(event.display, &event);
+-  } else {
++  }
++#endif
+     g_log_default_handler(log_domain, log_level, message, user_data);
+     MOZ_CRASH_UNSAFE(message);
+-  }
+ }
+
+ void InstallGdkErrorHandler() {
+@@ -103,7 +111,9 @@ void InstallGdkErrorHandler() {
+                     (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL |
+                                      G_LOG_FLAG_RECURSION),
+                     GdkErrorHandler, nullptr);
++#ifdef MOZ_X11
+   if (PR_GetEnv("MOZ_X_SYNC")) {
+     XSynchronize(GDK_DISPLAY_XDISPLAY(gdk_display_get_default()), X11True);
+   }
++#endif
+ }
+diff --git a/toolkit/xre/nsNativeAppSupportUnix.cpp b/toolkit/xre/nsNativeAppSupportUnix.cpp
+index e8f7b67c35..5549e40fe9 100644
+--- a/toolkit/xre/nsNativeAppSupportUnix.cpp
++++ b/toolkit/xre/nsNativeAppSupportUnix.cpp
+@@ -401,7 +401,6 @@ static void SetSMProperty(SmProp& prop, const char* name, const char* type,
+   prop.num_vals = numVals;
+   prop.vals = vals;
+ }
+-#endif /* MOZ_X11 */
+
+ static void RemoveArg(char** argv) {
+   do {
+@@ -411,6 +410,7 @@ static void RemoveArg(char** argv) {
+
+   --gArgc;
+ }
++#endif /* MOZ_X11 */
+
+ NS_IMETHODIMP
+ nsNativeAppSupportUnix::Start(bool* aRetVal) {
+diff --git a/widget/CompositorWidget.h b/widget/CompositorWidget.h
+index 4515f4ccc0..2f4795364c 100644
+--- a/widget/CompositorWidget.h
++++ b/widget/CompositorWidget.h
+@@ -63,7 +63,7 @@ class CompositorWidgetDelegate {
+ };
+
+ // Platforms that support out-of-process widgets.
+-#if defined(XP_WIN) || defined(MOZ_X11)
++#if defined(XP_WIN) || defined(MOZ_X11) || defined(MOZ_WAYLAND)
+ // CompositorWidgetParent should implement CompositorWidget and
+ // PCompositorWidgetParent.
+ class CompositorWidgetParent;
+diff --git a/widget/gtk/MozContainer.cpp b/widget/gtk/MozContainer.cpp
+index a1c1c2b124..97d31ba5b7 100644
+--- a/widget/gtk/MozContainer.cpp
++++ b/widget/gtk/MozContainer.cpp
+@@ -9,7 +9,12 @@
+
+ #include <glib.h>
+ #include <gtk/gtk.h>
++#ifdef MOZ_X11
+ #include <gdk/gdkx.h>
++#endif
++#ifdef MOZ_WAYLAND
++#include "mozilla/WidgetUtilsGtk.h"
++#endif
+ #include <stdio.h>
+
+ #ifdef ACCESSIBILITY
+diff --git a/widget/gtk/WindowSurfaceProvider.cpp b/widget/gtk/WindowSurfaceProvider.cpp
+index 837e8aa696..ae19f3ff70 100644
+--- a/widget/gtk/WindowSurfaceProvider.cpp
++++ b/widget/gtk/WindowSurfaceProvider.cpp
+@@ -87,7 +87,7 @@ RefPtr<WindowSurface> WindowSurfaceProvider::CreateWindowSurface() {
+                                               mXVisual, mXDepth);
+     }
+
+-#  ifdef MOZ_HAVE_SHMIMAGE
++#  if defined(MOZ_HAVE_SHMIMAGE) && defined(MOZ_X11)
+     if (!mIsShaped && nsShmImage::UseShm()) {
+       LOG(("Drawing to Window 0x%lx will use MIT-SHM\n", mXWindow));
+       return MakeRefPtr<WindowSurfaceX11SHM>(DefaultXDisplay(), mXWindow,
+@@ -95,9 +95,11 @@ RefPtr<WindowSurface> WindowSurfaceProvider::CreateWindowSurface() {
+     }
+ #  endif  // MOZ_HAVE_SHMIMAGE
+
++#  if defined(MOZ_X11)
+     LOG(("Drawing to Window 0x%lx will use XPutImage\n", mXWindow));
+     return MakeRefPtr<WindowSurfaceX11Image>(DefaultXDisplay(), mXWindow,
+                                              mXVisual, mXDepth, mIsShaped);
++#  endif
+   }
+ #endif
+   MOZ_RELEASE_ASSERT(false);
+diff --git a/widget/gtk/WindowSurfaceWayland.cpp b/widget/gtk/WindowSurfaceWayland.cpp
+index 5c74524c21..78e0dc7801 100644
+--- a/widget/gtk/WindowSurfaceWayland.cpp
++++ b/widget/gtk/WindowSurfaceWayland.cpp
+@@ -15,11 +15,13 @@
+ #include "mozilla/gfx/Tools.h"
+ #include "gfx2DGlue.h"
+ #include "gfxPlatform.h"
++#include "gfxImageSurface.h"
+ #include "MozContainer.h"
+ #include "mozilla/ScopeExit.h"
+ #include "mozilla/StaticPrefs_widget.h"
+ #include "mozilla/WidgetUtils.h"
+ #include "nsTArray.h"
++#include "prenv.h"
+
+ #ifdef MOZ_LOGGING
+ #  include "mozilla/Logging.h"
+diff --git a/widget/gtk/components.conf b/widget/gtk/components.conf
+index 38c07bd812..a125d8d275 100644
+--- a/widget/gtk/components.conf
++++ b/widget/gtk/components.conf
+@@ -78,7 +78,7 @@ Classes = [
+     },
+ ]
+
+-if defined('MOZ_X11'):
++if defined('MOZ_X11') or defined('MOZ_WAYLAND'):
+     Classes += [
+         {
+             'js_name': 'clipboard',
+diff --git a/widget/gtk/moz.build b/widget/gtk/moz.build
+index b579218ab8..f882569689 100644
+--- a/widget/gtk/moz.build
++++ b/widget/gtk/moz.build
+@@ -100,23 +100,27 @@ if CONFIG["MOZ_WAYLAND"]:
+
+ if CONFIG["MOZ_X11"]:
+     UNIFIED_SOURCES += [
+-        "CompositorWidgetChild.cpp",
+-        "CompositorWidgetParent.cpp",
+-        "InProcessGtkCompositorWidget.cpp",
+         "nsClipboardX11.cpp",
+         "nsShmImage.cpp",
+-        "nsUserIdleServiceGTK.cpp",
+         "WindowSurfaceX11.cpp",
+         "WindowSurfaceX11Image.cpp",
+         "WindowSurfaceX11SHM.cpp",
+         "WindowSurfaceXRender.cpp",
+     ]
+-    EXPORTS.mozilla.widget += [
+-        "CompositorWidgetChild.h",
+-        "CompositorWidgetParent.h",
+-        "GtkCompositorWidget.h",
+-        "InProcessGtkCompositorWidget.h",
+-    ]
++
++UNIFIED_SOURCES += [
++    "CompositorWidgetChild.cpp",
++    "CompositorWidgetParent.cpp",
++    "InProcessGtkCompositorWidget.cpp",
++    "nsUserIdleServiceGTK.cpp",
++]
++
++EXPORTS.mozilla.widget += [
++    "CompositorWidgetChild.h",
++    "CompositorWidgetParent.h",
++    "GtkCompositorWidget.h",
++    "InProcessGtkCompositorWidget.h",
++]
+
+ if CONFIG["NS_PRINTING"]:
+     UNIFIED_SOURCES += [
+diff --git a/widget/gtk/mozgtk/mozgtk.c b/widget/gtk/mozgtk/mozgtk.c
+index 677f9b3561..b8cb7de58e 100644
+--- a/widget/gtk/mozgtk/mozgtk.c
++++ b/widget/gtk/mozgtk/mozgtk.c
+@@ -6,6 +6,7 @@
+
+ #include "mozilla/Types.h"
+
++#if defined(MOZ_X11)
+ #include <X11/Xlib.h>
+ // Bug 1271100
+ // We need to trick system Cairo into not using the XShm extension due to
+@@ -19,3 +20,4 @@
+ // ever can remove this workaround for system Cairo, we'll need something
+ // to replace it for that purpose.
+ MOZ_EXPORT Bool XShmQueryExtension(Display* aDisplay) { return False; }
++#endif
+diff --git a/widget/gtk/nsClipboard.cpp b/widget/gtk/nsClipboard.cpp
+index 74379651b9..a89e8fd8e0 100644
+--- a/widget/gtk/nsClipboard.cpp
++++ b/widget/gtk/nsClipboard.cpp
+@@ -9,7 +9,9 @@
+
+ #include "nsArrayUtils.h"
+ #include "nsClipboard.h"
++#if defined(MOZ_X11)
+ #include "nsClipboardX11.h"
++#endif
+ #if defined(MOZ_WAYLAND)
+ #  include "nsClipboardWayland.h"
+ #endif
+@@ -32,7 +34,9 @@
+ #include "imgIContainer.h"
+
+ #include <gtk/gtk.h>
++#ifdef MOZ_X11
+ #include <gtk/gtkx.h>
++#endif
+
+ #include "mozilla/Encoding.h"
+
+@@ -95,10 +99,12 @@ nsClipboard::~nsClipboard() {
+ NS_IMPL_ISUPPORTS(nsClipboard, nsIClipboard, nsIObserver)
+
+ nsresult nsClipboard::Init(void) {
++#if defined(MOZ_X11)
+   if (widget::GdkIsX11Display()) {
+     mContext = MakeUnique<nsRetrievalContextX11>();
+-#if defined(MOZ_WAYLAND)
+-  } else if (widget::GdkIsWaylandDisplay()) {
++  }
++#elif defined(MOZ_WAYLAND)
++  if (widget::GdkIsWaylandDisplay()) {
+     mContext = MakeUnique<nsRetrievalContextWayland>();
+ #endif
+   } else {
+diff --git a/widget/gtk/nsDeviceContextSpecG.cpp b/widget/gtk/nsDeviceContextSpecG.cpp
+index b7891d67b5..abe6b82bc0 100644
+--- a/widget/gtk/nsDeviceContextSpecG.cpp
++++ b/widget/gtk/nsDeviceContextSpecG.cpp
+@@ -6,7 +6,9 @@
+ #include "nsDeviceContextSpecG.h"
+
+ #include "mozilla/gfx/PrintTargetPDF.h"
++#ifdef USE_X11
+ #include "mozilla/gfx/PrintTargetPS.h"
++#endif
+ #include "mozilla/Logging.h"
+ #include "mozilla/Services.h"
+
+@@ -46,7 +48,9 @@ using namespace mozilla;
+ using mozilla::gfx::IntSize;
+ using mozilla::gfx::PrintTarget;
+ using mozilla::gfx::PrintTargetPDF;
++#ifdef MOZ_X11
+ using mozilla::gfx::PrintTargetPS;
++#endif
+
+ nsDeviceContextSpecGTK::nsDeviceContextSpecGTK()
+     : mGtkPrintSettings(nullptr), mGtkPageSetup(nullptr) {}
+@@ -119,12 +123,15 @@ already_AddRefed<PrintTarget> nsDeviceContextSpecGTK::MakePrintTarget() {
+     return PrintTargetPDF::CreateOrNull(stream, size);
+   }
+
++#ifdef MOZ_X11
+   int32_t orientation = mPrintSettings->GetSheetOrientation();
+   return PrintTargetPS::CreateOrNull(
+       stream, size,
+       orientation == nsIPrintSettings::kPortraitOrientation
+           ? PrintTargetPS::PORTRAIT
+           : PrintTargetPS::LANDSCAPE);
++#endif
++  return nullptr;
+ }
+
+ #define DECLARE_KNOWN_MONOCHROME_SETTING(key_, value_) {"cups-" key_, value_},
+diff --git a/widget/gtk/nsDragService.cpp b/widget/gtk/nsDragService.cpp
+index 6983dc1b2c..2852e232b9 100644
+--- a/widget/gtk/nsDragService.cpp
++++ b/widget/gtk/nsDragService.cpp
+@@ -23,7 +23,11 @@
+ #include "prthread.h"
+ #include <dlfcn.h>
+ #include <gtk/gtk.h>
++#ifdef MOZ_X11
+ #include <gdk/gdkx.h>
++#else
++#include <gdk/gdkwayland.h>
++#endif
+ #include "nsCRT.h"
+ #include "mozilla/BasicEvents.h"
+ #include "mozilla/Services.h"
+@@ -33,7 +37,6 @@
+ #include "mozilla/WidgetUtilsGtk.h"
+ #include "GRefPtr.h"
+
+-#include "gfxXlibSurface.h"
+ #include "gfxContext.h"
+ #include "nsImageToPixbuf.h"
+ #include "nsPresContext.h"
+@@ -50,6 +53,8 @@
+ #ifdef MOZ_WAYLAND
+ #  include "nsClipboardWayland.h"
+ #  include "gfxPlatformGtk.h"
++#else
++#  include "gfxXlibSurface.h"
+ #endif
+
+ using namespace mozilla;
+diff --git a/widget/gtk/nsGtkKeyUtils.cpp b/widget/gtk/nsGtkKeyUtils.cpp
+index f4c7030a37..6c5af5394b 100644
+--- a/widget/gtk/nsGtkKeyUtils.cpp
++++ b/widget/gtk/nsGtkKeyUtils.cpp
+@@ -12,10 +12,12 @@
+ #include <gdk/gdkkeysyms.h>
+ #include <algorithm>
+ #include <gdk/gdk.h>
+-#include <gdk/gdkx.h>
+ #include <dlfcn.h>
+ #include <gdk/gdkkeysyms-compat.h>
++#ifdef MOZ_X11
++#include <gdk/gdkx.h>
+ #include <X11/XKBlib.h>
++#endif
+ #include "X11UndefineNone.h"
+ #include "IMContextWrapper.h"
+ #include "WidgetUtils.h"
+@@ -51,7 +53,7 @@ LazyLogModule gKeymapWrapperLog("KeymapWrapperWidgets");
+
+ KeymapWrapper* KeymapWrapper::sInstance = nullptr;
+ guint KeymapWrapper::sLastRepeatableHardwareKeyCode = 0;
+-Time KeymapWrapper::sLastRepeatableKeyTime = 0;
++GTime KeymapWrapper::sLastRepeatableKeyTime = 0;
+ KeymapWrapper::RepeatState KeymapWrapper::sRepeatState =
+     KeymapWrapper::NOT_PRESSED;
+
+@@ -346,9 +348,11 @@ KeymapWrapper::KeymapWrapper()
+
+   g_object_ref(mGdkKeymap);
+
++#ifdef MOZ_X11
+   if (GdkIsX11Display()) {
+     InitXKBExtension();
+   }
++#endif
+
+   Init();
+ }
+@@ -365,16 +369,19 @@ void KeymapWrapper::Init() {
+   mModifierKeys.Clear();
+   memset(mModifierMasks, 0, sizeof(mModifierMasks));
+
++#ifdef MOZ_X11
+   if (GdkIsX11Display()) {
+     InitBySystemSettingsX11();
+-  }
++  } else {
++#endif
+ #ifdef MOZ_WAYLAND
+-  else {
+     InitBySystemSettingsWayland();
++#endif
++#ifdef MOZ_X11
+   }
++  gdk_window_add_filter(nullptr, FilterEvents, this);
+ #endif
+
+-  gdk_window_add_filter(nullptr, FilterEvents, this);
+
+   MOZ_LOG(gKeymapWrapperLog, LogLevel::Info,
+           ("%p Init, CapsLock=0x%X, NumLock=0x%X, "
+@@ -387,6 +394,7 @@ void KeymapWrapper::Init() {
+            GetModifierMask(SUPER), GetModifierMask(HYPER)));
+ }
+
++#ifdef MOZ_X11
+ void KeymapWrapper::InitXKBExtension() {
+   PodZero(&mKeyboardState);
+
+@@ -619,6 +627,7 @@ void KeymapWrapper::InitBySystemSettingsX11() {
+   XFreeModifiermap(xmodmap);
+   XFree(xkeymap);
+ }
++#endif
+
+ #ifdef MOZ_WAYLAND
+ void KeymapWrapper::SetModifierMask(xkb_keymap* aKeymap,
+@@ -776,7 +785,9 @@ void KeymapWrapper::InitBySystemSettingsWayland() {
+ #endif
+
+ KeymapWrapper::~KeymapWrapper() {
++#ifdef MOZ_X11
+   gdk_window_remove_filter(nullptr, FilterEvents, this);
++#endif
+   if (mOnKeysChangedSignalHandle) {
+     g_signal_handler_disconnect(mGdkKeymap, mOnKeysChangedSignalHandle);
+   }
+@@ -787,6 +798,7 @@ KeymapWrapper::~KeymapWrapper() {
+   MOZ_LOG(gKeymapWrapperLog, LogLevel::Info, ("%p Destructor", this));
+ }
+
++#ifdef MOZ_X11
+ /* static */
+ GdkFilterReturn KeymapWrapper::FilterEvents(GdkXEvent* aXEvent,
+                                             GdkEvent* aGdkEvent,
+@@ -900,6 +912,7 @@ GdkFilterReturn KeymapWrapper::FilterEvents(GdkXEvent* aXEvent,
+
+   return GDK_FILTER_CONTINUE;
+ }
++#endif
+
+ static void ResetBidiKeyboard() {
+   // Reset the bidi keyboard settings for the new GdkKeymap
+@@ -1760,6 +1773,7 @@ void KeymapWrapper::InitKeyEvent(WidgetKeyboardEvent& aKeyEvent,
+   // state.  It means if there're some pending modifier key press or
+   // key release events, the result isn't what we want.
+   guint modifierState = aGdkKeyEvent->state;
++#ifdef MOZ_X11
+   GdkDisplay* gdkDisplay = gdk_display_get_default();
+   if (aGdkKeyEvent->is_modifier && GdkIsX11Display(gdkDisplay)) {
+     Display* display = gdk_x11_display_get_xdisplay(gdkDisplay);
+@@ -1777,6 +1791,7 @@ void KeymapWrapper::InitKeyEvent(WidgetKeyboardEvent& aKeyEvent,
+       }
+     }
+   }
++#endif
+   InitInputEvent(aKeyEvent, modifierState);
+
+   switch (aGdkKeyEvent->keyval) {
+@@ -2023,6 +2038,7 @@ bool KeymapWrapper::IsLatinGroup(guint8 aGroup) {
+   return result;
+ }
+
++#ifdef MOZ_X11
+ bool KeymapWrapper::IsAutoRepeatableKey(guint aHardwareKeyCode) {
+   uint8_t indexOfArray = aHardwareKeyCode / 8;
+   MOZ_ASSERT(indexOfArray < ArrayLength(mKeyboardState.auto_repeats),
+@@ -2030,6 +2046,7 @@ bool KeymapWrapper::IsAutoRepeatableKey(guint aHardwareKeyCode) {
+   char bitMask = 1 << (aHardwareKeyCode % 8);
+   return (mKeyboardState.auto_repeats[indexOfArray] & bitMask) != 0;
+ }
++#endif
+
+ /* static */
+ bool KeymapWrapper::IsBasicLatinLetterOrNumeral(uint32_t aCharCode) {
+diff --git a/widget/gtk/nsGtkKeyUtils.h b/widget/gtk/nsGtkKeyUtils.h
+index 07d60c27a6..43df8095fd 100644
+--- a/widget/gtk/nsGtkKeyUtils.h
++++ b/widget/gtk/nsGtkKeyUtils.h
+@@ -13,7 +13,9 @@
+ #include "nsTArray.h"
+
+ #include <gdk/gdk.h>
++#ifdef MOZ_X11
+ #include <X11/XKBlib.h>
++#endif
+ #ifdef MOZ_WAYLAND
+ #  include <gdk/gdkwayland.h>
+ #  include <xkbcommon/xkbcommon.h>
+@@ -315,7 +317,9 @@ class KeymapWrapper {
+    * See a call of XkbSelectEventDetails() with XkbControlsNotify in
+    * InitXKBExtension().
+    */
++#ifdef MOZ_X11
+   XKeyboardState mKeyboardState;
++#endif
+
+   /**
+    * Pointer of the singleton instance.
+@@ -326,7 +330,7 @@ class KeymapWrapper {
+    * Auto key repeat management.
+    */
+   static guint sLastRepeatableHardwareKeyCode;
+-  static Time sLastRepeatableKeyTime;
++  static GTime sLastRepeatableKeyTime;
+   enum RepeatState { NOT_PRESSED, FIRST_PRESS, REPEATING };
+   static RepeatState sRepeatState;
+
+diff --git a/widget/gtk/nsPrintDialogGTK.cpp b/widget/gtk/nsPrintDialogGTK.cpp
+index 48e9b6521f..461e6b2502 100644
+--- a/widget/gtk/nsPrintDialogGTK.cpp
++++ b/widget/gtk/nsPrintDialogGTK.cpp
+@@ -26,7 +26,11 @@
+ #include "nsIObserverService.h"
+
+ // for gdk_x11_window_get_xid
++#ifdef MOZ_X11
+ #include <gdk/gdkx.h>
++#else
++#include <gdk/gdkwayland.h>
++#endif
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <fcntl.h>
+@@ -526,6 +530,7 @@ static void wayland_window_handle_exported(GdkWindow* window,
+ static gboolean window_export_handle(GtkWindow* window,
+                                      GtkWindowHandleExported callback,
+                                      gpointer user_data) {
++#ifdef MOZ_X11
+   if (GdkIsX11Display()) {
+     GdkWindow* gdk_window = gtk_widget_get_window(GTK_WIDGET(window));
+     char* handle_str;
+@@ -536,8 +541,9 @@ static gboolean window_export_handle(GtkWindow* window,
+     g_free(handle_str);
+     return true;
+   }
++#endif
+ #ifdef MOZ_WAYLAND
+-  else if (GdkIsWaylandDisplay()) {
++  if (GdkIsWaylandDisplay()) {
+     GdkWindow* gdk_window = gtk_widget_get_window(GTK_WIDGET(window));
+     WaylandWindowHandleExportedData* data;
+
+diff --git a/widget/gtk/nsUserIdleServiceGTK.cpp b/widget/gtk/nsUserIdleServiceGTK.cpp
+index 884d52a6ca..d865b9a236 100644
+--- a/widget/gtk/nsUserIdleServiceGTK.cpp
++++ b/widget/gtk/nsUserIdleServiceGTK.cpp
+@@ -17,6 +17,7 @@ using mozilla::LogLevel;
+
+ static mozilla::LazyLogModule sIdleLog("nsIUserIdleService");
+
++#ifdef MOZ_X11
+ typedef bool (*_XScreenSaverQueryExtension_fn)(Display* dpy, int* event_base,
+                                                int* error_base);
+
+@@ -25,12 +26,15 @@ typedef XScreenSaverInfo* (*_XScreenSaverAllocInfo_fn)(void);
+ typedef void (*_XScreenSaverQueryInfo_fn)(Display* dpy, Drawable drw,
+                                           XScreenSaverInfo* info);
+
+-static bool sInitialized = false;
+ static _XScreenSaverQueryExtension_fn _XSSQueryExtension = nullptr;
+ static _XScreenSaverAllocInfo_fn _XSSAllocInfo = nullptr;
+ static _XScreenSaverQueryInfo_fn _XSSQueryInfo = nullptr;
++#endif
++
++static bool sInitialized = false;
+
+ static void Initialize() {
++#ifdef MOZ_X11
+   if (!mozilla::widget::GdkIsX11Display()) {
+     return;
+   }
+@@ -57,16 +61,22 @@ static void Initialize() {
+     MOZ_LOG(sIdleLog, LogLevel::Warning, ("Failed to get XSSAllocInfo!\n"));
+   if (!_XSSQueryInfo)
+     MOZ_LOG(sIdleLog, LogLevel::Warning, ("Failed to get XSSQueryInfo!\n"));
+-
++#endif
+   sInitialized = true;
+ }
+
+-nsUserIdleServiceGTK::nsUserIdleServiceGTK() : mXssInfo(nullptr) {
++nsUserIdleServiceGTK::nsUserIdleServiceGTK()
++#ifdef MOZ_X11
++: mXssInfo(nullptr)
++#endif
++{
+   Initialize();
+ }
+
+ nsUserIdleServiceGTK::~nsUserIdleServiceGTK() {
++#ifdef MOZ_X11
+   if (mXssInfo) XFree(mXssInfo);
++#endif
+
+ // It is not safe to unload libXScrnSaver until each display is closed because
+ // the library registers callbacks through XESetCloseDisplay (Bug 397607).
+@@ -88,6 +98,7 @@ bool nsUserIdleServiceGTK::PollIdleTime(uint32_t* aIdleTime) {
+   // Ask xscreensaver about idle time:
+   *aIdleTime = 0;
+
++#ifdef MOZ_X11
+   // We might not have a display (cf. in xpcshell)
+   Display* dplay = GDK_DISPLAY_XDISPLAY(gdk_display_get_default());
+   if (!dplay) {
+@@ -107,6 +118,7 @@ bool nsUserIdleServiceGTK::PollIdleTime(uint32_t* aIdleTime) {
+     *aIdleTime = mXssInfo->idle;
+     return true;
+   }
++#endif
+   // If we get here, we couldn't get to XScreenSaver:
+   MOZ_LOG(sIdleLog, LogLevel::Warning, ("XSSQueryExtension returned false!\n"));
+   return false;
+diff --git a/widget/gtk/nsUserIdleServiceGTK.h b/widget/gtk/nsUserIdleServiceGTK.h
+index 9b9ba31846..8f83aee584 100644
+--- a/widget/gtk/nsUserIdleServiceGTK.h
++++ b/widget/gtk/nsUserIdleServiceGTK.h
+@@ -9,6 +9,7 @@
+ #define nsUserIdleServiceGTK_h__
+
+ #include "nsUserIdleService.h"
++#ifdef MOZ_X11
+ #include <X11/Xlib.h>
+ #include <X11/Xutil.h>
+ #include <gdk/gdkx.h>
+@@ -21,6 +22,7 @@ typedef struct {
+   unsigned long idle;          // milliseconds idle
+   unsigned long event_mask;    // event stuff
+ } XScreenSaverInfo;
++#endif
+
+ class nsUserIdleServiceGTK : public nsUserIdleService {
+  public:
+@@ -40,7 +42,9 @@ class nsUserIdleServiceGTK : public nsUserIdleService {
+
+  private:
+   ~nsUserIdleServiceGTK();
++#ifdef MOZ_X11
+   XScreenSaverInfo* mXssInfo;
++#endif
+
+  protected:
+   nsUserIdleServiceGTK();
+diff --git a/widget/gtk/nsWidgetFactory.cpp b/widget/gtk/nsWidgetFactory.cpp
+index d649c7e0bf..70b47d5124 100644
+--- a/widget/gtk/nsWidgetFactory.cpp
++++ b/widget/gtk/nsWidgetFactory.cpp
+@@ -20,9 +20,7 @@
+ #include "nsHTMLFormatConverter.h"
+ #include "HeadlessClipboard.h"
+ #include "IMContextWrapper.h"
+-#ifdef MOZ_X11
+-#  include "nsClipboard.h"
+-#endif
++#include "nsClipboard.h"
+ #include "TaskbarProgress.h"
+ #include "nsFilePicker.h"
+ #include "nsSound.h"
+@@ -36,7 +34,6 @@
+ using namespace mozilla;
+ using namespace mozilla::widget;
+
+-#ifdef MOZ_X11
+ NS_IMPL_COMPONENT_FACTORY(nsIClipboard) {
+   nsCOMPtr<nsIClipboard> inst;
+   if (gfxPlatform::IsHeadless()) {
+@@ -51,7 +48,6 @@ NS_IMPL_COMPONENT_FACTORY(nsIClipboard) {
+
+   return inst.forget().downcast<nsISupports>();
+ }
+-#endif
+
+ nsresult nsWidgetGtk2ModuleCtor() { return nsAppShellInit(); }
+
+diff --git a/widget/gtk/nsWindow.cpp b/widget/gtk/nsWindow.cpp
+index f78ce835ef..fdd3580b72 100644
+--- a/widget/gtk/nsWindow.cpp
++++ b/widget/gtk/nsWindow.cpp
+@@ -57,7 +57,6 @@
+ #include "mozilla/UniquePtrExtensions.h"
+ #include "mozilla/WidgetUtils.h"
+ #include "mozilla/WritingModes.h"
+-#include "mozilla/X11Util.h"
+ #include "mozilla/XREAppData.h"
+ #include "NativeKeyBindings.h"
+ #include "nsAppDirectoryServiceDefs.h"
+@@ -89,7 +88,6 @@
+ #include "ScreenHelperGTK.h"
+ #include "SystemTimeConverter.h"
+ #include "WidgetUtilsGtk.h"
+-#include "mozilla/X11Util.h"
+
+ #ifdef ACCESSIBILITY
+ #  include "mozilla/a11y/LocalAccessible.h"
+@@ -97,19 +95,23 @@
+ #  include "nsAccessibilityService.h"
+ #endif
+
++#include "GLContextEGL.h"  // for GLContextEGL::FindVisual()
++#include "GtkCompositorWidget.h"
+ #ifdef MOZ_X11
++#  include "mozilla/X11Util.h"
+ #  include <gdk/gdkkeysyms-compat.h>
+ #  include <X11/Xatom.h>
+ #  include <X11/extensions/XShm.h>
+ #  include <X11/extensions/shape.h>
+ #  include "gfxXlibSurface.h"
+ #  include "GLContextGLX.h"  // for GLContextGLX::FindVisual()
+-#  include "GLContextEGL.h"  // for GLContextEGL::FindVisual()
+ #  include "WindowSurfaceX11Image.h"
+ #  include "WindowSurfaceX11SHM.h"
+ #  include "WindowSurfaceXRender.h"
+ #endif
+ #ifdef MOZ_WAYLAND
++#  include <gdk/gdk.h>
++#  include <gdk/gdkkeysyms-compat.h>
+ #  include "nsIClipboard.h"
+ #  include "nsView.h"
+ #endif
+@@ -119,7 +121,9 @@ using namespace mozilla::gfx;
+ using namespace mozilla::layers;
+ using namespace mozilla::widget;
+ using mozilla::gl::GLContextEGL;
++#ifdef MOZ_X11
+ using mozilla::gl::GLContextGLX;
++#endif
+
+ // Don't put more than this many rects in the dirty region, just fluff
+ // out to the bounding-box if there are more
+@@ -278,6 +282,7 @@ bool nsWindow::sTransparentMainWindow = false;
+
+ namespace mozilla {
+
++#ifdef MOZ_X11
+ class CurrentX11TimeGetter {
+  public:
+   explicit CurrentX11TimeGetter(GdkWindow* aWindow)
+@@ -325,6 +330,7 @@ class CurrentX11TimeGetter {
+   GdkWindow* mWindow;
+   TimeStamp mAsyncUpdateStart;
+ };
++#endif
+
+ }  // namespace mozilla
+
+@@ -2342,6 +2348,7 @@ void nsWindow::SetSizeMode(nsSizeMode aMode) {
+ }
+
+ static bool GetWindowManagerName(GdkWindow* gdk_window, nsACString& wmName) {
++#ifdef MOZ_X11
+   if (!GdkIsX11Display()) {
+     return false;
+   }
+@@ -2408,6 +2415,7 @@ static bool GetWindowManagerName(GdkWindow* gdk_window, nsACString& wmName) {
+   }
+
+   wmName = reinterpret_cast<const char*>(prop_return);
++#endif
+   return true;
+ }
+
+@@ -2465,6 +2473,8 @@ void nsWindow::GetWorkspaceID(nsAString& workspaceID) {
+   if (!GdkIsX11Display() || !mShell) {
+     return;
+   }
++
++#ifdef MOZ_X11
+   // Get the gdk window for this widget.
+   GdkWindow* gdk_window = gtk_widget_get_window(mShell);
+   if (!gdk_window) {
+@@ -2493,6 +2503,7 @@ void nsWindow::GetWorkspaceID(nsAString& workspaceID) {
+
+   workspaceID.AppendInt((int32_t)wm_desktop[0]);
+   g_free(wm_desktop);
++#endif
+ }
+
+ void nsWindow::MoveToWorkspace(const nsAString& workspaceIDStr) {
+@@ -2501,7 +2512,7 @@ void nsWindow::MoveToWorkspace(const nsAString& workspaceIDStr) {
+   if (NS_FAILED(rv) || !workspaceID || !GdkIsX11Display() || !mShell) {
+     return;
+   }
+-
++#ifdef MOZ_X11
+   // Get the gdk window for this widget.
+   GdkWindow* gdk_window = gtk_widget_get_window(mShell);
+   if (!gdk_window) {
+@@ -2535,6 +2546,7 @@ void nsWindow::MoveToWorkspace(const nsAString& workspaceIDStr) {
+              SubstructureNotifyMask | SubstructureRedirectMask, &xevent);
+
+   XFlush(xdisplay);
++#endif
+ }
+
+ using SetUserTimeFunc = void (*)(GdkWindow*, guint32);
+@@ -2575,9 +2587,13 @@ guint32 nsWindow::GetLastUserInputTime() {
+   // button and key releases.  Therefore use the most recent of
+   // gdk_x11_display_get_user_time and the last time that we have seen.
+   GdkDisplay* gdkDisplay = gdk_display_get_default();
++#ifdef MOZ_X11
+   guint32 timestamp = GdkIsX11Display(gdkDisplay)
+                           ? gdk_x11_display_get_user_time(gdkDisplay)
+                           : gtk_get_current_event_time();
++#else
++  guint32 timestamp = gtk_get_current_event_time();
++#endif
+
+   if (sLastUserInputTime != GDK_CURRENT_TIME &&
+       TimestampIsNewerThan(sLastUserInputTime, timestamp)) {
+@@ -2735,6 +2751,7 @@ void nsWindow::UpdateClientOffsetFromFrameExtents() {
+     return;
+   }
+
++#ifdef MOZ_X11
+   GdkAtom cardinal_atom = gdk_x11_xatom_to_atom(XA_CARDINAL);
+
+   GdkAtom type_returned;
+@@ -2768,6 +2785,7 @@ void nsWindow::UpdateClientOffsetFromFrameExtents() {
+
+   LOG(("nsWindow::UpdateClientOffsetFromFrameExtents [%p] %d,%d\n", (void*)this,
+        mClientOffset.x, mClientOffset.y));
++#endif
+ }
+
+ LayoutDeviceIntPoint nsWindow::GetClientOffset() {
+@@ -2778,6 +2796,7 @@ LayoutDeviceIntPoint nsWindow::GetClientOffset() {
+
+ gboolean nsWindow::OnPropertyNotifyEvent(GtkWidget* aWidget,
+                                          GdkEventProperty* aEvent) {
++#ifdef MOZ_X11
+   if (aEvent->atom == gdk_atom_intern("_NET_FRAME_EXTENTS", FALSE)) {
+     UpdateClientOffsetFromFrameExtents();
+     return FALSE;
+@@ -2786,7 +2805,7 @@ gboolean nsWindow::OnPropertyNotifyEvent(GtkWidget* aWidget,
+   if (GetCurrentTimeGetter()->PropertyNotifyHandler(aWidget, aEvent)) {
+     return TRUE;
+   }
+-
++#endif
+   return FALSE;
+ }
+
+@@ -2924,9 +2943,11 @@ void* nsWindow::GetNativeData(uint32_t aDataType) {
+       return GetToplevelWidget();
+
+     case NS_NATIVE_WINDOW_WEBRTC_DEVICE_ID:
++#ifdef MOZ_X11
+       if (GdkIsX11Display()) {
+         return (void*)GDK_WINDOW_XID(gdk_window_get_toplevel(mGdkWindow));
+       }
++#endif
+       NS_WARNING(
+           "nsWindow::GetNativeData(): NS_NATIVE_WINDOW_WEBRTC_DEVICE_ID is not "
+           "handled on Wayland!");
+@@ -2946,9 +2967,11 @@ void* nsWindow::GetNativeData(uint32_t aDataType) {
+     case NS_NATIVE_OPENGL_CONTEXT:
+       return nullptr;
+     case NS_NATIVE_EGL_WINDOW: {
++#ifdef MOZ_X11
+       if (GdkIsX11Display()) {
+         return mGdkWindow ? (void*)GDK_WINDOW_XID(mGdkWindow) : nullptr;
+       }
++#endif
+ #ifdef MOZ_WAYLAND
+       if (mContainer) {
+         return moz_container_wayland_get_egl_window(mContainer,
+@@ -3289,8 +3312,13 @@ gboolean nsWindow::OnExposeEvent(cairo_t* cr) {
+   nsIWidgetListener* listener = GetListener();
+   if (!listener) return FALSE;
+
++#ifdef MOZ_X11
+   LOG(("received expose event [%p] %p 0x%lx (rects follow):\n", this,
+        mGdkWindow, GdkIsX11Display() ? gdk_x11_window_get_xid(mGdkWindow) : 0));
++#else
++  LOG(("received expose event [%p] %p 0x%lx (rects follow):\n", this,
++       mGdkWindow, 0));
++#endif
+   LayoutDeviceIntRegion exposeRegion;
+   if (!ExtractExposeRegion(exposeRegion, cr)) {
+     return FALSE;
+@@ -3819,6 +3847,7 @@ void nsWindow::OnMotionNotifyEvent(GdkEventMotion* aEvent) {
+     MOZ_ASSERT(gdk_window, "gdk_window_get_toplevel should not return null");
+
+     bool canDrag = true;
++#ifdef MOZ_X11
+     if (GdkIsX11Display()) {
+       // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=789054
+       // To avoid crashes disable double-click on WM without _NET_WM_MOVERESIZE.
+@@ -3829,6 +3858,7 @@ void nsWindow::OnMotionNotifyEvent(GdkEventMotion* aEvent) {
+         canDrag = false;
+       }
+     }
++#endif
+
+     if (canDrag) {
+       gdk_window_begin_move_drag(gdk_window, 1, aEvent->x_root, aEvent->y_root,
+@@ -4321,16 +4351,20 @@ TimeStamp nsWindow::GetEventTimeStamp(guint32 aEventTime) {
+     int64_t tick =
+         BaseTimeDurationPlatformUtils::TicksFromMilliseconds(timestampTime);
+     eventTimeStamp = TimeStamp::FromSystemTime(tick);
+-  } else {
++  }
++#ifdef MOZ_X11
++  else {
+     CurrentX11TimeGetter* getCurrentTime = GetCurrentTimeGetter();
+     MOZ_ASSERT(getCurrentTime,
+                "Null current time getter despite having a window");
+     eventTimeStamp =
+         TimeConverter().GetTimeStampFromSystemTime(aEventTime, *getCurrentTime);
+   }
++#endif
+   return eventTimeStamp;
+ }
+
++#ifdef MOZ_X11
+ mozilla::CurrentX11TimeGetter* nsWindow::GetCurrentTimeGetter() {
+   MOZ_ASSERT(mGdkWindow, "Expected mGdkWindow to be set");
+   if (MOZ_UNLIKELY(!mCurrentTimeGetter)) {
+@@ -4338,6 +4372,7 @@ mozilla::CurrentX11TimeGetter* nsWindow::GetCurrentTimeGetter() {
+   }
+   return mCurrentTimeGetter.get();
+ }
++#endif
+
+ gboolean nsWindow::OnKeyPressEvent(GdkEventKey* aEvent) {
+   LOG(("OnKeyPressEvent [%p]\n", (void*)this));
+@@ -4914,6 +4949,7 @@ static GdkWindow* CreateGdkWindow(GdkWindow* parent, GtkWidget* widget) {
+   return window;
+ }
+
++#ifdef MOZ_X11
+ // Configure GL visual on X11. We add alpha silently
+ // if we use WebRender to workaround NVIDIA specific Bug 1663273.
+ bool nsWindow::ConfigureX11GLVisual(bool aUseAlpha) {
+@@ -4965,6 +5001,7 @@ bool nsWindow::ConfigureX11GLVisual(bool aUseAlpha) {
+
+   return true;
+ }
++#endif
+
+ nsCString nsWindow::GetWindowNodeName() {
+   nsCString nodeName("Unknown");
+@@ -5552,9 +5589,15 @@ nsresult nsWindow::Create(nsIWidget* aParent, nsNativeWidget aNativeParent,
+        mWindowType == eWindowType_toplevel ? "Toplevel" : "Popup",
+        mIsPIPWindow ? "PIP window" : ""));
+   if (mShell) {
++#ifdef MOZ_X11
+     LOG(("\tmShell %p mContainer %p mGdkWindow %p 0x%lx\n", mShell, mContainer,
+          mGdkWindow,
+          GdkIsX11Display() ? gdk_x11_window_get_xid(mGdkWindow) : 0));
++#else
++    LOG(("\tmShell %p mContainer %p mGdkWindow %p 0x%lx\n", mShell, mContainer,
++         mGdkWindow,
++         0));
++#endif
+   } else if (mContainer) {
+     LOG(("\tmContainer %p mGdkWindow %p\n", mContainer, mGdkWindow));
+   } else if (mGdkWindow) {
+@@ -6478,6 +6521,7 @@ void nsWindow::UpdateTitlebarTransparencyBitmap() {
+     cairo_surface_destroy(surface);
+   }
+
++#ifdef MOZ_X11
+   if (!mNeedsShow) {
+     Display* xDisplay = GDK_WINDOW_XDISPLAY(mGdkWindow);
+     Window xDrawable = GDK_WINDOW_XID(mGdkWindow);
+@@ -6500,6 +6544,7 @@ void nsWindow::UpdateTitlebarTransparencyBitmap() {
+
+     XFreePixmap(xDisplay, maskPixmap);
+   }
++#endif
+ }
+
+ void nsWindow::GrabPointer(guint32 aTime) {
+@@ -6772,7 +6817,7 @@ static bool IsFullscreenSupported(GtkWidget* aShell) {
+   GdkScreen* screen = gtk_widget_get_screen(aShell);
+   GdkAtom atom = gdk_atom_intern("_NET_WM_STATE_FULLSCREEN", FALSE);
+   return gdk_x11_screen_supports_net_wm_hint(screen, atom);
+-#elif
++#else
+   return true;
+ #endif
+ }
+@@ -8048,6 +8093,7 @@ bool nsWindow::GetDragInfo(WidgetMouseEvent* aMouseEvent, GdkWindow** aWindow,
+     return false;
+   }
+
++#ifdef MOZ_X11
+   if (GdkIsX11Display()) {
+     // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=789054
+     // To avoid crashes disable double-click on WM without _NET_WM_MOVERESIZE.
+@@ -8063,6 +8109,7 @@ bool nsWindow::GetDragInfo(WidgetMouseEvent* aMouseEvent, GdkWindow** aWindow,
+       }
+     }
+   }
++#endif
+
+   // FIXME: It would be nice to have the widget position at the time
+   // of the event, but it's relatively unlikely that the widget has
+@@ -8794,6 +8841,7 @@ void nsWindow::GetCompositorWidgetInitData(
+     mozilla::widget::CompositorWidgetInitData* aInitData) {
+   nsCString displayName;
+
++#ifdef MOZ_X11
+   if (GdkIsX11Display() && mXWindow != X11None) {
+     // Make sure the window XID is propagated to X server, we can fail otherwise
+     // in GPU process (Bug 1401634).
+@@ -8807,6 +8855,12 @@ void nsWindow::GetCompositorWidgetInitData(
+   *aInitData = mozilla::widget::GtkCompositorWidgetInitData(
+       (mXWindow != X11None) ? mXWindow : (uintptr_t) nullptr, displayName,
+       isShaped, GdkIsX11Display(), GetClientSize());
++#else
++  *aInitData = mozilla::widget::GtkCompositorWidgetInitData(
++      (uintptr_t) nullptr,
++      nsCString(), 0,
++      0, GetClientSize());
++#endif
+ }
+
+ #ifdef MOZ_WAYLAND
+diff --git a/widget/gtk/nsWindow.h b/widget/gtk/nsWindow.h
+index 9525c0c6da..6818f7cad2 100644
+--- a/widget/gtk/nsWindow.h
++++ b/widget/gtk/nsWindow.h
+@@ -90,7 +90,9 @@ typedef struct _GdkEventTouchpadPinch GdkEventTouchpadPinch;
+
+ namespace mozilla {
+ class TimeStamp;
++#ifdef MOZ_X11
+ class CurrentX11TimeGetter;
++#endif
+
+ }  // namespace mozilla
+
+@@ -271,7 +273,9 @@ class nsWindow final : public nsBaseWidget {
+
+   WidgetEventTime GetWidgetEventTime(guint32 aEventTime);
+   mozilla::TimeStamp GetEventTimeStamp(guint32 aEventTime);
++#ifdef MOV_X11
+   mozilla::CurrentX11TimeGetter* GetCurrentTimeGetter();
++#endif
+
+   virtual void SetInputContext(const InputContext& aContext,
+                                const InputContextAction& aAction) override;
+@@ -756,7 +760,9 @@ class nsWindow final : public nsBaseWidget {
+    */
+   RefPtr<mozilla::widget::IMContextWrapper> mIMContext;
+
++#ifdef MOZ_X11
+   mozilla::UniquePtr<mozilla::CurrentX11TimeGetter> mCurrentTimeGetter;
++#endif
+   static GtkWindowDecoration sGtkWindowDecoration;
+
+   static bool sTransparentMainWindow;
+@@ -807,6 +813,7 @@ class nsWindow final : public nsBaseWidget {
+   void DispatchRestoreEventAccessible();
+ #endif
+
++mozilla::widget::WindowSurfaceProvider mSurfaceProvider;
+ #ifdef MOZ_X11
+   typedef enum {GTK_WIDGET_COMPOSIDED_DEFAULT = 0,
+                 GTK_WIDGET_COMPOSIDED_DISABLED = 1,
+@@ -816,7 +823,6 @@ class nsWindow final : public nsBaseWidget {
+   Window mXWindow;
+   Visual* mXVisual;
+   int mXDepth;
+-  mozilla::widget::WindowSurfaceProvider mSurfaceProvider;
+
+   bool ConfigureX11GLVisual(bool aUseAlpha);
+ #endif
+diff --git a/widget/moz.build b/widget/moz.build
+index 07e6970e56..9d1fe19661 100644
+--- a/widget/moz.build
++++ b/widget/moz.build
+@@ -258,7 +258,7 @@ if CONFIG["MOZ_INSTRUMENT_EVENT_LOOP"]:
+
+ EXPORTS.ipc = ["nsGUIEventIPC.h"]
+
+-if CONFIG["MOZ_X11"]:
++if CONFIG["MOZ_X11"] or CONFIG["MOZ_WAYLAND"]:
+     DIRS += ["x11"]
+
+ if toolkit in ("cocoa", "windows"):
+@@ -305,7 +305,7 @@ if toolkit == "windows":
+         "windows/PCompositorWidget.ipdl",
+         "windows/PlatformWidgetTypes.ipdlh",
+     ]
+-elif CONFIG["MOZ_WIDGET_TOOLKIT"] == "gtk" and CONFIG["MOZ_X11"]:
++elif CONFIG["MOZ_WIDGET_TOOLKIT"] == "gtk":
+     IPDL_SOURCES = [
+         "gtk/PCompositorWidget.ipdl",
+         "gtk/PlatformWidgetTypes.ipdlh",
+diff --git a/widget/gtk/moz.build b/widget/gtk/moz.build
+index f882569..1acea03 100644
+--- a/widget/gtk/moz.build
++++ b/widget/gtk/moz.build
+@@ -149,7 +149,7 @@ LOCAL_INCLUDES += [
+     "/widget/headless",
+ ]
+
+-if CONFIG["MOZ_X11"]:
++if CONFIG["MOZ_X11"] or CONFIG["MOZ_WAYLAND"]:
+     LOCAL_INCLUDES += [
+         "/widget/x11",
+     ]
+diff --git a/gfx/thebes/gfxPlatformGtk.cpp b/gfx/thebes/gfxPlatformGtk.cpp
+index 12e01681c7..b9f526ff45 100644
+--- a/gfx/thebes/gfxPlatformGtk.cpp
++++ b/gfx/thebes/gfxPlatformGtk.cpp
+@@ -30,7 +30,9 @@
+ #include "mozilla/FontPropertyTypes.h"
+ #include "mozilla/gfx/2D.h"
+ #include "mozilla/gfx/Logging.h"
++#ifdef MOZ_X11
+ #include "mozilla/gfx/XlibDisplay.h"
++#endif
+ #include "mozilla/Monitor.h"
+ #include "mozilla/Preferences.h"
+ #include "mozilla/StaticPrefs_gfx.h"
