@@ -59,11 +59,32 @@ jemalloc          = false
 debug-assertions  = false
 codegen-tests     = false
 codegen-units-std = 1
+EOF
 
+case $("$CC" -print-file-name=libunwind.so) in */*)
+cat >> config.toml <<EOF
+llvm-libunwind    = "system"
+EOF
+esac
+
+cat >> config.toml <<EOF
 [target.x86_64-unknown-linux-musl]
 llvm-config = "/usr/bin/llvm-config"
 crt-static  = false
 EOF
+
+# Since libgcc_s.so is needed for Rust's own bootstrap binary, and
+# it's dynamically linked, we'll have to add two files, libgcc_s.so.1
+# for the symlink, and libgcc_s.so so the linker points to libunwind.
+case $("$CC" -print-file-name=libunwind.so) in */*)
+    mkdir -p libgcc
+    ln -sf /usr/lib/libunwind.so.1 libgcc/libgcc_s.so.1
+    cat > libgcc/libgcc_s.so <<EOF
+INPUT(-lunwind)
+EOF
+    export LD_LIBRARY_PATH="$PWD/libgcc:$LD_LIBRARY_PATH"
+    export LIBRARY_PATH="$PWD/libgcc:$LIBRARY_PATH"
+esac
 
 python3 ./x.py build -j "$(nproc)"
 python3 ./x.py install
@@ -73,4 +94,3 @@ rm -rf \
     "$1/usr/share/doc" \
     "$1/usr/share/zsh" \
     "$1/usr/lib/rustlib/uninstall.sh"
-
