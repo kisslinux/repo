@@ -37,6 +37,22 @@ mv -f _ "$_f"
     make
     make install
 )
+
+# Build zip for Firefox's sole use.
+# Zip is an awful format that we should use
+# as little as possible.
+(
+    cd zip
+
+    make \
+        CC="$CC $CFLAGS $CXXFLAGS" \
+        -f unix/Makefile generic
+
+    make \
+        prefix="$PWD/../junk" \
+        -f unix/Makefile install
+)
+
 export PATH="$PWD/junk/bin:$PATH"
 
 # If using libc++, CXXSTDLIB needs to be set manually.
