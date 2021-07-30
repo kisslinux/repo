@@ -1,4 +1,3 @@
 https://download.gnome.org/sources/gtk+/MAJOR.MINOR/gtk+-VERSION.tar.xz
 https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas/-/archive/40.0/gsettings-desktop-schemas-40.0.tar.gz schemas
 patches/no-fribidi.patch
-patches/schemas.patch

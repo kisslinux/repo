@@ -1,14 +1,10 @@
 #!/bin/sh -e
 
 patch -p1 < no-fribidi.patch
-patch -p1 < schemas.patch
 
 # GTK+3 on Wayland requires gsettings-desktop-schemas
-# for gsettings to work correctly. Install the bare
-# minimum needed (currently one schema).
-#
-# This fixes cursor icon issues and console spam when
-# running Firefox.
+# for gsettings to work correctly. Under X11 it made
+# use of xsettings but this is no longer the case.
 (
     cd schemas
 
