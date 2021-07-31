@@ -1,6 +1,12 @@
 #!/bin/sh -e
 
+# Make the build system run /bin/true to generate
+# a dummy file so our pre-generated one is used.
+sed 's/fcobjshash\.h/fcjunk.h/' src/Makefile.in > _
+mv -f _ src/Makefile.in
+
 ./configure \
+    GPERF=/bin/true \
     --prefix=/usr \
     --localstatedir=/var \
     --sysconfdir=/etc \
