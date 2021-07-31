@@ -1,9 +1,0 @@
-#!/bin/sh -e
-
-./configure \
-    --prefix=/usr
-
-make
-make install
-
-rm -rf "$1/usr/share/doc"
