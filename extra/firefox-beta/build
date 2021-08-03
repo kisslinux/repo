@@ -36,10 +36,10 @@ mv -f _ "$_f"
     cd yasm
 
     ./configure \
-        --prefix="$PWD/../junk"
+        --prefix=/
 
     make
-    make install
+    make DESTDIR="$PWD/../junk" install
 )
 
 # Build zip for Firefox's sole use.
