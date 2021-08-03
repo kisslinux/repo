@@ -11,7 +11,7 @@ patch -p1 < no-x11.patch
     printf '{"package":null,"files":{}}\n' \
         > third_party/rust/packed_simd/.cargo-checksum.json
 
-    patch -p1 < rust-1.45.0.patch
+    patch -p1 < rust-1.54.0.patch
 }
 
 # Remove fribidi dependency.
