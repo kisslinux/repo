@@ -2,6 +2,18 @@
 
 patch -p1 < no-x11.patch
 
+# Firefox 90 cannot be built with rust 1.54.0. This updates a crate
+# used by Firefox to work around this issue.
+{
+    sed '/const_fn,/d' third_party/rust/packed_simd/src/lib.rs > _
+    mv -f _ third_party/rust/packed_simd/src/lib.rs
+
+    printf '{"package":null,"files":{}}\n' \
+        > third_party/rust/packed_simd/.cargo-checksum.json
+
+    patch -p1 < rust-1.45.0.patch
+}
+
 # Remove fribidi dependency.
 sed '/fribidi/d' config/system-headers.mozbuild > _
 mv -f _ config/system-headers.mozbuild
