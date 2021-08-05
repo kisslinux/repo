@@ -21,6 +21,7 @@ make DESTDIR="$1" install
 
 cp -f contrib/ssh-copy-id   "$1/usr/bin"
 cp -f contrib/ssh-copy-id.1 "$1/usr/share/man/man1"
+chmod +x "$1/usr/bin/ssh-copy-id"
 
 # Install runit services.
 mkdir -p "$1/etc/sv/sshd"
