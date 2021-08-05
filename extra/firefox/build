@@ -18,6 +18,15 @@ patch -p1 < no-x11.patch
 sed '/fribidi/d' config/system-headers.mozbuild > _
 mv -f _ config/system-headers.mozbuild
 
+# The most recent version of Clang is able to build NSS with its
+# integrated assembler.
+sed '/-no-integrated-as/d' security/nss/lib/freebl/Makefile > _
+mv -f _ security/nss/lib/freebl/Makefile
+sed '/-no-integrated-as/d' security/nss/lib/freebl/freebl.gyp > _
+mv -f _ security/nss/lib/freebl/freebl.gyp
+sed '/-no-integrated-as/d' security/nss/lib/freebl/freebl_base.gypi > _
+mv -f _ security/nss/lib/freebl/freebl_base.gypi
+
 # Remove libc header which conflicts with 7 or so Linux
 # kernel headers. See: https://github.com/kisslinux/repo/issues/207
 _f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c

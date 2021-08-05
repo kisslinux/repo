@@ -6,6 +6,15 @@ patch -p1 < no-x11.patch
 # URL is used.
 patch -p1 < attachment.cgi\?id=9202429
 
+# The most recent version of Clang is able to build NSS with its
+# integrated assembler.
+sed '/-no-integrated-as/d' security/nss/lib/freebl/Makefile > _
+mv -f _ security/nss/lib/freebl/Makefile
+sed '/-no-integrated-as/d' security/nss/lib/freebl/freebl.gyp > _
+mv -f _ security/nss/lib/freebl/freebl.gyp
+sed '/-no-integrated-as/d' security/nss/lib/freebl/freebl_base.gypi > _ 
+mv -f _ security/nss/lib/freebl/freebl_base.gypi
+
 # Remove fribidi dependency.
 sed '/fribidi/d' config/system-headers.mozbuild > _
 mv -f _ config/system-headers.mozbuild
