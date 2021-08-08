@@ -1,4 +1,8 @@
 #!/bin/sh -e
 
+# Disable test program 'thread-test'.
+sed 's/thread-test//' src/Makefile > _
+mv -f _ src/Makefile
+
 make COMPILER="$CC"
 make libdir=/usr/lib/ install
