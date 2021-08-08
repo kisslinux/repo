@@ -1,8 +1,7 @@
 fontconfig
+freetype-harfbuzz
 glib
-libffi
 libpng
-mesa
 pixman
 pkgconf make
 zlib
