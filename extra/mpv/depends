@@ -2,7 +2,9 @@ alsa-lib
 ffmpeg
 freetype-harfbuzz
 libass
+linux-headers make
 mesa
 pkgconf make
 python  make
 wayland
+wayland-protocols make
