@@ -6,7 +6,8 @@ build_freetype() (
     ./configure \
         --prefix=/usr \
         --enable-freetype-config \
-        --with-harfbuzz="$2"
+        --with-harfbuzz="$2" \
+        --with-bzip2=no \
 
     make
     make install
