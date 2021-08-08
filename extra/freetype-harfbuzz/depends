@@ -1,4 +1,3 @@
 libpng
 meson   make
 pkgconf make
-zlib
