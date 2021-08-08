@@ -1,6 +1,9 @@
 #!/bin/sh -e
 
-# Disable test program 'thread-test'.
+# Disable test program 'thread-test' as it causes build failures when using
+# parallel make (due to missing dependency on libefivar.so). Other workarounds
+# include patching the Makefile or forcing -j1 (what we used to do).
+# See: https://github.com/rhboot/efivar/pull/169
 sed 's/thread-test//' src/Makefile > _
 mv -f _ src/Makefile
 
