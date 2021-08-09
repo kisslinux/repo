@@ -5,6 +5,7 @@ freetype-harfbuzz
 gdk-pixbuf
 glib
 libxkbcommon
+mesa
 meson   make
 pango
 pkgconf make
