@@ -83,3 +83,10 @@ make install
 # compiler errors for some packages. It has no use at all.
 rm -f "$1/usr/bin/gtk-encode-symbolic-svg"
 
+# Remove epoxy references from installed pkg-config files. The build system
+# should have done this for us as it is statically linked.
+for f in "$1/usr/lib/pkgconfig/"*.pc; do
+    sed 's/epoxy >= 1.4//' "$f" > _
+    mv -f _ "$f"
+done
+
