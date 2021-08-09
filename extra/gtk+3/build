@@ -3,7 +3,7 @@
 patch -p1 < no-fribidi.patch
 
 # Remove configure check for atk-bridge and fribidi. Funny enough, atk-bridge
-# is not requires under wayland and there are ifdefs in place to ensure this.
+# is not required under wayland and there are ifdefs in place to ensure this.
 # The build system forces the dependency anyway so we must remove it.
 sed -e 's/\(ATK_PACKAGES="atk\) atk-bridge-2.0"/\1"/' \
     -e 's/fribidi >= 0\.19\.7//g' \
