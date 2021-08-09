@@ -4,7 +4,6 @@ fontconfig
 freetype-harfbuzz
 gdk-pixbuf
 glib
-libepoxy
 libxkbcommon
 meson   make
 pango
