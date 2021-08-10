@@ -1,5 +1,14 @@
 #!/bin/sh -e
 
+# Without this environment variable being set to some arbitrary value,
+# python's module loader uses timestamps for cache invalidation. Something
+# goes wrong here and all pyc files are seen as stale.
+#
+# By setting this value, python uses checksums for cache invalidation which
+# (on my machine) drops startup time from 3 seconds to 0.060s. Further
+# investigation is needed.
+export SOURCE_DATE_EPOCH=1628593994
+
 # Remove util-linux dependency among other things.
 cat >> Modules/Setup <<EOF
 *disabled*
