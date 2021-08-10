@@ -2,27 +2,29 @@
 
 patch -p1 < no-x11.patch
 
-# Firefox 90 cannot be built with rust 1.54.0. This updates a crate
-# used by Firefox to work around this issue.
-{
-    sed '/const_fn,/d' third_party/rust/packed_simd/src/lib.rs > _
-    mv -f _ third_party/rust/packed_simd/src/lib.rs
-
-    printf '{"package":null,"files":{}}\n' \
-        > third_party/rust/packed_simd/.cargo-checksum.json
-
-    patch -p1 < rust-1.54.0.patch
-}
+# X11-less webrtc patch from bugzilla. Very large so a URL is used.
+patch -p1 < attachment.cgi\?id=9202429
 
 # Remove fribidi dependency.
 sed '/fribidi/d' config/system-headers.mozbuild > _
 mv -f _ config/system-headers.mozbuild
 
-# Remove libc header which conflicts with 7 or so Linux
-# kernel headers. See: https://github.com/kisslinux/repo/issues/207
+# Remove libc header which conflicts with 7 or so Linux kernel headers.
+# See: https://github.com/kisslinux/repo/issues/207
 _f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
 sed '/net\/if/d' "$_f" > _
 mv -f _ "$_f"
+
+# The most recent version of Clang is able to build NSS with its integrated
+# assembler.
+for f in \
+    security/nss/lib/freebl/Makefile \
+    security/nss/lib/freebl/freebl.gyp \
+    security/nss/lib/freebl/freebl_base.gypi
+do
+    sed '/-no-integrated-as/d' "$f" > _
+    mv -f _ "$f"
+done
 
 # Build autoconf 2.13 for Firefox's sole use.
 # See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
@@ -116,13 +118,6 @@ ac_add_options --disable-debug
 ac_add_options --disable-debug-symbols
 ac_add_options --disable-parental-controls
 ac_add_options --disable-system-extension-dirs
-EOF
-
-# Currently required for X11-less builds.
-# See: https://bugzilla.mozilla.org/show_bug.cgi?id=1661450
-#      https://bugzilla.mozilla.org/show_bug.cgi?id=1654112
-cat >> .mozconfig <<EOF
-ac_add_options --disable-webrtc
 EOF
 
 ./mach build
