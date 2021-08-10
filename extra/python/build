@@ -21,7 +21,7 @@ patch -p1 < python3-always-pip.patch
     --with-ensurepip=yes \
     --without-doc-strings
 
-make
+make EXTRA_CFLAGS="$CFLAGS -DTHREAD_STACK_SIZE=0x100000"
 make install
 
 ln -s python3 "$1/usr/bin/python"
