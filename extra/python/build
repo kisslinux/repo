@@ -1,14 +1,5 @@
 #!/bin/sh -e
 
-# Without this environment variable being set to some arbitrary value,
-# python's module loader uses timestamps for cache invalidation. Something
-# goes wrong here and all pyc files are seen as stale.
-#
-# By setting this value, python uses checksums for cache invalidation which
-# (on my machine) drops startup time from 3 seconds to 0.060s. Further
-# investigation is needed.
-export SOURCE_DATE_EPOCH=1628593994
-
 # Remove util-linux dependency among other things.
 cat >> Modules/Setup <<EOF
 *disabled*
@@ -20,7 +11,9 @@ EOF
 export CFLAGS="$CFLAGS -fno-semantic-interposition"
 export LDFLAGS="$LDFLAGS -fno-semantic-interposition"
 
-patch -p1 < python3-always-pip.patch
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
 
 ./configure \
     --prefix=/usr \
@@ -35,9 +28,6 @@ make install
 
 ln -s python3 "$1/usr/bin/python"
 ln -s pip3    "$1/usr/bin/pip"
-
-# Make static library writable.
-chmod u+w "$1/usr/lib/libpython"*
 
 # Let's make some kind of effort to reduce the overall
 # size of Python by removing a bunch of rarely used and

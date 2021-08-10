@@ -1,2 +1,4 @@
 https://www.python.org/ftp/python/VERSION/Python-VERSION.tar.xz
 patches/python3-always-pip.patch
+patches/python3-no-static.patch
+patches/python3-pyc-hash.patch

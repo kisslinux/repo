@@ -1,0 +1,16 @@
+diff --git a/Lib/py_compile.py b/Lib/py_compile.py
+index a81f493..e1328ed 100644
+--- a/Lib/py_compile.py
++++ b/Lib/py_compile.py
+@@ -70,10 +70,7 @@ class PycInvalidationMode(enum.Enum):
+
+
+ def _get_default_invalidation_mode():
+-    if os.environ.get('SOURCE_DATE_EPOCH'):
+-        return PycInvalidationMode.CHECKED_HASH
+-    else:
+-        return PycInvalidationMode.TIMESTAMP
++    return PycInvalidationMode.CHECKED_HASH
+
+
+ def compile(file, cfile=None, dfile=None, doraise=False, optimize=-1,
