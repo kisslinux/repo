@@ -9,10 +9,11 @@ patch -p1 < attachment.cgi\?id=9202429
 sed '/fribidi/d' config/system-headers.mozbuild > _
 mv -f _ config/system-headers.mozbuild
 
-# Remove libc header which conflicts with 7 or so Linux kernel headers.
+# Include net/if.h before linux/if.h since linux/if.h has redefinition
+# guards whereas net/if.h doesn't.
 # See: https://github.com/kisslinux/repo/issues/207
 _f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
-sed '/net\/if/d' "$_f" > _
+sed '/if defined(LINUX)/a#include <net\/if.h>' "$_f" > _
 mv -f _ "$_f"
 
 # The most recent version of Clang is able to build NSS with its integrated
