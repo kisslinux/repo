@@ -1,4 +1,0 @@
-#!/bin/sh -e
-
-make
-make PREFIX=/usr install
