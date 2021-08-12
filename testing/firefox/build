@@ -1,0 +1,137 @@
+#!/bin/sh -e
+
+patch -p1 < no-x11.patch
+
+# X11-less webrtc patch from bugzilla. Very large so a URL is used.
+patch -p1 < attachment.cgi\?id=9202429
+
+# Remove fribidi dependency.
+sed '/fribidi/d' config/system-headers.mozbuild > _
+mv -f _ config/system-headers.mozbuild
+
+# Fix issue with Firefox mixing userspace and kernel headers.
+# See: https://github.com/kisslinux/repo/issues/207
+_f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
+sed '/if defined(LINUX)/a#include <net\/if.h>' "$_f" > _
+mv -f _ "$_f"
+
+# The most recent version of Clang is able to build NSS with its integrated
+# assembler.
+for f in \
+    security/nss/lib/freebl/Makefile \
+    security/nss/lib/freebl/freebl.gyp \
+    security/nss/lib/freebl/freebl_base.gypi
+do
+    sed '/-no-integrated-as/d' "$f" > _
+    mv -f _ "$f"
+done
+
+# Build autoconf 2.13 for Firefox's sole use.
+# See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
+(
+    cd autoconf2.13
+
+    ./configure \
+        --prefix="$PWD/../junk" \
+        --program-suffix=-2.13
+
+    make
+    make install
+)
+
+# Build yasm for Firefox's sole use.
+# Firefox is the only package which needs it
+# and upstream is kinda dead.
+(
+    cd yasm
+
+    ./configure \
+        --prefix=/
+
+    make
+    make DESTDIR="$PWD/../junk" install
+)
+
+# Build zip for Firefox's sole use.
+# Zip is an awful format that we should use
+# as little as possible.
+(
+    cd zip
+
+    make \
+        CC="$CC $CFLAGS $CXXFLAGS" \
+        -f unix/Makefile generic
+
+    make \
+        prefix="$PWD/../junk" \
+        -f unix/Makefile install
+)
+
+export PATH="$PWD/junk/bin:$PATH"
+
+# If using libc++, CXXSTDLIB needs to be set manually.
+case $("$CC" -print-file-name=libc++.so) in */*)
+    export CXXSTDLIB=c++
+esac
+
+export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox,--enable-new-dtags"
+export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
+export MACH_USE_SYSTEM_PYTHON=1
+export MOZ_DEBUG_FLAGS=-g0
+export MOZ_NOSPAM=1
+
+cat > .mozconfig << EOF
+ac_add_options --enable-default-toolkit=cairo-gtk3-wayland
+ac_add_options --prefix=/usr
+ac_add_options --libdir=/usr/lib
+ac_add_options --enable-alsa
+ac_add_options --enable-strip
+ac_add_options --enable-release
+ac_add_options --enable-rust-simd
+ac_add_options --enable-install-strip
+ac_add_options --enable-official-branding
+ac_add_options --enable-application=browser
+ac_add_options --enable-optimize="${CFLAGS:-} -w"
+ac_add_options --with-system-libvpx
+ac_add_options --with-system-ffi
+ac_add_options --with-system-png
+ac_add_options --with-system-jpeg
+ac_add_options --with-system-zlib
+ac_add_options --with-system-pixman
+ac_add_options --without-system-nss
+ac_add_options --without-system-nspr
+ac_add_options --disable-eme
+ac_add_options --disable-dbus
+ac_add_options --disable-gold
+ac_add_options --disable-tests
+ac_add_options --disable-vtune
+ac_add_options --disable-updater
+ac_add_options --disable-jemalloc
+ac_add_options --disable-elf-hack
+ac_add_options --disable-callgrind
+ac_add_options --disable-profiling
+ac_add_options --disable-necko-wifi
+ac_add_options --disable-crashreporter
+ac_add_options --disable-pulseaudio
+ac_add_options --disable-accessibility
+ac_add_options --disable-debug
+ac_add_options --disable-debug-symbols
+ac_add_options --disable-parental-controls
+ac_add_options --disable-system-extension-dirs
+EOF
+
+sh >/dev/tty
+./mach build
+./mach install
+
+# Remove a lot of uneeded "stuff".
+rm -rf \
+    "$1/usr/include" \
+    "$1/usr/lib/firefox-devel" \
+    "$1/usr/share/idl" \
+    "$1/usr/lib/firefox/browser/features/fxmonitor@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/screenshots@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/doh-rollout@mozilla.org.xpi"
+
