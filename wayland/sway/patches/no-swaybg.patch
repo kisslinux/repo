@@ -1,0 +1,13 @@
+--- a/config.in
++++ b/config.in
+@@ -22,8 +22,8 @@
+ 
+ ### Output configuration
+ #
+-# Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
+-output * bg @datadir@/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
++# Setting up a wallpaper (requires swaybg to be installed)
++# output * bg /path/to/wallpaper.png fill
+ #
+ # Example configuration:
+ #
