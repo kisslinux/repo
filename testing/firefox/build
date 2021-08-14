@@ -120,7 +120,6 @@ ac_add_options --disable-parental-controls
 ac_add_options --disable-system-extension-dirs
 EOF
 
-sh >/dev/tty
 ./mach build
 ./mach install
 
