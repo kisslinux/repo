@@ -1,20 +1,20 @@
 #!/bin/sh -e
-#
-# This build system is a little funky. I want to contribute upstream to get the
-# whole thing buildable with Makefiles (no Cmake).
 
 make -C xxhash
 
 # Point mold to the local xxhash.
 export CXXFLAGS="-L$PWD/xxhash -I$PWD/xxhash $CXXFLAGS"
 
-# Prevent the build system from overwriting CC/CXX.
-sed /clang/d Makefile > _
-mv -f _ Makefile
+# CMAKE_GENERATOR must unset to force usage of Makefiles. The build system
+# calls cmake and proceeds to assume that Makefiles will be used with it
+# breaking builds with Ninja/Samurai.
+unset CMAKE_GENERATOR
 
-# CMAKE_GENERATOR must be set to force usage of Makefiles. The build system
-# calls cmake and proceeds to assume that Makefiles will be used with it.
-make CMAKE_GENERATOR= LDFLAGS="$LDFLAGS -static"
+# Force a static build so shared library breakage does not also break the
+# linker (and therefore the ability to recover from the issue).
+export LDFLAGS="$LDFLAGS -static"
+
+make
 make install
 
 # Create a symbolic link so users can use mold as the linker system-wide
