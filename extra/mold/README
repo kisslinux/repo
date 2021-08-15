@@ -1,0 +1,70 @@
+Mold
+________________________________________________________________________________
+
+mold is a multi-threaded, high-performance linker that is several times faster
+than the industry-standard ones, namely, GNU ld, GNU gold or LLVM lld. It is
+developed as a drop-in replacement for these linkers and command-line compatible
+with them with a few exceptions.
+
+
+Caveats
+________________________________________________________________________________
+
+* mold can not yet link the kernel.
+* LTO is not yet supported (so refrain from using it)
+
+If a package fails to link with mold, open an issue at $/kisslinux/repo and
+(until it is fixed) revert to using your previous linker for said package.
+
+
+Usage
+________________________________________________________________________________
+
+The linker is typically located at /usr/bin/ld and is invoked by the compiler.
+To use mold as the system linker, one of the following methods must be used.
+
+1. Use the alternatives system to set mold as the system linker.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|   $ kiss a mold /usr/bin/ld                                                  |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+2. Add --ld-path to CFLAGS/CXXFLAGS (Clang > 12.0)
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|   $ export CFLAGS="$CFLAGS -ld-path=/usr/bin/mold"                           |
+|   $ export CXXFLAGS="$CXXFLAGS -ld-path=/usr/bin/mold"                       |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+3. Add -B to CFLAGS/CXXFLAGS (GCC)
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|   $ export CFLAGS="$CFLAGS -B/usr/lib/mold"                                  |
+|   $ export CXXFLAGS="$CXXFLAGS -B/usr/lib/mold"                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+Verification
+________________________________________________________________________________
+
+To verify that mold is being used, disable binary stripping (KISS_STRIP=0) and
+run the following command on a newly build executable. If 'mold' appears in the
+output, everything is setup correctly.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|   $ readelf -p .comment /path/to/exe                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+Further Reading
+________________________________________________________________________________
+
+* $/rui314/mold
