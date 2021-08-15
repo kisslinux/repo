@@ -1,0 +1,30 @@
+diff --git a/src/include/defaults.mk b/src/include/defaults.mk
+index 511f4da..3825ef0 100644
+--- a/src/include/defaults.mk
++++ b/src/include/defaults.mk
+@@ -47,7 +47,6 @@ LDFLAGS ?=
+ override _CCLDFLAGS := $(CCLDFLAGS)
+ override _LDFLAGS := $(LDFLAGS)
+ override LDFLAGS = $(CFLAGS) -L. $(_LDFLAGS) $(_CCLDFLAGS) \
+-		   -Wl,--add-needed \
+ 		   -Wl,--build-id \
+ 		   -Wl,--no-allow-shlib-undefined \
+ 		   -Wl,--no-undefined-version \
+@@ -89,7 +88,6 @@ override _HOST_LDFLAGS := $(HOST_LDFLAGS)
+ override _HOST_CCLDFLAGS := $(HOST_CCLDFLAGS)
+ override HOST_LDFLAGS = $(HOST_CFLAGS) -L. \
+ 			$(_HOST_LDFLAGS) $(_HOST_CCLDFLAGS) \
+-			-Wl,--add-needed \
+ 			-Wl,--build-id \
+ 			-Wl,--no-allow-shlib-undefined \
+ 			-Wl,-z,now \
+diff --git a/src/include/gcc.specs b/src/include/gcc.specs
+index ef28e2b..d85e865 100644
+--- a/src/include/gcc.specs
++++ b/src/include/gcc.specs
+@@ -5,4 +5,4 @@
+ + %{!shared:%{!static:%{!r:-pie}}} %{static:-Wl,-no-fatal-warnings -Wl,-static -static -Wl,-z,relro,-z,now} -grecord-gcc-switches
+ 
+ *link:
+-+ %{!static:--fatal-warnings} --no-undefined-version --no-allow-shlib-undefined --add-needed -z now --build-id %{!static:%{!shared:-pie}} %{shared:-z relro} %{static:%<pie}
+++ %{!static:--fatal-warnings} --no-undefined-version --no-allow-shlib-undefined -z now --build-id %{!static:%{!shared:-pie}} %{shared:-z relro} %{static:%<pie}
