@@ -54,7 +54,7 @@ Verification
 ________________________________________________________________________________
 
 To verify that mold is being used, disable binary stripping (KISS_STRIP=0) and
-run the following command on a newly build executable. If 'mold' appears in the
+run the following command on a newly built executable. If 'mold' appears in the
 output, everything is setup correctly.
 
 +------------------------------------------------------------------------------+
