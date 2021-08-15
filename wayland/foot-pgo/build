@@ -11,10 +11,15 @@ case $("$CC" --version) in
         export CFLAGS="$CFLAGS -Wno-ignored-optimization-argument"
     ;;
 
-    *gcc*)
+    *GCC*)
         # PGO with < -O3 is slow > GCC 10.1.X.
         export CFLAGS="$CFLAGS -O3"
     ;;
+esac
+
+# Mold does not yet support LTO.
+case $(ld --version) in *mold*)
+    _lto=false
 esac
 
 mkdir -p bld/release
@@ -25,7 +30,7 @@ meson \
     --buildtype=release \
     --force-fallback-for=fcft,tllist \
     -Dime=false \
-    -Db_lto=true \
+    -Db_lto="${_lto:-true}" \
     ../..
 
 # Generate PGO data.
