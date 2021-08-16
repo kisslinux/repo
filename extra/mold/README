@@ -35,8 +35,8 @@ To use mold as the system linker, one of the following methods must be used.
 
 +------------------------------------------------------------------------------+
 |                                                                              |
-|   $ export CFLAGS="$CFLAGS -ld-path=/usr/bin/mold"                           |
-|   $ export CXXFLAGS="$CXXFLAGS -ld-path=/usr/bin/mold"                       |
+|   $ export CFLAGS="$CFLAGS --ld-path=/usr/bin/mold"                          |
+|   $ export CXXFLAGS="$CXXFLAGS --ld-path=/usr/bin/mold"                      |
 |                                                                              |
 +------------------------------------------------------------------------------+
 
