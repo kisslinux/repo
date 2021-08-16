@@ -24,9 +24,15 @@ case $2 in "$gcc_version"*)
     bootstrap=--disable-bootstrap
 esac
 
-export libat_cv_have_ifunc=no
+# Mold fails to dynamically link GCC, static linking works fine and does not
+# result in a large size increase (quite resonable). This will hopefully be
+# fixed upstream soon.
+case $CFLAGS$CXXFLAGS$(ld --version) in *mold*)
+    patch -p1 < static-bin.patch
+esac
 
 ../gcc/configure \
+    libat_cv_have_ifunc=no \
     --prefix=/usr \
     --libexecdir=/usr/lib \
     --mandir=/usr/share/man \
