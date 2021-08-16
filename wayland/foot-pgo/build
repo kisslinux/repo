@@ -18,7 +18,7 @@ case $("$CC" --version) in
 esac
 
 # Mold does not yet support LTO.
-case $(ld --version) in *mold*)
+case $CFLAGS$(ld --version) in *mold*)
     _lto=false
 esac
 
