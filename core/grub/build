@@ -15,8 +15,22 @@ done
 
 # Strip '-march' from 'CFLAGS' as per advice from upstream.
 # Fixes build fails on specific hardware.
-CFLAGS=$(printf %s "$CFLAGS"   | sed 's/-march=[^ ]*//g')
-CFLAGS=$(printf %s "$CXXFLAGS" | sed 's/-march=[^ ]*//g')
+export CFLAGS
+CFLAGS=$(printf %s "$CFLAGS" | sed 's/-march=[^ ]*//g')
+
+# Force bfd linker to fix issues with alternative linkers. Mold does not yet
+# have full linker script support and I'm not certain that lld or gold have
+# ever worked to build Grub.
+{
+    mkdir -p .bin
+    ln -s "$KISS_ROOT/usr/bin/ld.bfd" .bin/ld
+    export PATH=$PWD/.bin:$PATH
+
+    # Strip '-B<path>mold' and '--ld-path=<path>mold' from CFLAGS.
+    case $CFLAGS in *mold*)
+        CFLAGS=$(printf %s "$CFLAGS" | sed 's/-B[^ ]*//g;s/--ld-path=[^ ]*//g')
+    esac
+}
 
 build_grub() (
     cd "grub-${1##*=}"
