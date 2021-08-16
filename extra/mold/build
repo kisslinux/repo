@@ -5,11 +5,6 @@ make -C xxhash
 # Point mold to the local xxhash.
 export CXXFLAGS="-L$PWD/xxhash -I$PWD/xxhash $CXXFLAGS"
 
-# CMAKE_GENERATOR must unset to force usage of Makefiles. The build system
-# calls cmake and proceeds to assume that Makefiles will be used with it
-# breaking builds with Ninja/Samurai.
-unset CMAKE_GENERATOR
-
 # Force a static build so shared library breakage does not also break the
 # linker (and therefore the ability to recover from the issue).
 export LDFLAGS="$LDFLAGS -static"
