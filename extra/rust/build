@@ -84,8 +84,6 @@ case $("$CC" -print-file-name=libunwind.so) in */*)
             LD_LIBRARY_PATH="$PWD/libgcc:$LD_LIBRARY_PATH" \
             LIBRARY_PATH="$PWD/libgcc:$LIBRARY_PATH"
     }
-
-    echo hello world
 esac
 
 python3 ./x.py build -j "$(nproc)"
