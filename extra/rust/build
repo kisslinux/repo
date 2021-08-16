@@ -49,6 +49,10 @@ full-bootstrap = false
 [install]
 prefix = "/usr"
 
+[target.x86_64-unknown-linux-musl]
+llvm-config = "/usr/bin/llvm-config"
+crt-static  = false
+
 [rust]
 channel           = "stable"
 rpath             = false
@@ -59,11 +63,30 @@ jemalloc          = false
 debug-assertions  = false
 codegen-tests     = false
 codegen-units-std = 1
-
-[target.x86_64-unknown-linux-musl]
-llvm-config = "/usr/bin/llvm-config"
-crt-static  = false
 EOF
+
+# Workaround to get Rust to build in llvm-only environments.
+case $("$CC" -print-file-name=libunwind.so) in */*)
+    printf 'llvm-libunwind = "system"\n' >> config.toml
+
+    # libgcc_s.so is needed for Rust's bootstrap binaries, on llvm-only systems
+    # this library does not exist. This hack creates it as alias to libunwind.
+    {
+        mkdir -p libgcc
+
+        printf 'INPUT(-lunwind)\n' > \
+            libgcc/libgcc_s.so
+
+        ln -sf "$KISS_ROOT/usr/lib/libunwind.so.1" \
+            libgcc/libgcc_s.so.1
+
+        export \
+            LD_LIBRARY_PATH="$PWD/libgcc:$LD_LIBRARY_PATH" \
+            LIBRARY_PATH="$PWD/libgcc:$LIBRARY_PATH"
+    }
+
+    echo hello world
+esac
 
 python3 ./x.py build -j "$(nproc)"
 python3 ./x.py install
