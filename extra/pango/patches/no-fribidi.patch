@@ -1,5 +1,5 @@
 diff --git a/meson.build b/meson.build
-index c03bf85..df529aa 100644
+index c03bf85..a5bd314 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -191,7 +191,6 @@ endif
@@ -10,7 +10,7 @@ index c03bf85..df529aa 100644
  libthai_req_version = '>= 0.1.9'
  harfbuzz_req_version = '>= 2.2.0'
  fontconfig_req_version = '>= 2.11.91'
-@@ -211,11 +210,6 @@ gio_dep = dependency('gio-2.0', version: glib_req_version,
+@@ -211,10 +210,6 @@ gio_dep = dependency('gio-2.0', version: glib_req_version,
                           fallback: ['glib', 'libgio_dep'])
  pango_deps += [glib_dep, gobject_dep, gio_dep]
  
@@ -18,23 +18,23 @@ index c03bf85..df529aa 100644
 -                         fallback: ['fribidi', 'libfribidi_dep'],
 -                         default_options: ['docs=false'])
 -pango_deps += fribidi_dep
--
+ 
  thai_dep = dependency('libthai', version: libthai_req_version, required: get_option('libthai'))
  if thai_dep.found()
-   pango_conf.set('HAVE_LIBTHAI', 1)
 diff --git a/pango/pango-bidi-type.c b/pango/pango-bidi-type.c
-index 32858f7..d60b038 100644
+index 32858f7..1e4abed 100644
 --- a/pango/pango-bidi-type.c
 +++ b/pango/pango-bidi-type.c
-@@ -22,11 +22,19 @@
- #include "config.h"
+@@ -23,13 +23,20 @@
  
  #include <string.h>
--
--#include <fribidi.h>
-+#include <stdint.h>
  
+-#include <fribidi.h>
+-
  #undef PANGO_DISABLE_DEPRECATED
+ 
+ #include "pango-bidi-type.h"
+ #include "pango-utils.h"
  
 +typedef uint32_t FriBidiChar;
 +typedef uint32_t FriBidiCharType;
@@ -45,10 +45,10 @@ index 32858f7..d60b038 100644
 +
 +#define FRIBIDI_PAR_LTR (0x00000010L | 0x00000100L)
 +
- #include "pango-bidi-type.h"
- #include "pango-utils.h"
- 
-@@ -48,40 +56,7 @@
+ /**
+  * pango_bidi_type_for_unichar:
+  * @ch: a Unicode character
+@@ -48,40 +55,7 @@
  PangoBidiType
  pango_bidi_type_for_unichar (gunichar ch)
  {
@@ -90,14 +90,14 @@ index 32858f7..d60b038 100644
  }
  
  /* Some bidi-related functions */
-@@ -116,36 +91,13 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
+@@ -116,36 +90,14 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
    glong n_chars, i;
    guint8 *embedding_levels_list;
    const gchar *p;
 -  FriBidiParType fribidi_base_dir;
    FriBidiCharType *bidi_types;
    FriBidiBracketType *bracket_types;
--  FriBidiLevel max_level;
+   FriBidiLevel max_level;
    FriBidiCharType ored_types = 0;
 -  FriBidiCharType anded_strongs = FRIBIDI_TYPE_RLE;
  
@@ -127,30 +127,31 @@ index 32858f7..d60b038 100644
    if (length < 0)
      length = strlen (text);
  
-@@ -157,20 +109,14 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
+@@ -157,20 +109,12 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
  
    for (i = 0, p = text; p < text + length; p = g_utf8_next_char(p), i++)
      {
 -      gunichar ch = g_utf8_get_char (p);
 -      FriBidiCharType char_type = fribidi_get_bidi_type (ch);
-+      FriBidiCharType char_type = FRIBIDI_PAR_LTR;
- 
+-
        if (i == n_chars)
          break;
  
-       bidi_types[i] = char_type;
-       ored_types |= char_type;
+-      bidi_types[i] = char_type;
+-      ored_types |= char_type;
 -      if (FRIBIDI_IS_STRONG (char_type))
 -        anded_strongs &= char_type;
 -      if (G_UNLIKELY(bidi_types[i] == FRIBIDI_TYPE_ON))
 -        bracket_types[i] = fribidi_get_bracket (ch);
 -      else
 -        bracket_types[i] = FRIBIDI_NO_BRACKET;
++      bidi_types[i] = FRIBIDI_PAR_LTR;
++      ored_types |= FRIBIDI_PAR_LTR;
 +      bracket_types[i] = 0;
      }
  
      /* Short-circuit (malloc-expensive) FriBidi call for unidirectional
-@@ -187,56 +133,15 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
+@@ -187,56 +131,13 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
       * o base_dir doesn't have an RTL taste.
       * o there are letters, and base_dir is weak.
       */
@@ -164,7 +165,7 @@ index 32858f7..d60b038 100644
 -      {
 -        /* all LTR */
 -	fribidi_base_dir = FRIBIDI_PAR_LTR;
--	memset (embedding_levels_list, 0, n_chars);
+ 	memset (embedding_levels_list, 0, n_chars);
 -	goto resolved;
 -      }
 -    /* The case that all resolved levels will be RTL is much more complex.
@@ -198,9 +199,6 @@ index 32858f7..d60b038 100644
 -      /* fribidi_get_par_embedding_levels() failed. */
 -      memset (embedding_levels_list, 0, length);
 -    }
-+    /* all LTR */
-+    /* fribidi_get_par_embedding_levels() failed. */
-+    memset (embedding_levels_list, 0, length);
  
  resolved:
    g_free (bidi_types);
@@ -211,7 +209,7 @@ index 32858f7..d60b038 100644
  
    return embedding_levels_list;
  }
-@@ -260,17 +165,6 @@ resolved:
+@@ -260,17 +161,6 @@ resolved:
  PangoDirection
  pango_unichar_direction (gunichar ch)
  {
