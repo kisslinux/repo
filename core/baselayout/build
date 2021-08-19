@@ -57,21 +57,7 @@ ln -sf ../run            "$1/var/run"
 ln -sf ../run/lock       "$1/var/lock"
 ln -sf /proc/self/mounts "$1/etc/mtab"
 
-cp -f \
-    fstab \
-    group \
-    host.conf \
-    hosts \
-    issue \
-    os-release \
-    passwd \
-    profile \
-    securetty \
-    shells \
-    mime.types \
-    crypttab \
-    shadow \
-    "$1/etc"
+cp -f ./* "$1/etc"
 
 chmod 600 \
     "$1/etc/crypttab" \
