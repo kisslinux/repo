@@ -17,11 +17,6 @@ case $("$CC" --version) in
     ;;
 esac
 
-# Mold does not yet support LTO.
-case $CFLAGS$(ld --version) in *mold*)
-    _lto=false
-esac
-
 mkdir -p bld/release
 cd bld/release
 
@@ -30,7 +25,6 @@ meson \
     --buildtype=release \
     --force-fallback-for=fcft,tllist \
     -Dime=false \
-    -Db_lto="${_lto:-true}" \
     ../..
 
 # Generate PGO data.
