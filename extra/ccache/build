@@ -6,6 +6,7 @@ export CXXFLAGS="$CXXFLAGS -static"
 cmake -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
+    -DREDIS_STORAGE_BACKEND=OFF \
     -DENABLE_TESTING=OFF \
     -DZSTD_LIBRARY=/usr/lib/libzstd.a
 
