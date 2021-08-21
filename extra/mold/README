@@ -4,30 +4,44 @@ ________________________________________________________________________________
 mold is a multi-threaded, high-performance linker that is several times faster
 than the industry-standard ones, namely, GNU ld, GNU gold or LLVM lld. It is
 developed as a drop-in replacement for these linkers and command-line compatible
-with them with a few exceptions.
+with them with a few exceptions. [0]
+
+Upstream: $/rui314/mold
 
 
-Caveats
+[000] Index
 ________________________________________________________________________________
 
-* mold can not yet link the kernel.
-* LTO is not yet supported (so refrain from using it)
+* Installation-------------------------------------------------------------[001]
+* Setup--------------------------------------------------------------------[002]
+* Usage--------------------------------------------------------------------[003]
+* Troubleshooting----------------------------------------------------------[004]
+  * Package-Fails-To-Link-With-Mold----------------------------------------[005]
+* References---------------------------------------------------------------[006]
 
-If a package fails to link with mold, open an issue at $/kisslinux/repo and
-(until it is fixed) revert to using your previous linker for said package.
 
-
-Usage
+[001] Installation
 ________________________________________________________________________________
 
-The linker is typically located at /usr/bin/ld and is invoked by the compiler.
-To use mold as the system linker, one of the following methods must be used.
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b mold                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+To use mold as the system linker one of the following methods must be used.
+The first solution is recommended as it removes all possibility of the prior
+linker being executed by mistake.
 
 1. Use the alternatives system to set mold as the system linker.
 
 +------------------------------------------------------------------------------+
 |                                                                              |
-|   $ kiss a mold /usr/bin/ld                                                  |
+|  $ kiss a mold /usr/bin/ld                                                   |
 |                                                                              |
 +------------------------------------------------------------------------------+
 
@@ -35,8 +49,8 @@ To use mold as the system linker, one of the following methods must be used.
 
 +------------------------------------------------------------------------------+
 |                                                                              |
-|   $ export CFLAGS="$CFLAGS --ld-path=/usr/bin/mold"                          |
-|   $ export CXXFLAGS="$CXXFLAGS --ld-path=/usr/bin/mold"                      |
+|  $ export CFLAGS="$CFLAGS --ld-path=/usr/bin/mold"                           |
+|  $ export CXXFLAGS="$CXXFLAGS --ld-path=/usr/bin/mold"                       |
 |                                                                              |
 +------------------------------------------------------------------------------+
 
@@ -44,18 +58,22 @@ To use mold as the system linker, one of the following methods must be used.
 
 +------------------------------------------------------------------------------+
 |                                                                              |
-|   $ export CFLAGS="$CFLAGS -B/usr/lib/mold"                                  |
-|   $ export CXXFLAGS="$CXXFLAGS -B/usr/lib/mold"                              |
+|  $ export CFLAGS="$CFLAGS -B/usr/lib/mold"                                   |
+|  $ export CXXFLAGS="$CXXFLAGS -B/usr/lib/mold"                               |
 |                                                                              |
 +------------------------------------------------------------------------------+
 
 
-Verification
+[003] Usage
 ________________________________________________________________________________
 
-To verify that mold is being used, disable binary stripping (KISS_STRIP=0) and
-run the following command on a newly built executable. If 'mold' appears in the
-output, everything is setup correctly.
+Mold does not yet support all use cases. It can not be used to link the Linux
+kernel (due to lack of linker script support) and It has no support for LTO
+(Link Time Optimization).
+
+With mold as the default linker, running the package manager as normal should
+result in its usage. To verify that mold is being used, disable binary stripping
+(KISS_STRIP=0) and run the following command on a newly built executable.
 
 +------------------------------------------------------------------------------+
 |                                                                              |
@@ -63,8 +81,24 @@ output, everything is setup correctly.
 |                                                                              |
 +------------------------------------------------------------------------------+
 
+If 'mold' appears in the output, everything is setup correctly.
 
-Further Reading
+
+[004] Troubleshooting
 ________________________________________________________________________________
 
-* $/rui314/mold
+
+--[005]-Package-Fails-To-Link-With-Mold-----------------------------------------
+
+  If a package in the official repositories fails to link with mold, open an
+  issue. If a package in a third-party repository fails to link with mold, open
+  an issue in their tracker. If a package you maintain fails to link (and the
+  issue is in the linker), open an issue upstream.
+
+
+[006] References
+________________________________________________________________________________
+
+[0] $/rui314/mold
+
+
