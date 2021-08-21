@@ -1,0 +1,31 @@
+#!/bin/sh -e
+
+mkdir -p junk
+
+(
+    cd skalibs
+
+    ./configure \
+        --prefix=/usr \
+        --disable-shared
+
+    make
+    make DESTDIR="$PWD/../junk" install
+)
+
+./configure \
+    --prefix=/usr \
+    --enable-static-libc \
+    --disable-shared \
+    --with-sysdeps="$PWD/junk/usr/lib/skalibs/sysdeps" \
+    --with-lib="$PWD/junk/usr/lib/skalibs" \
+    --with-include="$PWD/junk/usr/include"
+
+make
+make install
+
+mkdir -p "$1/etc/sv/mdevd"
+cp -f mdevd.conf "$1/etc"
+cp -f mdevd.run  "$1/etc/sv/mdevd"
+ln -sf "/run/runit/supervise.mdevd" "$1/etc/sv/mdevd/supervise"
+rm -rf "$1/usr/include"

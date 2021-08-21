@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Null the legacy hotplugger as the service will take over from here.
+printf '\n' 2>/dev/null > /proc/sys/kernel/hotplug
+
+exec mdevd -f /etc/mdevd.conf
