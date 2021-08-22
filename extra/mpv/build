@@ -2,6 +2,23 @@
 
 ln -s waf-2.0.18 waf
 
+# Setup docutils to generate manual pages.
+{
+    cd docutils
+
+    python3 setup.py build
+    python3 setup.py install \
+        --root="$PWD/../dist"
+
+    cd ../dist/usr/lib/python*/site-packages
+
+    PYTHONPATH=$PWD:$(python -c "import sys;print(':'.join(sys.path))")
+
+    cd -; cd ..
+    export PATH=$PWD/dist/usr/bin:$PATH
+    export PYTHONPATH
+}
+
 python waf configure \
     --prefix=/usr \
     --mandir=/usr/share/man \
