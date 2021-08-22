@@ -36,6 +36,7 @@ build_grub() (
     cd "grub-${1##*=}"
 
     ./configure \
+        HELP2MAN="$OLDPWD/help2man" \
         --prefix=/usr \
         --sbindir=/usr/bin \
         --sysconfdir=/etc \

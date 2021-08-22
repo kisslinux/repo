@@ -1,0 +1,283 @@
+#!/bin/sh
+#
+# A POSIX shell help2man implementation. Supports most options but does not
+# output identical manuals. Written in a few hours this is still in "alpha"
+# status. Please let me know if there are any issues.
+#
+# Copyright (c) 2019-2021 Dylan Araps
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+args() {
+    while _arg=$1; do
+        case $1 in -[a-zA-Z]) shift; esac
+
+        case $_arg in
+            -n|--name=*) _arg_name=${1##--name=}
+                : "${_arg_name:?"$_arg requires an argument"}" ;;
+
+            -s|--section=*) _arg_section=${1##--section=}
+                : "${_arg_section:?"$_arg requires an argument"}" ;;
+
+            -m|--manual=*) _arg_manual=${1##--manual=}
+                : "${_arg_manual:?"$_arg requires an argument"}" ;;
+
+            -S|--source=*) _arg_source=${1##--source=}
+                : "${_arg_source:?"$_arg requires an argument"}" ;;
+
+            -i|--include=*|-I|--opt-include=*) _arg_include=${1##--include=}
+                : "${_arg_include:?"$_arg requires an argument"}" ;;
+
+            -o|--output=*) _arg_output=${1##--output=}
+                : "${_arg_output:?"$_arg requires an argument"}" ;;
+
+            --version)
+                cat <<EOF
+GNU ${0##*/} 1.47.16
+
+Copyright (c) Dylan Araps 2021
+
+This version output must spoof
+GNU help2man so build systems
+automatically work with it.
+EOF
+                exit 0
+            ;;
+
+            -h|--help-option=*) _arg_help_option=${1##--help-option=}
+                : "${_arg_help_option:?"$_arg requires an argument"}" ;;
+
+            -v|--version-option=*) _arg_version_option=${1##--version-option=}
+                : "${_arg_version_option:?"$_arg requires an argument"}" ;;
+
+            --version-string=*) _arg_version_string=${1##--version-string=}
+                : "${_arg_version_string:?"$_arg requires an argument"}" ;;
+
+            --no-discard-stderr)
+                cmd_stderr=1
+            ;;
+
+            -p|--info-page=*|-N|--no-info|-l|--libtool|-L|--locale=*)
+                # Not implemented.
+            ;;
+
+            -*)
+                cat <<EOF
+${0##*/} generates a man page out of '--help' and '--version' output.
+
+Usage: ${0##*/} [OPTION]... EXECUTABLE
+
+ -n, --name=STRING       description for the NAME paragraph
+ -s, --section=SECTION   section number for manual page (1, 6, 8)
+ -m, --manual=TEXT       name of manual (User Commands, ...)
+ -S, --source=TEXT       source of program (FSF, Debian, ...)
+ -L, --locale=STRING     select locale (default "C")
+ -i, --include=FILE      include material from 'FILE'
+ -I, --opt-include=FILE  include material from 'FILE' if it exists
+ -o, --output=FILE       send output to 'FILE'
+ -p, --info-page=TEXT    name of Texinfo manual
+ -N, --no-info           suppress pointer to Texinfo manual
+ -l, --libtool           exclude the 'lt-' from the program name
+     --help              print this help, then exit
+     --version           print version number, then exit
+
+EXECUTABLE should accept '--help' and '--version' options and produce output on
+stdout although alternatives may be specified using:
+
+ -h, --help-option=STRING     help option string
+ -v, --version-option=STRING  version option string
+ --version-string=STRING      version string
+ --no-discard-stderr          include stderr when parsing option output
+
+Report bugs to <dylan.araps@gmail.com>.
+EOF
+                exit 0
+            ;;
+
+            *)
+                exe=$1
+                break
+            ;;
+        esac
+
+        shift
+    done
+}
+
+fnr() {
+    # Replace all occurrences of substrings with substrings. This
+    # function takes pairs of arguments iterating two at a time
+    # until everything has been replaced.
+    _fnr=$1
+    shift 1
+
+    while :; do case $_fnr-$# in
+        *"$1"*) _fnr=${_fnr%"$1"*}${2}${_fnr##*"$1"} ;;
+           *-2) break ;;
+             *) shift 2
+    esac done
+}
+
+clean() {
+    _trim=${1#${1%%[![:space:]]*}}
+    _trim=${_trim%${_trim##*[![:space:]]}}
+    fnr "$_trim" "	" " " "  " " "
+}
+
+get_help() {
+    case $cmd_stderr in
+        1) cmd_help=$("$exe" "${_arg_help_option:---help}" 2>&1) ;;
+        *) cmd_help=$("$exe" "${_arg_help_option:---help}")
+    esac || :
+    cmd_help=${cmd_help:?cannot get --help info from "$exe"}
+}
+
+get_version() {
+    case $cmd_stderr in
+        1) cmd_version_raw=${_arg_version_string:-\
+                $("$exe" "${_arg_version_option:---version}" 2>&1)} ;;
+        *) cmd_version_raw=${_arg_version_string:-\
+                $("$exe" "${_arg_version_option:---version}")}
+    esac || :
+
+    read -r cmd_name cmd_version _junk <<EOF
+$cmd_version_raw
+EOF
+
+    case $cmd_name in GNU)
+        cmd_name="$cmd_name $cmd_version"
+        cmd_version=$_junk
+    esac
+    cmd_version_raw="$cmd_name $cmd_version"
+    cmd_name=${cmd_name##GNU }
+    cmd_NAME=$(tr '[:lower:]' '[:upper:]' <<EOF
+$cmd_name
+EOF
+    )
+}
+
+get_sections() {
+    while IFS= read -r line || [ "$line" ]; do
+        case $line in
+            *[Uu][Ss][Aa][Gg][Ee]:*)
+                sect_usage=$sect_usage${line#[Uu][Ss][Aa][Gg][Ee]: }$nl.P$nl
+            ;;
+
+            *[Oo][Rr]:*)
+                sect_usage=$sect_usage${line#[Oo][Rr]: }$nl.P$nl
+            ;;
+
+            *"$cmd_name $cmd_version"*)
+                # Skip lines containing what is probably the version string.
+                # Some utilities do not provide --version and so --help includes
+                # such information.
+            ;;
+
+            *"Report bugs"*|Report[[:space:]]*[[:space:]]bugs)
+                sect_bug=$line
+            ;;
+
+            [[:space:]]*[[:space:]]-*|-*)
+                read -r __arg1 __desc __junk <<EOF
+$line
+EOF
+                case $__desc in -*)
+                    __arg1="$__arg1 $__desc"
+                    __desc=
+                esac
+
+                clean "$__desc${__junk:+ $__junk}"
+                sect_opt="$sect_opt$nl.TP$nl$__arg1$nl$_fnr "
+            ;;
+
+            [[:space:]]*)
+                clean "$line"
+                sect_opt="$sect_opt$_fnr "
+            ;;
+
+            [[:print:]]*)
+                clean "$line"
+                sect_desc="$sect_desc$_fnr "
+            ;;
+        esac
+    done <<EOF
+$cmd_help
+EOF
+}
+
+get_includes() {
+    case $_arg_include in '') return 0; esac
+    exec 3<"$_arg_include"
+
+    while read -r line <&3 || [ "$line" ] || {
+        case $_hdr in *?*)
+            fnr "$_hdr" ' ' _
+            export "HELP_$_fnr=.SH \"$_hdr\"$nl$_buf"
+        esac
+        break
+    }; do
+        case $line in
+            '['*']')
+                case $_hdr in *?*)
+                    fnr "$_hdr" ' ' _
+                    export "HELP_$_fnr=.SH \"$_hdr\"$nl$_buf"
+                esac
+
+                fnr "$line" '[' '' ']' ''
+                _hdr=$_fnr
+                _buf=
+            ;;
+
+            *?*) _buf=$_buf$line$nl ;;
+        esac
+    done
+}
+
+main() {
+    set -e
+    nl="
+"
+
+    args "$@"
+    get_help
+    get_version
+    cmd_date=$(date +'%B %Y')
+    get_sections
+    get_includes
+
+: "${HELP_NAME:=".SH NAME$nl$cmd_name ${_arg_name:+"\\- $_arg_name"}"}"
+: "${HELP_SYNOPSIS:="${sect_usage:+".SH SYNOPSIS$nl$sect_usage"}"}"
+: "${HELP_DESCRIPTION:="${sect_desc:+".SH DESCRIPTION$nl$sect_desc"}"}"
+: "${HELP_OPTIONS:="${sect_opt:+".SH OPTIONS$nl$sect_opt"}"}"
+: "${HELP_REPORTING_BUGS:="${sect_bug:+".SH \"REPORTING BUGS\"$nl$sect_bug"}"}"
+
+    cat <<EOF > "${_arg_output:-/dev/stdout}"
+.\\" DO NOT MODIFY THIS FILE!  It was generated by ${0##*/} 1.48.3.
+.TH $cmd_NAME "${_arg_section:-1}" "$cmd_date"\
+ "${_arg_source:-$cmd_version_raw}" "${_arg_manual:-User Commands}"
+${HELP_NAME:+"$nl$HELP_NAME"}\
+${HELP_SYNOPSIS:+"$nl$HELP_SYNOPSIS"}\
+${HELP_DESCRIPTION:+"$nl$HELP_DESCRIPTION"}\
+${HELP_OPTIONS:+"$nl$HELP_OPTIONS"}\
+${HELP_REPORTING_BUGS:+"$nl$HELP_REPORTING_BUGS"}\
+${HELP_SEE_ALSO:+"$nl$HELP_SEE_ALSO"}
+EOF
+}
+
+main "$@"

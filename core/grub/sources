@@ -1,3 +1,4 @@
 https://ftp.gnu.org/gnu/grub/grub-VERSION.tar.xz grub-pc
 https://ftp.gnu.org/gnu/grub/grub-VERSION.tar.xz grub-efi
 files/grub.default
+files/help2man
