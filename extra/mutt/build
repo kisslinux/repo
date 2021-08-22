@@ -38,3 +38,21 @@ make
 make install-exec
 
 rm -f "$1/etc/mime.types"
+
+mkdir -p \
+    "$1/usr/share/man/man1" \
+    "$1/usr/share/man/man5" \
+
+# Install manual pages.
+for file in \
+    mutt.1 pgpring.1 pgpewrap.1 smime_keys.1 mbox.5 mmdf.5 muttrc.5
+do
+    base=${file%%.[15]}
+    suf=${file##"$base".}
+
+    sed \
+        -e 's,@docdir@,/usr/share/doc,g' \
+        -e 's,@sysconfdir@,/etc,g' \
+        -e 's,@bindir@,/usr/bin,g' \
+        "doc/$base.man" > "$1/usr/share/man/man$suf/$file"
+done
