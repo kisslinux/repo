@@ -26,6 +26,6 @@ make install
 
 mkdir -p "$1/etc/sv/mdevd"
 cp -f mdevd.conf "$1/etc"
-cp -f mdevd.run  "$1/etc/sv/mdevd"
+cp -f mdevd.run  "$1/etc/sv/mdevd/run"
 ln -sf "/run/runit/supervise.mdevd" "$1/etc/sv/mdevd/supervise"
 rm -rf "$1/usr/include"
