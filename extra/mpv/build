@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-ln -s waf-2.0.18 waf
-
 # Setup docutils to generate manual pages.
 {
     cd docutils
@@ -19,7 +17,7 @@ ln -s waf-2.0.18 waf
     export PYTHONPATH
 }
 
-python waf configure \
+python waf/waf configure \
     --prefix=/usr \
     --mandir=/usr/share/man \
     --confdir=/etc/mpv \
@@ -27,8 +25,8 @@ python waf configure \
     --enable-wayland \
     --disable-x11
 
-python waf build
-python waf install --destdir="$1"
+python waf/waf build
+python waf/waf install --destdir="$1"
 
 rm -rf \
     "$1/usr/share/zsh" \
