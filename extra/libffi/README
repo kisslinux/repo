@@ -1,0 +1,42 @@
+libffi
+________________________________________________________________________________
+
+libffi is a foreign function interface library. It provides a C programming
+language interface for calling natively compiled functions given information
+about the target function at run time instead of compile time. It also
+implements the opposite functionality: libffi can produce a pointer to a
+function that can accept and decode any combination of arguments defined at
+run time. [0]
+
+Upstream: https://sourceware.org/libffi/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libffi                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages for more information.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Libffi
+

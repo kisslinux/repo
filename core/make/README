@@ -1,0 +1,45 @@
+make
+________________________________________________________________________________
+
+GNU Make (short gmake) is the standard implementation of Make for Linux and
+macOS. It provides several extensions over the original Make, such as
+conditionals. It also provides many built-in functions which can be used to
+eliminate the need for shell-scripting in the makefile rules as well as to
+manipulate the variables set and used in the makefile. For example, the foreach
+function can be used to iterate over a list of values, such as the names of
+files in a given directory. GNU Make is required for building many software
+systems, including GCC (since version 3.4), the Linux kernel, LibreOffice and
+Mozilla Firefox. [0]
+
+Upstream: https://www.gnu.org/software/make/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b make                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Make_(software)
+

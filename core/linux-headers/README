@@ -1,0 +1,58 @@
+linux-headers
+________________________________________________________________________________
+
+The linux kernel's exported header files describe the API for user space
+programs attempting to use kernel services. These kernel header files are used
+by the system's C library (such as glibc or uClibc) to define available system
+calls, as well as constants and structures to be used with these system calls.
+The C library's header files include the kernel header files from the "linux"
+subdirectory. The system's libc headers are usually installed at the default
+location /usr/include and the kernel headers in subdirectories under that
+(most notably /usr/include/linux and /usr/include/asm). [0]
+
+Upstream: https://kernel.org
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Troubleshooting ........................................................ [002]
+  * The Headers Do Not Match My Kernel Version ........................... [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b linux-headers                                                      |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+
+[002] Troubleshooting
+________________________________________________________________________________
+
+
+--[003] The Headers Do Not Match My Kernel Version -----------------------------
+
+  The kernel headers in KISS are pinned to an LTS kernel version and are only
+  updated when there are changes of interest in the kernel or headers themselves
+  (usually by users requesting new features available in the newer headers).
+
+  The headers are backwards compatible and are fully usable with a matching or
+  _newer_ kernel version. There are two cases where you'd be required to update
+  the headers yourself.
+
+  1. To run a kernel _older_ than the default headers.
+  2. To make use of features in your _newer_ kernel version.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://www.kernel.org/doc/Documentation/kbuild/headers_install.txt
+

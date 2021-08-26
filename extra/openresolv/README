@@ -1,0 +1,41 @@
+openresolv
+________________________________________________________________________________
+
+Enter resolvconf, the middleman between the network configuration services and
+/etc/resolv.conf. resolvconf itself is just a script that stores, removes and
+lists a full resolv.conf generated for the interface. It then calls all the
+helper scripts it knows about so it can configure the real /etc/resolv.conf and
+optionally any local nameservers other than libc. [0]
+
+Upstream: https://roy.marples.name/projects/openresolv/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b openresolv                                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://roy.marples.name/projects/openresolv/
+

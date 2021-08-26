@@ -1,0 +1,41 @@
+expat
+________________________________________________________________________________
+
+Expat is a stream-oriented XML 1.0 parser library, written in C. As one of the
+first available open-source XML parsers, Expat has found a place in many
+open-source projects. Such projects include the Apache HTTP Server, Mozilla,
+Perl, Python and PHP. It is also bound in many other languages. [0]
+
+Upstream: https://libexpat.github.io/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b expat                                                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Expat_(library)
+

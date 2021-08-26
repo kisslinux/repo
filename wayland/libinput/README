@@ -1,0 +1,42 @@
+libinput
+________________________________________________________________________________
+
+Libinput handles input devices for multiple Wayland compositors and also
+provides a generic X.Org Server input driver. It aims to provide one
+implementation for multiple Wayland compositors with a common way to handle
+input events while minimizing the amount of custom input code compositors need
+to include. libinput provides device detection (via udev), device handling,
+input device event processing and abstraction. [0]
+
+Upstream: https://www.freedesktop.org/wiki/Software/libinput/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libinput                                                           |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Wayland_(display_server_protocol)#libinput
+

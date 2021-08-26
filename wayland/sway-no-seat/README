@@ -1,0 +1,103 @@
+sway
+________________________________________________________________________________
+
+Sway is a tiling window manager and Wayland compositor, inspired by i3, and
+written in C. Sway is designed as a drop-in replacement for i3 using the more
+modern Wayland display server protocol and wlroots compositor library. Sway
+works with existing i3 configuration files and supports most of i3's features
+while providing several new features of its own. [0]
+
+Upstream: https://swaywm.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+  * Add User To Input Video And TTY Groups ............................... [003]
+  * Setup Seat Management ................................................ [004]
+  * Set XDG_RUNTIME_DIR .................................................. [005]
+* Usage .................................................................. [006]
+* Troubleshooting ........................................................ [007]
+* References ............................................................. [008]
+
+
+[001] Installation
+________________________________________________________________________________
+
+There are three flavors of Sway in the repositories.
+
+1. 'sway': Sway as upstream intended. Comes with all the bells and whistles
+   and requires use of the seatd daemon.
+
+2. 'sway-no-seat': Sway without the seatd daemon requirement. Instead, the
+   libseat library embeds the daemon.
+
+3. 'sway-tiny': All changes from 'sway-no-seat' plus no dependency on pcre,
+   json-c, pango and cairo.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b [sway|sway-no-seat|sway-tiny]                                      |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+If the system has no fonts, installation of a font is also required.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b ttf-croscore                                                       |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+
+--[003] Add User To Input Video And TTY Groups ---------------------------------
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ addgroup USER input                                                     |
+  |  $ addgroup USER video                                                     |
+  |  $ addgroup USER tty                                                       |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+--[004] Setup Seat Management --------------------------------------------------
+
+  If using the 'sway package, the seatd daemon must be setup. Refer to the
+  documentation found here @/libseat
+
+  If using the 'sway-no-seat' or 'sway-tiny' packages, there is no seatd daemon
+  requirement. Instead you must be the first to call DRMSetMaster. [1]
+
+
+--[005] Set XDG_RUNTIME_DIR ----------------------------------------------------
+
+  This environment variable must be set to a directory that is writable by your
+  user. This can be anywhere in theory though /run/user/$(id -u) is recommended.
+
+
+[006] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[007] Troubleshooting
+________________________________________________________________________________
+
+If you are using the 'sway-tiny' package and encounter any issues, send bug
+reports to $/kisslinux/repo rather than upstream.
+
+
+[008] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org
+[1] $/torvalds/linux/commit/45bc3d26c95a8fc63a7d8668ca9e57ef0883351c

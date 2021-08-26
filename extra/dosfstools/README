@@ -1,0 +1,49 @@
+dosfstools
+________________________________________________________________________________
+
+dosfstools consists of the programs mkfs.fat, fsck.fat and fatlabel to create,
+check and label file systems of the FAT family. The dosfstools are licensed
+under the GNU GPL version 3 or later. See the file COPYING for details. [0]
+
+Upstream: https://github.com/dosfstools/dosfstools
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b dosfstools                                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
++--------------+---------------------------------------------------------------+
+| Tool         | Purpose                                                       |
++--------------+---------------------------------------------------------------+
+|              |                                                               |
+| mkfs.fat     | Create an MS-DOS FAT filesystem.                              |
+| fsck.fat     | Check and repair MS-DOS FAT.                                  |
+| fatlabel     | Set or get MS-DOS filesystem label or volume ID.              |
+|              |                                                               |
++--------------+---------------------------------------------------------------+
+
+Refer to the manual pages and command help output for more information.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://github.com/dosfstools/dosfstools
+

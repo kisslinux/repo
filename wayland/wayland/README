@@ -1,0 +1,42 @@
+wayland
+________________________________________________________________________________
+
+Wayland is a communication protocol that specifies the communication between a
+display server and its clients, as well as a C library implementation of that
+protocol. A display server using the Wayland protocol is called a Wayland
+compositor, because it additionally performs the task of a compositing window
+manager. [0]
+
+Upstream: https://wayland.freedesktop.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [003]
+* References ............................................................. [005]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b wayland                                                            |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Wayland_(display_server_protocol)
+

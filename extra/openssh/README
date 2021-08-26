@@ -1,0 +1,55 @@
+openssh
+________________________________________________________________________________
+
+OpenSSH (also known as OpenBSD Secure Shell[a]) is a suite of secure networking
+utilities based on the Secure Shell (SSH) protocol, which provides a secure
+channel over an unsecured network in a client–server architecture. [0]
+
+Upstream: https://www.openssh.com/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [005]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b openssh                                                            |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
++--------------+---------------------------------------------------------------+
+| Tool         | Purpose                                                       |
++--------------+---------------------------------------------------------------+
+|              |                                                               |
+| sshd         | OpenSSH daemon.                                               |
+| ssh-keyscan  | Gather SSH public keys from servers.                          |
+| ssh-keygen   | OpenSSH authentication key utility.                           |
+| ssh-copy-id  | Use locally available keys to authorise logins on a remote.   |
+| ssh-agent    | OpenSSH authentication agent.                                 |
+| ssh-add      | Adds private key identities to the OpenSSH auth agent.        |
+| ssh          | OpenSSH remote login client.                                  |
+| sftp         | OpenSSH secure file transfer.                                 |
+| scp          | Openssh secure file copy.                                     |
+|              |                                                               |
++--------------+---------------------------------------------------------------+
+
+Refer to the manual pages and command help output for more information.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/OpenSSH
+

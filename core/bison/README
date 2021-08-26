@@ -1,0 +1,41 @@
+bison
+________________________________________________________________________________
+
+GNU Bison, commonly known as Bison, is a parser generator that is part of the
+GNU Project. Bison reads a specification of a context-free language, warns about
+any parsing ambiguities, and generates a parser (either in C, C++, or Java) that
+reads sequences of tokens and decides whether the sequence conforms to the
+syntax specified by the grammar. [0]
+
+Upstream: https://www.gnu.org/software/bison/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b bison                                                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the accompanying manual pages or command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/GNU_Bison
+

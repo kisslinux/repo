@@ -1,0 +1,42 @@
+libva
+________________________________________________________________________________
+
+Video Acceleration API (VA-API) is an open source API that allows applications
+such as VLC media player or GStreamer to use hardware video acceleration
+capabilities, usually provided by the graphics processing unit (GPU). It is
+implemented by the free and open-source library libva, combined with a
+hardware-specific driver, usually provided together with the GPU driver.
+
+Upstream: https://github.com/intel/libva
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libva                                                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org
+

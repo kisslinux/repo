@@ -1,0 +1,72 @@
+ccache
+________________________________________________________________________________
+
+Ccache is a software development tool that caches the output of C/C++
+compilation so that the next time, the same compilation can be avoided and the
+results can be taken from the cache. This can greatly speed up recompiling time.
+The detection is done by hashing different kinds of information that should be
+unique for the compilation and then using the hash sum to identify the cached
+output. Ccache is licensed under the GNU General Public License. [0]
+
+Upstream: https://ccache.dev/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* Troubleshooting ........................................................ [004]
+* References ............................................................. [005]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b ccache                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+To use ccache system-wide add the following to your .profile or shell runtime
+configuration file. This will use ccache's wrappers in place of the actual
+executables.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+| .profile                                                                     |
+|                                                                              |
+|  1 export PATH=/usr/lib/ccache/bin:$PATH                                     |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+If using clang as the system compiler the setup is a little different. Do the
+above step and in addition, create the following symbolic links.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ ln -s /usr/bin/ccache /usr/lib/ccache/bin/clang                           |
+|  $ ln -s /usr/bin/ccache /usr/lib/ccache/bin/clang++                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the command help output. The package does not yet provide any such
+documentation. There is also documentation available online. To verify that
+ccache is working the 'ccache -s' command can be used.
+
+
+[005] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Ccache
+

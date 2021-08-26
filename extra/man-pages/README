@@ -1,0 +1,45 @@
+man-pages
+________________________________________________________________________________
+
+The Linux man-pages project documents the Linux kernel and C library interfaces
+that are employed by user-space programs. With respect to the C library, the
+primary focus is the GNU C library (glibc), although, where known, documentation
+of variations in other C libraries available for Linux is also included. [0]
+
+Also included are the POSIX manual pages (in place of the glibc ones). These
+manuals also include the core utilities (which busybox does not provide manuals
+for).
+
+Upstream: https://www.kernel.org/doc/man-pages/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b mandoc                                                             |
+|  $ kiss b man-pages                                                          |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://www.kernel.org/doc/man-pages/
+

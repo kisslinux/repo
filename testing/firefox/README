@@ -1,0 +1,126 @@
+firefox
+________________________________________________________________________________
+
+Mozilla Firefox or simply Firefox, is a free and open-source web browser
+developed by the Mozilla Foundation and its subsidiary, the Mozilla Corporation.
+Firefox uses the Gecko rendering engine to display web pages. [0]
+
+Upstream: https://www.mozilla.org/firefox
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+  * Runtime Dependencies ................................................. [002]
+  * Privacy Package ...................................................... [003]
+* Setup .................................................................. [004]
+  * Enable VAAPI Acceleration ............................................ [005]
+* Usage .................................................................. [006]
+* References ............................................................. [007]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b firefox                                                            |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+--[002] Runtime Dependencies ---------------------------------------------------
+
+  Firefox needs a few additional things to be fully functional. One is an icon
+  theme and the other is a font. If you have already installed the fonts and
+  icon theme of your choosing, this step can be skipped.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |   $ kiss b [hicolor-icon-theme|adwaita-icon-theme]                         |
+  |   $ kiss b ttf-croscore                                                    |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+--[003] Privacy Package --------------------------------------------------------
+
+  Provided is also an optional privacy package which makes Firefox perform zero
+  unsolicited network requests. More information can be found in the
+  documentation (@/firefox-privacy) Expect some website breakage when using this
+  privacy package YMMV.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ kiss b firefox-privacy                                                  |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+[004] Setup
+________________________________________________________________________________
+
+As of Firefox 91. There is no need to set special environment variables to
+enable Wayland support (in a Wayland only environment like ours). The browser
+should start with no further configuration.
+
+
+--[005] Enable VAAPI Acceleration ----------------------------------------------
+
+Make sure that the following are set in your about:config page.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+| about:config                                                                 |
+|                                                                              |
+|  gfx.webrender.all=true                                                      |
+|  media.av1.enabled=false                                                     |
+|  media.ffmpeg.dmabuf-textures.disabled=false                                 |
+|  media.ffmpeg.vaapi.enabled=true                                             |
+|  media.ffvpx.enabled=false                                                   |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+If using AMDGPU, the following kernel option must be enabled. [1]
+
++------------------------------------------------------------------------------+
+|                                                                              |
+| .config                                                                      |
+|                                                                              |
+|  CONFIG_CHECKPOINT_RESTORE=y                                                 |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+You may also need to set the following environment variable.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+| .profile                                                                     |
+|                                                                              |
+|  export MOZ_WAYLAND_DRM_DEVICE=/dev/dri/renderD128                           |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+To verify that VAAPI is working, launch Firefox with the following argument and
+attempt to watch a video. Pay attention for errors in the output.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ firefox --MOZ_LOG=PlatformDecoderModule:4                                 |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[006] Usage
+________________________________________________________________________________
+
+Refer to the browser's help output and online documentation for further
+information.
+
+
+[007] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Firefox
+

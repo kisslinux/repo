@@ -1,0 +1,41 @@
+cairo
+________________________________________________________________________________
+
+Cairo (stylized as cairo) is an open source graphics library that provides a
+vector graphics-based, device-independent API for software developers. It
+provides primitives for two-dimensional drawing across a number of different
+backends. Cairo uses hardware acceleration when available. [0]
+
+Upstream: https://www.cairographics.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b cairo                                                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Cairo_(graphics)
+

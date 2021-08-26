@@ -1,0 +1,48 @@
+zstd
+________________________________________________________________________________
+
+Zstandard (or zstd) is a lossless data compression algorithm developed by
+Yann Collet at Facebook. Zstd is the reference implementation in C. Version 1 of
+this implementation was released as open-source software on 31 August 2016. [0]
+
+Upstream: https://github.com/facebook/zstd
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b zstd                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+To use zstd as the package manager's compression method for build tarballs, set
+the environment variable KISS_COMPRESS to 'zst'. If zstd will not be used as
+the package manager's compression method, no such setup is required.
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Zstandard
+

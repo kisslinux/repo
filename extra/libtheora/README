@@ -1,0 +1,42 @@
+libtheora
+________________________________________________________________________________
+
+Theora is a free lossy video compression format.[6] It is developed by the
+Xiph.Org Foundation and distributed without licensing fees alongside their other
+free and open media projects, including the Vorbis audio format and the Ogg
+container. The libtheora video codec is the reference implementation of the
+Theora video compression format being developed by the Xiph.Org Foundation. [0]
+
+Upstream: https://www.theora.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libtheora                                                          |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Theora
+

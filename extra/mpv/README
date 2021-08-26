@@ -1,0 +1,41 @@
+mpv
+________________________________________________________________________________
+
+mpv is free and open-source media player software based on MPlayer, mplayer2 and
+FFmpeg. It runs on several operating systems, including the Unix-like operating
+systems (Linux, BSD-based, macOS) and the non-Unix Microsoft Windows, along with
+having an Android port called mpv-android. It is cross-platform, running on ARM,
+PowerPC, x86/IA-32, x86-64, and MIPS architecture. [0]
+
+Upstream: https://mpv.io
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b mpv                                                                |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Mpv_(media_player)
+

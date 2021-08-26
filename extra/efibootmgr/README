@@ -1,0 +1,84 @@
+efibootmgr
+________________________________________________________________________________
+
+This is efibootmgr, a Linux user-space application to modify the Intel
+Extensible Firmware Interface (EFI) Boot Manager. This application can create
+and destroy boot entries, change the boot order, change the next running boot
+option, and more.
+
+Upstream: https://github.com/rhboot/efibootmgr
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+  * Mounting The efivar Filesystem ....................................... [003]
+  * Booting The System With An EFISTUB ................................... [004]
+* Usage .................................................................. [005]
+* References ............................................................. [006]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b efibootmgr                                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+
+--[003] Mounting The efivar Filesystem -----------------------------------------
+
+  To use efibootmgr and other software to manipulate the UEFI boot entries, the
+  efivars filesystem must be mounted. This isn't handled automatically by KISS
+  due to the security implications in doing so. [1]
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ mount -t efivarfs none /sys/firmware/efi/efivars/                       |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+--[004] Booting The System With An EFISTUB -------------------------------------
+
+  Using an EFISTUB to boot the system removes the need for a bootloader and
+  shortens boot times. Ensure that the following options are enabled in your
+  kernel: CONFIG_EFI, CONFIG_EFI_STUB
+
+  Run the following command to create a boot entry (replacing example arguments
+  with their respective values). X and Y should point to where the ESP is
+  located.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ efibootmgr \                                                            |
+  |        --disk /dev/sdX \                                                   |
+  |        --part Y \                                                          |
+  |        --create \                                                          |
+  |        --label "KISS" \                                                    |
+  |        --loader /vmlinuz \                                                 |
+  |        --unicode 'root=PARTUUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX rw' \ |
+  |        --verbose                                                           |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+[005] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output for more information.
+
+
+[006] References
+________________________________________________________________________________
+
+[0] https://github.com/rhboot/efibootmgr
+[1] https://github.com/systemd/systemd/issues/2402

@@ -1,0 +1,41 @@
+strace
+________________________________________________________________________________
+
+strace is a diagnostic, debugging and instructional userspace utility for Linux.
+It is used to monitor and tamper with interactions between processes and the
+Linux kernel, which include system calls, signal deliveries, and changes of
+process state. The operation of strace is made possible by the kernel feature
+known as ptrace. [0]
+
+Upstream: https://strace.io/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b strace                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Strace
+

@@ -1,0 +1,47 @@
+opendoas
+________________________________________________________________________________
+
+doas is a minimal replacement for the venerable sudo. It was initially written
+by Ted Unangst of the OpenBSD project to provide 95% of the features of sudo
+with a fraction of the codebase. [0]
+
+Upstream: https://github.com/Duncaen/OpenDoas
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b opendoas                                                           |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+To use doas with the package manager, set the environment variable
+KISS_SU to 'doas'. For configuration, see 'doas.conf.5' and '/etc/doas.conf'.
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://github.com/Duncaen/OpenDoas
+

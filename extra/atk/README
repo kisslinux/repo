@@ -1,0 +1,44 @@
+atk
+________________________________________________________________________________
+
+Accessibility Toolkit (ATK) is an open source software library, part of the
+GNOME project, which provides application programming interfaces (APIs) for
+implementing accessibility support in software. [0]
+
+This package is a dependency of GTK+3 and Firefox. Its use in the future will
+be determined solely on whether or not its use can be patched out of
+aforementioned software.
+
+Upstream: https://wiki.gnome.org/Accessibility
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b atk                                                                |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Accessibility_Toolkit
+

@@ -1,0 +1,61 @@
+alsa-utils
+________________________________________________________________________________
+
+This package contains the command line utilities for the ALSA project. The
+package can be compiled only with the installed ALSA driver and the ALSA C
+library (alsa-lib). [0]
+
+Upstream: https://alsa-project.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b alsa-utils                                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
++--------------+---------------------------------------------------------------+
+| Tool         | Purpose                                                       |
++--------------+---------------------------------------------------------------+
+|              |                                                               |
+| alsa-info    | Gather information about ALSA subsystem.                      |
+| alsabat      | Sound tester for ALSA sound card driver.                      |
+| alsaconf     | The ALSA driver configurator script.                          |
+| alsactl      | Soundcard settings management.                                |
+| alsaloop     | Software loopback for PCM devices.                            |
+| alsamixer    | ncurses mixer.                                                |
+| alsatplg     | ALSA topology compiler.                                       |
+| alsaucm      | Use Case Manager utility.                                     |
+| amidi        | Send/receive sysex dumps or other MIDI data.                  |
+| amixer       | Command-line mixer.                                           |
+| aplay        | Playback .wav,.voc,.au files.                                 |
+| arecord      | Record .wav,.voc,.au files.                                   |
+| axfer        | Transfer audio data frame (enhancement of aplay).             |
+| iecset       | Show/set the IEC958 status bits.                              |
+| speaker-test | Speaker test utility.                                         |
+|              |                                                               |
++--------------+---------------------------------------------------------------+
+
+Refer to the manual pages and help output for more information.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://github.com/alsa-project/alsa-utils
+

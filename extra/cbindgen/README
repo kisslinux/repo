@@ -1,0 +1,44 @@
+cbindgen
+________________________________________________________________________________
+
+cbindgen creates C/C++11 headers for Rust libraries which expose a public C API.
+
+While you could do this by hand, it's not a particularly good use of your time.
+It's also much more likely to be error-prone than machine-generated headers that
+are based on your actual Rust code. The cbindgen developers have also worked
+closely with the developers of Rust to ensure that the headers we generate
+reflect actual guarantees about Rust's type layout and ABI. [0]
+
+Upstream: https://github.com/eqrion/cbindgen
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b cbindge                                                            |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being. $/eqrion/cbindgen/blob/master/docs.md
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://github.com/eqrion/cbindgen
+

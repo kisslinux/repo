@@ -1,0 +1,41 @@
+vim
+________________________________________________________________________________
+
+Vim is a free and open-source, screen-based text editor program for Unix. It is
+an improved clone of Bill Joy's vi. Vim's author, Bram Moolenaar, derived Vim
+from a port of the Stevie editor for Amiga and released a version to the public
+in 1991. Vim is designed for use both from a command-line interface and as a
+standalone application in a graphical user interface.
+
+Upstream: https://www.vim.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b vim                                                                |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Vim_(text_editor)
+

@@ -1,0 +1,63 @@
+cmake
+________________________________________________________________________________
+
+CMake is cross-platform free and open-source software for build automation,
+testing, packaging and installation of software by using a compiler-independent
+method. CMake is not a build system but rather it generates another system's
+build files. It supports directory hierarchies and applications that depend on
+multiple libraries. It is used in conjunction with native build environments
+such as Make, Qt Creator, Ninja, Android Studio, Apple's Xcode, and Microsoft
+Visual Studio. [0]
+
+Upstream: https://cmake.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b cmake                                                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+Cmake supports to output methods on Linux; 'GNU Makefiles' and 'Ninja' with the
+former being the default value. These values are set via the CMAKE_GENERATOR
+environment variable.
+
+The distribution recommends this value be set to 'Ninja' as it offers a
+performance improvement over make and works better with ccache. Set the
+following environment variable in your .profile or shell runtime file.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ export CMAKE_GENERATOR=Ninja                                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the command help output and online documentation. This package does
+not yet provide manual pages.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/CMake
+

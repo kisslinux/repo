@@ -1,0 +1,55 @@
+libjpeg-turbo
+________________________________________________________________________________
+
+libjpeg-turbo is a fork of libjpeg that uses SIMD instructions to accelerate
+baseline JPEG encoding and decoding. Many projects are now using libjpeg-turbo
+instead of libjpeg, including popular Linux distributions (Fedora, Debian,
+Mageia, openSUSE, ...), Mozilla, and Chrome. Apart from performance, some
+projects have chosen to use libjpeg-turbo because it allows them to retain
+backward ABI compatibility with the older libjpeg v6b release. libjpeg v7, v8
+and v9 broke ABI compatibility with prior releases. [0]
+
+Upstream: https://libjpeg-turbo.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libjpeg-turbo                                                      |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
++--------------+---------------------------------------------------------------+
+| Tool         | Purpose                                                       |
++--------------+---------------------------------------------------------------+
+|              |                                                               |
+| wrjpgcom     | Insert text comments into a JPEG file.                        |
+| rdjpgcom     | Display text comments from a JPEG file.                       |
+| jpegtran     | Lossless transformation of JPEG files.                        |
+| djpeg        | Decompress a JPEG file to an image file.                      |
+| cjpeg        | Compress a JPEG file to an image file.                        |
+|              |                                                               |
++--------------+---------------------------------------------------------------+
+
+Refer to the manual pages and command help output for more information.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Libjpeg#libjpeg-turbo
+

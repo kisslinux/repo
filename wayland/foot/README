@@ -1,0 +1,52 @@
+foot
+________________________________________________________________________________
+
+The fast, lightweight and minimalistic Wayland terminal emulator. [0]
+
+Upstream: https://codeberg.org/dnkl/foot
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* Troubleshooting ........................................................ [004]
+* References ............................................................. [005]
+
+
+[001] Installation
+________________________________________________________________________________
+
+There are two flavours of foot to choose from: 'foot' and 'foot-pgo'. The latter
+performs profile guided optimizations which result in a faster terminal. [1] [2]
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b [foot|foot-pgo]                                                    |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+If the system has no fonts, installation of a font is also required.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b ttf-croscore                                                       |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[005] References
+________________________________________________________________________________
+
+[0] https://codeberg.org/dnkl/foot
+[1] https://codeberg.org/dnkl/foot/wiki/Performance
+[2] https://codeberg.org/dnkl/foot/src/branch/master/doc/benchmark.md
+

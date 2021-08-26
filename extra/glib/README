@@ -1,0 +1,40 @@
+glib
+________________________________________________________________________________
+
+GLib is a bundle of three (formerly five) low-level system libraries written in
+C and developed mainly by GNOME. GLib's code was separated from GTK, so it can
+be used by other software and has been developed in parallel ever since. [0]
+
+Upstream: https://wiki.gnome.org/Projects/GLib
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b glib                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation and command output for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/GLib
+

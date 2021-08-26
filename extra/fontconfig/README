@@ -1,0 +1,41 @@
+Package Name
+________________________________________________________________________________
+
+Fontconfig (or fontconfig) is a free software program library designed to
+provide configuration, enumeration and substitution of fonts to other programs.
+Fontconfig was originally written and maintained by Keith Packard, and is
+currently maintained by Behdad Esfahbod. [0]
+
+Upstream: https://www.freedesktop.org/wiki/Software/fontconfig/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b fontconfig                                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Fontconfig
+

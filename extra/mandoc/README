@@ -1,0 +1,41 @@
+mandoc
+________________________________________________________________________________
+
+mandoc (historically called mdocml) is an ISC licensed utility for formatting
+man pages, specifically those written in the mdoc and man macro languages.
+Unlike the groff and older troff and nroff tools predominantly used for this
+purpose, mandoc focuses specifically on manuals and is not suitable for
+general-purpose type-setting. [0]
+
+Upstream: https://mandoc.bsd.lv/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b mandoc                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Mandoc
+

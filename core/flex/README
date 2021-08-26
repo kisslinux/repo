@@ -1,0 +1,44 @@
+flex
+________________________________________________________________________________
+
+Flex (fast lexical analyzer generator) is a free and open-source software
+alternative to lex. It is a computer program that generates lexical analyzers
+(also known as "scanners" or "lexers"). It is frequently used as the lex
+implementation together with Berkeley Yacc parser generator on BSD-derived
+operating systems (as both lex and yacc are part of POSIX), or together with GNU
+bison (a version of yacc) in *BSD ports and in Linux distributions. Unlike
+Bison, flex is not part of the GNU Project and is not released under the GNU
+General Public License, although a manual for Flex was produced and published by
+the Free Software Foundation. [0]
+
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b flex                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[005] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Flex_(lexical_analyser_generator)
+

@@ -1,0 +1,56 @@
+tzdata
+________________________________________________________________________________
+
+The tz database is a collaborative compilation of information about the world's
+time zones, primarily intended for use with computer programs and operating
+systems. Paul Eggert is its current editor and maintainer, with the
+organizational backing of ICANN. The tz database is also known as tzdata, the
+zoneinfo database or IANA time zone database, and occasionally as the Olson
+database, referring to the founding contributor, Arthur David Olson. [0]
+
+Upstream: http://web.cs.ucla.edu/~eggert/tz/tz-link.htm
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b tzdata                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+To set the timezone, run the following command substituting Zone and SubZone
+for their respective values (look in /usr/share/zoneinfo to find them).
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ ln -sf /usr/share/zoneinfo/Zone/SubZone /etc/localtime                    |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Tz_database
+

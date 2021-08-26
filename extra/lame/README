@@ -1,0 +1,42 @@
+lame
+________________________________________________________________________________
+
+LAME is a software encoder that converts a digitized WAV audio file into the MP3
+audio coding file format. LAME is a free software project that was first
+released in 1998, and has incorporated many improvements since then, including
+an improved psychoacoustic model. The LAME encoder outperforms early encoders
+like L3enc. [0]
+
+Upstream: https://lame.sourceforge.io/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b lame                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output. No library documentation is
+yet provided.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/LAME
+

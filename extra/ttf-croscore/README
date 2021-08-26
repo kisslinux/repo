@@ -1,0 +1,34 @@
+ttf-croscore
+________________________________________________________________________________
+
+The Chrome OS core fonts, also known as the Croscore fonts, are a collection of
+three TrueType font families: Arimo (sans-serif), Tinos (serif) and Cousine
+(monospace). These fonts are metrically compatible with Monotype Corporation’s
+Arial, Times New Roman, and Courier New, the most commonly used fonts on
+Microsoft Windows, for which they are intended as open-source substitutes. [0]
+
+Upstream: https://www.google.com/chromebook/chrome-os/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* References ............................................................. [002]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b ttf-croscore                                                       |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Croscore_fonts
+

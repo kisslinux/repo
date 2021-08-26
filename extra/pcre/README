@@ -1,0 +1,42 @@
+pcre
+________________________________________________________________________________
+
+Perl Compatible Regular Expressions (PCRE) is a library written in C, which
+implements a regular expression engine, inspired by the capabilities of the
+Perl programming language. Philip Hazel started writing PCRE in summer 1997.
+PCRE's syntax is much more powerful and flexible than either of the POSIX
+regular expression flavors (BRE, ERE) and than that of many other
+regular-expression libraries. [0]
+
+Upstream: https://www.pcre.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b pcre                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions
+

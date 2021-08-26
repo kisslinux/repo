@@ -1,0 +1,42 @@
+ncurses
+________________________________________________________________________________
+
+ncurses (new curses) is a programming library providing an application
+programming interface (API) that allows the programmer to write text-based user
+interfaces in a terminal-independent manner. It is a toolkit for developing
+"GUI-like" application software that runs under a terminal emulator. It also
+optimizes screen changes, in order to reduce the latency experienced when using
+remote shells. [0]
+
+Upstream: https://invisible-island.net/ncurses/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b ncurses                                                            |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Ncurses
+

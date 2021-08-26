@@ -1,0 +1,83 @@
+grub
+________________________________________________________________________________
+
+GNU GRUB (short for GNU GRand Unified Bootloader, commonly referred to as GRUB)
+is a boot loader package from the GNU Project. GRUB is the reference
+implementation of the Free Software Foundation's Multiboot Specification, which
+provides a user the choice to boot one of multiple operating systems installed
+on a computer or select a specific kernel configuration available on a
+particular operating system's partitions. [0]
+
+Upstream: https://www.gnu.org/software/grub/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b grub                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+If using UEFI, efibootmgr is also required.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b efibootmgr                                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+Ensure that all required partitions are mounted.
+
+
+--[003] BIOS -------------------------------------------------------------------
+
+  Replace '/dev/sdX' with the disk (not partition) where Grub will be installed.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ grub-install --target=i386-pc /dev/sdX                                  |
+  |  $ grub-mkconfig -o /boot/grub/grub.cfg                                    |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+--[004] EUFI -------------------------------------------------------------------
+
+  Replace 'esp' with the EFI mount point (typically /boot).
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ grub-install --target=x86_64-efi \                                      |
+  |                 --efi-directory=esp \                                      |
+  |                 --bootloader-id=GRUB                                       |
+  |  $ grub-mkconfig -o /boot/grub/grub.cfg                                    |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/GNU_GRUB
+

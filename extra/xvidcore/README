@@ -1,0 +1,42 @@
+xvidcore
+________________________________________________________________________________
+
+Xvid (formerly "XviD") is a video codec library following the MPEG-4 video
+coding standard, specifically MPEG-4 Part 2 Advanced Simple Profile (ASP). It
+uses ASP features such as b-frames, global and quarter pixel motion
+compensation, lumi masking, trellis quantization, and H.263, MPEG and custom
+quantization matrices. [0]
+
+Upstream: https://labs.xvid.com/source/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b xvidcore                                                           |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Xvid
+

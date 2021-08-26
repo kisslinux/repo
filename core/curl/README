@@ -1,0 +1,49 @@
+curl
+________________________________________________________________________________
+
+cURL (pronounced 'curl') is a computer software project providing a library
+(libcurl) and command-line tool (curl) for transferring data using various
+network protocols. The name stands for "Client URL", which was first released
+in 1997. [0]
+
+Upstream: https://curl.se/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b curl                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+The package manager supports many download tools and will also use curl if it is
+available. To explicitly tell the package manager to use it, set the KISS_GET
+environment variable to 'curl'.
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[005] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/CURL
+

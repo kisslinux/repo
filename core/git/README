@@ -1,0 +1,42 @@
+git
+________________________________________________________________________________
+
+Git is software for tracking changes in any set of files, usually used for
+coordinating work among programmers collaboratively developing source code
+during software development. Its goals include speed, data integrity, and
+support for distributed, non-linear workflows (thousands of parallel branches
+running on different systems). [0]
+
+Upstream: https://git-scm.com/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b git                                                                |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output. To use git-request-pull,
+perl is required.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Git
+

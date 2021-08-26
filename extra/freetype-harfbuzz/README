@@ -1,0 +1,57 @@
+freetype-harfbuzz
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+| This package is actually two packages: freetype and harfbuzz. To circumvent  |
+| the circular dependency between them, they have been merged together.        |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+FreeType is a popular software development library used to render text onto
+bitmaps, and provides support for other font-related operations. The FreeType
+font rasterization engine is free and open-source software with the source code
+dual-licensed under a BSD-like license and the GPL. FreeType supports a number
+of font formats, including TrueType, Type 1, and OpenType and "is designed to
+be small, efficient, highly customizable, and portable while capable of
+producing high-quality output (glyph images)." [0]
+
+HarfBuzz is a software development library for text shaping, which is the
+process of converting Unicode text to glyph indices and positions. The newer
+version, New HarfBuzz (2012–), targets various font technologies while the first
+version, Old HarfBuzz (2006–2012), targeted only OpenType fonts. [1]
+
+Upstream: https://www.freetype.org/ https://github.com/harfbuzz/harfbuzz
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b freetype-harfbuzz                                                  |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/FreeType
+[1] https://en.wikipedia.org/wiki/HarfBuzz
+

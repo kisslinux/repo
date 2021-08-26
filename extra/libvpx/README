@@ -1,0 +1,41 @@
+libvpx
+________________________________________________________________________________
+
+libvpx is a free software video codec library from Google and the Alliance for O
+pen Media (AOMedia). It serves as the reference software implementation for the
+VP8 and VP9 video coding formats, and for AV1 a special fork named libaom that
+was stripped of backwards compatibility. [0]
+
+Upstream: https://github.com/webmproject/libvpx
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libvpx                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Libvpx
+

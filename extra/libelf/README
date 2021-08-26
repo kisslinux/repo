@@ -1,0 +1,42 @@
+libelf
+________________________________________________________________________________
+
+NOTE: The libelf implementation is one component of elfutils of which the
+      following information is about.
+
+elfutils is a collection of utilities and libraries to read, create and modify
+ELF binary files, find and handle DWARF debug data, symbols, thread state and
+stacktraces for processes and core files on GNU/Linux. [0]
+
+Upstream: https://sourceware.org/elfutils/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libelf                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages for more information.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://sourceware.org/elfutils/
+

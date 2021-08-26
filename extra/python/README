@@ -1,0 +1,46 @@
+python
+________________________________________________________________________________
+
+Python is an interpreted high-level general-purpose programming language. Its
+design philosophy emphasizes code readability with its use of significant
+indentation. Its language constructs as well as its object-oriented approach aim
+to help programmers write clear, logical code for small and large-scale
+projects.
+
+Python is dynamically-typed and garbage-collected. It supports multiple
+programming paradigms, including structured (particularly, procedural),
+object-oriented and functional programming. It is often described as a
+"batteries included" language due to its comprehensive standard library. [0]
+
+Upstream: https://www.python.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b python                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Python_(programming_language)
+

@@ -1,0 +1,40 @@
+gdk-pixbuf
+________________________________________________________________________________
+
+GdkPixbuf is a library that loads image data in various formats and stores it as
+linear buffers in memory. The buffers can then be scaled, composited, modified,
+saved, or rendered. [0]
+
+Upstream: https://gitlab.gnome.org/GNOME/gdk-pixbuf
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b gdk-pixbuf                                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation and command output for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://gitlab.gnome.org/GNOME/gdk-pixbuf
+

@@ -1,0 +1,46 @@
+sqlite
+________________________________________________________________________________
+
+SQLite is a relational database management system (RDBMS) contained in a C
+library. In contrast to many other database management systems, SQLite is not a
+client–server database engine. Rather, it is embedded into the end program.
+
+SQLite generally follows PostgreSQL syntax. SQLite uses a dynamically and weakly
+typed SQL syntax that does not guarantee the domain integrity. This means that
+one can, for example, insert a string into a column defined as an integer.
+SQLite will attempt to convert data between formats where appropriate, the
+string "123" into an int in this case, but does not guarantee such  conversions
+and will store the data as-is if such a conversion is not possible. [0]
+
+Upstream: https://www.sqlite.org/index.html
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b sqlite                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/SQLite
+

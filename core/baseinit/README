@@ -1,0 +1,64 @@
+baseinit
+________________________________________________________________________________
+
+KISS Linux's portable init framework. Handles the power-on and shutdown process
+in a generic way and is usable by all init systems.
+
+Upstream: $/kisslinux/init
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* Troubleshooting ........................................................ [004]
+* References ............................................................. [005]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b baseinit                                                           |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+If using the default init system and service manager, no setup is required.
+Refer to the service management documentation. [0]
+
+To use this init framework with another init system, simply have it execute
+/usr/lib/init/rc.boot on power-on and /usr/lib/init/rc.shutdown on poweroff
+and reboot.
+
+Usage is as follows:
+
+# /usr/lib/init/rc.boot
+# /usr/lib/init/rc.shutdown reboot
+# /usr/lib/init/rc.shutdown poweroff
+
+Also, configure your init system to spawn some gettys and a service manager.
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the service management documentation. [0]
+
+
+[004] Troubleshooting
+________________________________________________________________________________
+
+Open issues at $/kisslinux/init or send email #/contact
+
+
+[005] References
+________________________________________________________________________________
+
+[0] #/wiki/service-management

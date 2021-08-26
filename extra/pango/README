@@ -1,0 +1,43 @@
+pango
+________________________________________________________________________________
+
+Pango is a text (i.e. glyph) layout engine library which works with the HarfBuzz
+shaping engine for displaying multi-language text. Full-function rendering of
+text and cross-platform support is achieved when Pango is used with platform
+APIs or third-party libraries, such as Uniscribe and FreeType, as text rendering
+backends. Pango-processed text will appear similar under different operating
+systems. [0]
+
+Upstream: https://pango.gnome.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b pango                                                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Pango
+

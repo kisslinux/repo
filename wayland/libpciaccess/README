@@ -1,0 +1,40 @@
+libpciaccess
+________________________________________________________________________________
+
+Free software library for generic PCI access, is used by the Xorg server (and
+was adopted by Wayland) to  interface with the appropriate routines for finding
+and using PCI bus devices on various operating systems. [0]
+
+Upstream: https://gitlab.freedesktop.org/xorg/lib/libpciaccess
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libpciaccess                                                       |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://www.wikidata.org/wiki/Q33129784
+

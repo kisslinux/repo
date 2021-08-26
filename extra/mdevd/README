@@ -1,0 +1,57 @@
+mdevd
+________________________________________________________________________________
+
+mdevd is a small daemon managing kernel hotplug events, similarly to udevd. It
+uses the same configuration file as mdev, which is a hotplug manager integrated
+in the Busybox suite of tools. However, mdev needs to be registered in
+/proc/sys/kernel/hotplug, and the kernel forks an instance of mdev for every
+event; by contrast, mdevd is a daemon and does not fork.
+
+The point of mdevd is to provide a drop-in replacement to mdev that does not
+fork, so it can handle large influxes of events at boot time without a
+performance drop. mdevd is designed to be entirely compatible with advanced
+mdev usage such as $/mdev-like-a-boss. [0]
+
+Upstream: https://skarnet.org/software/mdevd/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b mdevd                                                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+This package provides a service file compatible with the distribution's default
+service manager. Refer to the distribution's service management documentation
+for instructions on how to enable the service. [1]
+
+
+[003] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://skarnet.org/software/mdevd/
+[1] #/wiki/service-management
+

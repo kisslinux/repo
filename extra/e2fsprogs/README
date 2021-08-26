@@ -1,0 +1,62 @@
+e2fsprogs
+________________________________________________________________________________
+
+e2fsprogs (sometimes called the e2fs programs) is a set of utilities for
+maintaining the ext2, ext3 and ext4 file systems. Since those file systems are
+often the default for Linux distributions, it is commonly considered to be
+essential software. [0]
+
+Upstream: http://e2fsprogs.sourceforge.net/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b e2fsprogs                                                          |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
++--------------+---------------------------------------------------------------+
+| Tool         | Purpose                                                       |
++--------------+---------------------------------------------------------------+
+|              |                                                               |
+| e4defrag     | Online defragmenter for ext4 filesystems.                     |
+| e4crypt      | ext4 filesystem encryption utility.                           |
+| e2undo       | Replay an undo log for an ext[234] filesystem.                |
+| e2scrub_all  | Check all mounted ext[234] filesystems for errors.            |
+| e2scrub      | Check the contents of a mounted ext[234] filesystem.          |
+| e2mmpstatus  | Check MMP status of an ext4 filesystem.                       |
+| e2label      | Change the label on an ext[234] filesystem.                   |
+| e2image      | Save critical ext[234] filesystem metadata to a file.         |
+| e2fsck       | Check a Linux ext[234] filesystem.                            |
+| e2freefrag   | Report free space fragementation information.                 |
+| dumpe2fs     | Dump ext[234] filesystem information.                         |
+| debugfs      | ext[234] filesystem debugger.                                 |
+| compile_et   | Error table compiler.                                         |
+| chattr       | Change file attributes on a Linux filesystem.                 |
+| badblocks    | Search a device for bad blocks.                               |
+|              |                                                               |
++--------------+---------------------------------------------------------------+
+
+Refer to the manual pages and command help output for more information.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/E2fsprogs
+

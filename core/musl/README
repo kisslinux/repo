@@ -1,0 +1,54 @@
+musl
+________________________________________________________________________________
+
+musl is a C standard library intended for operating systems based on the Linux
+kernel, released under the MIT License. It was developed by Rich Felker with the
+goal to write a clean, efficient and standards-conformant libc implementation.
+
+musl was designed from scratch to allow efficient static linking and to have
+realtime-quality robustness by avoiding race conditions, internal failures on
+resource exhaustion and various other bad worst-case behaviors present in
+existing implementations. The dynamic runtime is a single file with stable ABI
+allowing race-free updates and static linking support allows an application to
+be deployed as a single portable binary without significant size overhead. [0]
+
+
+Upstream: https://www.musl-libc.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b pkg                                                                |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+musl does not come with any documentation. For C library documentation, install
+the man-pages package.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b man-pages                                                          |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Musl
+

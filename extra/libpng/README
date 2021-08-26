@@ -1,0 +1,41 @@
+libpng
+________________________________________________________________________________
+
+libpng is the official Portable Network Graphics (PNG) reference library
+(originally called pnglib). It is a platform-independent library that contains C
+functions for handling PNG images. It supports almost all of PNG's features, is
+extensible, and has been widely used and tested for over 23 years. libpng is
+dependent on zlib for data compression and decompression routines. [0]
+
+Upstream: http://www.libpng.org/pub/png/libpng.html
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libpng                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Libpng
+

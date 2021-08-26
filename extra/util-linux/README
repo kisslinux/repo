@@ -1,0 +1,56 @@
+util-linux
+________________________________________________________________________________
+
+util-linux is a standard package distributed by the Linux Kernel Organization
+for use as part of the Linux operating system. A fork, util-linux-ng (with ng
+meaning "next generation"), was created when development stalled, but as of
+January 2011 has been renamed back to util-linux, and is the official version of
+the package. [0]
+
+Upstream: https://github.com/karelzak/util-linux
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b util-linux                                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+util-linux and busybox have some command overlap. Use the alternatives system
+to swap to the desired choices. Run 'kiss a' to list alternatives and then
+swap to util-linux accordingly.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss a util-linux /path/to/bin                                            |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org
+

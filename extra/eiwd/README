@@ -1,0 +1,150 @@
+eiwd
+________________________________________________________________________________
+
+eiwd is iNet Wireless Daemon (iwd) without dbus. This package only provides
+the iwd daemon and does not include any clients. Usage is config file based.
+
+Upstream: https://github.com/illiliti/eiwd
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+  * Create The Configuration File ........................................ [003]
+  * Add The Following Lines .............................................. [004]
+  * Connecting To Networks ............................................... [005]
+* Usage .................................................................. [006]
+  * Starting The Service ................................................. [007]
+* Troubleshooting ........................................................ [008]
+  * iwd Fails To Start ................................................... [009]
+* References ............................................................. [010]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b eiwd                                                               |
+|  $ kiss b openresolv                                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+
+--[003] Create The Configuration File ------------------------------------------
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ mkdir -p /etc/iwd                                                       |
+  |  $ touch    /etc/iwd/main.conf                                             |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+--[004] Add The Following Lines ------------------------------------------------
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  | main.conf                                                                  |
+  |                                                                            |
+  |  [General]                                                                 |
+  |  EnableNetworkConfiguration=true                                           |
+  |                                                                            |
+  |  [Network]                                                                 |
+  |  RoutePriorityOffset=200                                                   |
+  |  NameResolvingService=resolvconf                                           |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+  To prevent iwd from scanning continuously while not connected, add the
+  following lines.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  [Scan]                                                                    |
+  |  DisablePeriodicScan=true                                                  |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+  To prevent iwd from destroying / recreating wireless interfaces at startup,
+  add the following line to [General].
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  UseDefaultInterface=true                                                  |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+--[005] Connecting To Networks -------------------------------------------------
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ printf 'password\n' | iwd_passphrase ssid                               |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  The iwd_passhprase tool prints its help messages to stderr. Run the tool  |
+  |  once to get information and a second time with '> /var/lib/iwd/FILE' to   |
+  |  save it directly.                                                         |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+  The iwd daemon watches the /var/lib/iwd directory for changes to network
+  configs. When it detects creation of a config, it will at once become aware
+  of it. Other filesystem operations changes behavior as well.
+
+
+[006] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+--[007] Starting The Service ---------------------------------------------------
+
+  This package provides a service file compatible with the distribution's
+  default service manager. Refer to the distribution's service management
+  documentation for instructions on how to enable the service. [1]
+
+
+[008] Troubleshooting
+________________________________________________________________________________
+
+
+--[009] iwd Fails To Start -----------------------------------------------------
+
+  Ensure that the following options are enabled in your kernel.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  CONFIG_CRYPTO_USER_API_HASH                                               |
+  |  CONFIG_CRYPTO_USER_API_SKCIPHER                                           |
+  |  CONFIG_KEY_DH_OPERATIONS                                                  |
+  |  CONFIG_CRYPTO_ECB                                                         |
+  |  CONFIG_CRYPTO_MD5                                                         |
+  |  CONFIG_CRYPTO_CBC                                                         |
+  |  CONFIG_CRYPTO_SHA256                                                      |
+  |  CONFIG_CRYPTO_AES                                                         |
+  |  CONFIG_CRYPTO_DES                                                         |
+  |  CONFIG_CRYPTO_CMAC                                                        |
+  |  CONFIG_CRYPTO_HMAC                                                        |
+  |  CONFIG_CRYPTO_SHA512                                                      |
+  |  CONFIG_CRYPTO_ARC4                                                        |
+  |  CONFIG_CRYPTO_SHA1                                                        |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+[010] References
+________________________________________________________________________________
+
+[0] https://github.com/illiliti/eiwd
+[1] #/wiki/service-management
+

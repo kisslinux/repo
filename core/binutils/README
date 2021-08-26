@@ -1,0 +1,81 @@
+binutils
+________________________________________________________________________________
+
+The GNU Binary Utilities, or binutils, are a set of programming tools for
+creating and managing binary programs, object files, libraries, profile data,
+and assembly source code. [0]
+
+Upstream: https://www.gnu.org/software/binutils/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* Troubleshooting ........................................................ [003]
+  * Manual Pages Empty ................................................... [004]
+* References ............................................................. [005]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b binutils                                                           |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+This package is a collection of binary tools.
+
++-----------+------------------------------------------------------------------+
+| Tool      | Purpose                                                          |
++-----------+------------------------------------------------------------------+
+|           |                                                                  |
+| addr2line | Converts addresses into file names and line numbers.             |
+|        ar | Creates, modifies and extracts archives.                         |
+|        as | The GNU assembler.                                               |
+|   c++filt | Demangle encoded C++ symbols.                                    |
+|       dwp | The DWARF packaging utility.                                     |
+|   elfedit | Update the ELF header of ELF files.                              |
+|      gold | A new, faster, ELF only linker, still in beta test.              |
+|        ld | The GNU BFD linker.                                              |
+|        nm | Lists symbols from object files.                                 |
+|   objcopy | Copies and translates object files.                              |
+|   objdump | Displays information from object files.                          |
+|    ranlib | Generates an index to the contents of an archive.                |
+|   readelf | Displays information from any ELF format object file.            |
+|      size | Lists the section sizes of an object or archive file.            |
+|   strings | Lists printable strings from files.                              |
+|     strip | Discards symbols.                                                |
+|           |                                                                  |
++-----------+------------------------------------------------------------------+
+
+For usage information refer to the command's --help output, each command also
+has its own manual page.
+
+
+[003] Troubleshooting
+________________________________________________________________________________
+
+
+--[004] Manual Pages Empty -----------------------------------------------------
+
+  The latest binutils has a bug in its build system where manual pages are
+  truncated and end up empty. A patch must be applied and they must be
+  regenerated. To do so, install perl and run 'kiss b binutils'.
+
+  This workaround should not be needed as of next release. This is a temporary
+  measure to ensure documentation remains available to those wanting it
+
+
+[005] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/GNU_Binutils
+

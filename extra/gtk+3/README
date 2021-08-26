@@ -1,0 +1,42 @@
+gtk+3
+________________________________________________________________________________
+
+GTK (formerly GTK+, GIMP ToolKit) is a free and open-source cross-platform
+widget toolkit for creating graphical user interfaces (GUIs). It is licensed
+under the terms of the GNU Lesser General Public License, allowing both free and
+proprietary software to use it. It is one of the most popular toolkits for the
+Wayland and X11 windowing systems. [0]
+
+Upstream: https://docs.gtk.org/gtk3/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b gtk+3                                                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org
+

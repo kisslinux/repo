@@ -1,0 +1,42 @@
+ffmpeg
+________________________________________________________________________________
+
+FFmpeg is a free and open-source software project consisting of a large suite of
+libraries and programs for handling video, audio, and other multimedia files and
+streams. At its core is the FFmpeg program itself, designed for
+command-line-based processing of video and audio files. It is widely used for
+format transcoding, basic editing (trimming and concatenation), video scaling,
+video post-production effects and standards compliance (SMPTE, ITU). [0]
+
+Upstream: https://www.ffmpeg.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b ffmpeg                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/FFmpeg
+

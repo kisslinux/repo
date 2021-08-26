@@ -1,0 +1,51 @@
+nodejs
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  Nodejs lives here solely for use by Firefox's build system. If Firefox ever |
+|  drops its nodejs dependency, this package will be removed.                  |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+Node.js is an open-source, cross-platform, back-end JavaScript runtime
+environment that runs on the V8 engine and executes JavaScript code outside a
+web browser. Node.js lets developers use JavaScript to write command line tools
+and for server-side scripting—running scripts server-side to produce dynamic web
+page content before the page is sent to the user's web browser. Consequently,
+Node.js represents a "JavaScript everywhere" paradigm, unifying web-application
+development around a single programming language, rather than different
+languages for server-side and client-side scripts. [0]
+
+Upstream: https://nodejs.org/en/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b nodejs                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org
+

@@ -1,0 +1,72 @@
+busybox
+________________________________________________________________________________
+
+BusyBox is a software suite that provides several Unix utilities in a single
+executable file. It runs in a variety of POSIX environments such as Linux,
+Android, and FreeBSD, although many of the tools it provides are designed to
+work with interfaces provided by the Linux kernel. It was specifically created
+for embedded operating systems with very limited resources. The authors dubbed
+it "The Swiss Army knife of Embedded Linux", as the single executable replaces
+basic functions of more than 300 common commands. [0]
+
+Upstream: https://busybox.net/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+  * Services ............................................................. [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b busybox                                                            |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+KISS' default busybox configuration comes with upwards of 300 utilities (all
+contained in less than a single megabyte). There are many more utilities and
+options which are also currently disabled.
+
+Busybox does not provide manual pages for each of its commands. Instead it only
+provides help output (--help). The POSIX manual pages can be installed to fill
+in some of these documentation holes.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b man-pages                                                          |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+--[003] Services ---------------------------------------------------------------
+
+  The busybox package provides various daemons and also accompanying service
+  files for the default service manager. The following daemons have services
+  provided by the distribution.
+
+  * acpid     - Simple ACPI events listener
+  * crond     - Daemon to execute scheduled commands.
+  * mdev      - A device manager.
+  * ntpd      - Network Time Protocol Daemon.
+  * syslogd   - System logging daemon.
+
+  Refer to the distribution's service management documentation. [1] If busybox
+  provides a daemon but no service file is provided, open an issue at
+  $/kisslinux/repo and a service will be added.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/BusyBox
+[1] #/wiki/service-management

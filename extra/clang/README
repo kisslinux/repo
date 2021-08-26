@@ -1,0 +1,68 @@
+clang
+________________________________________________________________________________
+
+Clang is a compiler front end for the C, C++, Objective-C and Objective-C++
+programming languages, as well as the OpenMP, OpenCL, RenderScript, CUDA and
+HIP frameworks. It uses the LLVM compiler infrastructure as its back end and has
+been part of the LLVM release cycle since LLVM 2.6.
+
+It is designed to act as a drop-in replacement for the GNU Compiler Collection
+(GCC), supporting most of its compilation flags and unofficial language
+extensions. Its contributors include Apple, Microsoft, Google, ARM, Sony,
+Intel and Advanced Micro Devices (AMD). [0]
+
+Upstream: https://clang.llvm.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* Troubleshooting ........................................................ [004]
+* References ............................................................. [005]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b clang                                                              |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+To use clang as the system compiler, set the following environment variables in
+your .profile or shell runtime configuration file.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ export CC=clang                                                           |
+|  $ export CXX=clang++                                                        |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the command help output. This package does not yet provide manual
+pages. Documentation can also be found online.
+
+
+[004] Troubleshooting
+________________________________________________________________________________
+
+If a package fails to build with clang, open an issue at $/kisslinux/repo
+
+
+[005] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Clang
+

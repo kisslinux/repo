@@ -1,0 +1,49 @@
+libudev-zero
+________________________________________________________________________________
+
+Drop-in replacement for libudev intended to work with any device manager. [0]
+
+This satisfies the libudev library dependency while allowing the user to use
+the device manager of their choosing.
+
+Upstream: https://github.com/illiliti/libudev-zero
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+* Usage .................................................................. [003]
+* References ............................................................. [004]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libudev-zero                                                       |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+If using mdev or mdevd (with the default configuration files), libudev-zero will
+automatically be used once installed.
+
+
+[003] Usage
+________________________________________________________________________________
+
+Refer to the FreeDesktop libudev documentation for library information. Refer
+to the project's upstream for more information.
+
+
+[004] References
+________________________________________________________________________________
+
+[0] https://github.com/illiliti/libudev-zero
+

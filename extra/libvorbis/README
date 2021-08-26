@@ -1,0 +1,42 @@
+libvorbis
+________________________________________________________________________________
+
+Vorbis is a free and open-source software project headed by the Xiph.Org
+Foundation. The project produces an audio coding format and software reference
+encoder/decoder (codec) for lossy audio compression. Vorbis is most commonly
+used in conjunction with the Ogg container format[9] and it is therefore often
+referred to as Ogg Vorbis. [0]
+
+Upstream: https://xiph.org/vorbis/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libvorbis                                                          |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Vorbis
+

@@ -1,0 +1,42 @@
+zlib
+________________________________________________________________________________
+
+zlib is a software library used for data compression. zlib was written by
+Jean-loup Gailly and Mark Adler and is an abstraction of the DEFLATE compression
+algorithm used in their gzip file compression program. zlib is also a crucial
+component of many software platforms, including Linux, macOS, and iOS. It has
+also been used in gaming consoles such as the PlayStation 4, PlayStation 3,
+Wii U, Wii, Xbox One and Xbox 360. [0]
+
+Upstream: https://en.wikipedia.org/wiki/Zlib
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b zlib                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Zlib
+

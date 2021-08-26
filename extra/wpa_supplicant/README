@@ -1,0 +1,67 @@
+wpa_supplicant
+________________________________________________________________________________
+
+wpa_supplicant is a free software implementation of an IEEE 802.11i supplicant
+for Linux, FreeBSD, NetBSD, QNX, AROS, Microsoft Windows, Solaris, OS/2
+(including ArcaOS and eComStation) and Haiku. In addition to being a WPA3 and
+WPA2 supplicant, it also implements WPA and older wireless LAN security
+protocols. [0]
+
+Upstream: https://w1.fi/wpa_supplicant/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+  * Conntecting-To-Networks------------------------------------------------]003]
+* Usage .................................................................. [004]
+  * Starting The Service ................................................. [005]
+* References ............................................................. [006]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b wpa_supplicant                                                     |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+--[003] Connecting To Networks -------------------------------------------------
+
+  Save the output of this command to /etc/wpa_supplicant.conf.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ wpa_passphrase SSID passphrase                                          |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+[004] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output. For DHCP, refer to dhcpcd
+and its documentation.
+
+
+--[005] Starting The Service ---------------------------------------------------
+
+  This package provides a service file compatible with the distribution's
+  default service manager. Refer to the distribution's service management
+  documentation for instructions on how to enable the service. [1]
+
+
+[006] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Wpa_supplicant
+[1] #/wiki/service-management
+

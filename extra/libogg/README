@@ -1,0 +1,42 @@
+libogg
+________________________________________________________________________________
+
+Ogg is a free, open container format maintained by the Xiph.Org Foundation. The
+creators of the Ogg format state that it is unrestricted by software patents and
+is designed to provide for efficient streaming and manipulation of high-quality
+digital multimedia. Its name is derived from "ogging", jargon from the computer
+game Netrek. [0]
+
+Upstream: https://www.xiph.org/ogg/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libogg                                                             |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+No documentation is currently provided with the package, refer to online
+documentation for the time being.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Ogg
+

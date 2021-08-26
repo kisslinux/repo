@@ -1,0 +1,40 @@
+kirc
+________________________________________________________________________________
+
+kirc is an extremely fast and simple IRC client designed with portability in
+mind. This client reads from stdin and prints to stdout, so all traffic can
+multiplexed and text parsed or modified using external commands. All highlighted
+text and color can be controlled with ANSI escape sequences. [0]
+
+Upstream: http://kirc.io/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b kirc                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] Manual page.
+
