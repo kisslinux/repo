@@ -2,7 +2,7 @@ firefox-privacy
 ________________________________________________________________________________
 
 This package provides a vendor.js and enterprise policy which when used cause
-firefox to make zero unsolicited web requests (at the cost of some website
+firefox to make zero unsolicited web requests [0] (at the cost of some website
 breakage, YMMV).
 
 Upstream: $/kisslinux/repo
@@ -15,6 +15,7 @@ ________________________________________________________________________________
 * Usage .................................................................. [002]
 * Troubleshooting ........................................................ [003]
   * Firefox phones home .................................................. [004]
+* References ............................................................. [005]
 
 
 [001] Installation
@@ -42,4 +43,9 @@ ________________________________________________________________________________
 
   If you encounter Firefox phoning home, open an issue at $/kisslinux/repo
 
+
+[005] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Phoning_home
 
