@@ -1,5 +1,22 @@
 #!/bin/sh -e
 
+# Setup docutils to generate manual pages.
+{
+    cd docutils
+
+    python setup.py build
+    python setup.py install \
+        --root="$PWD/../dist"
+
+    cd ../dist/usr/lib/python*/site-packages
+
+    PYTHONPATH=$PWD:$(python -c "import sys;print(':'.join(sys.path))")
+
+    cd -; cd ..
+    export PATH=$PWD/dist/usr/bin:$PATH
+    export PYTHONPATH
+}
+
 meson \
     --prefix=/usr \
     -Dvalgrind=false \
