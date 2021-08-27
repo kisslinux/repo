@@ -4,16 +4,11 @@ mkdir -p \
     "$1/usr/bin" \
     "$1/usr/share/doc/kiss"
 
-cp -f kiss contrib/* "$1/usr/bin/"
+cp -f  kiss contrib/*  "$1/usr/bin"
+cp -f  docs/site/*.txt "$1/usr/share/doc/kiss"
+cp -rf docs/site/wiki  "$1/usr/share/doc/kiss"
 
-for doc in docs/site/*.txt doc/*.txt; do case ${doc%%.txt} in
-    README|news|blog|screenshots)
-        # Skip.
-    ;;
-
-    *)
-        cp -f "$doc" "$1/usr/share/doc/kiss/${doc##*/}"
-    ;;
-esac done
-
-cp -r wiki "$1/usr/share/doc/kiss/wiki"
+rm -f \
+    "$1/usr/share/doc/kiss/README.txt" \
+    "$1/usr/share/doc/kiss/post.txt" \
+    "$1/usr/share/doc/kiss/tidbits.txt"
