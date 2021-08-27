@@ -1,2 +1,3 @@
 https://downloads.xiph.org/releases/theora/libtheora-VERSION.tar.gz
 patches/libtheora-1.1.1-libpng16.patch
+patches/fix-theoraenc.patch

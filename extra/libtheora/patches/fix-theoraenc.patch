@@ -1,0 +1,13 @@
+diff --git a/lib/Makefile.in b/lib/Makefile.in
+index f26ccdc..666f79d 100644
+--- a/lib/Makefile.in
++++ b/lib/Makefile.in
+@@ -310,7 +310,7 @@ libtheoraenc_la_SOURCES = \
+ 
+ libtheoraenc_la_LDFLAGS = \
+   -version-info @THENC_LIB_CURRENT@:@THENC_LIB_REVISION@:@THENC_LIB_AGE@ \
+-  @THEORAENC_LDFLAGS@ $(OGG_LIBS)
++  -ltheoradec @THEORAENC_LDFLAGS@ $(OGG_LIBS)
+ 
+ 
+ libtheora_la_SOURCES = \
