@@ -37,6 +37,7 @@ make install
 {
     set -f
 
+    # shellcheck source=/dev/null
     . /etc/rc.conf || :
 
     # Intentional, globbing disabled.
