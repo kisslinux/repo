@@ -1,0 +1,12 @@
+#!/bin/sh -ef
+
+mkdir -p "$1/usr/bin"
+
+# Intentional, globbing disabled.
+# shellcheck disable=2086
+"$CC" -static $LDFLAGS $CFLAGS $CPPFLAGS \
+    -o "$1/usr/bin/sinit" sinit.c
+
+ln -s sinit "$1/usr/bin/init"
+
+cp -f poweroff reboot "$1/usr/bin"

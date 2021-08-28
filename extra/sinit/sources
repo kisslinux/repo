@@ -1,0 +1,4 @@
+git+https://git.suckless.org/sinit#28c44b6b94a870f2942c37f9cfbae8b770595712
+files/config.h
+files/reboot
+files/poweroff
