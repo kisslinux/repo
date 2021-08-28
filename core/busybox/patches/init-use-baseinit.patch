@@ -1,0 +1,13 @@
+diff --git a/init/init.c b/init/init.c
+index efab5dc..5135de3 100644
+--- a/init/init.c
++++ b/init/init.c
+@@ -153,7 +153,7 @@
+ 
+ /* Default sysinit script. */
+ #ifndef INIT_SCRIPT
+-# define INIT_SCRIPT  "/etc/init.d/rcS"
++# define INIT_SCRIPT  "/usr/lib/init/rc.boot"
+ #endif
+ 
+ /* Each type of actions can appear many times. They will be
