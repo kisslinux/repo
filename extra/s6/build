@@ -37,9 +37,13 @@ make install
 {
     set -f
 
+    . /etc/rc.conf || :
+
     # Intentional, globbing disabled.
     # shellcheck disable=2086
-    "$CC" -o "$1/usr/bin/init" init.c $CFLAGS $CPPFLAGS $LDFLAGS
+    "$CC" -o "$1/usr/bin/init" init.c \
+        -DCONFIG_SERVICE_DIR="\"${CONFIG_SERVICE_DIR:-/var/service}\"" \
+        $CFLAGS $CPPFLAGS $LDFLAGS
 
     cp -f poweroff "$1/usr/bin"
     ln -s poweroff "$1/usr/bin/reboot"

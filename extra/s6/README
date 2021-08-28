@@ -37,7 +37,7 @@ ________________________________________________________________________________
 
 To use s6 set CONFIG_SERVICE to 's6' in /etc/rc.conf. If your service directory
 is /var/service, no further setup is required. To change this location set
-CONFIG_SERVICE_DIR in /etc/rc.conf.
+CONFIG_SERVICE_DIR in /etc/rc.conf and rebuild s6.
 
 +------------------------------------------------------------------------------+
 |                                                                              |

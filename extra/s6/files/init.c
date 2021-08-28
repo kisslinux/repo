@@ -47,7 +47,7 @@ int main()
     wait(0);
 
     execve("/usr/bin/s6-svscan",
-        ((char *[]) { "/usr/bin/s6-svscan", "/var/service", 0 }),
+        ((char *[]) { "/usr/bin/s6-svscan", CONFIG_SERVICE_DIR, 0 }),
         ((char *[]){ 0 }));
 
     for (;;) wait(0);
