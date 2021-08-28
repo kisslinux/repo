@@ -59,7 +59,7 @@ mkdir -p "$1/etc/acpid"
 for s in acpid crond syslogd mdev ntpd; do
     mkdir -p "$1/etc/sv/$s"
     cp -f "$s.run" "$1/etc/sv/$s/run"
-    ln -sf "/run/runit/supervise.$s" "$1/etc/sv/$s/supervise"
 done
 
 cp -f mdev.conf "$1/etc/mdev.conf"
+cp -f inittab "$1/etc"

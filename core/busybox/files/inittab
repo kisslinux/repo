@@ -1,0 +1,17 @@
+# Refer to the documentation in the busybox sources and the source code itself
+# information on this file. These below two lines are needed for the baseinit
+# package to work.
+::sysinit:/lib/init/rc.boot
+::shutdown:/lib/init/rc.shutdown
+::restart:/sbin/init
+
+tty1::respawn:/bin/getty 38400 tty1
+tty2::respawn:/bin/getty 38400 tty2
+
+# Uncomment to enable more gettys.
+# tty3::respawn:/bin/getty 38400 tty3
+# tty4::respawn:/bin/getty 38400 tty4
+# tty5::respawn:/bin/getty 38400 tty5
+
+# Run a one-shot command during boot.
+# ::once:/bin/modprobe iwlwifi

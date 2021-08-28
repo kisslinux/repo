@@ -12,6 +12,7 @@ files/.config
 files/.config-suid
 files/acpid.run
 files/crond.run
+files/inittab
 files/syslogd.run
 files/mdev.run
 files/ntpd.run
