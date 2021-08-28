@@ -1,0 +1,120 @@
+s6
+________________________________________________________________________________
+
+s6 is a small suite of programs for UNIX, designed to allow process supervision
+(a.k.a service supervision), in the line of daemontools and runit, as well as
+various operations on processes and daemons. It is meant to be a toolbox for
+low-level process and service administration, providing different sets of
+independent tools that can be used within or without the framework, and that can
+be assembled together to achieve powerful functionality with a very small amount
+of code. [0]
+
+Upstream: https://skarnet.org/software/s6/index.html
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Setup .................................................................. [002]
+  * Running s6 As PID 1 .................................................. [003]
+* Usage .................................................................. [004]
+* References ............................................................. [005]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b s6                                                                 |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Setup
+________________________________________________________________________________
+
+To use s6 set CONFIG_SERVICE to 's6' in /etc/rc.conf. If your service directory
+is /var/service, no further setup is required. To change this location set
+CONFIG_SERVICE_DIR in /etc/rc.conf.
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  CONFIG_SERVICE=s6                                                           |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+The distribution's service files [4] work with s6 though to use s6's features,
+further configuration may be required. For more information read the online
+documentation.
+
+* https://skarnet.org/software/s6/servicedir.html (/etc/sv)
+* https://skarnet.org/software/s6/scandir.html    (/var/service)
+
+
+--[003] Running s6 As PID 1 ----------------------------------------------------
+
+  s6 (specifically s6-svscan) can also be run as PID 1 [1] whereby it replaces
+  the original init once the boot process is done. This s6 package comes with
+  a small init (based on Rich Felker's minimal init [5] [6]) that execs into
+  s6-svscan once the system is up.
+
+  NOTE: The initial init and reboot/poweroff files are from the distribution
+        and not a part of s6. Send bug reports to #/contact
+
+  NOTE: CONFIG_SERVICE_DIR (default = /var/service) must contain at least one
+        getty for login to be possible. Refer to the service management wiki
+        page for more information. [4]
+
+  To set s6 as the system init the package manager's alternatives system must
+  be used. This command swaps /usr/bin/init to s6.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ kiss a s6 /usr/bin/init                                                 |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+  Next, set CONFIG_INIT to 's6' in /etc/rc.conf.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  CONFIG_INIT=s6                                                            |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+  Finally, reboot the machine and use the alternatives system to swap
+  /usr/bin/reboot and /usr/bin/poweroff.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ kiss a s6 /usr/bin/poweroff                                             |
+  |  $ kiss a s6 /usr/bin/reboot                                               |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+[004] Usage
+________________________________________________________________________________
+
+s6 comes with many utilities. The bare minimum to learn is s6-svscan,
+s6-supervise, s6-svscanctl and s6-svc. These are the core of s6 and all that is
+needed for the system to function.
+
+If new to s6, start with these four utilities and explore from there. There are
+also additional s6 components like s6-rc, s6-linux-init, execline, etc. Refer to
+the skarnet website and manual pages for more information.
+
+
+[005] References
+________________________________________________________________________________
+
+[0] https://skarnet.org/software/s6/index.html
+[1] https://skarnet.org/software/s6/s6-svscan-1.html
+[2] https://skarnet.org/software/s6-linux-init/
+[3] https://skarnet.org/software/s6/overview.html
+[4] #/wiki/service-management
+[5] https://github.com/richfelker/minimal-init
+[6] https://ewontfix.com/14/
+

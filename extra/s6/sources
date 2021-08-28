@@ -1,0 +1,5 @@
+https://skarnet.org/software/s6/s6-VERSION.tar.gz
+https://skarnet.org/software/skalibs/skalibs-2.10.0.3.tar.gz skalibs
+https://github.com/flexibeast/s6-man-pages/archive/refs/tags/v2.10.0.3.1.tar.gz man
+files/init.c
+files/poweroff

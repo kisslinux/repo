@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. /usr/lib/init/rc.lib
+load_conf
+
+rm -f "$CONFIG_SERVICE_DIR/.s6-svscan/finish"
+
+cat > "$CONFIG_SERVICE_DIR/.s6-svscan/finish" <<EOF
+#!/bin/sh
+/usr/lib/init/rc.${0##*/}
+EOF
+chmod +x "$CONFIG_SERVICE_DIR/.s6-svscan/finish"
+
+exec s6-svscanctl -t /var/service

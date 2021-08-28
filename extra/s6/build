@@ -1,0 +1,47 @@
+#!/bin/sh -e
+
+(
+    cd skalibs
+
+    ./configure \
+        --prefix=/usr \
+        --disable-shared
+
+    make
+    make DESTDIR="$PWD" install
+)
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=lib \
+    --with-sysdeps="$PWD/skalibs/usr/lib/skalibs/sysdeps" \
+    --with-lib="$PWD/skalibs/usr/lib/skalibs" \
+    --with-include="$PWD/skalibs/usr/include" \
+    --enable-static-libc \
+    --disable-shared \
+    --disable-execline
+
+make
+make install
+
+(
+    cd man
+
+    export MANPATH=$1/usr/share/man
+
+    make
+    make install
+)
+
+# Install baseinit files for using s6-svscan as PID 1.
+{
+    set -f
+
+    # Intentional, globbing disabled.
+    # shellcheck disable=2086
+    "$CC" -o "$1/usr/bin/init" init.c $CFLAGS $CPPFLAGS $LDFLAGS
+
+    cp -f poweroff "$1/usr/bin"
+    ln -s poweroff "$1/usr/bin/reboot"
+}
+
