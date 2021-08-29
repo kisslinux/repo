@@ -1,4 +1,4 @@
-https://skarnet.org/software/mdevd/mdevd-VERSION.tar.gz
-https://skarnet.org/software/skalibs/skalibs-2.10.0.3.tar.gz skalibs
+https://github.com/skarnet/mdevd/archive/VERSION.tar.gz
+https://github.com/skarnet/skalibs/archive/b9fc60351f89d7ea01a4d25682076fcbbf33ef74.tar.gz skalibs
 files/mdevd.conf
 files/mdevd.run
