@@ -1,4 +1,12 @@
-#!/bin/sh -e
+#!/bin/sh -ef
 
 make PREFIX=/usr
 make PREFIX=/usr install
+
+mkdir -p "$1/usr/bin"
+
+# Intentional, globbing disabled.
+# shellcheck disable=2086
+"$CC" -static $LDFLAGS $CFLAGS $CPPFLAGS \
+    -o "$1/usr/bin/libudev-zero-helper" contrib/helper.c
+

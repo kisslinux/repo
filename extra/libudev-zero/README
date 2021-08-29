@@ -14,8 +14,10 @@ ________________________________________________________________________________
 
 * Installation ........................................................... [001]
 * Setup .................................................................. [002]
-* Usage .................................................................. [003]
-* References ............................................................. [004]
+  * Configure mdev For Hotplugging ....................................... [003]
+  * Configure mdevd For Hotplugging ...................................... [004]
+* Usage .................................................................. [005]
+* References ............................................................. [006]
 
 
 [001] Installation
@@ -32,17 +34,37 @@ ________________________________________________________________________________
 ________________________________________________________________________________
 
 If using mdev or mdevd (with the default configuration files), libudev-zero will
-automatically be used once installed.
+automatically be used once installed. If not, the following configuration must
+be done for hotplugging to work.
 
 
-[003] Usage
+--[003] Configure mdev For Hotplugging -----------------------------------------
+
+  Add the folllowing to your /etc/mdev.conf.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  SUBSYSTEM=drm;.*   root:video 660 *libudev-zero-helper                    |
+  |  SUBSYSTEM=input;.* root:input 660 *libudev-zero-helper                    |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+--[004] Configure mdevd For Hotplugging ----------------------------------------
+
+  Ensure that mdevd is started with the flags '-O 4'. This will make the daemon
+  rebroadcast kernel uevents to libudev-zero. The distribution's default service
+  runs mdevd with these flags.
+
+
+[005] Usage
 ________________________________________________________________________________
 
 Refer to the FreeDesktop libudev documentation for library information. Refer
 to the project's upstream for more information.
 
 
-[004] References
+[006] References
 ________________________________________________________________________________
 
 [0] https://github.com/illiliti/libudev-zero
