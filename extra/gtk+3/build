@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 patch -p1 < no-fribidi.patch
+patch -p1 < fix-firefox.patch
 
 # Remove configure check for atk-bridge and fribidi. Funny enough, atk-bridge
 # is not required under wayland and there are ifdefs in place to ensure this.

@@ -1,0 +1,62 @@
+From f8e2e254c5a6cba2f6cf267bd8c3ce796779a2e8 Mon Sep 17 00:00:00 2001
+From: Ronan Pigott <rpigott@berkeley.edu>
+Date: Sun, 22 Aug 2021 01:54:39 -0700
+Subject: [PATCH] Revert "Revert "wayland: Push NULL buffer when hiding a
+ GdkWindow""
+
+wayland: Push NULL buffer when hiding a GdkWindow
+
+This is how windows are hidden in xdg_shell stable.
+
+This reverts commit bbcc3ee45643ccdc25bc525b4d7f7daf6b25440a.
+
+Closes #4198
+---
+ gdk/wayland/gdkwindow-wayland.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/gdk/wayland/gdkwindow-wayland.c b/gdk/wayland/gdkwindow-wayland.c
+index 2d7c42bd7a..07f77eb596 100644
+--- a/gdk/wayland/gdkwindow-wayland.c
++++ b/gdk/wayland/gdkwindow-wayland.c
+@@ -3286,7 +3286,7 @@ unmap_popups_for_window (GdkWindow *window)
+ }
+
+ static void
+-gdk_wayland_window_hide_surface (GdkWindow *window)
++gdk_wayland_window_clear_surface (GdkWindow *window)
+ {
+   GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (gdk_window_get_display (window));
+   GdkWindowImplWayland *impl = GDK_WINDOW_IMPL_WAYLAND (window->impl);
+@@ -3416,7 +3416,10 @@ gdk_wayland_window_hide_surface (GdkWindow *window)
+ static void
+ gdk_wayland_window_hide (GdkWindow *window)
+ {
+-  gdk_wayland_window_hide_surface (window);
++  GdkWindowImplWayland *impl = GDK_WINDOW_IMPL_WAYLAND (window->impl);
++
++  wl_surface_attach (impl->display_server.wl_surface, NULL, 0, 0);
++  wl_surface_commit (impl->display_server.wl_surface);
+   _gdk_window_clear_update_area (window);
+ }
+
+@@ -3430,7 +3433,7 @@ gdk_window_wayland_withdraw (GdkWindow *window)
+
+       g_assert (!GDK_WINDOW_IS_MAPPED (window));
+
+-      gdk_wayland_window_hide_surface (window);
++      gdk_wayland_window_clear_surface (window);
+     }
+ }
+
+@@ -3751,7 +3754,7 @@ gdk_wayland_window_destroy (GdkWindow *window,
+    */
+   g_return_if_fail (!foreign_destroy);
+
+-  gdk_wayland_window_hide_surface (window);
++  gdk_wayland_window_clear_surface (window);
+ }
+
+ static void
+--
+GitLab
