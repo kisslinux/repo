@@ -11,4 +11,4 @@ cat > "$CONFIG_SERVICE_DIR/.s6-svscan/finish" <<EOF
 EOF
 chmod +x "$CONFIG_SERVICE_DIR/.s6-svscan/finish"
 
-exec s6-svscanctl -t /var/service
+exec s6-svscanctl -t "$CONFIG_SERVICE_DIR"
