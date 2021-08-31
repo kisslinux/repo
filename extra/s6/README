@@ -64,7 +64,8 @@ documentation.
         and not a part of s6. Send bug reports to #/contact
 
   NOTE: CONFIG_SERVICE_DIR (default = /var/service) must contain at least one
-        getty for login to be possible. Refer to the service management wiki
+        getty for login to be possible. Also, if CONFIG_SERVICE_DIR is changed,
+        the s6 package must be rebuilt. Refer to the service management wiki
         page for more information. [4]
 
   To set s6 as the system init the package manager's alternatives system must
