@@ -1,30 +1,11 @@
 #!/bin/sh -e
 
-patch -p1 < no-x11.patch
+for p in *.patch; do
+    patch -p1 < "$p"
+done
 
 # X11-less webrtc patch from bugzilla. Very large so a URL is used.
 patch -p1 < attachment.cgi\?id=9202429
-
-# Remove fribidi dependency.
-sed '/fribidi/d' config/system-headers.mozbuild > _
-mv -f _ config/system-headers.mozbuild
-
-# Fix issue with Firefox mixing userspace and kernel headers.
-# See: https://github.com/kisslinux/repo/issues/207
-_f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
-sed '/if defined(LINUX)/a#include <net\/if.h>' "$_f" > _
-mv -f _ "$_f"
-
-# The most recent version of Clang is able to build NSS with its integrated
-# assembler.
-for f in \
-    security/nss/lib/freebl/Makefile \
-    security/nss/lib/freebl/freebl.gyp \
-    security/nss/lib/freebl/freebl_base.gypi
-do
-    sed '/-no-integrated-as/d' "$f" > _
-    mv -f _ "$f"
-done
 
 # Build autoconf 2.13 for Firefox's sole use.
 # See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
@@ -39,8 +20,7 @@ done
     make install
 )
 
-# Build yasm for Firefox's sole use.
-# Firefox is the only package which needs it
+# Build yasm for Firefox's sole use. Firefox is the only package which needs it
 # and upstream is kinda dead.
 (
     cd yasm
@@ -52,11 +32,9 @@ done
     make DESTDIR="$PWD/../junk" install
 )
 
-# Build zip for Firefox's sole use.
-# Zip is an awful format that we should use
-# as little as possible.
-(
-    cd zip
+# Build zip/unzip for Firefox's sole use.
+for f in zip unzip; do (
+    cd "$f"
 
     make \
         CC="$CC $CFLAGS $CXXFLAGS" \
@@ -65,7 +43,7 @@ done
     make \
         prefix="$PWD/../junk" \
         -f unix/Makefile install
-)
+) done
 
 export PATH="$PWD/junk/bin:$PATH"
 
