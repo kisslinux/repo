@@ -32,6 +32,7 @@ mv -f _ vendor/rustc-ap-rustc_target/.cargo-checksum.json
 cat > config.toml <<EOF
 [llvm]
 link-shared = true
+skip-rebuild = true
 
 [build]
 build     = "x86_64-unknown-linux-musl"
@@ -45,7 +46,7 @@ submodules     = false
 python         = "python3"
 locked-deps    = true
 vendor         = true
-tools          = [ "cargo" ]
+tools          = [ "cargo", "rustfmt", "src" ]
 sanitizers     = false
 profiler       = false
 full-bootstrap = false
@@ -58,17 +59,22 @@ llvm-config = "/usr/bin/llvm-config"
 crt-static  = false
 sanitizers  = false
 
+[dist]
+src-tarball = false
+
 [rust]
 backtrace         = false
 channel           = "stable"
 codegen-tests     = false
 codegen-units-std = 0
+codegen-units     = 0
 debug             = false
 debug-assertions  = false
 debuginfo-level   = 0
 incremental       = false
 jemalloc          = false
 rpath             = false
+dist-src          = false
 EOF
 
 # Workaround to get Rust to build in llvm-only environments.
