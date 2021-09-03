@@ -52,6 +52,10 @@ case $("$CC" -print-file-name=libc++.so) in */*)
     export CXXSTDLIB=c++
 esac
 
+# Instruct the compiler to trim absolute paths in resulting binaries and instead
+# change them to relative paths ($PWD/... ./...).
+export RUSTFLAGS="$RUSTFLAGS --remap-path-prefix=$PWD=."
+
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox,--enable-new-dtags"
 export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
 export MACH_USE_SYSTEM_PYTHON=1
