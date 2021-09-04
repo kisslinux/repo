@@ -557,6 +557,10 @@ pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr", false);
 pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
 pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
 
+// Permit extensions to run on all domains instead of being conditional (via a
+// blacklist of domains).
+pref("extensions.webextensions.restrictedDomains", "");
+
 //
 // STORAGE
 //
