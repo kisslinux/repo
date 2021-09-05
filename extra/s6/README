@@ -52,6 +52,8 @@ documentation.
 * https://skarnet.org/software/s6/servicedir.html (/etc/sv)
 * https://skarnet.org/software/s6/scandir.html    (/var/service)
 
+To enable support for execline, install the execline package and rebuild s6.
+
 
 --[003] Running s6 As PID 1 ----------------------------------------------------
 
