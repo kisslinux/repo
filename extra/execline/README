@@ -1,0 +1,43 @@
+execline
+________________________________________________________________________________
+
+execline is a (non-interactive) scripting language, like sh - but its syntax is
+quite different from a traditional shell syntax. The execlineb program is meant
+to be used as an interpreter for a text file; the other commands are essentially
+useful inside an execlineb script. execline is as powerful as a shell: it
+features conditional loops, getopt-style option handling, filename globbing, and
+more. Meanwhile, its syntax is far more logic and predictable than the shell's
+syntax, and has no security issues. [0]
+
+Upstream: https://skarnet.org/software/execline/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b execline                                                           |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages for further information.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://skarnet.org/software/execline/
+
