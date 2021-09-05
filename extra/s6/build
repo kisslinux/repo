@@ -17,7 +17,7 @@
     --with-sysdeps="$PWD/skalibs/usr/lib/skalibs/sysdeps" \
     --with-lib="$PWD/skalibs/usr/lib/skalibs" \
     --with-include="$PWD/skalibs/usr/include" \
-    --enable-static-libc \
+    --enable-allstatic \
     --disable-shared \
     --disable-execline
 
