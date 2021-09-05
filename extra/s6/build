@@ -5,25 +5,28 @@
 
     ./configure \
         --prefix=/usr \
-        --disable-shared
+        --enable-allstatic
 
     make
-    make DESTDIR="$PWD" install
+    make DESTDIR="$PWD/.." install
 )
+
+kiss l execline && _execline=enable
 
 ./configure \
     --prefix=/usr \
-    --libexecdir=lib \
-    --with-sysdeps="$PWD/skalibs/usr/lib/skalibs/sysdeps" \
-    --with-lib="$PWD/skalibs/usr/lib/skalibs" \
-    --with-include="$PWD/skalibs/usr/include" \
+    --libexecdir=/usr/lib/s6 \
+    --libdir=/usr/lib \
+    --with-sysdeps="$PWD/usr/lib/skalibs/sysdeps" \
+    --with-lib="$PWD/usr/lib/skalibs" \
+    --with-include="$PWD/usr/include" \
     --enable-allstatic \
-    --disable-shared \
-    --disable-execline
+    "--${_execline:-disable}-execline"
 
 make
 make install
 
+# Install manual pages.
 (
     cd man
 
