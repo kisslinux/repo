@@ -42,7 +42,7 @@ make install
 
     # Intentional, globbing disabled.
     # shellcheck disable=2086
-    "$CC" -o "$1/usr/bin/init" init.c \
+    "$CC" -static -std=c99 -o "$1/usr/bin/init" init.c \
         -DCONFIG_SERVICE_DIR="\"${CONFIG_SERVICE_DIR:-/var/service}\"" \
         $CFLAGS $CPPFLAGS $LDFLAGS
 
