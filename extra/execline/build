@@ -21,3 +21,13 @@
 
 make
 make install
+
+# Install manual pages.
+(
+    cd man
+
+    export MANPATH=$1/usr/share/man
+
+    make
+    make install
+)
