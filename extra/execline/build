@@ -1,0 +1,23 @@
+#!/bin/sh -e
+
+(
+    cd skalibs
+
+    ./configure \
+        --prefix=/usr \
+        --enable-allstatic
+
+    make
+    make DESTDIR="$PWD/.." install
+)
+
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib \
+    --enable-allstatic \
+    --with-sysdeps="$PWD/usr/lib/skalibs/sysdeps" \
+    --with-lib="$PWD/usr/lib/skalibs" \
+    --with-include="$PWD/usr/include"
+
+make
+make install
