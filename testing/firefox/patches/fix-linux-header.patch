@@ -1,0 +1,12 @@
+diff --git a/dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c b/dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
+index 73e85c6..9eca548 100644
+--- a/dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
++++ b/dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
+@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ 
+ #if defined(LINUX)
++#include <net/if.h>
+ #include "addrs-netlink.h"
+ #include <csi_platform.h>
+ #include <assert.h>
