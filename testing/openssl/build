@@ -1,0 +1,31 @@
+#!/bin/sh -e
+
+./Configure \
+    --prefix=/usr \
+    --openssldir=/etc/ssl \
+    --libdir=lib \
+    no-unit-test \
+    shared \
+    linux-x86_64
+
+make depend
+make
+
+make DESTDIR="$1" \
+    install_sw \
+    install_ssldirs \
+    install_man_docs
+
+cp -f update-certdata.sh "$1/etc/ssl"
+
+# Libretls is LibreSSL's libtls library for OpenSSL.
+(
+    cd libretls
+
+    ./configure \
+        --prefix=/usr \
+        --with-openssl="$1/usr"
+
+    make
+    make install
+)

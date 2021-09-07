@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/etc/ssl/update-certdata.sh

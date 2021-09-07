@@ -1,0 +1,47 @@
+openssl
+________________________________________________________________________________
+
+OpenSSL is a software library for applications that secure communications over
+computer networks against eavesdropping or need to identify the party at the
+other end. It is widely used by Internet servers, including the majority of
+HTTPS websites.
+
+OpenSSL contains an open-source implementation of the SSL and TLS protocols.
+The core library, written in the C programming language, implements basic
+cryptographic functions and provides various utility functions. Wrappers
+allowing the use of the OpenSSL library in a variety of computer languages are
+available. [0]
+
+Upstream: https://www.openssl.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b openssl                                                            |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output. To update the system's SSL
+certificates, run /etc/ssl/update-certdata.sh.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/OpenSSL
+
