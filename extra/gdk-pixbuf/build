@@ -11,7 +11,7 @@ meson \
     -Djasper=false \
     -Djpeg=true \
     -Dpng=true \
-    -Dtiff=true \
+    -Dtiff=false \
     -Ddocs=false \
     -Dman=false \
     -Dgio_sniffing=false \
