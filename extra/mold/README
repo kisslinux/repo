@@ -14,10 +14,13 @@ ________________________________________________________________________________
 
 * Installation ........................................................... [001]
 * Setup .................................................................. [002]
-* Usage .................................................................. [003]
-* Troubleshooting ........................................................ [004]
-  * Package Fails To Link With Mold ...................................... [005]
-* References ............................................................. [006]
+  * METHOD 1 (Compiler-agnostic) ......................................... [003]
+  * METHOD 2 (Clang >= 12.0) ............................................. [004]
+  * METHOD 3 (GCC) ....................................................... [005]
+* Usage .................................................................. [006]
+* Troubleshooting ........................................................ [007]
+  * Package Fails To Link With Mold ...................................... [008]
+* References ............................................................. [009]
 
 
 [001] Installation
@@ -37,34 +40,43 @@ To use mold as the system linker one of the following methods must be used.
 The first solution is recommended as it removes all possibility of the prior
 linker being executed by mistake.
 
-1. Use the alternatives system to set mold as the system linker.
 
-+------------------------------------------------------------------------------+
-|                                                                              |
-|  $ kiss a mold /usr/bin/ld                                                   |
-|                                                                              |
-+------------------------------------------------------------------------------+
+--[003] METHOD 1 (Compiler-agnostic) -------------------------------------------
 
-2. Add --ld-path to CFLAGS/CXXFLAGS (Clang > 12.0)
+  Use the alternatives system to set mold as the system linker.
 
-+------------------------------------------------------------------------------+
-|                                                                              |
-|  $ export CFLAGS="$CFLAGS --ld-path=/usr/bin/mold"                           |
-|  $ export CXXFLAGS="$CXXFLAGS --ld-path=/usr/bin/mold"                       |
-|                                                                              |
-+------------------------------------------------------------------------------+
-
-3. Add -B to CFLAGS/CXXFLAGS (GCC)
-
-+------------------------------------------------------------------------------+
-|                                                                              |
-|  $ export CFLAGS="$CFLAGS -B/usr/lib/mold"                                   |
-|  $ export CXXFLAGS="$CXXFLAGS -B/usr/lib/mold"                               |
-|                                                                              |
-+------------------------------------------------------------------------------+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ kiss a mold /usr/bin/ld                                                 |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
 
 
-[003] Usage
+--[004] METHOD 2 (Clang >= 12.0) -----------------------------------------------
+
+  Add --ld-path to CFLAGS/CXXFLAGS.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ export CFLAGS="$CFLAGS --ld-path=/usr/bin/mold"                         |
+  |  $ export CXXFLAGS="$CXXFLAGS --ld-path=/usr/bin/mold"                     |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+--[005] METHOD 3 (GCC) ---------------------------------------------------------
+
+  Add -B to CFLAGS/CXXFLAGS (GCC)
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  |  $ export CFLAGS="$CFLAGS -B/usr/lib/mold"                                 |
+  |  $ export CXXFLAGS="$CXXFLAGS -B/usr/lib/mold"                             |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
+
+[006] Usage
 ________________________________________________________________________________
 
 Mold does not yet support all use cases. It can not be used to link the Linux
@@ -84,11 +96,11 @@ result in its usage. To verify that mold is being used, disable binary stripping
 If 'mold' appears in the output, everything is setup correctly.
 
 
-[004] Troubleshooting
+[007] Troubleshooting
 ________________________________________________________________________________
 
 
---[005] Package Fails To Link With Mold ----------------------------------------
+--[008] Package Fails To Link With Mold ----------------------------------------
 
   If a package in the official repositories fails to link with mold, open an
   issue. If a package in a third-party repository fails to link with mold, open
@@ -96,7 +108,7 @@ ________________________________________________________________________________
   issue is in the linker), open an issue upstream.
 
 
-[006] References
+[009] References
 ________________________________________________________________________________
 
 [0] $/rui314/mold
