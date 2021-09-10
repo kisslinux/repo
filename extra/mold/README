@@ -63,6 +63,17 @@ linker being executed by mistake.
   |                                                                            |
   +----------------------------------------------------------------------------+
 
+  In addition to --ld-path, the following may also be needed. Please NOTE the
+  implications of this warning suppression and why METHOD 1 may be the best
+  solution to this problem.
+
+  +----------------------------------------------------------------------------+
+  |                                                                            |
+  | $ export CFLAGS="$CFLAGS -Wno-unused-command-line-argument"                |
+  | $ export CXXFLAGS="$CXXFLAGS -Wno-unused-command-line-argument"            |
+  |                                                                            |
+  +----------------------------------------------------------------------------+
+
 
 --[005] METHOD 3 (GCC) ---------------------------------------------------------
 
