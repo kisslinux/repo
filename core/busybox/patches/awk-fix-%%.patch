@@ -1,21 +1,31 @@
 diff --git a/editors/awk.c b/editors/awk.c
-index 3adbca7..f7b8ef0 100644
+index 3adbca7..02c26d7 100644
 --- a/editors/awk.c
 +++ b/editors/awk.c
-@@ -2346,8 +2346,15 @@ static char *awk_printf(node *n, size_t *len)
+@@ -2346,12 +2346,21 @@ static char *awk_printf(node *n, size_t *len)
  		size_t slen;
  
  		s = f;
 -		while (*f && (*f != '%' || *++f == '%'))
+-			f++;
+-		while (*f && !isalpha(*f)) {
+-			if (*f == '*')
+-				syntax_error("%*x formats are not supported");
 +		while (*f && *f != '%')
  			f++;
-+		c = *++f;
-+		if (c == '%') { /* double % */
-+			slen = f - s;
-+			s = xstrndup(s, slen);
-+			f++;
-+			goto tail;
-+		}
- 		while (*f && !isalpha(*f)) {
- 			if (*f == '*')
- 				syntax_error("%*x formats are not supported");
++		if (*f) {
++      c = *++f;
++			if (c == '%') { /* double % */
++				slen = f - s;
++				s = xstrndup(s, slen);
++				f++;
++				goto tail;
++			}
++			while (*f && !isalpha(*f)) {
++				if (*f == '*')
++					syntax_error("%*x formats are not supported");
++				f++;
++ 			}
+ 		}
+ 		c = *f;
+ 		if (!c) {
