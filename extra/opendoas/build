@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < bison-3.8.patch
-
 BINOWN="$(id -u)" \
 BINGRP="$(id -g)" \
 ./configure \
