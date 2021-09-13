@@ -1,5 +1,5 @@
 diff --git a/libass/ass_shaper.c b/libass/ass_shaper.c
-index ffcb36b..849b55f 100644
+index c4a157f..771c857 100644
 --- a/libass/ass_shaper.c
 +++ b/libass/ass_shaper.c
 @@ -81,8 +81,7 @@ struct ass_shaper_font_data {
@@ -22,15 +22,10 @@ index ffcb36b..849b55f 100644
          props.script = glyphs[offset].script;
          props.language  = hb_shaper_get_run_language(shaper, props.script);
          hb_buffer_set_segment_properties(buf, &props);
-@@ -754,33 +752,6 @@ void ass_shaper_determine_script(ASS_Shaper *shaper, GlyphInfo *glyphs,
-     }
- }
- 
--/**
-- * \brief Shape event text with FriBidi. Does mirroring and simple
-- * Arabic shaping.
-- * \param len number of clusters
-- */
+@@ -759,27 +757,6 @@ void ass_shaper_determine_script(ASS_Shaper *shaper, GlyphInfo *glyphs,
+  * Arabic shaping.
+  * \param len number of clusters
+  */
 -static void shape_fribidi(ASS_Shaper *shaper, GlyphInfo *glyphs, size_t len)
 -{
 -    int i;
@@ -52,45 +47,10 @@ index ffcb36b..849b55f 100644
 -
 -    free(joins);
 -}
--
+ 
  /**
   * \brief Toggle kerning for HarfBuzz shaping.
-  * \param shaper shaper instance
-@@ -864,33 +835,6 @@ void ass_shaper_set_bidi_brackets(ASS_Shaper *shaper, bool match_brackets)
- }
- #endif
- 
--/**
--  * \brief Remove all zero-width invisible characters from the text.
--  * \param text_info text
--  */
--static void ass_shaper_skip_characters(TextInfo *text_info)
--{
--    int i;
--    GlyphInfo *glyphs = text_info->glyphs;
--
--    for (i = 0; i < text_info->length; i++) {
--        // Skip direction override control characters
--        if ((glyphs[i].symbol <= 0x202e && glyphs[i].symbol >= 0x202a)
--                || (glyphs[i].symbol <= 0x200f && glyphs[i].symbol >= 0x200b)
--                || (glyphs[i].symbol <= 0x206f && glyphs[i].symbol >= 0x2060)
--                || (glyphs[i].symbol <= 0xfe0f && glyphs[i].symbol >= 0xfe00)
--                || (glyphs[i].symbol <= 0xe01ef && glyphs[i].symbol >= 0xe0100)
--                || (glyphs[i].symbol <= 0x180f && glyphs[i].symbol >= 0x180b)
--                || glyphs[i].symbol == 0x061c
--                || glyphs[i].symbol == 0xfeff
--                || glyphs[i].symbol == 0x00ad
--                || glyphs[i].symbol == 0x034f) {
--            glyphs[i].symbol = 0;
--            glyphs[i].skip = true;
--        }
--    }
--}
--
- /**
-  * \brief Shape an event's text. Calculates directional runs and shapes them.
-  * \param text_info event's text
-@@ -898,52 +842,18 @@ static void ass_shaper_skip_characters(TextInfo *text_info)
+@@ -911,51 +888,18 @@ void ass_shaper_set_bidi_brackets(ASS_Shaper *shaper, bool match_brackets)
   */
  bool ass_shaper_shape(ASS_Shaper *shaper, TextInfo *text_info)
  {
@@ -135,7 +95,6 @@ index ffcb36b..849b55f 100644
 -    switch (shaper->shaping_level) {
 -    case ASS_SHAPING_SIMPLE:
 -        shape_fribidi(shaper, glyphs, text_info->length);
--        ass_shaper_skip_characters(text_info);
 -        return true;
 -    case ASS_SHAPING_COMPLEX:
 -    default:
@@ -145,7 +104,7 @@ index ffcb36b..849b55f 100644
  }
  
  /**
-@@ -955,7 +865,7 @@ ASS_Shaper *ass_shaper_new(void)
+@@ -967,7 +911,7 @@ ASS_Shaper *ass_shaper_new(void)
      if (!shaper)
          return NULL;
  
@@ -154,7 +113,7 @@ index ffcb36b..849b55f 100644
  
      if (!init_features(shaper))
          goto error;
-@@ -998,25 +908,12 @@ void ass_shaper_cleanup(ASS_Shaper *shaper, TextInfo *text_info)
+@@ -1010,25 +954,12 @@ void ass_shaper_cleanup(ASS_Shaper *shaper, TextInfo *text_info)
   */
  FriBidiStrIndex *ass_shaper_reorder(ASS_Shaper *shaper, TextInfo *text_info)
  {
@@ -181,7 +140,7 @@ index ffcb36b..849b55f 100644
      return shaper->cmap;
  }
  
-@@ -1034,10 +931,5 @@ FriBidiStrIndex *ass_shaper_get_reorder_map(ASS_Shaper *shaper)
+@@ -1046,10 +977,5 @@ FriBidiStrIndex *ass_shaper_get_reorder_map(ASS_Shaper *shaper)
   */
  FriBidiParType resolve_base_direction(int enc)
  {
