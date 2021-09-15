@@ -53,7 +53,7 @@ chmod u+s "$1/usr/bin/busybox-suid"
 
 # The acpid command requires that this directory exist
 # and does not automatically create it..
-mkdir -p "$1/etc/acpid"
+mkdir -p "$1/etc/acpi"
 
 # Install runit services.
 for s in acpid crond syslogd mdev ntpd; do
