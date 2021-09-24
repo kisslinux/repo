@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+make install
+
+cp -fr colemak "$1/usr/share/bkeymaps"
+
