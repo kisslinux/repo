@@ -1,3 +1,2 @@
-https://fossies.org/linux/misc/mandoc-VERSION.tar.gz
+https://mandoc.bsd.lv/snapshots/mandoc-VERSION.tar.gz
 patches/mandoc-no-warn.patch
-patches/fix-tbl-segfault.patch

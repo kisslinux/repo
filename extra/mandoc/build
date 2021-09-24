@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
 patch -p1 < mandoc-no-warn.patch
-patch -p1 < fix-tbl-segfault.patch
 
 # Change default pager.
 sed 's,"more -s","less",g' main.c > _
