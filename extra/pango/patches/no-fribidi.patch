@@ -1,5 +1,5 @@
 diff --git a/meson.build b/meson.build
-index c03bf85..a5bd314 100644
+index 6d8de0b..93141b0 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -191,7 +191,6 @@ endif
@@ -22,7 +22,7 @@ index c03bf85..a5bd314 100644
  thai_dep = dependency('libthai', version: libthai_req_version, required: get_option('libthai'))
  if thai_dep.found()
 diff --git a/pango/pango-bidi-type.c b/pango/pango-bidi-type.c
-index 32858f7..1e4abed 100644
+index 32858f7..ca8adfc 100644
 --- a/pango/pango-bidi-type.c
 +++ b/pango/pango-bidi-type.c
 @@ -23,13 +23,20 @@
@@ -90,15 +90,15 @@ index 32858f7..1e4abed 100644
  }
  
  /* Some bidi-related functions */
-@@ -116,36 +90,14 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
+@@ -116,36 +90,12 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
    glong n_chars, i;
    guint8 *embedding_levels_list;
    const gchar *p;
 -  FriBidiParType fribidi_base_dir;
    FriBidiCharType *bidi_types;
    FriBidiBracketType *bracket_types;
-   FriBidiLevel max_level;
-   FriBidiCharType ored_types = 0;
+-  FriBidiLevel max_level;
+-  FriBidiCharType ored_types = 0;
 -  FriBidiCharType anded_strongs = FRIBIDI_TYPE_RLE;
  
    G_STATIC_ASSERT (sizeof (FriBidiLevel) == sizeof (guint8));
@@ -127,7 +127,7 @@ index 32858f7..1e4abed 100644
    if (length < 0)
      length = strlen (text);
  
-@@ -157,20 +109,12 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
+@@ -157,20 +107,11 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
  
    for (i = 0, p = text; p < text + length; p = g_utf8_next_char(p), i++)
      {
@@ -146,12 +146,11 @@ index 32858f7..1e4abed 100644
 -      else
 -        bracket_types[i] = FRIBIDI_NO_BRACKET;
 +      bidi_types[i] = FRIBIDI_PAR_LTR;
-+      ored_types |= FRIBIDI_PAR_LTR;
 +      bracket_types[i] = 0;
      }
  
      /* Short-circuit (malloc-expensive) FriBidi call for unidirectional
-@@ -187,56 +131,13 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
+@@ -187,56 +128,12 @@ pango_log2vis_get_embedding_levels (const gchar    *text,
       * o base_dir doesn't have an RTL taste.
       * o there are letters, and base_dir is weak.
       */
@@ -200,7 +199,7 @@ index 32858f7..1e4abed 100644
 -      memset (embedding_levels_list, 0, length);
 -    }
  
- resolved:
+-resolved:
    g_free (bidi_types);
    g_free (bracket_types);
  
@@ -209,7 +208,7 @@ index 32858f7..1e4abed 100644
  
    return embedding_levels_list;
  }
-@@ -260,17 +161,6 @@ resolved:
+@@ -260,17 +157,6 @@ resolved:
  PangoDirection
  pango_unichar_direction (gunichar ch)
  {
