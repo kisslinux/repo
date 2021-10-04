@@ -1,4 +1,5 @@
 libffi
 meson   make
+pcre
 pkgconf make
 zlib

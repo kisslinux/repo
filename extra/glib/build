@@ -21,7 +21,6 @@ meson \
     -Ddefault_library=both \
     -Dman=false \
     -Dfam=false \
-    -Dinternal_pcre=true \
     . build
 
 ninja -C build
