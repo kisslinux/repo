@@ -60,6 +60,7 @@ export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox,--enable-new-dtags"
 export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
 export MACH_USE_SYSTEM_PYTHON=1
 export MOZ_DEBUG_FLAGS=-g0
+export MOZBUILD_STATE_PATH=$PWD/state
 export MOZ_NOSPAM=1
 
 cat > .mozconfig << EOF
