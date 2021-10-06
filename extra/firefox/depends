@@ -28,4 +28,5 @@ pkgconf       make
 python        make
 rust          make
 wayland
+wayland-protocols make
 zlib
