@@ -1,1 +1,2 @@
 https://nodejs.org/download/release/vVERSION/node-vVERSION.tar.xz
+patches/python-3.10.patch
