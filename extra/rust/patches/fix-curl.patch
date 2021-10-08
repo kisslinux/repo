@@ -1,0 +1,33 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 085aae3..ccedf97 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -873,7 +873,7 @@ dependencies = [
+ name = "curl-sys"
+ version = "0.4.45+curl-7.78.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "de9e5a72b1c744eb5dd20b2be4d7eb84625070bb5c4ab9b347b70464ab1e62eb"
++checksum = "d8f1e2562c5784ad3348906a9c7e2e435c8bc5c8796a4398d322456d9a2710c1"
+ dependencies = [
+  "cc",
+  "libc",
+diff --git a/vendor/curl-sys/.cargo-checksum.json b/vendor/curl-sys/.cargo-checksum.json
+new file mode 100644
+index 0000000..b3a3efe
+--- /dev/null
++++ b/vendor/curl-sys/.cargo-checksum.json
+@@ -0,0 +1 @@
++{"files":{},"package":"d8f1e2562c5784ad3348906a9c7e2e435c8bc5c8796a4398d322456d9a2710c1"}
+diff --git a/vendor/curl-sys/build.rs b/vendor/curl-sys/build.rs
+index 7b66756..a7c7122 100644
+--- a/vendor/curl-sys/build.rs
++++ b/vendor/curl-sys/build.rs
+@@ -109,6 +109,8 @@ fn main() {
+         .include("curl/lib")
+         .include("curl/include")
+         .define("BUILDING_LIBCURL", None)
++        .define("CURL_CA_BUNDLE", "\"/etc/ssl/cert.pem\"")
++        .define("CURL_CA_PATH", "\"/etc/ssl/certs\"")
+         .define("CURL_DISABLE_CRYPTO_AUTH", None)
+         .define("CURL_DISABLE_DICT", None)
+         .define("CURL_DISABLE_GOPHER", None)

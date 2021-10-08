@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+rm -f vendor/curl-sys/.cargo-checksum.json
+patch -p1 < fix-curl.patch
+
 # Instruct the compiler to trim absolute paths in resulting binaries and instead
 # change them to relative paths ($PWD/... ./...).
 export RUSTFLAGS="$RUSTFLAGS --remap-path-prefix=$PWD=."
