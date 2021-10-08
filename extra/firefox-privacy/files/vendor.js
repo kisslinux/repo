@@ -321,6 +321,13 @@ pref("browser.taskbar.lists.recent.enabled", false);
 pref("browser.taskbar.lists.tasks.enabled", false);
 pref("browser.taskbar.previews.enable", false);
 
+// Disable search bar ad suggestions.
+// https://support.mozilla.org/en-US/kb/navigate-web-faster-firefox-suggest#w_contextual-suggestions
+pref("browser.region.network.url", "");
+pref("browser.region.update.enabled", false);
+pref("browser.region.network.scan", false);
+pref("browser.region.log", false);
+
 //
 // PASSWORDS
 //
