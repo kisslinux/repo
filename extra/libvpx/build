@@ -26,3 +26,9 @@ sh ./configure \
 
 make
 make install
+
+# ABI was bumped for command-line options. This symbolic link removes the need
+# for users to rebuild Firefox, etc. Will be removed as of next Firefox release.
+# webmproject/libvpx#4ec84326cc65c5b042bf06d222d51e51d7e5461d
+ln -s libvpx.so.7 "$1/usr/lib/libvpx.so.6"
+
