@@ -1,0 +1,46 @@
+rust
+________________________________________________________________________________
+
+Rust is a multi-paradigm, high-level, general-purpose programming language
+designed for performance and safety, especially safe concurrency. Rust is
+syntactically similar to C++, but can guarantee memory safety by using a borrow
+checker to validate references. Rust achieves memory safety without garbage
+collection, and reference counting is optional.
+
+Rust was originally designed by Graydon Hoare at Mozilla Research, with
+contributions from Dave Herman, Brendan Eich, and others. The designers refined
+the language while writing the Servo experimental browser engine, and the Rust
+compiler. [0]
+
+Upstream: https://www.rust-lang.org/
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b rust                                                               |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://en.wikipedia.org/wiki/Rust_(programming_language)
+
