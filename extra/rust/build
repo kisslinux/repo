@@ -1,6 +1,5 @@
 #!/bin/sh -e
 
-rm -f vendor/curl-sys/.cargo-checksum.json
 patch -p1 < fix-curl.patch
 
 # Instruct the compiler to trim absolute paths in resulting binaries and instead
@@ -11,7 +10,7 @@ export RUSTFLAGS="$RUSTFLAGS --remap-path-prefix=$PWD=."
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
 {
-    mkdir -p "${cache_dir:=build/cache/2021-07-29}"
+    mkdir -p "${cache_dir:=build/cache/2021-09-09}"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
@@ -31,6 +30,9 @@ done
 sed 's/\("files":{\)[^}]*/\1/' \
     vendor/rustc-ap-rustc_target/.cargo-checksum.json > _
 mv -f _ vendor/rustc-ap-rustc_target/.cargo-checksum.json
+sed 's/\("files":{\)[^}]*/\1/' \
+    vendor/curl-sys/.cargo-checksum.json > _
+mv -f _ vendor/curl-sys/.cargo-checksum.json
 
 cat > config.toml <<EOF
 [llvm]
