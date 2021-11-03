@@ -277,7 +277,7 @@ index c1853a9f4d..b407dce197 100644
  
  if CONFIG["MOZ_WIDGET_TOOLKIT"] == "windows":
 diff --git a/toolkit/components/remote/nsRemoteService.cpp b/toolkit/components/remote/nsRemoteService.cpp
-index b2499d8191..a912dd5acd 100644
+index b2499d8191..5448b8f4b4 100644
 --- a/toolkit/components/remote/nsRemoteService.cpp
 +++ b/toolkit/components/remote/nsRemoteService.cpp
 @@ -12,12 +12,17 @@
@@ -301,6 +301,32 @@ index b2499d8191..a912dd5acd 100644
  #  endif
  #elif defined(XP_WIN)
  #  include "nsWinRemoteServer.h"
+@@ -99,10 +104,11 @@ RemoteResult nsRemoteService::StartClient(const char* aDesktopStartupID) {
+   }
+ 
+   UniquePtr<nsRemoteClient> client;
++  return REMOTE_NOT_FOUND;
+ #ifdef MOZ_WIDGET_GTK
+ #  if defined(MOZ_ENABLE_DBUS)
+   client = MakeUnique<nsDBusRemoteClient>();
+-#  else
++#  elif defined(MOZ_X11)
+   client = MakeUnique<nsXRemoteClient>();
+ #  endif
+ #elif defined(XP_WIN)
+@@ -143,10 +149,11 @@ void nsRemoteService::StartupServer() {
+     return;
+   }
+ 
++  return;
+ #ifdef MOZ_WIDGET_GTK
+ #  if defined(MOZ_ENABLE_DBUS)
+   mRemoteServer = MakeUnique<nsDBusRemoteServer>();
+-#  else
++#  elif defined(MOZ_X11)
+   mRemoteServer = MakeUnique<nsGTKRemoteServer>();
+ #  endif
+ #elif defined(XP_WIN)
 diff --git a/toolkit/moz.configure b/toolkit/moz.configure
 index f63780b892..deadf892d6 100644
 --- a/toolkit/moz.configure
@@ -858,6 +884,74 @@ index 0050af3af3..c2c02e59ff 100644
      GdkWindow* gdk_window = gtk_widget_get_window(GTK_WIDGET(window));
      WaylandWindowHandleExportedData* data;
  
+diff --git a/widget/gtk/nsUserIdleServiceGTK.cpp b/widget/gtk/nsUserIdleServiceGTK.cpp
+index 884d52a6ca..89bdc16b1a 100644
+--- a/widget/gtk/nsUserIdleServiceGTK.cpp
++++ b/widget/gtk/nsUserIdleServiceGTK.cpp
+@@ -17,6 +17,7 @@ using mozilla::LogLevel;
+ 
+ static mozilla::LazyLogModule sIdleLog("nsIUserIdleService");
+ 
++#ifdef MOZ_X11
+ typedef bool (*_XScreenSaverQueryExtension_fn)(Display* dpy, int* event_base,
+                                                int* error_base);
+ 
+@@ -25,12 +26,14 @@ typedef XScreenSaverInfo* (*_XScreenSaverAllocInfo_fn)(void);
+ typedef void (*_XScreenSaverQueryInfo_fn)(Display* dpy, Drawable drw,
+                                           XScreenSaverInfo* info);
+ 
+-static bool sInitialized = false;
+ static _XScreenSaverQueryExtension_fn _XSSQueryExtension = nullptr;
+ static _XScreenSaverAllocInfo_fn _XSSAllocInfo = nullptr;
+ static _XScreenSaverQueryInfo_fn _XSSQueryInfo = nullptr;
++#endif
++static bool sInitialized = false;
+ 
+ static void Initialize() {
++#ifdef MOZ_X11
+   if (!mozilla::widget::GdkIsX11Display()) {
+     return;
+   }
+@@ -58,15 +61,22 @@ static void Initialize() {
+   if (!_XSSQueryInfo)
+     MOZ_LOG(sIdleLog, LogLevel::Warning, ("Failed to get XSSQueryInfo!\n"));
+ 
++#endif
+   sInitialized = true;
+ }
+ 
+-nsUserIdleServiceGTK::nsUserIdleServiceGTK() : mXssInfo(nullptr) {
++nsUserIdleServiceGTK::nsUserIdleServiceGTK() 
++#ifdef MOZ_X11
++: mXssInfo(nullptr) 
++#endif
++{
+   Initialize();
+ }
+ 
+ nsUserIdleServiceGTK::~nsUserIdleServiceGTK() {
++#ifdef MOZ_X11
+   if (mXssInfo) XFree(mXssInfo);
++#endif
+ 
+ // It is not safe to unload libXScrnSaver until each display is closed because
+ // the library registers callbacks through XESetCloseDisplay (Bug 397607).
+@@ -88,6 +98,7 @@ bool nsUserIdleServiceGTK::PollIdleTime(uint32_t* aIdleTime) {
+   // Ask xscreensaver about idle time:
+   *aIdleTime = 0;
+ 
++#ifdef MOZ_X11
+   // We might not have a display (cf. in xpcshell)
+   Display* dplay = GDK_DISPLAY_XDISPLAY(gdk_display_get_default());
+   if (!dplay) {
+@@ -107,6 +118,7 @@ bool nsUserIdleServiceGTK::PollIdleTime(uint32_t* aIdleTime) {
+     *aIdleTime = mXssInfo->idle;
+     return true;
+   }
++#endif
+   // If we get here, we couldn't get to XScreenSaver:
+   MOZ_LOG(sIdleLog, LogLevel::Warning, ("XSSQueryExtension returned false!\n"));
+   return false;
 diff --git a/widget/gtk/nsUserIdleServiceGTK.h b/widget/gtk/nsUserIdleServiceGTK.h
 index 9b9ba31846..8f83aee584 100644
 --- a/widget/gtk/nsUserIdleServiceGTK.h
@@ -920,7 +1014,7 @@ index d649c7e0bf..70b47d5124 100644
  nsresult nsWidgetGtk2ModuleCtor() { return nsAppShellInit(); }
  
 diff --git a/widget/gtk/nsWindow.cpp b/widget/gtk/nsWindow.cpp
-index aec5588fae..7b2cc08fa2 100644
+index aec5588fae..350f24d328 100644
 --- a/widget/gtk/nsWindow.cpp
 +++ b/widget/gtk/nsWindow.cpp
 @@ -58,7 +58,6 @@
@@ -943,7 +1037,7 @@ index aec5588fae..7b2cc08fa2 100644
  #  include "nsAccessibilityService.h"
  #endif
  
-+#include "GLContextEgl.h"
++#include "GLContextEGL.h"
 +#include "GtkCompositorWidget.h"
  #ifdef MOZ_X11
 +#  include "mozilla/X11Util.h"
