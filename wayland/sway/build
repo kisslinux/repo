@@ -10,18 +10,12 @@ mv -f _ sway/desktop/render.c
 
 meson \
     --prefix=/usr \
-    -Dexamples=false \
+    -Ddefault-wallpaper=false \
+    -Dzsh-completions=false \
+    -Dbash-completions=false \
+    -Dfish-completions=false \
     -Dxwayland=disabled \
-    -Dx11-backend=disabled \
-    -Dxcb-errors=disabled \
-    -Dxcb-icccm=disabled \
     . build
 
 ninja -C build
 ninja -C build install
-
-rm -rf \
-    "$1/usr/share/fish" \
-    "$1/usr/share/bash-completion" \
-    "$1/usr/share/backgrounds" \
-    "$1/usr/share/zsh"
