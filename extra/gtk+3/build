@@ -26,7 +26,6 @@ mv -f _ Makefile.in
         --sysconfdir=/etc \
         --mandir=/usr/share/man \
         -Ddefault_library=static \
-        -Dhas-dlvsym=false \
         -Degl=yes \
         -Dtests=false \
         -Dglx=no \
