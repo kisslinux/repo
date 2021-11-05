@@ -7,8 +7,6 @@ meson \
     --sysconfdir=/etc \
     --mandir=/usr/share/man \
     -Ddebug=false \
-    -Dgir=false \
-    -Djasper=false \
     -Djpeg=true \
     -Dpng=true \
     -Dtiff=false \
