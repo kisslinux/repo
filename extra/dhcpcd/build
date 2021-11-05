@@ -8,7 +8,7 @@
     --libexecdir=/usr/lib/dhcpcd
 
 make
-make install
+make BINMODE=755 install
 
 # Install runit service.
 mkdir -p "$1/etc/sv/dhcpcd"
