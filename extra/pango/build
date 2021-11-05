@@ -12,11 +12,9 @@ rm -rf subprojects
 
 meson \
     --prefix=/usr \
-    -Dgir=false \
     -Dgtk_doc=false \
     -Dxft=disabled \
     -Dintrospection=disabled \
-    -Dinstall_tests=false \
     . build
 
 ninja -C build
