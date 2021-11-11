@@ -1,15 +1,9 @@
 #!/bin/sh -e
 
+patch -p1 < musl.patch
+
 # Build sometimes forces -Werror.
 export CFLAGS="$CFLAGS -Wno-error"
-
-# Disable configure error for missing argp/fts/obstack.
-sed 's/as_fn_error.*\(argp\|fts\|_obstack\)/: "/g' configure > _
-mv -f _ configure
-
-# Don't compile two unrelated C files which require argp.
-sed 's/color.*printversion../#/g' lib/Makefile.in > _
-mv -f _ lib/Makefile.in
 
 sh ./configure \
     --prefix=/usr \

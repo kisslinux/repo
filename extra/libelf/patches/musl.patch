@@ -1,0 +1,59 @@
+diff --git a/configure b/configure
+index d03dab4..7fc88bd 100755
+--- a/configure
++++ b/configure
+@@ -7758,7 +7758,7 @@ LIBS="$saved_LIBS"
+ case "$ac_cv_search_argp_parse" in
+         no) { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+ $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+-as_fn_error $? "failed to find argp_parse
++: $? "failed to find argp_parse
+ See \`config.log' for more details" "$LINENO" 5; } ;;
+         -l*) argp_LDADD="$ac_cv_search_argp_parse" ;;
+         *) argp_LDADD= ;;
+@@ -7826,7 +7826,7 @@ LIBS="$saved_LIBS"
+ case "$ac_cv_search_fts_close" in
+         no) { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+ $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+-as_fn_error $? "failed to find fts_close
++: $? "failed to find fts_close
+ See \`config.log' for more details" "$LINENO" 5; } ;;
+         -l*) fts_LIBS="$ac_cv_search_fts_close" ;;
+         *) fts_LIBS= ;;
+@@ -7894,7 +7894,7 @@ LIBS="$saved_LIBS"
+ case "$ac_cv_search__obstack_free" in
+         no) { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+ $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+-as_fn_error $? "failed to find _obstack_free
++: $? "failed to find _obstack_free
+ See \`config.log' for more details" "$LINENO" 5; } ;;
+         -l*) obstack_LIBS="$ac_cv_search__obstack_free" ;;
+         *) obstack_LIBS= ;;
+diff --git a/lib/Makefile.in b/lib/Makefile.in
+index 41ff5f7..0c81496 100644
+--- a/lib/Makefile.in
++++ b/lib/Makefile.in
+@@ -117,8 +117,8 @@ libeu_a_AR = $(AR) $(ARFLAGS)
+ libeu_a_LIBADD =
+ am_libeu_a_OBJECTS = xasprintf.$(OBJEXT) xstrdup.$(OBJEXT) \
+ 	xstrndup.$(OBJEXT) xmalloc.$(OBJEXT) next_prime.$(OBJEXT) \
+-	crc32.$(OBJEXT) crc32_file.$(OBJEXT) color.$(OBJEXT) \
+-	error.$(OBJEXT) printversion.$(OBJEXT)
++	crc32.$(OBJEXT) crc32_file.$(OBJEXT) \
++	error.$(OBJEXT)
+ libeu_a_OBJECTS = $(am_libeu_a_OBJECTS)
+ AM_V_P = $(am__v_P_@AM_V@)
+ am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
+@@ -406,10 +406,10 @@ textrel_check = if $(READELF) -d $@ | fgrep -q TEXTREL; then $(textrel_found); f
+ noinst_LIBRARIES = libeu.a
+ libeu_a_SOURCES = xasprintf.c xstrdup.c xstrndup.c xmalloc.c next_prime.c \
+ 		  crc32.c crc32_file.c \
+-		  color.c error.c printversion.c
++		  error.c
+ 
+ noinst_HEADERS = fixedsizehash.h libeu.h system.h dynamicsizehash.h list.h \
+-		 eu-config.h color.h printversion.h bpf.h \
++		 eu-config.h bpf.h \
+ 		 atomics.h stdatomic-fbsd.h dynamicsizehash_concurrent.h
+ 
+ EXTRA_DIST = dynamicsizehash.c dynamicsizehash_concurrent.c
