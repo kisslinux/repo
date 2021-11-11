@@ -23,6 +23,7 @@ mv -f _ src/Makefile.in
     --without-libpsl \
     --without-libidn \
     --without-libidn2 \
+    --without-brotli \
     --without-zstd
 
 make
