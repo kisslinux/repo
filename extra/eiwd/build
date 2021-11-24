@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < clang.patch
+
 ./configure \
     --prefix=/usr \
     --libexecdir=/usr/bin \

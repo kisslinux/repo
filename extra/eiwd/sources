@@ -1,3 +1,4 @@
 https://github.com/illiliti/eiwd/releases/download/VERSION-1/iwd-MAJOR.MINOR.tar.xz
 files/eiwd.run
 files/iwd_passphrase
+patches/clang.patch
