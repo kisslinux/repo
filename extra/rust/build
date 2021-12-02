@@ -10,7 +10,7 @@ export RUSTFLAGS="$RUSTFLAGS --remap-path-prefix=$PWD=."
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
 {
-    mkdir -p "${cache_dir:=build/cache/2021-09-09}"
+    mkdir -p "${cache_dir:=build/cache/2021-11-01}"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
