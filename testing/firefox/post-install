@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cat <<EOF
+
+Run 'kiss help firefox' for setup
+information and general troubleshooting.
+
+Also available here:
+
+https://kisslinux.org/wiki/software/firefox
+
+EOF
