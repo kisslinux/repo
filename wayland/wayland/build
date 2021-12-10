@@ -1,10 +1,13 @@
 #!/bin/sh -e
 
-./configure \
+meson \
     --prefix=/usr \
-    --disable-documentation \
-    --disable-dtd-validation \
-    --enable-static
+    -Ddefault_library=both \
+    -Dtests=false \
+    -Ddocumentation=false \
+    -Ddtd_validation=false \
+    . build
 
-make
-make install
+ninja -C build
+ninja -C build install
+
