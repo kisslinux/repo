@@ -1,0 +1,12 @@
+diff --git a/dom/quota/PQuotaRequest.ipdl b/dom/quota/PQuotaRequest.ipdl
+index 3e28d1cae1..3f0b2bc61f 100644
+--- a/dom/quota/PQuotaRequest.ipdl
++++ b/dom/quota/PQuotaRequest.ipdl
+@@ -3,6 +3,7 @@
+  * You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
+ include protocol PQuota;
++include "mozilla/dom/quota/SerializationHelpers.h";
+ 
+ using mozilla::dom::quota::FullOriginMetadata
+   from "mozilla/dom/quota/CommonMetadata.h";

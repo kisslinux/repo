@@ -7,4 +7,5 @@ patches/fix-clang-as.patch
 patches/fix-linux-header.patch
 patches/no-fribidi.patch
 patches/no-x11.patch
+patches/fix-disable-accessibility.patch
 https://bugzilla.mozilla.org/attachment.cgi?id=9202429
