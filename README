@@ -1,5 +1,5 @@
 |/
-|\ISS LINUX                                                https://kisslinux.org
+|\ISS LINUX                                          https://kisslinux.github.io
 ________________________________________________________________________________
 
 
@@ -10,14 +10,14 @@ The official repositories for KISS Linux maintained by Dylan Araps.
 
 More information:
 
-    - https://kisslinux.org
-    - https://kisslinux.org/package-system
+    - https://kisslinux.github.io
+    - https://kisslinux.github.io/package-system
 
 
 Signature Verification
 ________________________________________________________________________________
 
-Enabling signature verification: https://kisslinux.org/install#3.0
+Enabling signature verification: https://kisslinux.github.io/install#3.0
 
 
 Dylan Araps' public key:
